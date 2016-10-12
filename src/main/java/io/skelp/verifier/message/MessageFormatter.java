@@ -19,12 +19,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier;
+package io.skelp.verifier.message;
+
+import io.skelp.verifier.Verification;
 
 /**
- * Tests for the {@link Verifier} class.
+ * TODO: Document
  *
  * @author Alasdair Mercer
  */
-public class VerifierTest {
+public interface MessageFormatter {
+
+  /**
+   * TODO: Document
+   *
+   * @param verification
+   * @param message
+   * @param args
+   * @return
+   */
+  String format(Verification verification, String message, Object... args);
 }

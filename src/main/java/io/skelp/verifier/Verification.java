@@ -21,78 +21,94 @@
  */
 package io.skelp.verifier;
 
-import io.skelp.verifier.message.DefaultMessageFormatter;
 import io.skelp.verifier.message.MessageFormatter;
-import io.skelp.verifier.type.TypeVerifier;
 
 /**
  * TODO: Document
  *
  * @author Alasdair Mercer
  */
-public final class Verifier {
+public class Verification {
 
-  private static MessageFormatter defaultMessageFormatter = new DefaultMessageFormatter();
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @param name
-   * @param type
-   * @param <T>
-   * @return
-   * @throws VerifierException
-   */
-  public static <T extends TypeVerifier> T verify(final Object value, final Object name, final Class<T> type) {
-    return verify(value, name, type, null);
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @param name
-   * @param type
-   * @param messageFormatter
-   * @param <T>
-   * @return
-   * @throws VerifierException
-   */
-  public static <T extends TypeVerifier> T verify(final Object value, final Object name, final Class<T> type, final MessageFormatter messageFormatter) {
-    if (type == null) {
-      throw new VerifierException("type must not be null");
-    }
-
-    final Verification verification = new Verification(messageFormatter != null ? messageFormatter : defaultMessageFormatter, value, name);
-    final T verifier;
-    try {
-      verifier = type.getConstructor(Verification.class).newInstance(verification);
-    } catch (ReflectiveOperationException e) {
-      throw new VerifierException("Unable to instantiate TypeVerifier", e);
-    }
-
-    return verifier;
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  public static MessageFormatter getDefaultMessageFormatter() {
-    return defaultMessageFormatter;
-  }
+  private final MessageFormatter messageFormatter;
+  private final Object name;
+  private boolean negated;
+  private final Object value;
 
   /**
    * TODO: Document
    *
    * @param messageFormatter
+   * @param value
+   * @param name
    */
-  public static void setDefaultMessageFormatter(final MessageFormatter messageFormatter) {
-    defaultMessageFormatter = messageFormatter != null ? messageFormatter : new DefaultMessageFormatter();
+  public Verification(final MessageFormatter messageFormatter, final Object value, final Object name) {
+    this.messageFormatter = messageFormatter;
+    this.value = value;
+    this.name = name;
   }
 
-  Verifier() {
+  /**
+   * TODO: Document
+   *
+   * @param result
+   * @param message
+   * @param args
+   * @return
+   * @throws VerifierException
+   */
+  public Verification check(final boolean result, final String message, final Object... args) {
+    if (result && negated || !result && !negated) {
+      throw new VerifierException(messageFormatter.format(this, message, args));
+    }
+
+    negated = false;
+
+    return this;
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @return
+   */
+  public MessageFormatter getMessageFormatter() {
+    return messageFormatter;
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @return
+   */
+  public Object getName() {
+    return name;
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @return
+   */
+  public boolean isNegated() {
+    return negated;
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param negated
+   */
+  public void setNegated(final boolean negated) {
+    this.negated = negated;
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @return
+   */
+  public Object getValue() {
+    return value;
   }
 }

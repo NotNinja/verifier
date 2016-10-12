@@ -19,12 +19,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier;
+package io.skelp.verifier.message;
+
+import io.skelp.verifier.Verification;
 
 /**
- * Tests for the {@link Verifier} class.
+ * TODO: Document
  *
  * @author Alasdair Mercer
  */
-public class VerifierTest {
+public class DefaultMessageFormatter implements MessageFormatter {
+
+  /** TODO: Document */
+  public static final String DEFAULT_MESSAGE = "valid";
+  /** TODO: Document */
+  public static final String DEFAULT_MESSAGE_NEGATED = "invalid";
+  /** TODO: Document */
+  public static final String DEFAULT_NAME = "Value";
+
+  @Override
+  public String format(final Verification verification, final String message, final Object... args) {
+    final StringBuilder buffer = new StringBuilder();
+    buffer.append(verification.getName() != null ? verification.getName() : DEFAULT_NAME);
+    buffer.append(" must ");
+    if (verification.isNegated()) {
+      buffer.append("not ");
+    }
+    if (message != null) {
+      buffer.append(String.format(message, args));
+    } else {
+      buffer.append(!verification.isNegated() ? DEFAULT_MESSAGE : DEFAULT_MESSAGE_NEGATED);
+    }
+    buffer.append(": ");
+    buffer.append(verification.getValue());
+
+    return buffer.toString();
+  }
 }

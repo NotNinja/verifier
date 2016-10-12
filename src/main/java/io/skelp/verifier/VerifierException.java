@@ -22,9 +22,48 @@
 package io.skelp.verifier;
 
 /**
- * Tests for the {@link Verifier} class.
+ * TODO: Document
  *
  * @author Alasdair Mercer
  */
-public class VerifierTest {
+public class VerifierException extends RuntimeException {
+
+  /**
+   * Creates a new instance of {@link VerifierException} with no detail message or cause.
+   */
+  public VerifierException() {
+    super();
+  }
+
+  /**
+   * Creates a new instance of {@link VerifierException} with the detail {@code message} provided but no cause.
+   *
+   * @param message
+   *         the detail message to be used
+   */
+  public VerifierException(final String message) {
+    super(message);
+  }
+
+  /**
+   * Creates a new instance of {@link VerifierException} with the detail {@code message} and {@code cause} provided.
+   *
+   * @param message
+   *         the detail message to be used
+   * @param cause
+   *         the {@code Throwable} cause to be used
+   */
+  public VerifierException(final String message, final Throwable cause) {
+    super(message, cause);
+  }
+
+  /**
+   * Creates a new instance of {@link VerifierException} with the {@code cause} provided but no detail message.
+   *
+   * @param cause
+   *         the {@code Throwable} cause to be used
+   */
+  public VerifierException(final Throwable cause) {
+    super(cause);
+  }
 }

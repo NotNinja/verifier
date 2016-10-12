@@ -19,12 +19,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier;
+package io.skelp.verifier.type;
+
+import io.skelp.verifier.Verification;
 
 /**
- * Tests for the {@link Verifier} class.
+ * TODO: Document
  *
+ * @param <V>
  * @author Alasdair Mercer
  */
-public class VerifierTest {
+public class BooleanVerifier<V extends BooleanVerifier> extends ComparableVerifier<V> implements TruthVerifier<V> {
+
+  /**
+   * TODO: Document
+   *
+   * @param verification
+   */
+  public BooleanVerifier(final Verification verification) {
+    super(verification);
+  }
+
+  @Override
+  public V falsehood() {
+    final boolean result = !Boolean.TRUE.equals(verification.getValue());
+    verification.check(result, "have falsehood");
+
+    return chain();
+  }
+
+  @Override
+  public V truth() {
+    final boolean result = Boolean.TRUE.equals(verification.getValue());
+    verification.check(result, "have truth");
+
+    return chain();
+  }
 }

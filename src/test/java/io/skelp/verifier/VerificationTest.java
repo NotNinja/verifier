@@ -22,9 +22,9 @@
 package io.skelp.verifier;
 
 /**
- * Tests for the {@link Verifier} class.
+ * Tests for the {@link Verification} class.
  *
  * @author Alasdair Mercer
  */
-public class VerifierTest {
+public class VerificationTest {
 }

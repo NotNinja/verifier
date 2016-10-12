@@ -19,12 +19,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier;
+package io.skelp.verifier.type;
+
+import io.skelp.verifier.VerifierException;
 
 /**
- * Tests for the {@link Verifier} class.
+ * TODO: Document
  *
+ * @param <V>
+ * @param <N>
  * @author Alasdair Mercer
  */
-public class VerifierTest {
+public interface NumberVerifier<V extends NumberVerifier, N extends Number> extends TruthVerifier<V> {
+
+  /**
+   * TODO: Document
+   *
+   * @return
+   * @throws VerifierException
+   */
+  V even();
+
+  /**
+   * TODO: Document
+   *
+   * @return
+   * @throws VerifierException
+   */
+  V negative();
+
+  /**
+   * TODO: Document
+   *
+   * @return
+   * @throws VerifierException
+   */
+  V odd();
+
+  /**
+   * TODO: Document
+   *
+   * @return
+   * @throws VerifierException
+   */
+  V positive();
 }

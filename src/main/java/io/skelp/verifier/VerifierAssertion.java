@@ -22,9 +22,17 @@
 package io.skelp.verifier;
 
 /**
- * Tests for the {@link Verifier} class.
+ * TODO: Document
  *
  * @author Alasdair Mercer
  */
-public class VerifierTest {
+public interface VerifierAssertion {
+
+  /**
+   * TODO: Document
+   *
+   * @param value
+   * @return
+   */
+  boolean verify(Object value);
 }

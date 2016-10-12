@@ -26,11 +26,12 @@ Verifier.verify(num)
   .odd(optionalMessage)
   .positive(optionalMessage)
   .negative(optionalMessage)
-  .lessThan(otherValue, optionalMessage) // alias: lt
-  .lessThanOrEqualTo(otherValue, optionalMessage) // alias: lte
-  .greaterThan(otherValue, optionalMessage) // alias: gt
-  .greaterThanOrEqualTo(otherValue, optionalMessage) // alias: gte
-  .equalTo(otherValue, optionalMessage) // alias: eq
+  .lessThan(otherValue, optionalMessage)
+  .lessThanOrEqualTo(otherValue, optionalMessage)
+  .greaterThan(otherValue, optionalMessage)
+  .greaterThanOrEqualTo(otherValue, optionalMessage)
+  .equalTo(otherValue, optionalMessage)
+  .sameAs(otherValue, optionalMessage)
   .that(VerifierAssertion, optionalMessage);
 
 Verifier.verify(num, NumberVerifier.class)
@@ -43,6 +44,7 @@ Verifier.verify(num, NumberVerifier.class)
   .not().greaterThan(otherValue, optionalMessage)
   .not().greaterThanOrEqualTo(otherValue, optionalMessage)
   .not().equalTo(otherValue, optionalMessage)
+  .not().sameAs(otherValue, optionalMessage)
   .not().that(VerifierAssertion, optionalMessage);
 
 Verifier.verify(post, MyCustomVerifier.class)
