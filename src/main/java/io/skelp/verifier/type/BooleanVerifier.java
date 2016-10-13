@@ -43,7 +43,8 @@ public class BooleanVerifier<V extends BooleanVerifier> extends ComparableVerifi
   @Override
   public V falsehood() {
     final boolean result = !Boolean.TRUE.equals(verification.getValue());
-    verification.check(result, "have falsehood");
+
+    verification.check(result, "be false");
 
     return chain();
   }
@@ -51,7 +52,8 @@ public class BooleanVerifier<V extends BooleanVerifier> extends ComparableVerifi
   @Override
   public V truth() {
     final boolean result = Boolean.TRUE.equals(verification.getValue());
-    verification.check(result, "have truth");
+
+    verification.check(result, "be true");
 
     return chain();
   }

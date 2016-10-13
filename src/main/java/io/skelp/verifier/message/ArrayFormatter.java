@@ -19,64 +19,61 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier.type;
-
-import io.skelp.verifier.VerifierException;
+package io.skelp.verifier.message;
 
 /**
  * TODO: Document
  *
- * @param <V>
- * @param <N>
  * @author Alasdair Mercer
  */
-public interface NumberVerifier<V extends NumberVerifier, N extends Number> extends TruthVerifier<V> {
+public class ArrayFormatter {
+
+  private final Object[] array;
+
+  /**
+   * TODO: Document
+   *
+   * @param array
+   */
+  public ArrayFormatter(final Object[] array) {
+    this.array = array;
+  }
 
   /**
    * TODO: Document
    *
    * @return
-   * @throws VerifierException
    */
-  V even();
+  public String format() {
+    if (array == null) {
+      return "null";
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V negative();
+    final int last = array.length - 1;
+    if (last == -1) {
+      return "[]";
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V odd();
+    final StringBuilder buffer = new StringBuilder();
+    buffer.append('[');
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V one();
+    int index = 0;
+    while (true) {
+      buffer.append('\'');
+      buffer.append(String.valueOf(array[index]));
+      buffer.append('\'');
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V positive();
+      if (index == last) {
+        return buffer.append(']').toString();
+      }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V zero();
+      buffer.append(", ");
+      index++;
+    }
+  }
+
+  @Override
+  public String toString() {
+    return format();
+  }
 }

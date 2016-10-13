@@ -21,62 +21,24 @@
  */
 package io.skelp.verifier.type;
 
-import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.Verification;
 
 /**
  * TODO: Document
  *
  * @param <V>
- * @param <N>
  * @author Alasdair Mercer
  */
-public interface NumberVerifier<V extends NumberVerifier, N extends Number> extends TruthVerifier<V> {
+public class DateVerifier<V extends DateVerifier> extends ComparableVerifier<V> {
 
   /**
    * TODO: Document
    *
-   * @return
-   * @throws VerifierException
+   * @param verification
    */
-  V even();
+  public DateVerifier(final Verification verification) {
+    super(verification);
+  }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V negative();
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V odd();
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V one();
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V positive();
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V zero();
+  // TODO: Complete
 }

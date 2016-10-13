@@ -44,6 +44,7 @@ public class BigDecimalVerifier<V extends BigDecimalVerifier> extends Comparable
   public V even() {
     final BigDecimal value = (BigDecimal) verification.getValue();
     final boolean result = value != null && !value.stripTrailingZeros().unscaledValue().testBit(0);
+
     verification.check(result, "be even");
 
     return chain();
@@ -53,7 +54,8 @@ public class BigDecimalVerifier<V extends BigDecimalVerifier> extends Comparable
   public V falsehood() {
     final BigDecimal value = (BigDecimal) verification.getValue();
     final boolean result = value != null && value.compareTo(BigDecimal.ZERO) == 0;
-    verification.check(result, "have falsehood");
+
+    verification.check(result, "be false");
 
     return chain();
   }
@@ -62,6 +64,7 @@ public class BigDecimalVerifier<V extends BigDecimalVerifier> extends Comparable
   public V negative() {
     final BigDecimal value = (BigDecimal) verification.getValue();
     final boolean result = value != null && value.compareTo(BigDecimal.ZERO) < 0;
+
     verification.check(result, "be negative");
 
     return chain();
@@ -71,7 +74,18 @@ public class BigDecimalVerifier<V extends BigDecimalVerifier> extends Comparable
   public V odd() {
     final BigDecimal value = (BigDecimal) verification.getValue();
     final boolean result = value != null && value.stripTrailingZeros().unscaledValue().testBit(0);
+
     verification.check(result, "be odd");
+
+    return chain();
+  }
+
+  @Override
+  public V one() {
+    final BigDecimal value = (BigDecimal) verification.getValue();
+    final boolean result = value != null && value.compareTo(BigDecimal.ONE) == 0;
+
+    verification.check(result, "be one");
 
     return chain();
   }
@@ -80,6 +94,7 @@ public class BigDecimalVerifier<V extends BigDecimalVerifier> extends Comparable
   public V positive() {
     final BigDecimal value = (BigDecimal) verification.getValue();
     final boolean result = value != null && value.compareTo(BigDecimal.ZERO) >= 0;
+
     verification.check(result, "be positive");
 
     return chain();
@@ -89,7 +104,18 @@ public class BigDecimalVerifier<V extends BigDecimalVerifier> extends Comparable
   public V truth() {
     final BigDecimal value = (BigDecimal) verification.getValue();
     final boolean result = value != null && value.compareTo(BigDecimal.ONE) == 0;
-    verification.check(result, "have truth");
+
+    verification.check(result, "be true");
+
+    return chain();
+  }
+
+  @Override
+  public V zero() {
+    final BigDecimal value = (BigDecimal) verification.getValue();
+    final boolean result = value != null && value.compareTo(BigDecimal.ZERO) == 0;
+
+    verification.check(result, "be zero");
 
     return chain();
   }

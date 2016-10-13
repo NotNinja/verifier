@@ -19,64 +19,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier.type;
-
-import io.skelp.verifier.VerifierException;
+package io.skelp.verifier.util;
 
 /**
  * TODO: Document
  *
- * @param <V>
- * @param <N>
+ * @param <R>
+ * @param <T>
  * @author Alasdair Mercer
  */
-public interface NumberVerifier<V extends NumberVerifier, N extends Number> extends TruthVerifier<V> {
+public interface Function<R, T> {
 
   /**
    * TODO: Document
    *
+   * @param input
    * @return
-   * @throws VerifierException
    */
-  V even();
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V negative();
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V odd();
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V one();
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V positive();
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V zero();
+  R apply(T input);
 }

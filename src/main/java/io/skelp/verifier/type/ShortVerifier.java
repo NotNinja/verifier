@@ -43,6 +43,7 @@ public class ShortVerifier<V extends ShortVerifier> extends ComparableVerifier<V
   public V even() {
     final Short value = (Short) verification.getValue();
     final boolean result = value != null && value % 2 == 0;
+
     verification.check(result, "be even");
 
     return chain();
@@ -52,7 +53,8 @@ public class ShortVerifier<V extends ShortVerifier> extends ComparableVerifier<V
   public V falsehood() {
     final Short value = (Short) verification.getValue();
     final boolean result = value != null && value == 0;
-    verification.check(result, "have falsehood");
+
+    verification.check(result, "be false");
 
     return chain();
   }
@@ -61,6 +63,7 @@ public class ShortVerifier<V extends ShortVerifier> extends ComparableVerifier<V
   public V negative() {
     final Short value = (Short) verification.getValue();
     final boolean result = value != null && value < 0;
+
     verification.check(result, "be negative");
 
     return chain();
@@ -70,7 +73,18 @@ public class ShortVerifier<V extends ShortVerifier> extends ComparableVerifier<V
   public V odd() {
     final Short value = (Short) verification.getValue();
     final boolean result = value != null && value % 2 != 0;
+
     verification.check(result, "be odd");
+
+    return chain();
+  }
+
+  @Override
+  public V one() {
+    final Short value = (Short) verification.getValue();
+    final boolean result = value != null && value == 1;
+
+    verification.check(result, "be one");
 
     return chain();
   }
@@ -79,6 +93,7 @@ public class ShortVerifier<V extends ShortVerifier> extends ComparableVerifier<V
   public V positive() {
     final Short value = (Short) verification.getValue();
     final boolean result = value != null && value >= 0;
+
     verification.check(result, "be positive");
 
     return chain();
@@ -88,7 +103,18 @@ public class ShortVerifier<V extends ShortVerifier> extends ComparableVerifier<V
   public V truth() {
     final Short value = (Short) verification.getValue();
     final boolean result = value != null && value == 0;
-    verification.check(result, "have truth");
+
+    verification.check(result, "be true");
+
+    return chain();
+  }
+
+  @Override
+  public V zero() {
+    final Short value = (Short) verification.getValue();
+    final boolean result = value != null && value == 0;
+
+    verification.check(result, "be zero");
 
     return chain();
   }

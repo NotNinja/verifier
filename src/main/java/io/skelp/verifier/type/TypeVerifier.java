@@ -54,11 +54,29 @@ public interface TypeVerifier<V extends TypeVerifier> {
   /**
    * TODO: Document
    *
+   * @param others
+   * @return
+   * @throws VerifierException
+   */
+  V equalToAny(Object... others);
+
+  /**
+   * TODO: Document
+   *
    * @param cls
    * @return
    * @throws VerifierException
    */
   V instanceOf(Class<?> cls);
+
+  /**
+   * TODO: Document
+   *
+   * @param classes
+   * @return
+   * @throws VerifierException
+   */
+  V instanceOfAny(Class<?>... classes);
 
   /**
    * TODO: Document
@@ -93,6 +111,15 @@ public interface TypeVerifier<V extends TypeVerifier> {
    * @throws VerifierException
    */
   V sameAs(Object other, Object name);
+
+  /**
+   * TODO: Document
+   *
+   * @param others
+   * @return
+   * @throws VerifierException
+   */
+  V sameAsAny(Object... others);
 
   /**
    * TODO: Document

@@ -24,6 +24,8 @@ package io.skelp.verifier.type;
 import io.skelp.verifier.Verification;
 import io.skelp.verifier.VerifierAssertion;
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.message.ArrayFormatter;
+import io.skelp.verifier.util.Function;
 
 /**
  * TODO: Document
@@ -32,6 +34,16 @@ import io.skelp.verifier.VerifierException;
  * @author Alasdair Mercer
  */
 public class BaseTypeVerifier<V extends BaseTypeVerifier> implements TypeVerifier<V> {
+
+  private static <T> boolean matchAny(final T[] inputs, final Function<Boolean, T> matcher) {
+    for (final T input : inputs) {
+      if (matcher.apply(input)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 
   final Verification verification;
 
@@ -63,7 +75,23 @@ public class BaseTypeVerifier<V extends BaseTypeVerifier> implements TypeVerifie
   public V equalTo(final Object other, final Object name) {
     final Object value = verification.getValue();
     final boolean result = other == null ? value == null : other.equals(value);
-    verification.check(result, "be equal to %s", name);
+
+    verification.check(result, "be equal to '%s'", name);
+
+    return chain();
+  }
+
+  @Override
+  public V equalToAny(final Object... others) {
+    final Object value = verification.getValue();
+    final boolean result = matchAny(others, new Function<Boolean, Object>() {
+      @Override
+      public Boolean apply(final Object input) {
+        return input == null ? value == null : input.equals(value);
+      }
+    });
+
+    verification.check(result, "be equal to any %s", new ArrayFormatter(others));
 
     return chain();
   }
@@ -71,7 +99,23 @@ public class BaseTypeVerifier<V extends BaseTypeVerifier> implements TypeVerifie
   @Override
   public V instanceOf(final Class<?> cls) {
     final boolean result = cls.isInstance(verification.getValue());
-    verification.check(result, "be an instance of %s", cls);
+
+    verification.check(result, "be an instance of '%s'", cls);
+
+    return chain();
+  }
+
+  @Override
+  public V instanceOfAny(final Class<?>... classes) {
+    final Object value = verification.getValue();
+    final boolean result = matchAny(classes, new Function<Boolean, Class<?>>() {
+      @Override
+      public Boolean apply(final Class<?> input) {
+        return input.isInstance(value);
+      }
+    });
+
+    verification.check(result, "be an instance of any %s", new ArrayFormatter(classes));
 
     return chain();
   }
@@ -86,6 +130,7 @@ public class BaseTypeVerifier<V extends BaseTypeVerifier> implements TypeVerifie
   @Override
   public V nulled() {
     final boolean result = verification.getValue() == null;
+
     verification.check(result, "be null");
 
     return chain();
@@ -99,7 +144,23 @@ public class BaseTypeVerifier<V extends BaseTypeVerifier> implements TypeVerifie
   @Override
   public V sameAs(final Object other, final Object name) {
     final boolean result = verification.getValue() == other;
+
     verification.check(result, "be same as %s", name);
+
+    return chain();
+  }
+
+  @Override
+  public V sameAsAny(final Object... others) {
+    final Object value = verification.getValue();
+    final boolean result = matchAny(others, new Function<Boolean, Object>() {
+      @Override
+      public Boolean apply(final Object input) {
+        return value == input;
+      }
+    });
+
+    verification.check(result, "be same as any %s", new ArrayFormatter(others));
 
     return chain();
   }
@@ -116,6 +177,7 @@ public class BaseTypeVerifier<V extends BaseTypeVerifier> implements TypeVerifie
     }
 
     final boolean result = assertion.verify(verification.getValue());
+
     verification.check(result, message, args);
 
     return chain();

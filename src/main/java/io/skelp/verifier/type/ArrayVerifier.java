@@ -21,16 +21,42 @@
  */
 package io.skelp.verifier.type;
 
+import java.util.Arrays;
+import io.skelp.verifier.Verification;
 import io.skelp.verifier.VerifierException;
 
 /**
  * TODO: Document
  *
  * @param <V>
- * @param <N>
  * @author Alasdair Mercer
  */
-public interface NumberVerifier<V extends NumberVerifier, N extends Number> extends TruthVerifier<V> {
+public class ArrayVerifier<V extends ArrayVerifier> extends BaseTypeVerifier<V> {
+
+  /**
+   * TODO: Document
+   *
+   * @param verification
+   */
+  public ArrayVerifier(final Verification verification) {
+    super(verification);
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param item
+   * @return
+   * @throws VerifierException
+   */
+  public V contain(final Object item) {
+    final Object[] value = (Object[]) verification.getValue();
+    final boolean result = value != null && Arrays.asList(value).contains(item);
+
+    verification.check(result, "contain '%s'", item);
+
+    return chain();
+  }
 
   /**
    * TODO: Document
@@ -38,45 +64,28 @@ public interface NumberVerifier<V extends NumberVerifier, N extends Number> exte
    * @return
    * @throws VerifierException
    */
-  V even();
+  public V empty() {
+    final Object[] value = (Object[]) verification.getValue();
+    final boolean result = value == null || value.length == 0;
+
+    verification.check(result, "be empty");
+
+    return chain();
+  }
 
   /**
    * TODO: Document
    *
+   * @param length
    * @return
    * @throws VerifierException
    */
-  V negative();
+  public V length(final int length) {
+    final Object[] value = (Object[]) verification.getValue();
+    final boolean result = value != null && value.length == length;
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V odd();
+    verification.check(result, "have length of '%d'", length);
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V one();
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V positive();
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V zero();
+    return chain();
+  }
 }

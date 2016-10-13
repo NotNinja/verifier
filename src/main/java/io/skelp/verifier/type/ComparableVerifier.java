@@ -66,7 +66,7 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    * @throws VerifierException
    */
   public <T> V between(final T start, final T end, final Object startName, final Object endName) {
-    return between(start, ComparisonOperator.GREATER_THAN_OR_EQUAL_TO, startName, end, ComparisonOperator.LESS_THAN_OR_EQUAL_TO, endName, "be between %s and %s (inclusive)");
+    return between(start, ComparisonOperator.GREATER_THAN_OR_EQUAL_TO, startName, end, ComparisonOperator.LESS_THAN_OR_EQUAL_TO, endName, "be between '%s' and '%s' (inclusive)");
   }
 
   /**
@@ -118,7 +118,7 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    * @throws VerifierException
    */
   public <T> V betweenExclusive(final T start, final T end, final Object startName, final Object endName) {
-    return between(start, ComparisonOperator.GREATER_THAN, startName, end, ComparisonOperator.LESS_THAN, endName, "be between %s and %s (exclusive)");
+    return between(start, ComparisonOperator.GREATER_THAN, startName, end, ComparisonOperator.LESS_THAN, endName, "be between '%s' and '%s' (exclusive)");
   }
 
   /**
@@ -164,7 +164,7 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    * @throws VerifierException
    */
   public <T> V greaterThan(final T other, final Object name) {
-    return comparesTo(ComparisonOperator.GREATER_THAN, other, name, "be greater than %s");
+    return comparesTo(ComparisonOperator.GREATER_THAN, other, name, "be greater than '%s'");
   }
 
   /**
@@ -189,7 +189,7 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    * @throws VerifierException
    */
   public <T> V greaterThanOrEqualTo(final T other, final Object name) {
-    return comparesTo(ComparisonOperator.GREATER_THAN_OR_EQUAL_TO, other, name, "be greater than or equal to %s");
+    return comparesTo(ComparisonOperator.GREATER_THAN_OR_EQUAL_TO, other, name, "be greater than or equal to '%s'");
   }
 
   /**
@@ -214,7 +214,7 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    * @throws VerifierException
    */
   public <T> V lessThan(final T other, final Object name) {
-    return comparesTo(ComparisonOperator.LESS_THAN, other, name, "be less than %s");
+    return comparesTo(ComparisonOperator.LESS_THAN, other, name, "be less than '%s'");
   }
 
   /**
@@ -239,7 +239,7 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    * @throws VerifierException
    */
   public <T> V lessThanOrEqualTo(final T other, final Object name) {
-    return comparesTo(ComparisonOperator.LESS_THAN_OR_EQUAL_TO, other, name, "be less than or equal to %s");
+    return comparesTo(ComparisonOperator.LESS_THAN_OR_EQUAL_TO, other, name, "be less than or equal to '%s'");
   }
 
   /**

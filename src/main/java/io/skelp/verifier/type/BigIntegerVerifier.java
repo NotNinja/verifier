@@ -44,6 +44,7 @@ public class BigIntegerVerifier<V extends BigIntegerVerifier> extends Comparable
   public V even() {
     final BigInteger value = (BigInteger) verification.getValue();
     final boolean result = value != null && !value.testBit(0);
+
     verification.check(result, "be even");
 
     return chain();
@@ -53,7 +54,8 @@ public class BigIntegerVerifier<V extends BigIntegerVerifier> extends Comparable
   public V falsehood() {
     final BigInteger value = (BigInteger) verification.getValue();
     final boolean result = value != null && value.compareTo(BigInteger.ZERO) == 0;
-    verification.check(result, "have falsehood");
+
+    verification.check(result, "be false");
 
     return chain();
   }
@@ -62,6 +64,7 @@ public class BigIntegerVerifier<V extends BigIntegerVerifier> extends Comparable
   public V negative() {
     final BigInteger value = (BigInteger) verification.getValue();
     final boolean result = value != null && value.compareTo(BigInteger.ZERO) < 0;
+
     verification.check(result, "be negative");
 
     return chain();
@@ -71,7 +74,18 @@ public class BigIntegerVerifier<V extends BigIntegerVerifier> extends Comparable
   public V odd() {
     final BigInteger value = (BigInteger) verification.getValue();
     final boolean result = value != null && value.testBit(0);
+
     verification.check(result, "be odd");
+
+    return chain();
+  }
+
+  @Override
+  public V one() {
+    final BigInteger value = (BigInteger) verification.getValue();
+    final boolean result = value != null && value.compareTo(BigInteger.ONE) == 0;
+
+    verification.check(result, "be one");
 
     return chain();
   }
@@ -80,6 +94,7 @@ public class BigIntegerVerifier<V extends BigIntegerVerifier> extends Comparable
   public V positive() {
     final BigInteger value = (BigInteger) verification.getValue();
     final boolean result = value != null && value.compareTo(BigInteger.ZERO) >= 0;
+
     verification.check(result, "be positive");
 
     return chain();
@@ -89,7 +104,18 @@ public class BigIntegerVerifier<V extends BigIntegerVerifier> extends Comparable
   public V truth() {
     final BigInteger value = (BigInteger) verification.getValue();
     final boolean result = value != null && value.compareTo(BigInteger.ONE) == 0;
-    verification.check(result, "have truth");
+
+    verification.check(result, "be true");
+
+    return chain();
+  }
+
+  @Override
+  public V zero() {
+    final BigInteger value = (BigInteger) verification.getValue();
+    final boolean result = value != null && value.compareTo(BigInteger.ZERO) == 0;
+
+    verification.check(result, "be zero");
 
     return chain();
   }
