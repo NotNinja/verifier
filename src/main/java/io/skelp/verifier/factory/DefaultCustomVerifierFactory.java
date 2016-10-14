@@ -19,63 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier.verification;
+package io.skelp.verifier.factory;
 
-import io.skelp.verifier.VerifierException;
-import io.skelp.verifier.message.MessageFormatter;
+import io.skelp.verifier.CustomVerifier;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * TODO: Document
  *
- * @param <T>
  * @author Alasdair Mercer
  */
-public interface Verification<T> {
+public final class DefaultCustomVerifierFactory implements CustomVerifierFactory {
 
-  /**
-   * TODO: Document
-   *
-   * @param result
-   * @param message
-   * @param args
-   * @return
-   * @throws VerifierException
-   */
-  Verification<T> check(boolean result, String message, Object... args) throws VerifierException;
+  @Override
+  public <T, V extends CustomVerifier<T, V>> V create(final Class<V> cls, final Verification<T> verification) throws VerifierFactoryException {
+    if (cls == null) {
+      throw new VerifierFactoryException("cls must not be null");
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  MessageFormatter getMessageFormatter() throws VerifierException;
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  Object getName();
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  boolean isNegated();
-
-  /**
-   * TODO: Document
-   *
-   * @param negated
-   */
-  void setNegated(boolean negated);
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  T getValue();
+    try {
+      return cls.getConstructor(Verification.class).newInstance(verification);
+    } catch (ReflectiveOperationException e) {
+      throw new VerifierFactoryException("cls could not be instantiated", e);
+    }
+  }
 }

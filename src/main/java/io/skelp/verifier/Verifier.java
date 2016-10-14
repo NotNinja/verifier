@@ -26,8 +26,9 @@ import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import io.skelp.verifier.message.DefaultMessageFormatter;
-import io.skelp.verifier.message.MessageFormatter;
+import io.skelp.verifier.factory.DefaultVerifierFactoryProvider;
+import io.skelp.verifier.factory.VerifierFactoryException;
+import io.skelp.verifier.factory.VerifierFactoryProvider;
 import io.skelp.verifier.type.ArrayVerifier;
 import io.skelp.verifier.type.BigDecimalVerifier;
 import io.skelp.verifier.type.BigIntegerVerifier;
@@ -47,7 +48,6 @@ import io.skelp.verifier.type.ObjectVerifier;
 import io.skelp.verifier.type.ShortVerifier;
 import io.skelp.verifier.type.StringVerifier;
 import io.skelp.verifier.type.ThrowableVerifier;
-import io.skelp.verifier.verification.DefaultVerification;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -57,7 +57,7 @@ import io.skelp.verifier.verification.Verification;
  */
 public final class Verifier {
 
-  private static MessageFormatter defaultMessageFormatter = new DefaultMessageFormatter();
+  private static VerifierFactoryProvider factoryProvider = new DefaultVerifierFactoryProvider();
 
   /**
    * TODO: Document
@@ -65,178 +65,9 @@ public final class Verifier {
    * @param value
    * @param <T>
    * @return
+   * @throws VerifierFactoryException
    */
-  public static <T> ArrayVerifier<T> verify(final T[] value) {
-    return verify(value, null);
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @param name
-   * @param <T>
-   * @return
-   */
-  public static <T> ArrayVerifier<T> verify(final T[] value, final Object name) {
-    return new ArrayVerifier<>(createVerification(value, name, null));
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @return
-   */
-  public static BigDecimalVerifier verify(final BigDecimal value) {
-    return verify(value, null);
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @param name
-   * @return
-   */
-  public static BigDecimalVerifier verify(final BigDecimal value, final Object name) {
-    return new BigDecimalVerifier(createVerification(value, name, null));
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @return
-   */
-  public static BigIntegerVerifier verify(final BigInteger value) {
-    return verify(value, null);
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @param name
-   * @return
-   */
-  public static BigIntegerVerifier verify(final BigInteger value, final Object name) {
-    return new BigIntegerVerifier(createVerification(value, name, null));
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @return
-   */
-  public static BooleanVerifier verify(final Boolean value) {
-    return verify(value, null);
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @param name
-   * @return
-   */
-  public static BooleanVerifier verify(final Boolean value, final Object name) {
-    return new BooleanVerifier(createVerification(value, name, null));
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @return
-   */
-  public static ByteVerifier verify(final Byte value) {
-    return verify(value, null);
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @param name
-   * @return
-   */
-  public static ByteVerifier verify(final Byte value, final Object name) {
-    return new ByteVerifier(createVerification(value, name, null));
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @return
-   */
-  public static CalendarVerifier verify(final Calendar value) {
-    return verify(value, null);
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @param name
-   * @return
-   */
-  public static CalendarVerifier verify(final Calendar value, final Object name) {
-    return new CalendarVerifier(createVerification(value, name, null));
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @return
-   */
-  public static CharacterVerifier verify(final Character value) {
-    return verify(value, null);
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @param name
-   * @return
-   */
-  public static CharacterVerifier verify(final Character value, final Object name) {
-    return new CharacterVerifier(createVerification(value, name, null));
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @return
-   */
-  public static ClassVerifier verify(final Class value) {
-    return verify(value, null);
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @param name
-   * @return
-   */
-  public static ClassVerifier verify(final Class value, final Object name) {
-    return new ClassVerifier(createVerification(value, name, null));
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @param <T>
-   * @return
-   */
-  public static <T extends Comparable<? super T>> ComparableVerifier<T> verify(final T value) {
+  public static <T> ArrayVerifier<T> verify(final T[] value) throws VerifierFactoryException {
     return verify(value, null);
   }
 
@@ -247,9 +78,10 @@ public final class Verifier {
    * @param name
    * @param <T>
    * @return
+   * @throws VerifierFactoryException
    */
-  public static <T extends Comparable<? super T>> ComparableVerifier<T> verify(final T value, final Object name) {
-    return new ComparableVerifier<>(createVerification(value, name, null));
+  public static <T> ArrayVerifier<T> verify(final T[] value, final Object name) throws VerifierFactoryException {
+    return new ArrayVerifier<>(createVerification(value, name));
   }
 
   /**
@@ -257,8 +89,9 @@ public final class Verifier {
    *
    * @param value
    * @return
+   * @throws VerifierFactoryException
    */
-  public static DateVerifier verify(final Date value) {
+  public static BigDecimalVerifier verify(final BigDecimal value) throws VerifierFactoryException {
     return verify(value, null);
   }
 
@@ -268,9 +101,10 @@ public final class Verifier {
    * @param value
    * @param name
    * @return
+   * @throws VerifierFactoryException
    */
-  public static DateVerifier verify(final Date value, final Object name) {
-    return new DateVerifier(createVerification(value, name, null));
+  public static BigDecimalVerifier verify(final BigDecimal value, final Object name) throws VerifierFactoryException {
+    return new BigDecimalVerifier(createVerification(value, name));
   }
 
   /**
@@ -278,8 +112,9 @@ public final class Verifier {
    *
    * @param value
    * @return
+   * @throws VerifierFactoryException
    */
-  public static DoubleVerifier verify(final Double value) {
+  public static BigIntegerVerifier verify(final BigInteger value) throws VerifierFactoryException {
     return verify(value, null);
   }
 
@@ -289,9 +124,10 @@ public final class Verifier {
    * @param value
    * @param name
    * @return
+   * @throws VerifierFactoryException
    */
-  public static DoubleVerifier verify(final Double value, final Object name) {
-    return new DoubleVerifier(createVerification(value, name, null));
+  public static BigIntegerVerifier verify(final BigInteger value, final Object name) throws VerifierFactoryException {
+    return new BigIntegerVerifier(createVerification(value, name));
   }
 
   /**
@@ -299,8 +135,9 @@ public final class Verifier {
    *
    * @param value
    * @return
+   * @throws VerifierFactoryException
    */
-  public static FloatVerifier verify(final Float value) {
+  public static BooleanVerifier verify(final Boolean value) throws VerifierFactoryException {
     return verify(value, null);
   }
 
@@ -310,9 +147,10 @@ public final class Verifier {
    * @param value
    * @param name
    * @return
+   * @throws VerifierFactoryException
    */
-  public static FloatVerifier verify(final Float value, final Object name) {
-    return new FloatVerifier(createVerification(value, name, null));
+  public static BooleanVerifier verify(final Boolean value, final Object name) throws VerifierFactoryException {
+    return new BooleanVerifier(createVerification(value, name));
   }
 
   /**
@@ -320,8 +158,9 @@ public final class Verifier {
    *
    * @param value
    * @return
+   * @throws VerifierFactoryException
    */
-  public static IntegerVerifier verify(final Integer value) {
+  public static ByteVerifier verify(final Byte value) throws VerifierFactoryException {
     return verify(value, null);
   }
 
@@ -331,9 +170,10 @@ public final class Verifier {
    * @param value
    * @param name
    * @return
+   * @throws VerifierFactoryException
    */
-  public static IntegerVerifier verify(final Integer value, final Object name) {
-    return new IntegerVerifier(createVerification(value, name, null));
+  public static ByteVerifier verify(final Byte value, final Object name) throws VerifierFactoryException {
+    return new ByteVerifier(createVerification(value, name));
   }
 
   /**
@@ -341,8 +181,9 @@ public final class Verifier {
    *
    * @param value
    * @return
+   * @throws VerifierFactoryException
    */
-  public static LocaleVerifier verify(final Locale value) {
+  public static CalendarVerifier verify(final Calendar value) throws VerifierFactoryException {
     return verify(value, null);
   }
 
@@ -352,9 +193,10 @@ public final class Verifier {
    * @param value
    * @param name
    * @return
+   * @throws VerifierFactoryException
    */
-  public static LocaleVerifier verify(final Locale value, final Object name) {
-    return new LocaleVerifier(createVerification(value, name, null));
+  public static CalendarVerifier verify(final Calendar value, final Object name) throws VerifierFactoryException {
+    return new CalendarVerifier(createVerification(value, name));
   }
 
   /**
@@ -362,8 +204,9 @@ public final class Verifier {
    *
    * @param value
    * @return
+   * @throws VerifierFactoryException
    */
-  public static LongVerifier verify(final Long value) {
+  public static CharacterVerifier verify(final Character value) throws VerifierFactoryException {
     return verify(value, null);
   }
 
@@ -373,9 +216,10 @@ public final class Verifier {
    * @param value
    * @param name
    * @return
+   * @throws VerifierFactoryException
    */
-  public static LongVerifier verify(final Long value, final Object name) {
-    return new LongVerifier(createVerification(value, name, null));
+  public static CharacterVerifier verify(final Character value, final Object name) throws VerifierFactoryException {
+    return new CharacterVerifier(createVerification(value, name));
   }
 
   /**
@@ -383,8 +227,9 @@ public final class Verifier {
    *
    * @param value
    * @return
+   * @throws VerifierFactoryException
    */
-  public static ObjectVerifier verify(final Object value) {
+  public static ClassVerifier verify(final Class value) throws VerifierFactoryException {
     return verify(value, null);
   }
 
@@ -394,9 +239,35 @@ public final class Verifier {
    * @param value
    * @param name
    * @return
+   * @throws VerifierFactoryException
    */
-  public static ObjectVerifier verify(final Object value, final Object name) {
-    return new ObjectVerifier(createVerification(value, name, null));
+  public static ClassVerifier verify(final Class value, final Object name) throws VerifierFactoryException {
+    return new ClassVerifier(createVerification(value, name));
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param value
+   * @param <T>
+   * @return
+   * @throws VerifierFactoryException
+   */
+  public static <T extends Comparable<? super T>> ComparableVerifier<T> verify(final T value) throws VerifierFactoryException {
+    return verify(value, null);
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param value
+   * @param name
+   * @param <T>
+   * @return
+   * @throws VerifierFactoryException
+   */
+  public static <T extends Comparable<? super T>> ComparableVerifier<T> verify(final T value, final Object name) throws VerifierFactoryException {
+    return new ComparableVerifier<>(createVerification(value, name));
   }
 
   /**
@@ -404,8 +275,9 @@ public final class Verifier {
    *
    * @param value
    * @return
+   * @throws VerifierFactoryException
    */
-  public static ShortVerifier verify(final Short value) {
+  public static DateVerifier verify(final Date value) throws VerifierFactoryException {
     return verify(value, null);
   }
 
@@ -415,9 +287,10 @@ public final class Verifier {
    * @param value
    * @param name
    * @return
+   * @throws VerifierFactoryException
    */
-  public static ShortVerifier verify(final Short value, final Object name) {
-    return new ShortVerifier(createVerification(value, name, null));
+  public static DateVerifier verify(final Date value, final Object name) throws VerifierFactoryException {
+    return new DateVerifier(createVerification(value, name));
   }
 
   /**
@@ -425,8 +298,9 @@ public final class Verifier {
    *
    * @param value
    * @return
+   * @throws VerifierFactoryException
    */
-  public static StringVerifier verify(final String value) {
+  public static DoubleVerifier verify(final Double value) throws VerifierFactoryException {
     return verify(value, null);
   }
 
@@ -436,9 +310,10 @@ public final class Verifier {
    * @param value
    * @param name
    * @return
+   * @throws VerifierFactoryException
    */
-  public static StringVerifier verify(final String value, final Object name) {
-    return new StringVerifier(createVerification(value, name, null));
+  public static DoubleVerifier verify(final Double value, final Object name) throws VerifierFactoryException {
+    return new DoubleVerifier(createVerification(value, name));
   }
 
   /**
@@ -446,8 +321,9 @@ public final class Verifier {
    *
    * @param value
    * @return
+   * @throws VerifierFactoryException
    */
-  public static ThrowableVerifier verify(final Throwable value) {
+  public static FloatVerifier verify(final Float value) throws VerifierFactoryException {
     return verify(value, null);
   }
 
@@ -457,9 +333,21 @@ public final class Verifier {
    * @param value
    * @param name
    * @return
+   * @throws VerifierFactoryException
    */
-  public static ThrowableVerifier verify(final Throwable value, final Object name) {
-    return new ThrowableVerifier(createVerification(value, name, null));
+  public static FloatVerifier verify(final Float value, final Object name) throws VerifierFactoryException {
+    return new FloatVerifier(createVerification(value, name));
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param value
+   * @return
+   * @throws VerifierFactoryException
+   */
+  public static IntegerVerifier verify(final Integer value) throws VerifierFactoryException {
+    return verify(value, null);
   }
 
   /**
@@ -467,45 +355,168 @@ public final class Verifier {
    *
    * @param value
    * @param name
-   * @param verifierType
+   * @return
+   * @throws VerifierFactoryException
+   */
+  public static IntegerVerifier verify(final Integer value, final Object name) throws VerifierFactoryException {
+    return new IntegerVerifier(createVerification(value, name));
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param value
+   * @return
+   * @throws VerifierFactoryException
+   */
+  public static LocaleVerifier verify(final Locale value) throws VerifierFactoryException {
+    return verify(value, null);
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param value
+   * @param name
+   * @return
+   * @throws VerifierFactoryException
+   */
+  public static LocaleVerifier verify(final Locale value, final Object name) throws VerifierFactoryException {
+    return new LocaleVerifier(createVerification(value, name));
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param value
+   * @return
+   * @throws VerifierFactoryException
+   */
+  public static LongVerifier verify(final Long value) throws VerifierFactoryException {
+    return verify(value, null);
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param value
+   * @param name
+   * @return
+   * @throws VerifierFactoryException
+   */
+  public static LongVerifier verify(final Long value, final Object name) throws VerifierFactoryException {
+    return new LongVerifier(createVerification(value, name));
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param value
+   * @return
+   * @throws VerifierFactoryException
+   */
+  public static ObjectVerifier verify(final Object value) throws VerifierFactoryException {
+    return verify(value, null);
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param value
+   * @param name
+   * @return
+   * @throws VerifierFactoryException
+   */
+  public static ObjectVerifier verify(final Object value, final Object name) throws VerifierFactoryException {
+    return new ObjectVerifier(createVerification(value, name));
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param value
+   * @return
+   * @throws VerifierFactoryException
+   */
+  public static ShortVerifier verify(final Short value) throws VerifierFactoryException {
+    return verify(value, null);
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param value
+   * @param name
+   * @return
+   * @throws VerifierFactoryException
+   */
+  public static ShortVerifier verify(final Short value, final Object name) throws VerifierFactoryException {
+    return new ShortVerifier(createVerification(value, name));
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param value
+   * @return
+   * @throws VerifierFactoryException
+   */
+  public static StringVerifier verify(final String value) throws VerifierFactoryException {
+    return verify(value, null);
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param value
+   * @param name
+   * @return
+   * @throws VerifierFactoryException
+   */
+  public static StringVerifier verify(final String value, final Object name) throws VerifierFactoryException {
+    return new StringVerifier(createVerification(value, name));
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param value
+   * @return
+   * @throws VerifierFactoryException
+   */
+  public static ThrowableVerifier verify(final Throwable value) throws VerifierFactoryException {
+    return verify(value, null);
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param value
+   * @param name
+   * @return
+   * @throws VerifierFactoryException
+   */
+  public static ThrowableVerifier verify(final Throwable value, final Object name) throws VerifierFactoryException {
+    return new ThrowableVerifier(createVerification(value, name));
+  }
+
+  /**
+   * TODO: Document
+   *
+   * @param value
+   * @param name
+   * @param cls
    * @param <T>
    * @param <V>
    * @return
-   * @throws VerifierException
+   * @throws VerifierFactoryException
    */
-  public static <T, V extends CustomVerifier<T, V>> V verify(final T value, final Object name, final Class<V> verifierType) {
-    return verify(value, name, verifierType, null);
+  public static <T, V extends CustomVerifier<T, V>> V verify(final T value, final Object name, final Class<V> cls) throws VerifierFactoryException {
+    return getFactoryProvider().getCustomVerifierFactory().create(cls, createVerification(value, name));
   }
 
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @param name
-   * @param verifierType
-   * @param messageFormatter
-   * @param <T>
-   * @param <V>
-   * @return
-   * @throws VerifierException
-   */
-  public static <T, V extends CustomVerifier<T, V>> V verify(final T value, final Object name, final Class<V> verifierType, final MessageFormatter messageFormatter) {
-    if (verifierType == null) {
-      throw new VerifierException("type must not be null");
-    }
-
-    final V verifier;
-    try {
-      verifier = verifierType.getConstructor(Verification.class).newInstance(createVerification(value, name, messageFormatter));
-    } catch (ReflectiveOperationException e) {
-      throw new VerifierException("Unable to instantiate TypeVerifier", e);
-    }
-
-    return verifier;
-  }
-
-  private static <T> Verification<T> createVerification(final T value, final Object name, final MessageFormatter messageFormatter) {
-    return new DefaultVerification<>(messageFormatter != null ? messageFormatter : defaultMessageFormatter, value, name);
+  private static <T> Verification<T> createVerification(final T value, final Object name) throws VerifierFactoryException {
+    return getFactoryProvider().getVerificationFactory().create(getFactoryProvider().getMessageFormatterFactory(), value, name);
   }
 
   /**
@@ -513,17 +524,17 @@ public final class Verifier {
    *
    * @return
    */
-  public static MessageFormatter getDefaultMessageFormatter() {
-    return defaultMessageFormatter;
+  public static VerifierFactoryProvider getFactoryProvider() {
+    return factoryProvider;
   }
 
   /**
    * TODO: Document
    *
-   * @param messageFormatter
+   * @param factoryProvider
    */
-  public static void setDefaultMessageFormatter(final MessageFormatter messageFormatter) {
-    defaultMessageFormatter = messageFormatter != null ? messageFormatter : new DefaultMessageFormatter();
+  public static void setFactoryProvider(final VerifierFactoryProvider factoryProvider) {
+    Verifier.factoryProvider = factoryProvider != null ? factoryProvider : new DefaultVerifierFactoryProvider();
   }
 
   Verifier() {

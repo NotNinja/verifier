@@ -22,7 +22,9 @@
 package io.skelp.verifier.verification;
 
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.factory.VerifierFactoryException;
 import io.skelp.verifier.message.MessageFormatter;
+import io.skelp.verifier.message.factory.MessageFormatterFactory;
 
 /**
  * TODO: Document
@@ -32,7 +34,7 @@ import io.skelp.verifier.message.MessageFormatter;
  */
 public class DefaultVerification<T> implements Verification<T> {
 
-  private final MessageFormatter messageFormatter;
+  private final MessageFormatterFactory messageFormatterFactory;
   private final Object name;
   private boolean negated;
   private final T value;
@@ -40,12 +42,12 @@ public class DefaultVerification<T> implements Verification<T> {
   /**
    * TODO: Document
    *
-   * @param messageFormatter
+   * @param messageFormatterFactory
    * @param value
    * @param name
    */
-  public DefaultVerification(final MessageFormatter messageFormatter, final T value, final Object name) {
-    this.messageFormatter = messageFormatter;
+  public DefaultVerification(final MessageFormatterFactory messageFormatterFactory, final T value, final Object name) {
+    this.messageFormatterFactory = messageFormatterFactory;
     this.value = value;
     this.name = name;
   }
@@ -53,7 +55,7 @@ public class DefaultVerification<T> implements Verification<T> {
   @Override
   public DefaultVerification<T> check(final boolean result, final String message, final Object... args) throws VerifierException {
     if (result && negated || !result && !negated) {
-      throw new VerifierException(messageFormatter.format(this, message, args));
+      throw new VerifierException(getMessageFormatter().format(this, message, args));
     }
 
     negated = false;
@@ -62,8 +64,8 @@ public class DefaultVerification<T> implements Verification<T> {
   }
 
   @Override
-  public MessageFormatter getMessageFormatter() {
-    return messageFormatter;
+  public MessageFormatter getMessageFormatter() throws VerifierFactoryException {
+    return messageFormatterFactory.create();
   }
 
   @Override

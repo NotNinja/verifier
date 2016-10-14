@@ -19,63 +19,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier.verification;
+package io.skelp.verifier.message.factory;
 
-import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.factory.VerifierFactoryException;
 import io.skelp.verifier.message.MessageFormatter;
 
 /**
  * TODO: Document
  *
- * @param <T>
  * @author Alasdair Mercer
  */
-public interface Verification<T> {
-
-  /**
-   * TODO: Document
-   *
-   * @param result
-   * @param message
-   * @param args
-   * @return
-   * @throws VerifierException
-   */
-  Verification<T> check(boolean result, String message, Object... args) throws VerifierException;
+public interface MessageFormatterFactory {
 
   /**
    * TODO: Document
    *
    * @return
-   * @throws VerifierException
+   * @throws VerifierFactoryException
    */
-  MessageFormatter getMessageFormatter() throws VerifierException;
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  Object getName();
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  boolean isNegated();
-
-  /**
-   * TODO: Document
-   *
-   * @param negated
-   */
-  void setNegated(boolean negated);
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  T getValue();
+  MessageFormatter create() throws VerifierFactoryException;
 }

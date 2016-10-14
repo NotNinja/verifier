@@ -19,63 +19,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier.verification;
+package io.skelp.verifier.message.factory;
 
-import io.skelp.verifier.VerifierException;
-import io.skelp.verifier.message.MessageFormatter;
+import static org.junit.Assert.*;
+
+import io.skelp.verifier.message.DefaultMessageFormatter;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * TODO: Document
+ * Tests for the {@link DefaultMessageFormatterFactory} class.
  *
- * @param <T>
  * @author Alasdair Mercer
  */
-public interface Verification<T> {
+public class DefaultMessageFormatterFactoryTest {
 
-  /**
-   * TODO: Document
-   *
-   * @param result
-   * @param message
-   * @param args
-   * @return
-   * @throws VerifierException
-   */
-  Verification<T> check(boolean result, String message, Object... args) throws VerifierException;
+  private DefaultMessageFormatterFactory factory;
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  MessageFormatter getMessageFormatter() throws VerifierException;
+  @Before
+  public void setup() {
+    factory = new DefaultMessageFormatterFactory();
+  }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  Object getName();
+  @Test
+  public void testCreate() {
+    DefaultMessageFormatter instance = factory.create();
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  boolean isNegated();
-
-  /**
-   * TODO: Document
-   *
-   * @param negated
-   */
-  void setNegated(boolean negated);
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  T getValue();
+    assertNotNull("Never null", instance);
+  }
 }

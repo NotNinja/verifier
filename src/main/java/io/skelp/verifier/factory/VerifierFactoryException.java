@@ -19,63 +19,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier.verification;
+package io.skelp.verifier.factory;
 
 import io.skelp.verifier.VerifierException;
-import io.skelp.verifier.message.MessageFormatter;
 
 /**
  * TODO: Document
  *
- * @param <T>
  * @author Alasdair Mercer
  */
-public interface Verification<T> {
+public class VerifierFactoryException extends VerifierException {
 
   /**
-   * TODO: Document
+   * Creates a new instance of {@link VerifierFactoryException} with no detail message or cause.
+   */
+  public VerifierFactoryException() {
+    super();
+  }
+
+  /**
+   * Creates a new instance of {@link VerifierFactoryException} with the detail {@code message} provided but no cause.
    *
-   * @param result
    * @param message
-   * @param args
-   * @return
-   * @throws VerifierException
+   *         the detail message to be used
    */
-  Verification<T> check(boolean result, String message, Object... args) throws VerifierException;
+  public VerifierFactoryException(final String message) {
+    super(message);
+  }
 
   /**
-   * TODO: Document
+   * Creates a new instance of {@link VerifierFactoryException} with the detail {@code message} and {@code cause}
+   * provided.
    *
-   * @return
-   * @throws VerifierException
+   * @param message
+   *         the detail message to be used
+   * @param cause
+   *         the {@code Throwable} cause to be used
    */
-  MessageFormatter getMessageFormatter() throws VerifierException;
+  public VerifierFactoryException(final String message, final Throwable cause) {
+    super(message, cause);
+  }
 
   /**
-   * TODO: Document
+   * Creates a new instance of {@link VerifierFactoryException} with the {@code cause} provided but no detail message.
    *
-   * @return
+   * @param cause
+   *         the {@code Throwable} cause to be used
    */
-  Object getName();
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  boolean isNegated();
-
-  /**
-   * TODO: Document
-   *
-   * @param negated
-   */
-  void setNegated(boolean negated);
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  T getValue();
+  public VerifierFactoryException(final Throwable cause) {
+    super(cause);
+  }
 }
