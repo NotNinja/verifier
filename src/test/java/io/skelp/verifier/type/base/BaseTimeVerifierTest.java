@@ -19,14 +19,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier.message;
+package io.skelp.verifier.type.base;
 
 import static org.junit.Assert.*;
 
 /**
- * Tests for the {@link DefaultMessageFormatter} class.
+ * Tests for the {@link BaseTimeVerifier} class.
  *
  * @author Alasdair Mercer
  */
-public class DefaultMessageFormatterTest {
+public class BaseTimeVerifierTest {
 }

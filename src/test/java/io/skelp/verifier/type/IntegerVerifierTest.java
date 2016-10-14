@@ -21,12 +21,12 @@
  */
 package io.skelp.verifier.type;
 
-import io.skelp.verifier.AbstractCustomVerifier;
+import static org.junit.Assert.*;
 
 /**
- * Tests for the {@link AbstractCustomVerifier} class.
+ * Tests for the {@link IntegerVerifier} class.
  *
  * @author Alasdair Mercer
  */
-public class BaseTypeVerifierTest {
+public class IntegerVerifierTest {
 }

@@ -24,9 +24,9 @@ package io.skelp.verifier.message;
 import static org.junit.Assert.*;
 
 /**
- * Tests for the {@link DefaultMessageFormatter} class.
+ * Tests for the {@link ArrayFormatter} class.
  *
  * @author Alasdair Mercer
  */
-public class DefaultMessageFormatterTest {
+public class ArrayFormatterTest {
 }
