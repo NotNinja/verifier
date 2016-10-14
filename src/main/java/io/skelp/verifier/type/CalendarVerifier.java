@@ -23,7 +23,6 @@ package io.skelp.verifier.type;
 
 import java.util.Calendar;
 import io.skelp.verifier.Verification;
-import io.skelp.verifier.VerifierException;
 
 /**
  * TODO: Document
@@ -31,19 +30,19 @@ import io.skelp.verifier.VerifierException;
  * @param <V>
  * @author Alasdair Mercer
  */
-public class CalendarVerifier<V extends CalendarVerifier> extends TimeVerifier<Calendar, V> {
+public class CalendarVerifier<V extends CalendarVerifier<V>> extends TimeVerifier<Calendar, V> {
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public CalendarVerifier(final Verification verification) {
+  public CalendarVerifier(final Verification<Calendar> verification) {
     super(verification);
   }
 
   @Override
-  Calendar getCalendar(final Object value) {
-    return (Calendar) value;
+  Calendar getCalendar(final Calendar value) {
+    return value;
   }
 }

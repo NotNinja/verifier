@@ -27,10 +27,11 @@ import io.skelp.verifier.VerifierException;
 /**
  * TODO: Document
  *
+ * @param <T>
  * @param <V>
  * @author Alasdair Mercer
  */
-public interface TypeVerifier<V extends TypeVerifier> {
+public interface TypeVerifier<T, V extends TypeVerifier<T, V>> {
 
   /**
    * TODO: Document
@@ -128,7 +129,7 @@ public interface TypeVerifier<V extends TypeVerifier> {
    * @return
    * @throws VerifierException
    */
-  V that(VerifierAssertion assertion);
+  V that(VerifierAssertion<T> assertion);
 
   /**
    * TODO: Document
@@ -139,5 +140,5 @@ public interface TypeVerifier<V extends TypeVerifier> {
    * @return
    * @throws VerifierException
    */
-  V that(VerifierAssertion assertion, String message, Object... args);
+  V that(VerifierAssertion<T> assertion, String message, Object... args);
 }

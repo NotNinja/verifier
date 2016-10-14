@@ -27,17 +27,18 @@ import io.skelp.verifier.VerifierException;
 /**
  * TODO: Document
  *
+ * @param <T>
  * @param <V>
  * @author Alasdair Mercer
  */
-public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVerifier<V> {
+public class ComparableVerifier<T extends Comparable<? super T>, V extends ComparableVerifier<T, V>> extends BaseTypeVerifier<T, V> {
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public ComparableVerifier(final Verification verification) {
+  public ComparableVerifier(final Verification<T> verification) {
     super(verification);
   }
 
@@ -46,11 +47,10 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    *
    * @param start
    * @param end
-   * @param <T>
    * @return
    * @throws VerifierException
    */
-  public <T> V between(final T start, final T end) {
+  public V between(final T start, final T end) {
     return between(start, end, start, end);
   }
 
@@ -61,11 +61,10 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    * @param end
    * @param startName
    * @param endName
-   * @param <T>
    * @return
    * @throws VerifierException
    */
-  public <T> V between(final T start, final T end, final Object startName, final Object endName) {
+  public V between(final T start, final T end, final Object startName, final Object endName) {
     return between(start, ComparisonOperator.GREATER_THAN_OR_EQUAL_TO, startName, end, ComparisonOperator.LESS_THAN_OR_EQUAL_TO, endName, "be between '%s' and '%s' (inclusive)");
   }
 
@@ -79,13 +78,11 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    * @param endOperator
    * @param endName
    * @param message
-   * @param <T>
    * @return
    * @throws VerifierException
    */
-  <T> V between(final T start, final ComparisonOperator startOperator, final Object startName, final T end, final ComparisonOperator endOperator, final Object endName, final String message) {
-    @SuppressWarnings("unchecked")
-    final Comparable<T> value = (Comparable<T>) verification.getValue();
+  V between(final T start, final ComparisonOperator startOperator, final Object startName, final T end, final ComparisonOperator endOperator, final Object endName, final String message) {
+    final T value = verification.getValue();
     final boolean result = value != null && startOperator.compare(value.compareTo(start)) && endOperator.compare(value.compareTo(end));
 
     verification.check(result, message, startName, endName);
@@ -98,11 +95,10 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    *
    * @param start
    * @param end
-   * @param <T>
    * @return
    * @throws VerifierException
    */
-  public <T> V betweenExclusive(final T start, final T end) {
+  public V betweenExclusive(final T start, final T end) {
     return betweenExclusive(start, end, start, end);
   }
 
@@ -113,11 +109,10 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    * @param end
    * @param startName
    * @param endName
-   * @param <T>
    * @return
    * @throws VerifierException
    */
-  public <T> V betweenExclusive(final T start, final T end, final Object startName, final Object endName) {
+  public V betweenExclusive(final T start, final T end, final Object startName, final Object endName) {
     return between(start, ComparisonOperator.GREATER_THAN, startName, end, ComparisonOperator.LESS_THAN, endName, "be between '%s' and '%s' (exclusive)");
   }
 
@@ -128,13 +123,11 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    * @param other
    * @param name
    * @param message
-   * @param <T>
    * @return
    * @throws VerifierException
    */
-  <T> V comparesTo(final ComparisonOperator operator, final T other, final Object name, final String message) {
-    @SuppressWarnings("unchecked")
-    final Comparable<T> value = (Comparable<T>) verification.getValue();
+  V comparesTo(final ComparisonOperator operator, final T other, final Object name, final String message) {
+    final T value = verification.getValue();
     final boolean result = value != null && operator.compare(value.compareTo(other));
 
     verification.check(result, message, name);
@@ -146,11 +139,10 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    * TODO: Document
    *
    * @param other
-   * @param <T>
    * @return
    * @throws VerifierException
    */
-  public <T> V greaterThan(final T other) {
+  public V greaterThan(final T other) {
     return greaterThan(other, other);
   }
 
@@ -159,11 +151,10 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    *
    * @param other
    * @param name
-   * @param <T>
    * @return
    * @throws VerifierException
    */
-  public <T> V greaterThan(final T other, final Object name) {
+  public V greaterThan(final T other, final Object name) {
     return comparesTo(ComparisonOperator.GREATER_THAN, other, name, "be greater than '%s'");
   }
 
@@ -171,11 +162,10 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    * TODO: Document
    *
    * @param other
-   * @param <T>
    * @return
    * @throws VerifierException
    */
-  public <T> V greaterThanOrEqualTo(final T other) {
+  public V greaterThanOrEqualTo(final T other) {
     return greaterThanOrEqualTo(other, other);
   }
 
@@ -184,11 +174,10 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    *
    * @param other
    * @param name
-   * @param <T>
    * @return
    * @throws VerifierException
    */
-  public <T> V greaterThanOrEqualTo(final T other, final Object name) {
+  public V greaterThanOrEqualTo(final T other, final Object name) {
     return comparesTo(ComparisonOperator.GREATER_THAN_OR_EQUAL_TO, other, name, "be greater than or equal to '%s'");
   }
 
@@ -196,11 +185,10 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    * TODO: Document
    *
    * @param other
-   * @param <T>
    * @return
    * @throws VerifierException
    */
-  public <T> V lessThan(final T other) {
+  public V lessThan(final T other) {
     return lessThan(other, other);
   }
 
@@ -209,11 +197,10 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    *
    * @param other
    * @param name
-   * @param <T>
    * @return
    * @throws VerifierException
    */
-  public <T> V lessThan(final T other, final Object name) {
+  public V lessThan(final T other, final Object name) {
     return comparesTo(ComparisonOperator.LESS_THAN, other, name, "be less than '%s'");
   }
 
@@ -221,11 +208,10 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    * TODO: Document
    *
    * @param other
-   * @param <T>
    * @return
    * @throws VerifierException
    */
-  public <T> V lessThanOrEqualTo(final T other) {
+  public V lessThanOrEqualTo(final T other) {
     return lessThanOrEqualTo(other, other);
   }
 
@@ -234,18 +220,17 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
    *
    * @param other
    * @param name
-   * @param <T>
    * @return
    * @throws VerifierException
    */
-  public <T> V lessThanOrEqualTo(final T other, final Object name) {
+  public V lessThanOrEqualTo(final T other, final Object name) {
     return comparesTo(ComparisonOperator.LESS_THAN_OR_EQUAL_TO, other, name, "be less than or equal to '%s'");
   }
 
   /**
    * TODO: Document
    */
-  protected interface Comparison {
+  private interface Comparison {
 
     /**
      * TODO: Document
@@ -259,7 +244,7 @@ public class ComparableVerifier<V extends ComparableVerifier> extends BaseTypeVe
   /**
    * TODO: Document
    */
-  protected enum ComparisonOperator implements Comparison {
+  enum ComparisonOperator implements Comparison {
 
     GREATER_THAN() {
       @Override

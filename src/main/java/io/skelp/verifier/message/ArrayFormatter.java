@@ -24,18 +24,19 @@ package io.skelp.verifier.message;
 /**
  * TODO: Document
  *
+ * @param <T>
  * @author Alasdair Mercer
  */
-public class ArrayFormatter {
+public class ArrayFormatter<T> {
 
-  private final Object[] array;
+  private final T[] array;
 
   /**
    * TODO: Document
    *
    * @param array
    */
-  public ArrayFormatter(final Object[] array) {
+  public ArrayFormatter(final T[] array) {
     this.array = array;
   }
 

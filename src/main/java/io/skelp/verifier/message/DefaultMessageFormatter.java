@@ -38,7 +38,7 @@ public class DefaultMessageFormatter implements MessageFormatter {
   public static final String DEFAULT_NAME = "Value";
 
   @Override
-  public String format(final Verification verification, final String message, final Object... args) {
+  public String format(final Verification<?> verification, final String message, final Object... args) {
     final StringBuilder buffer = new StringBuilder();
     buffer.append(verification.getName() != null ? verification.getName() : DEFAULT_NAME);
     buffer.append(" must ");

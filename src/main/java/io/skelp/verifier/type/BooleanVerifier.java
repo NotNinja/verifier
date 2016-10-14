@@ -29,14 +29,14 @@ import io.skelp.verifier.Verification;
  * @param <V>
  * @author Alasdair Mercer
  */
-public class BooleanVerifier<V extends BooleanVerifier> extends ComparableVerifier<V> implements TruthVerifier<V> {
+public class BooleanVerifier<V extends BooleanVerifier<V>> extends ComparableVerifier<Boolean, V> implements TruthVerifier<Boolean, V> {
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public BooleanVerifier(final Verification verification) {
+  public BooleanVerifier(final Verification<Boolean> verification) {
     super(verification);
   }
 

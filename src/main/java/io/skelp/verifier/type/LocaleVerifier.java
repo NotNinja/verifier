@@ -36,14 +36,14 @@ import io.skelp.verifier.VerifierException;
  * @param <V>
  * @author Alasdair Mercer
  */
-public class LocaleVerifier<V extends LocaleVerifier> extends BaseTypeVerifier<V> {
+public class LocaleVerifier<V extends LocaleVerifier<V>> extends BaseTypeVerifier<Locale, V> {
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public LocaleVerifier(final Verification verification) {
+  public LocaleVerifier(final Verification<Locale> verification) {
     super(verification);
   }
 
@@ -54,7 +54,7 @@ public class LocaleVerifier<V extends LocaleVerifier> extends BaseTypeVerifier<V
    * @throws VerifierException
    */
   public V available() {
-    final Locale value = (Locale) verification.getValue();
+    final Locale value = verification.getValue();
     final boolean result = LazyHolder.AVAILABLE_LOCALES.contains(value);
 
     verification.check(result, "be available");
@@ -70,7 +70,7 @@ public class LocaleVerifier<V extends LocaleVerifier> extends BaseTypeVerifier<V
    * @throws VerifierException
    */
   public V country(final String country) {
-    final Locale value = (Locale) verification.getValue();
+    final Locale value = verification.getValue();
     final boolean result = value != null && value.getCountry().equals(country);
 
     verification.check(result, "be country '%s'", country);
@@ -85,7 +85,7 @@ public class LocaleVerifier<V extends LocaleVerifier> extends BaseTypeVerifier<V
    * @throws VerifierException
    */
   public V defaulting() {
-    final Locale value = (Locale) verification.getValue();
+    final Locale value = verification.getValue();
     final boolean result = Locale.getDefault().equals(value);
 
     verification.check(result, "be default");
@@ -101,7 +101,7 @@ public class LocaleVerifier<V extends LocaleVerifier> extends BaseTypeVerifier<V
    * @throws VerifierException
    */
   public V language(final String language) {
-    final Locale value = (Locale) verification.getValue();
+    final Locale value = verification.getValue();
     final boolean result = value != null && value.getLanguage().equals(language);
 
     verification.check(result, "be language '%s'", language);
@@ -117,7 +117,7 @@ public class LocaleVerifier<V extends LocaleVerifier> extends BaseTypeVerifier<V
    * @throws VerifierException
    */
   public V script(final String script) {
-    final Locale value = (Locale) verification.getValue();
+    final Locale value = verification.getValue();
     final boolean result = value != null && value.getScript().equals(script);
 
     verification.check(result, "be script '%s'", script);
@@ -133,7 +133,7 @@ public class LocaleVerifier<V extends LocaleVerifier> extends BaseTypeVerifier<V
    * @throws VerifierException
    */
   public V variant(final String variant) {
-    final Locale value = (Locale) verification.getValue();
+    final Locale value = verification.getValue();
     final boolean result = value != null && value.getVariant().equals(variant);
 
     verification.check(result, "be variant '%s'", variant);

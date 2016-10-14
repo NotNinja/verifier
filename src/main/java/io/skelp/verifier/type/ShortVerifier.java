@@ -26,22 +26,23 @@ import io.skelp.verifier.Verification;
 /**
  * TODO: Document
  *
+ * @param <V>
  * @author Alasdair Mercer
  */
-public class ShortVerifier<V extends ShortVerifier> extends ComparableVerifier<V> implements NumberVerifier<V, Short> {
+public class ShortVerifier<V extends ShortVerifier<V>> extends ComparableVerifier<Short, V> implements NumberVerifier<Short, V> {
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public ShortVerifier(final Verification verification) {
+  public ShortVerifier(final Verification<Short> verification) {
     super(verification);
   }
 
   @Override
   public V even() {
-    final Short value = (Short) verification.getValue();
+    final Short value = verification.getValue();
     final boolean result = value != null && value % 2 == 0;
 
     verification.check(result, "be even");
@@ -51,7 +52,7 @@ public class ShortVerifier<V extends ShortVerifier> extends ComparableVerifier<V
 
   @Override
   public V falsehood() {
-    final Short value = (Short) verification.getValue();
+    final Short value = verification.getValue();
     final boolean result = value != null && value == 0;
 
     verification.check(result, "be false");
@@ -61,7 +62,7 @@ public class ShortVerifier<V extends ShortVerifier> extends ComparableVerifier<V
 
   @Override
   public V negative() {
-    final Short value = (Short) verification.getValue();
+    final Short value = verification.getValue();
     final boolean result = value != null && value < 0;
 
     verification.check(result, "be negative");
@@ -71,7 +72,7 @@ public class ShortVerifier<V extends ShortVerifier> extends ComparableVerifier<V
 
   @Override
   public V odd() {
-    final Short value = (Short) verification.getValue();
+    final Short value = verification.getValue();
     final boolean result = value != null && value % 2 != 0;
 
     verification.check(result, "be odd");
@@ -81,7 +82,7 @@ public class ShortVerifier<V extends ShortVerifier> extends ComparableVerifier<V
 
   @Override
   public V one() {
-    final Short value = (Short) verification.getValue();
+    final Short value = verification.getValue();
     final boolean result = value != null && value == 1;
 
     verification.check(result, "be one");
@@ -91,7 +92,7 @@ public class ShortVerifier<V extends ShortVerifier> extends ComparableVerifier<V
 
   @Override
   public V positive() {
-    final Short value = (Short) verification.getValue();
+    final Short value = verification.getValue();
     final boolean result = value != null && value >= 0;
 
     verification.check(result, "be positive");
@@ -101,7 +102,7 @@ public class ShortVerifier<V extends ShortVerifier> extends ComparableVerifier<V
 
   @Override
   public V truth() {
-    final Short value = (Short) verification.getValue();
+    final Short value = verification.getValue();
     final boolean result = value != null && value == 0;
 
     verification.check(result, "be true");
@@ -111,7 +112,7 @@ public class ShortVerifier<V extends ShortVerifier> extends ComparableVerifier<V
 
   @Override
   public V zero() {
-    final Short value = (Short) verification.getValue();
+    final Short value = verification.getValue();
     final boolean result = value != null && value == 0;
 
     verification.check(result, "be zero");

@@ -24,9 +24,10 @@ package io.skelp.verifier;
 /**
  * TODO: Document
  *
+ * @param <T>
  * @author Alasdair Mercer
  */
-public interface VerifierAssertion {
+public interface VerifierAssertion<T> {
 
   /**
    * TODO: Document
@@ -34,5 +35,5 @@ public interface VerifierAssertion {
    * @param value
    * @return
    */
-  boolean verify(Object value);
+  boolean verify(T value);
 }

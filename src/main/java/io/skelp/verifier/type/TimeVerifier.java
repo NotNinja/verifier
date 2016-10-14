@@ -32,14 +32,14 @@ import io.skelp.verifier.VerifierException;
  * @param <V>
  * @author Alasdair Mercer
  */
-public abstract class TimeVerifier<T, V extends TimeVerifier> extends ComparableVerifier<V> {
+public abstract class TimeVerifier<T extends Comparable<? super T>, V extends TimeVerifier<T, V>> extends ComparableVerifier<T, V> {
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public TimeVerifier(final Verification verification) {
+  public TimeVerifier(final Verification<T> verification) {
     super(verification);
   }
 
@@ -165,5 +165,5 @@ public abstract class TimeVerifier<T, V extends TimeVerifier> extends Comparable
    * @param value
    * @return
    */
-  abstract Calendar getCalendar(Object value);
+  abstract Calendar getCalendar(T value);
 }

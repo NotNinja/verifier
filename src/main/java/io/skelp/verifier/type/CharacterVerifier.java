@@ -30,7 +30,7 @@ import io.skelp.verifier.VerifierException;
  * @param <V>
  * @author Alasdair Mercer
  */
-public class CharacterVerifier<V extends CharacterVerifier> extends ComparableVerifier<V> implements TruthVerifier<V> {
+public class CharacterVerifier<V extends CharacterVerifier<V>> extends ComparableVerifier<Character, V> implements TruthVerifier<Character, V> {
 
   private static boolean isAsciiAlpha(final char ch) {
     return isAsciiAlphaUpperCase(ch) || isAsciiAlphaLowerCase(ch);
@@ -53,7 +53,7 @@ public class CharacterVerifier<V extends CharacterVerifier> extends ComparableVe
    *
    * @param verification
    */
-  public CharacterVerifier(final Verification verification) {
+  public CharacterVerifier(final Verification<Character> verification) {
     super(verification);
   }
 
@@ -64,7 +64,7 @@ public class CharacterVerifier<V extends CharacterVerifier> extends ComparableVe
    * @throws VerifierException
    */
   public V ascii() {
-    final Character value = (Character) verification.getValue();
+    final Character value = verification.getValue();
     final boolean result = value != null && value < 128;
 
     verification.check(result, "be ASCII");
@@ -79,7 +79,7 @@ public class CharacterVerifier<V extends CharacterVerifier> extends ComparableVe
    * @throws VerifierException
    */
   public V asciiAlpha() {
-    final Character value = (Character) verification.getValue();
+    final Character value = verification.getValue();
     final boolean result = value != null && isAsciiAlpha(value);
 
     verification.check(result, "be an ASCII letter");
@@ -94,7 +94,7 @@ public class CharacterVerifier<V extends CharacterVerifier> extends ComparableVe
    * @throws VerifierException
    */
   public V asciiAlphaLowerCase() {
-    final Character value = (Character) verification.getValue();
+    final Character value = verification.getValue();
     final boolean result = value != null && isAsciiAlphaLowerCase(value);
 
     verification.check(result, "be an ASCII lower case letter");
@@ -109,7 +109,7 @@ public class CharacterVerifier<V extends CharacterVerifier> extends ComparableVe
    * @throws VerifierException
    */
   public V asciiAlphaUpperCase() {
-    final Character value = (Character) verification.getValue();
+    final Character value = verification.getValue();
     final boolean result = value != null && isAsciiAlphaUpperCase(value);
 
     verification.check(result, "be an ASCII upper case letter");
@@ -124,7 +124,7 @@ public class CharacterVerifier<V extends CharacterVerifier> extends ComparableVe
    * @throws VerifierException
    */
   public V asciiAlphanumeric() {
-    final Character value = (Character) verification.getValue();
+    final Character value = verification.getValue();
     final boolean result = value != null && (isAsciiAlpha(value) || isAsciiNumeric(value));
 
     verification.check(result, "be an ASCII letter or digit");
@@ -139,7 +139,7 @@ public class CharacterVerifier<V extends CharacterVerifier> extends ComparableVe
    * @throws VerifierException
    */
   public V asciiControl() {
-    final Character value = (Character) verification.getValue();
+    final Character value = verification.getValue();
     final boolean result = value != null && (value < 32 || value == 127);
 
     verification.check(result, "be an ASCII control");
@@ -154,7 +154,7 @@ public class CharacterVerifier<V extends CharacterVerifier> extends ComparableVe
    * @throws VerifierException
    */
   public V asciiNumeric() {
-    final Character value = (Character) verification.getValue();
+    final Character value = verification.getValue();
     final boolean result = value != null && isAsciiNumeric(value);
 
     verification.check(result, "be an ASCII digit");
@@ -169,7 +169,7 @@ public class CharacterVerifier<V extends CharacterVerifier> extends ComparableVe
    * @throws VerifierException
    */
   public V asciiPrintable() {
-    final Character value = (Character) verification.getValue();
+    final Character value = verification.getValue();
     final boolean result = value != null && value >= 32 && value < 127;
 
     verification.check(result, "be ASCII printable");
@@ -179,7 +179,7 @@ public class CharacterVerifier<V extends CharacterVerifier> extends ComparableVe
 
   @Override
   public V falsehood() {
-    final Character value = (Character) verification.getValue();
+    final Character value = verification.getValue();
     final boolean result = value != null && value == '0';
 
     verification.check(result, "be false");
@@ -189,7 +189,7 @@ public class CharacterVerifier<V extends CharacterVerifier> extends ComparableVe
 
   @Override
   public V truth() {
-    final Character value = (Character) verification.getValue();
+    final Character value = verification.getValue();
     final boolean result = value != null && value == '1';
 
     verification.check(result, "be true");

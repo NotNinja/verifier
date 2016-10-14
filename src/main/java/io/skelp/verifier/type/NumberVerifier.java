@@ -26,11 +26,11 @@ import io.skelp.verifier.VerifierException;
 /**
  * TODO: Document
  *
+ * @param <T>
  * @param <V>
- * @param <N>
  * @author Alasdair Mercer
  */
-public interface NumberVerifier<V extends NumberVerifier, N extends Number> extends TruthVerifier<V> {
+public interface NumberVerifier<T extends Number, V extends NumberVerifier<T, V>> extends TruthVerifier<T, V> {
 
   /**
    * TODO: Document

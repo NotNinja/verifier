@@ -26,22 +26,23 @@ import io.skelp.verifier.Verification;
 /**
  * TODO: Document
  *
+ * @param <V>
  * @author Alasdair Mercer
  */
-public class DoubleVerifier<V extends DoubleVerifier> extends ComparableVerifier<V> implements NumberVerifier<V, Double> {
+public class DoubleVerifier<V extends DoubleVerifier<V>> extends ComparableVerifier<Double, V> implements NumberVerifier<Double, V> {
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public DoubleVerifier(final Verification verification) {
+  public DoubleVerifier(final Verification<Double> verification) {
     super(verification);
   }
 
   @Override
   public V even() {
-    final Double value = (Double) verification.getValue();
+    final Double value = verification.getValue();
     final boolean result = value != null && value % 2D == 0;
 
     verification.check(result, "be even");
@@ -51,7 +52,7 @@ public class DoubleVerifier<V extends DoubleVerifier> extends ComparableVerifier
 
   @Override
   public V falsehood() {
-    final Double value = (Double) verification.getValue();
+    final Double value = verification.getValue();
     final boolean result = value != null && value == 0D;
 
     verification.check(result, "be false");
@@ -61,7 +62,7 @@ public class DoubleVerifier<V extends DoubleVerifier> extends ComparableVerifier
 
   @Override
   public V negative() {
-    final Double value = (Double) verification.getValue();
+    final Double value = verification.getValue();
     final boolean result = value != null && value < 0D;
 
     verification.check(result, "be negative");
@@ -71,7 +72,7 @@ public class DoubleVerifier<V extends DoubleVerifier> extends ComparableVerifier
 
   @Override
   public V odd() {
-    final Double value = (Double) verification.getValue();
+    final Double value = verification.getValue();
     final boolean result = value != null && value % 2 != 0D;
 
     verification.check(result, "be odd");
@@ -81,7 +82,7 @@ public class DoubleVerifier<V extends DoubleVerifier> extends ComparableVerifier
 
   @Override
   public V one() {
-    final Double value = (Double) verification.getValue();
+    final Double value = verification.getValue();
     final boolean result = value != null && value == 1D;
 
     verification.check(result, "be one");
@@ -91,7 +92,7 @@ public class DoubleVerifier<V extends DoubleVerifier> extends ComparableVerifier
 
   @Override
   public V positive() {
-    final Double value = (Double) verification.getValue();
+    final Double value = verification.getValue();
     final boolean result = value != null && value >= 0D;
 
     verification.check(result, "be positive");
@@ -101,7 +102,7 @@ public class DoubleVerifier<V extends DoubleVerifier> extends ComparableVerifier
 
   @Override
   public V truth() {
-    final Double value = (Double) verification.getValue();
+    final Double value = verification.getValue();
     final boolean result = value != null && value == 1D;
 
     verification.check(result, "be true");
@@ -111,7 +112,7 @@ public class DoubleVerifier<V extends DoubleVerifier> extends ComparableVerifier
 
   @Override
   public V zero() {
-    final Double value = (Double) verification.getValue();
+    final Double value = verification.getValue();
     final boolean result = value != null && value == 0D;
 
     verification.check(result, "be zero");

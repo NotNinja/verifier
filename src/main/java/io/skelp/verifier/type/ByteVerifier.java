@@ -26,22 +26,23 @@ import io.skelp.verifier.Verification;
 /**
  * TODO: Document
  *
+ * @param <V>
  * @author Alasdair Mercer
  */
-public class ByteVerifier<V extends ByteVerifier> extends ComparableVerifier<V> implements NumberVerifier<V, Byte> {
+public class ByteVerifier<V extends ByteVerifier<V>> extends ComparableVerifier<Byte, V> implements NumberVerifier<Byte, V> {
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public ByteVerifier(final Verification verification) {
+  public ByteVerifier(final Verification<Byte> verification) {
     super(verification);
   }
 
   @Override
   public V even() {
-    final Byte value = (Byte) verification.getValue();
+    final Byte value = verification.getValue();
     final boolean result = value != null && value % 2 == 0;
 
     verification.check(result, "be even");
@@ -51,7 +52,7 @@ public class ByteVerifier<V extends ByteVerifier> extends ComparableVerifier<V> 
 
   @Override
   public V falsehood() {
-    final Byte value = (Byte) verification.getValue();
+    final Byte value = verification.getValue();
     final boolean result = value != null && value == 0;
 
     verification.check(result, "be false");
@@ -61,7 +62,7 @@ public class ByteVerifier<V extends ByteVerifier> extends ComparableVerifier<V> 
 
   @Override
   public V negative() {
-    final Byte value = (Byte) verification.getValue();
+    final Byte value = verification.getValue();
     final boolean result = value != null && value < 0;
 
     verification.check(result, "be negative");
@@ -71,7 +72,7 @@ public class ByteVerifier<V extends ByteVerifier> extends ComparableVerifier<V> 
 
   @Override
   public V odd() {
-    final Byte value = (Byte) verification.getValue();
+    final Byte value = verification.getValue();
     final boolean result = value != null && value % 2 != 0;
 
     verification.check(result, "be odd");
@@ -81,7 +82,7 @@ public class ByteVerifier<V extends ByteVerifier> extends ComparableVerifier<V> 
 
   @Override
   public V one() {
-    final Byte value = (Byte) verification.getValue();
+    final Byte value = verification.getValue();
     final boolean result = value != null && value == 1;
 
     verification.check(result, "be one");
@@ -91,7 +92,7 @@ public class ByteVerifier<V extends ByteVerifier> extends ComparableVerifier<V> 
 
   @Override
   public V positive() {
-    final Byte value = (Byte) verification.getValue();
+    final Byte value = verification.getValue();
     final boolean result = value != null && value >= 0;
 
     verification.check(result, "be positive");
@@ -101,7 +102,7 @@ public class ByteVerifier<V extends ByteVerifier> extends ComparableVerifier<V> 
 
   @Override
   public V truth() {
-    final Byte value = (Byte) verification.getValue();
+    final Byte value = verification.getValue();
     final boolean result = value != null && value == 1;
 
     verification.check(result, "be true");
@@ -111,7 +112,7 @@ public class ByteVerifier<V extends ByteVerifier> extends ComparableVerifier<V> 
 
   @Override
   public V zero() {
-    final Byte value = (Byte) verification.getValue();
+    final Byte value = verification.getValue();
     final boolean result = value != null && value == 0;
 
     verification.check(result, "be zero");

@@ -28,17 +28,18 @@ import io.skelp.verifier.VerifierException;
 /**
  * TODO: Document
  *
+ * @param <T>
  * @param <V>
  * @author Alasdair Mercer
  */
-public class ArrayVerifier<V extends ArrayVerifier> extends BaseTypeVerifier<V> {
+public class ArrayVerifier<T, V extends ArrayVerifier<T, V>> extends BaseTypeVerifier<T[], V> {
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public ArrayVerifier(final Verification verification) {
+  public ArrayVerifier(final Verification<T[]> verification) {
     super(verification);
   }
 
@@ -49,8 +50,8 @@ public class ArrayVerifier<V extends ArrayVerifier> extends BaseTypeVerifier<V> 
    * @return
    * @throws VerifierException
    */
-  public V contain(final Object item) {
-    final Object[] value = (Object[]) verification.getValue();
+  public V contain(final T item) {
+    final T[] value = verification.getValue();
     final boolean result = value != null && Arrays.asList(value).contains(item);
 
     verification.check(result, "contain '%s'", item);
@@ -65,7 +66,7 @@ public class ArrayVerifier<V extends ArrayVerifier> extends BaseTypeVerifier<V> 
    * @throws VerifierException
    */
   public V empty() {
-    final Object[] value = (Object[]) verification.getValue();
+    final T[] value = verification.getValue();
     final boolean result = value == null || value.length == 0;
 
     verification.check(result, "be empty");
@@ -81,7 +82,7 @@ public class ArrayVerifier<V extends ArrayVerifier> extends BaseTypeVerifier<V> 
    * @throws VerifierException
    */
   public V length(final int length) {
-    final Object[] value = (Object[]) verification.getValue();
+    final T[] value = verification.getValue();
     final boolean result = value != null && value.length == length;
 
     verification.check(result, "have length of '%d'", length);

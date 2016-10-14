@@ -38,5 +38,5 @@ public interface MessageFormatter {
    * @param args
    * @return
    */
-  String format(Verification verification, String message, Object... args);
+  String format(Verification<?> verification, String message, Object... args);
 }

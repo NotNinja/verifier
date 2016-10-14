@@ -26,22 +26,23 @@ import io.skelp.verifier.Verification;
 /**
  * TODO: Document
  *
+ * @param <V>
  * @author Alasdair Mercer
  */
-public class LongVerifier<V extends LongVerifier> extends ComparableVerifier<V> implements NumberVerifier<V, Long> {
+public class LongVerifier<V extends LongVerifier<V>> extends ComparableVerifier<Long, V> implements NumberVerifier<Long, V> {
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public LongVerifier(final Verification verification) {
+  public LongVerifier(final Verification<Long> verification) {
     super(verification);
   }
 
   @Override
   public V even() {
-    final Long value = (Long) verification.getValue();
+    final Long value = verification.getValue();
     final boolean result = value != null && value % 2L == 0;
 
     verification.check(result, "be even");
@@ -51,7 +52,7 @@ public class LongVerifier<V extends LongVerifier> extends ComparableVerifier<V> 
 
   @Override
   public V falsehood() {
-    final Long value = (Long) verification.getValue();
+    final Long value = verification.getValue();
     final boolean result = value != null && value == 0L;
 
     verification.check(result, "be false");
@@ -61,7 +62,7 @@ public class LongVerifier<V extends LongVerifier> extends ComparableVerifier<V> 
 
   @Override
   public V negative() {
-    final Long value = (Long) verification.getValue();
+    final Long value = verification.getValue();
     final boolean result = value != null && value < 0L;
 
     verification.check(result, "be negative");
@@ -71,7 +72,7 @@ public class LongVerifier<V extends LongVerifier> extends ComparableVerifier<V> 
 
   @Override
   public V odd() {
-    final Long value = (Long) verification.getValue();
+    final Long value = verification.getValue();
     final boolean result = value != null && value % 2 != 0L;
 
     verification.check(result, "be odd");
@@ -81,7 +82,7 @@ public class LongVerifier<V extends LongVerifier> extends ComparableVerifier<V> 
 
   @Override
   public V one() {
-    final Long value = (Long) verification.getValue();
+    final Long value = verification.getValue();
     final boolean result = value != null && value == 1L;
 
     verification.check(result, "be one");
@@ -91,7 +92,7 @@ public class LongVerifier<V extends LongVerifier> extends ComparableVerifier<V> 
 
   @Override
   public V positive() {
-    final Long value = (Long) verification.getValue();
+    final Long value = verification.getValue();
     final boolean result = value != null && value >= 0L;
 
     verification.check(result, "be positive");
@@ -101,7 +102,7 @@ public class LongVerifier<V extends LongVerifier> extends ComparableVerifier<V> 
 
   @Override
   public V truth() {
-    final Long value = (Long) verification.getValue();
+    final Long value = verification.getValue();
     final boolean result = value != null && value == 0L;
 
     verification.check(result, "be true");
@@ -111,7 +112,7 @@ public class LongVerifier<V extends LongVerifier> extends ComparableVerifier<V> 
 
   @Override
   public V zero() {
-    final Long value = (Long) verification.getValue();
+    final Long value = verification.getValue();
     final boolean result = value != null && value == 0L;
 
     verification.check(result, "be zero");

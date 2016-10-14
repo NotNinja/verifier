@@ -26,14 +26,15 @@ import io.skelp.verifier.message.MessageFormatter;
 /**
  * TODO: Document
  *
+ * @param <T>
  * @author Alasdair Mercer
  */
-public class Verification {
+public class Verification<T> {
 
   private final MessageFormatter messageFormatter;
   private final Object name;
   private boolean negated;
-  private final Object value;
+  private final T value;
 
   /**
    * TODO: Document
@@ -42,7 +43,7 @@ public class Verification {
    * @param value
    * @param name
    */
-  public Verification(final MessageFormatter messageFormatter, final Object value, final Object name) {
+  public Verification(final MessageFormatter messageFormatter, final T value, final Object name) {
     this.messageFormatter = messageFormatter;
     this.value = value;
     this.name = name;
@@ -108,7 +109,7 @@ public class Verification {
    *
    * @return
    */
-  public Object getValue() {
+  public T getValue() {
     return value;
   }
 }

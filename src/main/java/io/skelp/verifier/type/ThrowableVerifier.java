@@ -32,7 +32,7 @@ import io.skelp.verifier.VerifierException;
  * @param <V>
  * @author Alasdair Mercer
  */
-public class ThrowableVerifier<V extends ThrowableVerifier> extends BaseTypeVerifier<V> {
+public class ThrowableVerifier<V extends ThrowableVerifier<V>> extends BaseTypeVerifier<Throwable, V> {
 
   private static List<Throwable> getThrowables(Throwable throwable) {
     final List<Throwable> throwables = new ArrayList<>();
@@ -49,7 +49,7 @@ public class ThrowableVerifier<V extends ThrowableVerifier> extends BaseTypeVeri
    *
    * @param verification
    */
-  public ThrowableVerifier(final Verification verification) {
+  public ThrowableVerifier(final Verification<Throwable> verification) {
     super(verification);
   }
 
@@ -60,7 +60,7 @@ public class ThrowableVerifier<V extends ThrowableVerifier> extends BaseTypeVeri
    * @throws VerifierException
    */
   public V checked() {
-    final Throwable value = (Throwable) verification.getValue();
+    final Throwable value = verification.getValue();
     final boolean result = value != null && !(value instanceof RuntimeException);
     verification.check(result, "checked");
 
@@ -75,7 +75,7 @@ public class ThrowableVerifier<V extends ThrowableVerifier> extends BaseTypeVeri
    * @throws VerifierException
    */
   public V causedBy(final Class<?> type) {
-    final Throwable value = (Throwable) verification.getValue();
+    final Throwable value = verification.getValue();
     boolean result = false;
     for (final Throwable throwable : getThrowables(value)) {
       if (type.isAssignableFrom(throwable.getClass())) {
@@ -96,7 +96,7 @@ public class ThrowableVerifier<V extends ThrowableVerifier> extends BaseTypeVeri
    * @throws VerifierException
    */
   public V causedBy(final Throwable cause) {
-    final Throwable value = (Throwable) verification.getValue();
+    final Throwable value = verification.getValue();
     final boolean result = getThrowables(value).contains(cause);
     verification.check(result, "been caused by %s", cause);
 
@@ -110,7 +110,7 @@ public class ThrowableVerifier<V extends ThrowableVerifier> extends BaseTypeVeri
    * @throws VerifierException
    */
   public V unchecked() {
-    final Throwable value = (Throwable) verification.getValue();
+    final Throwable value = verification.getValue();
     final boolean result = value instanceof RuntimeException;
     verification.check(result, "unchecked");
 

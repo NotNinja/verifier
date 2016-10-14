@@ -31,25 +31,25 @@ import io.skelp.verifier.Verification;
  * @param <V>
  * @author Alasdair Mercer
  */
-public class DateVerifier<V extends DateVerifier> extends TimeVerifier<Date, V> {
+public class DateVerifier<V extends DateVerifier<V>> extends TimeVerifier<Date, V> {
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public DateVerifier(final Verification verification) {
+  public DateVerifier(final Verification<Date> verification) {
     super(verification);
   }
 
   @Override
-  Calendar getCalendar(final Object value) {
+  Calendar getCalendar(final Date value) {
     if (value == null) {
       return null;
     }
 
     final Calendar calendar = Calendar.getInstance();
-    calendar.setTime((Date) value);
+    calendar.setTime(value);
 
     return calendar;
   }

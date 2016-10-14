@@ -23,6 +23,7 @@ package io.skelp.verifier;
 
 import io.skelp.verifier.message.DefaultMessageFormatter;
 import io.skelp.verifier.message.MessageFormatter;
+import io.skelp.verifier.type.BaseTypeVerifier;
 import io.skelp.verifier.type.TypeVerifier;
 
 /**
@@ -39,13 +40,14 @@ public final class Verifier {
    *
    * @param value
    * @param name
-   * @param type
+   * @param verifierType
    * @param <T>
+   * @param <V>
    * @return
    * @throws VerifierException
    */
-  public static <T extends TypeVerifier> T verify(final Object value, final Object name, final Class<T> type) {
-    return verify(value, name, type, null);
+  public static <T, V extends TypeVerifier<T, V>> V verify(final T value, final Object name, final Class<V> verifierType) {
+    return verify(value, name, verifierType, null);
   }
 
   /**
@@ -53,26 +55,34 @@ public final class Verifier {
    *
    * @param value
    * @param name
-   * @param type
+   * @param verifierType
    * @param messageFormatter
    * @param <T>
+   * @param <V>
    * @return
    * @throws VerifierException
    */
-  public static <T extends TypeVerifier> T verify(final Object value, final Object name, final Class<T> type, final MessageFormatter messageFormatter) {
-    if (type == null) {
+  public static <T, V extends TypeVerifier<T, V>> V verify(final T value, final Object name, final Class<V> verifierType, final MessageFormatter messageFormatter) {
+    if (verifierType == null) {
       throw new VerifierException("type must not be null");
     }
 
-    final Verification verification = new Verification(messageFormatter != null ? messageFormatter : defaultMessageFormatter, value, name);
-    final T verifier;
+    final V verifier;
     try {
-      verifier = type.getConstructor(Verification.class).newInstance(verification);
+      verifier = verifierType.getConstructor(Verification.class).newInstance(createVerification(value, name, messageFormatter));
     } catch (ReflectiveOperationException e) {
       throw new VerifierException("Unable to instantiate TypeVerifier", e);
     }
 
     return verifier;
+  }
+
+  private static <T> Verification<T> createVerification(final T value, final Object name) {
+    return createVerification(value, name, null);
+  }
+
+  private static <T> Verification<T> createVerification(final T value, final Object name, final MessageFormatter messageFormatter) {
+    return new Verification<>(messageFormatter != null ? messageFormatter : defaultMessageFormatter, value, name);
   }
 
   /**

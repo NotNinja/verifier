@@ -27,22 +27,23 @@ import io.skelp.verifier.Verification;
 /**
  * TODO: Document
  *
+ * @param <V>
  * @author Alasdair Mercer
  */
-public class BigIntegerVerifier<V extends BigIntegerVerifier> extends ComparableVerifier<V> implements NumberVerifier<V, BigInteger> {
+public class BigIntegerVerifier<V extends BigIntegerVerifier<V>> extends ComparableVerifier<BigInteger, V> implements NumberVerifier<BigInteger, V> {
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public BigIntegerVerifier(final Verification verification) {
+  public BigIntegerVerifier(final Verification<BigInteger> verification) {
     super(verification);
   }
 
   @Override
   public V even() {
-    final BigInteger value = (BigInteger) verification.getValue();
+    final BigInteger value = verification.getValue();
     final boolean result = value != null && !value.testBit(0);
 
     verification.check(result, "be even");
@@ -52,7 +53,7 @@ public class BigIntegerVerifier<V extends BigIntegerVerifier> extends Comparable
 
   @Override
   public V falsehood() {
-    final BigInteger value = (BigInteger) verification.getValue();
+    final BigInteger value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigInteger.ZERO) == 0;
 
     verification.check(result, "be false");
@@ -62,7 +63,7 @@ public class BigIntegerVerifier<V extends BigIntegerVerifier> extends Comparable
 
   @Override
   public V negative() {
-    final BigInteger value = (BigInteger) verification.getValue();
+    final BigInteger value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigInteger.ZERO) < 0;
 
     verification.check(result, "be negative");
@@ -72,7 +73,7 @@ public class BigIntegerVerifier<V extends BigIntegerVerifier> extends Comparable
 
   @Override
   public V odd() {
-    final BigInteger value = (BigInteger) verification.getValue();
+    final BigInteger value = verification.getValue();
     final boolean result = value != null && value.testBit(0);
 
     verification.check(result, "be odd");
@@ -82,7 +83,7 @@ public class BigIntegerVerifier<V extends BigIntegerVerifier> extends Comparable
 
   @Override
   public V one() {
-    final BigInteger value = (BigInteger) verification.getValue();
+    final BigInteger value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigInteger.ONE) == 0;
 
     verification.check(result, "be one");
@@ -92,7 +93,7 @@ public class BigIntegerVerifier<V extends BigIntegerVerifier> extends Comparable
 
   @Override
   public V positive() {
-    final BigInteger value = (BigInteger) verification.getValue();
+    final BigInteger value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigInteger.ZERO) >= 0;
 
     verification.check(result, "be positive");
@@ -102,7 +103,7 @@ public class BigIntegerVerifier<V extends BigIntegerVerifier> extends Comparable
 
   @Override
   public V truth() {
-    final BigInteger value = (BigInteger) verification.getValue();
+    final BigInteger value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigInteger.ONE) == 0;
 
     verification.check(result, "be true");
@@ -112,7 +113,7 @@ public class BigIntegerVerifier<V extends BigIntegerVerifier> extends Comparable
 
   @Override
   public V zero() {
-    final BigInteger value = (BigInteger) verification.getValue();
+    final BigInteger value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigInteger.ZERO) == 0;
 
     verification.check(result, "be zero");

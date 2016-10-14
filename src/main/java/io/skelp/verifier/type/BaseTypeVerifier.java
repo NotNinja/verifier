@@ -30,10 +30,11 @@ import io.skelp.verifier.util.Function;
 /**
  * TODO: Document
  *
+ * @param <T>
  * @param <V>
  * @author Alasdair Mercer
  */
-public class BaseTypeVerifier<V extends BaseTypeVerifier> implements TypeVerifier<V> {
+public class BaseTypeVerifier<T, V extends BaseTypeVerifier<T, V>> implements TypeVerifier<T, V> {
 
   private static <T> boolean matchAny(final T[] inputs, final Function<Boolean, T> matcher) {
     for (final T input : inputs) {
@@ -45,14 +46,14 @@ public class BaseTypeVerifier<V extends BaseTypeVerifier> implements TypeVerifie
     return false;
   }
 
-  final Verification verification;
+  final Verification<T> verification;
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public BaseTypeVerifier(final Verification verification) {
+  public BaseTypeVerifier(final Verification<T> verification) {
     this.verification = verification;
   }
 
@@ -166,12 +167,12 @@ public class BaseTypeVerifier<V extends BaseTypeVerifier> implements TypeVerifie
   }
 
   @Override
-  public V that(final VerifierAssertion assertion) {
+  public V that(final VerifierAssertion<T> assertion) {
     return that(assertion, null);
   }
 
   @Override
-  public V that(final VerifierAssertion assertion, final String message, final Object... args) {
+  public V that(final VerifierAssertion<T> assertion, final String message, final Object... args) {
     if (assertion == null) {
       throw new VerifierException("assertion must not be null");
     }

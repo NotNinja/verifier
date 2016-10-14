@@ -26,22 +26,23 @@ import io.skelp.verifier.Verification;
 /**
  * TODO: Document
  *
+ * @param <V>
  * @author Alasdair Mercer
  */
-public class FloatVerifier<V extends FloatVerifier> extends ComparableVerifier<V> implements NumberVerifier<V, Float> {
+public class FloatVerifier<V extends FloatVerifier<V>> extends ComparableVerifier<Float, V> implements NumberVerifier<Float, V> {
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public FloatVerifier(final Verification verification) {
+  public FloatVerifier(final Verification<Float> verification) {
     super(verification);
   }
 
   @Override
   public V even() {
-    final Float value = (Float) verification.getValue();
+    final Float value = verification.getValue();
     final boolean result = value != null && value % 2F == 0;
 
     verification.check(result, "be even");
@@ -51,7 +52,7 @@ public class FloatVerifier<V extends FloatVerifier> extends ComparableVerifier<V
 
   @Override
   public V falsehood() {
-    final Float value = (Float) verification.getValue();
+    final Float value = verification.getValue();
     final boolean result = value != null && value == 0F;
 
     verification.check(result, "be false");
@@ -61,7 +62,7 @@ public class FloatVerifier<V extends FloatVerifier> extends ComparableVerifier<V
 
   @Override
   public V negative() {
-    final Float value = (Float) verification.getValue();
+    final Float value = verification.getValue();
     final boolean result = value != null && value < 0F;
 
     verification.check(result, "be negative");
@@ -71,7 +72,7 @@ public class FloatVerifier<V extends FloatVerifier> extends ComparableVerifier<V
 
   @Override
   public V odd() {
-    final Float value = (Float) verification.getValue();
+    final Float value = verification.getValue();
     final boolean result = value != null && value % 2 != 0F;
 
     verification.check(result, "be odd");
@@ -81,7 +82,7 @@ public class FloatVerifier<V extends FloatVerifier> extends ComparableVerifier<V
 
   @Override
   public V one() {
-    final Float value = (Float) verification.getValue();
+    final Float value = verification.getValue();
     final boolean result = value != null && value == 1F;
 
     verification.check(result, "be one");
@@ -91,7 +92,7 @@ public class FloatVerifier<V extends FloatVerifier> extends ComparableVerifier<V
 
   @Override
   public V positive() {
-    final Float value = (Float) verification.getValue();
+    final Float value = verification.getValue();
     final boolean result = value != null && value >= 0F;
 
     verification.check(result, "be positive");
@@ -101,7 +102,7 @@ public class FloatVerifier<V extends FloatVerifier> extends ComparableVerifier<V
 
   @Override
   public V truth() {
-    final Float value = (Float) verification.getValue();
+    final Float value = verification.getValue();
     final boolean result = value != null && value == 1F;
 
     verification.check(result, "be true");
@@ -111,7 +112,7 @@ public class FloatVerifier<V extends FloatVerifier> extends ComparableVerifier<V
 
   @Override
   public V zero() {
-    final Float value = (Float) verification.getValue();
+    final Float value = verification.getValue();
     final boolean result = value != null && value == 0F;
 
     verification.check(result, "be zero");

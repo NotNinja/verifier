@@ -26,22 +26,23 @@ import io.skelp.verifier.Verification;
 /**
  * TODO: Document
  *
+ * @param <V>
  * @author Alasdair Mercer
  */
-public class IntegerVerifier<V extends IntegerVerifier> extends ComparableVerifier<V> implements NumberVerifier<V, Integer> {
+public class IntegerVerifier<V extends IntegerVerifier<V>> extends ComparableVerifier<Integer, V> implements NumberVerifier<Integer, V> {
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public IntegerVerifier(final Verification verification) {
+  public IntegerVerifier(final Verification<Integer> verification) {
     super(verification);
   }
 
   @Override
   public V even() {
-    final Integer value = (Integer) verification.getValue();
+    final Integer value = verification.getValue();
     final boolean result = value != null && value % 2 == 0;
 
     verification.check(result, "be even");
@@ -51,7 +52,7 @@ public class IntegerVerifier<V extends IntegerVerifier> extends ComparableVerifi
 
   @Override
   public V falsehood() {
-    final Integer value = (Integer) verification.getValue();
+    final Integer value = verification.getValue();
     final boolean result = value != null && value == 0;
 
     verification.check(result, "be false");
@@ -61,7 +62,7 @@ public class IntegerVerifier<V extends IntegerVerifier> extends ComparableVerifi
 
   @Override
   public V negative() {
-    final Integer value = (Integer) verification.getValue();
+    final Integer value = verification.getValue();
     final boolean result = value != null && value < 0;
 
     verification.check(result, "be negative");
@@ -71,7 +72,7 @@ public class IntegerVerifier<V extends IntegerVerifier> extends ComparableVerifi
 
   @Override
   public V odd() {
-    final Integer value = (Integer) verification.getValue();
+    final Integer value = verification.getValue();
     final boolean result = value != null && value % 2 != 0;
 
     verification.check(result, "be odd");
@@ -81,7 +82,7 @@ public class IntegerVerifier<V extends IntegerVerifier> extends ComparableVerifi
 
   @Override
   public V one() {
-    final Integer value = (Integer) verification.getValue();
+    final Integer value = verification.getValue();
     final boolean result = value != null && value == 1;
 
     verification.check(result, "be one");
@@ -91,7 +92,7 @@ public class IntegerVerifier<V extends IntegerVerifier> extends ComparableVerifi
 
   @Override
   public V positive() {
-    final Integer value = (Integer) verification.getValue();
+    final Integer value = verification.getValue();
     final boolean result = value != null && value >= 0;
 
     verification.check(result, "be positive");
@@ -101,7 +102,7 @@ public class IntegerVerifier<V extends IntegerVerifier> extends ComparableVerifi
 
   @Override
   public V truth() {
-    final Integer value = (Integer) verification.getValue();
+    final Integer value = verification.getValue();
     final boolean result = value != null && value == 1;
 
     verification.check(result, "be true");
@@ -111,7 +112,7 @@ public class IntegerVerifier<V extends IntegerVerifier> extends ComparableVerifi
 
   @Override
   public V zero() {
-    final Integer value = (Integer) verification.getValue();
+    final Integer value = verification.getValue();
     final boolean result = value != null && value == 0;
 
     verification.check(result, "be zero");

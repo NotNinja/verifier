@@ -27,22 +27,23 @@ import io.skelp.verifier.Verification;
 /**
  * TODO: Document
  *
+ * @param <V>
  * @author Alasdair Mercer
  */
-public class BigDecimalVerifier<V extends BigDecimalVerifier> extends ComparableVerifier<V> implements NumberVerifier<V, BigDecimal> {
+public class BigDecimalVerifier<V extends BigDecimalVerifier<V>> extends ComparableVerifier<BigDecimal, V> implements NumberVerifier<BigDecimal, V> {
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public BigDecimalVerifier(final Verification verification) {
+  public BigDecimalVerifier(final Verification<BigDecimal> verification) {
     super(verification);
   }
 
   @Override
   public V even() {
-    final BigDecimal value = (BigDecimal) verification.getValue();
+    final BigDecimal value = verification.getValue();
     final boolean result = value != null && !value.stripTrailingZeros().unscaledValue().testBit(0);
 
     verification.check(result, "be even");
@@ -52,7 +53,7 @@ public class BigDecimalVerifier<V extends BigDecimalVerifier> extends Comparable
 
   @Override
   public V falsehood() {
-    final BigDecimal value = (BigDecimal) verification.getValue();
+    final BigDecimal value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigDecimal.ZERO) == 0;
 
     verification.check(result, "be false");
@@ -62,7 +63,7 @@ public class BigDecimalVerifier<V extends BigDecimalVerifier> extends Comparable
 
   @Override
   public V negative() {
-    final BigDecimal value = (BigDecimal) verification.getValue();
+    final BigDecimal value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigDecimal.ZERO) < 0;
 
     verification.check(result, "be negative");
@@ -72,7 +73,7 @@ public class BigDecimalVerifier<V extends BigDecimalVerifier> extends Comparable
 
   @Override
   public V odd() {
-    final BigDecimal value = (BigDecimal) verification.getValue();
+    final BigDecimal value = verification.getValue();
     final boolean result = value != null && value.stripTrailingZeros().unscaledValue().testBit(0);
 
     verification.check(result, "be odd");
@@ -82,7 +83,7 @@ public class BigDecimalVerifier<V extends BigDecimalVerifier> extends Comparable
 
   @Override
   public V one() {
-    final BigDecimal value = (BigDecimal) verification.getValue();
+    final BigDecimal value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigDecimal.ONE) == 0;
 
     verification.check(result, "be one");
@@ -92,7 +93,7 @@ public class BigDecimalVerifier<V extends BigDecimalVerifier> extends Comparable
 
   @Override
   public V positive() {
-    final BigDecimal value = (BigDecimal) verification.getValue();
+    final BigDecimal value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigDecimal.ZERO) >= 0;
 
     verification.check(result, "be positive");
@@ -102,7 +103,7 @@ public class BigDecimalVerifier<V extends BigDecimalVerifier> extends Comparable
 
   @Override
   public V truth() {
-    final BigDecimal value = (BigDecimal) verification.getValue();
+    final BigDecimal value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigDecimal.ONE) == 0;
 
     verification.check(result, "be true");
@@ -112,7 +113,7 @@ public class BigDecimalVerifier<V extends BigDecimalVerifier> extends Comparable
 
   @Override
   public V zero() {
-    final BigDecimal value = (BigDecimal) verification.getValue();
+    final BigDecimal value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigDecimal.ZERO) == 0;
 
     verification.check(result, "be zero");
