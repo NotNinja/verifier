@@ -36,7 +36,7 @@ import io.skelp.verifier.VerifierException;
  *
  * @author Alasdair Mercer
  */
-public final class ClassVerifier extends AbstractCustomVerifier<Class<?>, ClassVerifier> {
+public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVerifier> {
 
   private static final Set<Class<?>> PRIMITIVE_WRAPPERS;
 
@@ -50,7 +50,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class<?>, ClassV
    *
    * @param verification
    */
-  public ClassVerifier(final Verification<Class<?>> verification) {
+  public ClassVerifier(final Verification<Class> verification) {
     super(verification);
   }
 
