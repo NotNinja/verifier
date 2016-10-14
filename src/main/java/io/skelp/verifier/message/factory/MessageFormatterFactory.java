@@ -31,11 +31,11 @@ import io.skelp.verifier.message.MessageFormatter;
  */
 public interface MessageFormatterFactory {
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierFactoryException
-   */
-  MessageFormatter create() throws VerifierFactoryException;
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierFactoryException
+     */
+    MessageFormatter create() throws VerifierFactoryException;
 }

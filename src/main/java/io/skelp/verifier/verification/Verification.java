@@ -32,50 +32,50 @@ import io.skelp.verifier.message.MessageFormatter;
  */
 public interface Verification<T> {
 
-  /**
-   * TODO: Document
-   *
-   * @param result
-   * @param message
-   * @param args
-   * @return
-   * @throws VerifierException
-   */
-  Verification<T> check(boolean result, String message, Object... args) throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @param result
+     * @param message
+     * @param args
+     * @return
+     * @throws VerifierException
+     */
+    Verification<T> check(boolean result, String message, Object... args) throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  MessageFormatter getMessageFormatter() throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    MessageFormatter getMessageFormatter() throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  Object getName();
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    Object getName();
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  boolean isNegated();
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    boolean isNegated();
 
-  /**
-   * TODO: Document
-   *
-   * @param negated
-   */
-  void setNegated(boolean negated);
+    /**
+     * TODO: Document
+     *
+     * @param negated
+     */
+    void setNegated(boolean negated);
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  T getValue();
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    T getValue();
 }

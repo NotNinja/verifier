@@ -33,31 +33,31 @@ import io.skelp.verifier.verification.factory.VerificationFactory;
  */
 public final class DefaultVerifierFactoryProvider implements VerifierFactoryProvider {
 
-  @Override
-  public CustomVerifierFactory getCustomVerifierFactory() {
-    return LazyHolder.CUSTOM_VERIFIER_FACTORY;
-  }
-
-  @Override
-  public MessageFormatterFactory getMessageFormatterFactory() {
-    return LazyHolder.MESSAGE_FORMATTER_FACTORY;
-  }
-
-  @Override
-  public VerificationFactory getVerificationFactory() {
-    return LazyHolder.VERIFICATION_FACTORY;
-  }
-
-  private static class LazyHolder {
-
-    static final CustomVerifierFactory CUSTOM_VERIFIER_FACTORY;
-    static final MessageFormatterFactory MESSAGE_FORMATTER_FACTORY;
-    static final VerificationFactory VERIFICATION_FACTORY;
-
-    static {
-      CUSTOM_VERIFIER_FACTORY = new DefaultCustomVerifierFactory();
-      MESSAGE_FORMATTER_FACTORY = new DefaultMessageFormatterFactory();
-      VERIFICATION_FACTORY = new DefaultVerificationFactory();
+    @Override
+    public CustomVerifierFactory getCustomVerifierFactory() {
+        return LazyHolder.CUSTOM_VERIFIER_FACTORY;
     }
-  }
+
+    @Override
+    public MessageFormatterFactory getMessageFormatterFactory() {
+        return LazyHolder.MESSAGE_FORMATTER_FACTORY;
+    }
+
+    @Override
+    public VerificationFactory getVerificationFactory() {
+        return LazyHolder.VERIFICATION_FACTORY;
+    }
+
+    private static class LazyHolder {
+
+        static final CustomVerifierFactory CUSTOM_VERIFIER_FACTORY;
+        static final MessageFormatterFactory MESSAGE_FORMATTER_FACTORY;
+        static final VerificationFactory VERIFICATION_FACTORY;
+
+        static {
+            CUSTOM_VERIFIER_FACTORY = new DefaultCustomVerifierFactory();
+            MESSAGE_FORMATTER_FACTORY = new DefaultMessageFormatterFactory();
+            VERIFICATION_FACTORY = new DefaultVerificationFactory();
+        }
+    }
 }

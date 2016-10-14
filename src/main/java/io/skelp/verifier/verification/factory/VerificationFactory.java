@@ -32,15 +32,15 @@ import io.skelp.verifier.verification.Verification;
  */
 public interface VerificationFactory {
 
-  /**
-   * TODO: Document
-   *
-   * @param messageFormatterFactory
-   * @param value
-   * @param name
-   * @param <T>
-   * @return
-   * @throws VerifierFactoryException
-   */
-  <T> Verification<T> create(MessageFormatterFactory messageFormatterFactory, T value, Object name) throws VerifierFactoryException;
+    /**
+     * TODO: Document
+     *
+     * @param messageFormatterFactory
+     * @param value
+     * @param name
+     * @param <T>
+     * @return
+     * @throws VerifierFactoryException
+     */
+    <T> Verification<T> create(MessageFormatterFactory messageFormatterFactory, T value, Object name) throws VerifierFactoryException;
 }

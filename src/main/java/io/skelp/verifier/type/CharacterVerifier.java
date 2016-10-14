@@ -21,10 +21,10 @@
  */
 package io.skelp.verifier.type;
 
-import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseTruthVerifier;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * TODO: Document
@@ -33,168 +33,168 @@ import io.skelp.verifier.type.base.BaseTruthVerifier;
  */
 public final class CharacterVerifier extends BaseComparableVerifier<Character, CharacterVerifier> implements BaseTruthVerifier<Character, CharacterVerifier> {
 
-  private static boolean isAsciiAlpha(final char ch) {
-    return isAsciiAlphaUpperCase(ch) || isAsciiAlphaLowerCase(ch);
-  }
+    private static boolean isAsciiAlpha(final char ch) {
+        return isAsciiAlphaUpperCase(ch) || isAsciiAlphaLowerCase(ch);
+    }
 
-  private static boolean isAsciiAlphaLowerCase(final char ch) {
-    return ch >= 'a' && ch <= 'z';
-  }
+    private static boolean isAsciiAlphaLowerCase(final char ch) {
+        return ch >= 'a' && ch <= 'z';
+    }
 
-  private static boolean isAsciiAlphaUpperCase(final char ch) {
-    return ch >= 'A' && ch <= 'Z';
-  }
+    private static boolean isAsciiAlphaUpperCase(final char ch) {
+        return ch >= 'A' && ch <= 'Z';
+    }
 
-  private static boolean isAsciiNumeric(final char ch) {
-    return ch >= '0' && ch <= '9';
-  }
+    private static boolean isAsciiNumeric(final char ch) {
+        return ch >= '0' && ch <= '9';
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @param verification
-   */
-  public CharacterVerifier(final Verification<Character> verification) {
-    super(verification);
-  }
+    /**
+     * TODO: Document
+     *
+     * @param verification
+     */
+    public CharacterVerifier(final Verification<Character> verification) {
+        super(verification);
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public CharacterVerifier ascii() throws VerifierException {
-    final Character value = verification.getValue();
-    final boolean result = value != null && value < 128;
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public CharacterVerifier ascii() throws VerifierException {
+        final Character value = verification.getValue();
+        final boolean result = value != null && value < 128;
 
-    verification.check(result, "be ASCII");
+        verification.check(result, "be ASCII");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public CharacterVerifier asciiAlpha() throws VerifierException {
-    final Character value = verification.getValue();
-    final boolean result = value != null && isAsciiAlpha(value);
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public CharacterVerifier asciiAlpha() throws VerifierException {
+        final Character value = verification.getValue();
+        final boolean result = value != null && isAsciiAlpha(value);
 
-    verification.check(result, "be an ASCII letter");
+        verification.check(result, "be an ASCII letter");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public CharacterVerifier asciiAlphaLowerCase() throws VerifierException {
-    final Character value = verification.getValue();
-    final boolean result = value != null && isAsciiAlphaLowerCase(value);
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public CharacterVerifier asciiAlphaLowerCase() throws VerifierException {
+        final Character value = verification.getValue();
+        final boolean result = value != null && isAsciiAlphaLowerCase(value);
 
-    verification.check(result, "be an ASCII lower case letter");
+        verification.check(result, "be an ASCII lower case letter");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public CharacterVerifier asciiAlphaUpperCase() throws VerifierException {
-    final Character value = verification.getValue();
-    final boolean result = value != null && isAsciiAlphaUpperCase(value);
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public CharacterVerifier asciiAlphaUpperCase() throws VerifierException {
+        final Character value = verification.getValue();
+        final boolean result = value != null && isAsciiAlphaUpperCase(value);
 
-    verification.check(result, "be an ASCII upper case letter");
+        verification.check(result, "be an ASCII upper case letter");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public CharacterVerifier asciiAlphanumeric() throws VerifierException {
-    final Character value = verification.getValue();
-    final boolean result = value != null && (isAsciiAlpha(value) || isAsciiNumeric(value));
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public CharacterVerifier asciiAlphanumeric() throws VerifierException {
+        final Character value = verification.getValue();
+        final boolean result = value != null && (isAsciiAlpha(value) || isAsciiNumeric(value));
 
-    verification.check(result, "be an ASCII letter or digit");
+        verification.check(result, "be an ASCII letter or digit");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public CharacterVerifier asciiControl() throws VerifierException {
-    final Character value = verification.getValue();
-    final boolean result = value != null && (value < 32 || value == 127);
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public CharacterVerifier asciiControl() throws VerifierException {
+        final Character value = verification.getValue();
+        final boolean result = value != null && (value < 32 || value == 127);
 
-    verification.check(result, "be an ASCII control");
+        verification.check(result, "be an ASCII control");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public CharacterVerifier asciiNumeric() throws VerifierException {
-    final Character value = verification.getValue();
-    final boolean result = value != null && isAsciiNumeric(value);
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public CharacterVerifier asciiNumeric() throws VerifierException {
+        final Character value = verification.getValue();
+        final boolean result = value != null && isAsciiNumeric(value);
 
-    verification.check(result, "be an ASCII digit");
+        verification.check(result, "be an ASCII digit");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public CharacterVerifier asciiPrintable() throws VerifierException {
-    final Character value = verification.getValue();
-    final boolean result = value != null && value >= 32 && value < 127;
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public CharacterVerifier asciiPrintable() throws VerifierException {
+        final Character value = verification.getValue();
+        final boolean result = value != null && value >= 32 && value < 127;
 
-    verification.check(result, "be ASCII printable");
+        verification.check(result, "be ASCII printable");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public CharacterVerifier falsehood() throws VerifierException {
-    final Character value = verification.getValue();
-    final boolean result = value != null && value == '0';
+    @Override
+    public CharacterVerifier falsehood() throws VerifierException {
+        final Character value = verification.getValue();
+        final boolean result = value != null && value == '0';
 
-    verification.check(result, "be false");
+        verification.check(result, "be false");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public CharacterVerifier truth() throws VerifierException {
-    final Character value = verification.getValue();
-    final boolean result = value != null && value == '1';
+    @Override
+    public CharacterVerifier truth() throws VerifierException {
+        final Character value = verification.getValue();
+        final boolean result = value != null && value == '1';
 
-    verification.check(result, "be true");
+        verification.check(result, "be true");
 
-    return this;
-  }
+        return this;
+    }
 }

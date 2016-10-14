@@ -31,8 +31,8 @@ import io.skelp.verifier.message.DefaultMessageFormatter;
  */
 public final class DefaultMessageFormatterFactory implements MessageFormatterFactory {
 
-  @Override
-  public DefaultMessageFormatter create() throws VerifierFactoryException {
-    return new DefaultMessageFormatter();
-  }
+    @Override
+    public DefaultMessageFormatter create() throws VerifierFactoryException {
+        return new DefaultMessageFormatter();
+    }
 }

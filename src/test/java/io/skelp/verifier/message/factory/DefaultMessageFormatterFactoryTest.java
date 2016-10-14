@@ -23,9 +23,10 @@ package io.skelp.verifier.message.factory;
 
 import static org.junit.Assert.*;
 
-import io.skelp.verifier.message.DefaultMessageFormatter;
 import org.junit.Before;
 import org.junit.Test;
+
+import io.skelp.verifier.message.DefaultMessageFormatter;
 
 /**
  * Tests for the {@link DefaultMessageFormatterFactory} class.
@@ -34,17 +35,17 @@ import org.junit.Test;
  */
 public class DefaultMessageFormatterFactoryTest {
 
-  private DefaultMessageFormatterFactory factory;
+    private DefaultMessageFormatterFactory factory;
 
-  @Before
-  public void setup() {
-    factory = new DefaultMessageFormatterFactory();
-  }
+    @Before
+    public void setup() {
+        factory = new DefaultMessageFormatterFactory();
+    }
 
-  @Test
-  public void testCreate() {
-    DefaultMessageFormatter instance = factory.create();
+    @Test
+    public void testCreate() {
+        DefaultMessageFormatter instance = factory.create();
 
-    assertNotNull("Never null", instance);
-  }
+        assertNotNull("Never null", instance);
+    }
 }

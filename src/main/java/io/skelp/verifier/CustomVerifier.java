@@ -30,121 +30,121 @@ package io.skelp.verifier;
  */
 public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
 
-  /**
-   * TODO: Document
-   *
-   * @param other
-   * @return
-   * @throws VerifierException
-   */
-  V equalTo(Object other) throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @param other
+     * @return
+     * @throws VerifierException
+     */
+    V equalTo(Object other) throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @param other
-   * @param name
-   * @return
-   * @throws VerifierException
-   */
-  V equalTo(Object other, Object name) throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @param other
+     * @param name
+     * @return
+     * @throws VerifierException
+     */
+    V equalTo(Object other, Object name) throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @param others
-   * @return
-   * @throws VerifierException
-   */
-  V equalToAny(Object... others) throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @param others
+     * @return
+     * @throws VerifierException
+     */
+    V equalToAny(Object... others) throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @param hashCode
-   * @return
-   * @throws VerifierException
-   */
-  V hashed(int hashCode) throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @param hashCode
+     * @return
+     * @throws VerifierException
+     */
+    V hashed(int hashCode) throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @param cls
-   * @return
-   * @throws VerifierException
-   */
-  V instanceOf(Class<?> cls) throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @param cls
+     * @return
+     * @throws VerifierException
+     */
+    V instanceOf(Class<?> cls) throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @param classes
-   * @return
-   * @throws VerifierException
-   */
-  V instanceOfAny(Class<?>... classes) throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @param classes
+     * @return
+     * @throws VerifierException
+     */
+    V instanceOfAny(Class<?>... classes) throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  V not();
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    V not();
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V nulled() throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    V nulled() throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @param other
-   * @return
-   * @throws VerifierException
-   */
-  V sameAs(Object other) throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @param other
+     * @return
+     * @throws VerifierException
+     */
+    V sameAs(Object other) throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @param other
-   * @param name
-   * @return
-   * @throws VerifierException
-   */
-  V sameAs(Object other, Object name) throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @param other
+     * @param name
+     * @return
+     * @throws VerifierException
+     */
+    V sameAs(Object other, Object name) throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @param others
-   * @return
-   * @throws VerifierException
-   */
-  V sameAsAny(Object... others) throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @param others
+     * @return
+     * @throws VerifierException
+     */
+    V sameAsAny(Object... others) throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @param assertion
-   * @return
-   * @throws VerifierException
-   */
-  V that(VerifierAssertion<T> assertion) throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @param assertion
+     * @return
+     * @throws VerifierException
+     */
+    V that(VerifierAssertion<T> assertion) throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @param assertion
-   * @param message
-   * @param args
-   * @return
-   * @throws VerifierException
-   */
-  V that(VerifierAssertion<T> assertion, String message, Object... args) throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @param assertion
+     * @param message
+     * @param args
+     * @return
+     * @throws VerifierException
+     */
+    V that(VerifierAssertion<T> assertion, String message, Object... args) throws VerifierException;
 }

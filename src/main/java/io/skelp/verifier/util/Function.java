@@ -30,11 +30,11 @@ package io.skelp.verifier.util;
  */
 public interface Function<R, T> {
 
-  /**
-   * TODO: Document
-   *
-   * @param input
-   * @return
-   */
-  R apply(T input);
+    /**
+     * TODO: Document
+     *
+     * @param input
+     * @return
+     */
+    R apply(T input);
 }

@@ -33,19 +33,19 @@ import io.skelp.verifier.VerifierException;
  */
 public interface BaseTruthVerifier<T, V extends BaseTruthVerifier<T, V>> extends CustomVerifier<T, V> {
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V falsehood() throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    V falsehood() throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V truth() throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    V truth() throws VerifierException;
 }

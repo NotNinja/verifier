@@ -21,10 +21,10 @@
  */
 package io.skelp.verifier.type;
 
-import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseNumberVerifier;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * TODO: Document
@@ -33,92 +33,92 @@ import io.skelp.verifier.type.base.BaseNumberVerifier;
  */
 public final class DoubleVerifier extends BaseComparableVerifier<Double, DoubleVerifier> implements BaseNumberVerifier<Double, DoubleVerifier> {
 
-  /**
-   * TODO: Document
-   *
-   * @param verification
-   */
-  public DoubleVerifier(final Verification<Double> verification) {
-    super(verification);
-  }
+    /**
+     * TODO: Document
+     *
+     * @param verification
+     */
+    public DoubleVerifier(final Verification<Double> verification) {
+        super(verification);
+    }
 
-  @Override
-  public DoubleVerifier even() throws VerifierException {
-    final Double value = verification.getValue();
-    final boolean result = value != null && value % 2D == 0;
+    @Override
+    public DoubleVerifier even() throws VerifierException {
+        final Double value = verification.getValue();
+        final boolean result = value != null && value % 2D == 0;
 
-    verification.check(result, "be even");
+        verification.check(result, "be even");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public DoubleVerifier falsehood() throws VerifierException {
-    final Double value = verification.getValue();
-    final boolean result = value != null && value == 0D;
+    @Override
+    public DoubleVerifier falsehood() throws VerifierException {
+        final Double value = verification.getValue();
+        final boolean result = value != null && value == 0D;
 
-    verification.check(result, "be false");
+        verification.check(result, "be false");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public DoubleVerifier negative() throws VerifierException {
-    final Double value = verification.getValue();
-    final boolean result = value != null && value < 0D;
+    @Override
+    public DoubleVerifier negative() throws VerifierException {
+        final Double value = verification.getValue();
+        final boolean result = value != null && value < 0D;
 
-    verification.check(result, "be negative");
+        verification.check(result, "be negative");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public DoubleVerifier odd() throws VerifierException {
-    final Double value = verification.getValue();
-    final boolean result = value != null && value % 2 != 0D;
+    @Override
+    public DoubleVerifier odd() throws VerifierException {
+        final Double value = verification.getValue();
+        final boolean result = value != null && value % 2 != 0D;
 
-    verification.check(result, "be odd");
+        verification.check(result, "be odd");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public DoubleVerifier one() throws VerifierException {
-    final Double value = verification.getValue();
-    final boolean result = value != null && value == 1D;
+    @Override
+    public DoubleVerifier one() throws VerifierException {
+        final Double value = verification.getValue();
+        final boolean result = value != null && value == 1D;
 
-    verification.check(result, "be one");
+        verification.check(result, "be one");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public DoubleVerifier positive() throws VerifierException {
-    final Double value = verification.getValue();
-    final boolean result = value != null && value >= 0D;
+    @Override
+    public DoubleVerifier positive() throws VerifierException {
+        final Double value = verification.getValue();
+        final boolean result = value != null && value >= 0D;
 
-    verification.check(result, "be positive");
+        verification.check(result, "be positive");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public DoubleVerifier truth() throws VerifierException {
-    final Double value = verification.getValue();
-    final boolean result = value != null && value == 1D;
+    @Override
+    public DoubleVerifier truth() throws VerifierException {
+        final Double value = verification.getValue();
+        final boolean result = value != null && value == 1D;
 
-    verification.check(result, "be true");
+        verification.check(result, "be true");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public DoubleVerifier zero() throws VerifierException {
-    final Double value = verification.getValue();
-    final boolean result = value != null && value == 0D;
+    @Override
+    public DoubleVerifier zero() throws VerifierException {
+        final Double value = verification.getValue();
+        final boolean result = value != null && value == 0D;
 
-    verification.check(result, "be zero");
+        verification.check(result, "be zero");
 
-    return this;
-  }
+        return this;
+    }
 }

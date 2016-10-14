@@ -32,51 +32,51 @@ import io.skelp.verifier.VerifierException;
  */
 public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifier<T, V>> extends BaseTruthVerifier<T, V> {
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V even() throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    V even() throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V negative() throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    V negative() throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V odd() throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    V odd() throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V one() throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    V one() throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V positive() throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    V positive() throws VerifierException;
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  V zero() throws VerifierException;
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    V zero() throws VerifierException;
 }

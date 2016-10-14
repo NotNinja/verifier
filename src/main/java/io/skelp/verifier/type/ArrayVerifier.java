@@ -22,9 +22,10 @@
 package io.skelp.verifier.type;
 
 import java.util.Arrays;
+
 import io.skelp.verifier.AbstractCustomVerifier;
-import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * TODO: Document
@@ -34,59 +35,59 @@ import io.skelp.verifier.VerifierException;
  */
 public final class ArrayVerifier<T> extends AbstractCustomVerifier<T[], ArrayVerifier<T>> {
 
-  /**
-   * TODO: Document
-   *
-   * @param verification
-   */
-  public ArrayVerifier(final Verification<T[]> verification) {
-    super(verification);
-  }
+    /**
+     * TODO: Document
+     *
+     * @param verification
+     */
+    public ArrayVerifier(final Verification<T[]> verification) {
+        super(verification);
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @param item
-   * @return
-   * @throws VerifierException
-   */
-  public ArrayVerifier<T> contain(final T item) throws VerifierException {
-    final T[] value = verification.getValue();
-    final boolean result = value != null && Arrays.asList(value).contains(item);
+    /**
+     * TODO: Document
+     *
+     * @param item
+     * @return
+     * @throws VerifierException
+     */
+    public ArrayVerifier<T> contain(final T item) throws VerifierException {
+        final T[] value = verification.getValue();
+        final boolean result = value != null && Arrays.asList(value).contains(item);
 
-    verification.check(result, "contain '%s'", item);
+        verification.check(result, "contain '%s'", item);
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public ArrayVerifier<T> empty() throws VerifierException {
-    final T[] value = verification.getValue();
-    final boolean result = value == null || value.length == 0;
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public ArrayVerifier<T> empty() throws VerifierException {
+        final T[] value = verification.getValue();
+        final boolean result = value == null || value.length == 0;
 
-    verification.check(result, "be empty");
+        verification.check(result, "be empty");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @param length
-   * @return
-   * @throws VerifierException
-   */
-  public ArrayVerifier<T> length(final int length) throws VerifierException {
-    final T[] value = verification.getValue();
-    final boolean result = value != null && value.length == length;
+    /**
+     * TODO: Document
+     *
+     * @param length
+     * @return
+     * @throws VerifierException
+     */
+    public ArrayVerifier<T> length(final int length) throws VerifierException {
+        final T[] value = verification.getValue();
+        final boolean result = value != null && value.length == length;
 
-    verification.check(result, "have length of '%d'", length);
+        verification.check(result, "have length of '%d'", length);
 
-    return this;
-  }
+        return this;
+    }
 }

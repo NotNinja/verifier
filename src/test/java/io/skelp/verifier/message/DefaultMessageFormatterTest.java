@@ -24,12 +24,13 @@ package io.skelp.verifier.message;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import io.skelp.verifier.verification.Verification;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import io.skelp.verifier.verification.Verification;
 
 /**
  * Tests for the {@link DefaultMessageFormatter} class.
@@ -39,81 +40,81 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultMessageFormatterTest {
 
-  @Mock
-  private Verification<Object> mockVerification;
+    @Mock
+    private Verification<Object> mockVerification;
 
-  private DefaultMessageFormatter formatter;
+    private DefaultMessageFormatter formatter;
 
-  @Before
-  public void setup() {
-    when(mockVerification.getMessageFormatter()).thenReturn(formatter);
+    @Before
+    public void setup() {
+        when(mockVerification.getMessageFormatter()).thenReturn(formatter);
 
-    formatter = new DefaultMessageFormatter();
-  }
+        formatter = new DefaultMessageFormatter();
+    }
 
-  @Test
-  public void testFormat() {
-    when(mockVerification.getName()).thenReturn("foo");
-    when(mockVerification.getValue()).thenReturn(123);
+    @Test
+    public void testFormat() {
+        when(mockVerification.getName()).thenReturn("foo");
+        when(mockVerification.getValue()).thenReturn(123);
 
-    String expected = "foo must be a test: 123";
-    String actual = formatter.format(mockVerification, "be a %s", "test");
+        String expected = "foo must be a test: 123";
+        String actual = formatter.format(mockVerification, "be a %s", "test");
 
-    assertEquals("Formats verification", expected, actual);
-  }
+        assertEquals("Formats verification", expected, actual);
+    }
 
-  @Test
-  public void testFormatWhenNegated() {
-    when(mockVerification.getName()).thenReturn("foo");
-    when(mockVerification.isNegated()).thenReturn(true);
-    when(mockVerification.getValue()).thenReturn(123);
+    @Test
+    public void testFormatWhenNegated() {
+        when(mockVerification.getName()).thenReturn("foo");
+        when(mockVerification.isNegated()).thenReturn(true);
+        when(mockVerification.getValue()).thenReturn(123);
 
-    String expected = "foo must not be a test: 123";
-    String actual = formatter.format(mockVerification, "be a %s", "test");
+        String expected = "foo must not be a test: 123";
+        String actual = formatter.format(mockVerification, "be a %s", "test");
 
-    assertEquals("Formats negated verification", expected, actual);
-  }
+        assertEquals("Formats negated verification", expected, actual);
+    }
 
-  @Test
-  public void testFormatWithNoName() {
-    when(mockVerification.getValue()).thenReturn(123);
+    @Test
+    public void testFormatWithNoName() {
+        when(mockVerification.getValue()).thenReturn(123);
 
-    String expected = "Value must be a test: 123";
-    String actual = formatter.format(mockVerification, "be a %s", "test");
+        String expected = "Value must be a test: 123";
+        String actual = formatter.format(mockVerification, "be a %s", "test");
 
-    assertEquals("Formats verification with no name", expected, actual);
-  }
+        assertEquals("Formats verification with no name", expected, actual);
+    }
 
-  @Test
-  public void testFormatWithNoMessage() {
-    when(mockVerification.getName()).thenReturn("foo");
-    when(mockVerification.getValue()).thenReturn(123);
+    @Test
+    public void testFormatWithNoMessage() {
+        when(mockVerification.getName()).thenReturn("foo");
+        when(mockVerification.getValue()).thenReturn(123);
 
-    String expected = "foo must match: 123";
-    String actual = formatter.format(mockVerification, null);
+        String expected = "foo must match: 123";
+        String actual = formatter.format(mockVerification, null);
 
-    assertEquals("Formats verification with no message", expected, actual);
-  }
+        assertEquals("Formats verification with no message", expected, actual);
+    }
 
-  @Test
-  public void testFormatWithNoMessageWhenNegated() {
-    when(mockVerification.getName()).thenReturn("foo");
-    when(mockVerification.isNegated()).thenReturn(true);
-    when(mockVerification.getValue()).thenReturn(123);
+    @Test
+    public void testFormatWithNoMessageWhenNegated() {
+        when(mockVerification.getName()).thenReturn("foo");
+        when(mockVerification.isNegated()).thenReturn(true);
+        when(mockVerification.getValue()).thenReturn(123);
 
-    String expected = "foo must not match: 123";
-    String actual = formatter.format(mockVerification, null);
+        String expected = "foo must not match: 123";
+        String actual = formatter.format(mockVerification, null);
 
-    assertEquals("Formats verification", expected, actual);
-  }
+        assertEquals("Formats verification", expected, actual);
+    }
 
-  @Test
-  public void testFormatWithNullValue() {
-    when(mockVerification.getName()).thenReturn("foo");
+    @Test
+    public void testFormatWithNullValue() {
+        when(mockVerification.getName()).thenReturn("foo");
 
-    String expected = "foo must be a test: null";
-    String actual = formatter.format(mockVerification, "be a %s", "test");
+        String expected = "foo must be a test: null";
+        String actual = formatter.format(mockVerification, "be a %s", "test");
 
-    assertEquals("Formats verification with null value", expected, actual);
-  }
+        assertEquals("Formats verification with null value", expected, actual);
+    }
 }

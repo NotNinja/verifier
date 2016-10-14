@@ -31,16 +31,16 @@ import io.skelp.verifier.verification.Verification;
  */
 public final class DefaultCustomVerifierFactory implements CustomVerifierFactory {
 
-  @Override
-  public <T, V extends CustomVerifier<T, V>> V create(final Class<V> cls, final Verification<T> verification) throws VerifierFactoryException {
-    if (cls == null) {
-      throw new VerifierFactoryException("cls must not be null");
-    }
+    @Override
+    public <T, V extends CustomVerifier<T, V>> V create(final Class<V> cls, final Verification<T> verification) throws VerifierFactoryException {
+        if (cls == null) {
+            throw new VerifierFactoryException("cls must not be null");
+        }
 
-    try {
-      return cls.getConstructor(Verification.class).newInstance(verification);
-    } catch (ReflectiveOperationException e) {
-      throw new VerifierFactoryException("cls could not be instantiated", e);
+        try {
+            return cls.getConstructor(Verification.class).newInstance(verification);
+        } catch (ReflectiveOperationException e) {
+            throw new VerifierFactoryException("cls could not be instantiated", e);
+        }
     }
-  }
 }

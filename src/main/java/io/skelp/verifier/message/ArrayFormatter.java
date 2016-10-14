@@ -29,52 +29,52 @@ package io.skelp.verifier.message;
  */
 public class ArrayFormatter<T> {
 
-  private final T[] array;
+    private final T[] array;
 
-  /**
-   * TODO: Document
-   *
-   * @param array
-   */
-  public ArrayFormatter(final T[] array) {
-    this.array = array;
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  public String format() {
-    if (array == null) {
-      return "null";
+    /**
+     * TODO: Document
+     *
+     * @param array
+     */
+    public ArrayFormatter(final T[] array) {
+        this.array = array;
     }
 
-    final int last = array.length - 1;
-    if (last == -1) {
-      return "[]";
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    public String format() {
+        if (array == null) {
+            return "null";
+        }
+
+        final int last = array.length - 1;
+        if (last == -1) {
+            return "[]";
+        }
+
+        final StringBuilder buffer = new StringBuilder();
+        buffer.append('[');
+
+        int index = 0;
+        while (true) {
+            buffer.append('\'');
+            buffer.append(String.valueOf(array[index]));
+            buffer.append('\'');
+
+            if (index == last) {
+                return buffer.append(']').toString();
+            }
+
+            buffer.append(", ");
+            index++;
+        }
     }
 
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append('[');
-
-    int index = 0;
-    while (true) {
-      buffer.append('\'');
-      buffer.append(String.valueOf(array[index]));
-      buffer.append('\'');
-
-      if (index == last) {
-        return buffer.append(']').toString();
-      }
-
-      buffer.append(", ");
-      index++;
+    @Override
+    public String toString() {
+        return format();
     }
-  }
-
-  @Override
-  public String toString() {
-    return format();
-  }
 }

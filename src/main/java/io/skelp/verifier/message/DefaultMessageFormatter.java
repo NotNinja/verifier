@@ -30,22 +30,22 @@ import io.skelp.verifier.verification.Verification;
  */
 public class DefaultMessageFormatter implements MessageFormatter {
 
-  @Override
-  public String format(final Verification<?> verification, final String message, final Object... args) {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append(verification.getName() != null ? verification.getName() : "Value");
-    buffer.append(" must ");
-    if (verification.isNegated()) {
-      buffer.append("not ");
-    }
-    if (message != null) {
-      buffer.append(String.format(message, args));
-    } else {
-      buffer.append("match");
-    }
-    buffer.append(": ");
-    buffer.append(verification.getValue());
+    @Override
+    public String format(final Verification<?> verification, final String message, final Object... args) {
+        final StringBuilder buffer = new StringBuilder();
+        buffer.append(verification.getName() != null ? verification.getName() : "Value");
+        buffer.append(" must ");
+        if (verification.isNegated()) {
+            buffer.append("not ");
+        }
+        if (message != null) {
+            buffer.append(String.format(message, args));
+        } else {
+            buffer.append("match");
+        }
+        buffer.append(": ");
+        buffer.append(verification.getValue());
 
-    return buffer.toString();
-  }
+        return buffer.toString();
+    }
 }

@@ -21,10 +21,10 @@
  */
 package io.skelp.verifier.type;
 
-import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseTruthVerifier;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * TODO: Document
@@ -33,30 +33,30 @@ import io.skelp.verifier.type.base.BaseTruthVerifier;
  */
 public final class BooleanVerifier extends BaseComparableVerifier<Boolean, BooleanVerifier> implements BaseTruthVerifier<Boolean, BooleanVerifier> {
 
-  /**
-   * TODO: Document
-   *
-   * @param verification
-   */
-  public BooleanVerifier(final Verification<Boolean> verification) {
-    super(verification);
-  }
+    /**
+     * TODO: Document
+     *
+     * @param verification
+     */
+    public BooleanVerifier(final Verification<Boolean> verification) {
+        super(verification);
+    }
 
-  @Override
-  public BooleanVerifier falsehood() throws VerifierException {
-    final boolean result = !Boolean.TRUE.equals(verification.getValue());
+    @Override
+    public BooleanVerifier falsehood() throws VerifierException {
+        final boolean result = !Boolean.TRUE.equals(verification.getValue());
 
-    verification.check(result, "be false");
+        verification.check(result, "be false");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public BooleanVerifier truth() throws VerifierException {
-    final boolean result = Boolean.TRUE.equals(verification.getValue());
+    @Override
+    public BooleanVerifier truth() throws VerifierException {
+        final boolean result = Boolean.TRUE.equals(verification.getValue());
 
-    verification.check(result, "be true");
+        verification.check(result, "be true");
 
-    return this;
-  }
+        return this;
+    }
 }

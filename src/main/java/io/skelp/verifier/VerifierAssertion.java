@@ -29,11 +29,11 @@ package io.skelp.verifier;
  */
 public interface VerifierAssertion<T> {
 
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @return
-   */
-  boolean verify(T value);
+    /**
+     * TODO: Document
+     *
+     * @param value
+     * @return
+     */
+    boolean verify(T value);
 }

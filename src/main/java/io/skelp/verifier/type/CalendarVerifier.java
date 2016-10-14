@@ -22,8 +22,9 @@
 package io.skelp.verifier.type;
 
 import java.util.Calendar;
-import io.skelp.verifier.verification.Verification;
+
 import io.skelp.verifier.type.base.BaseTimeVerifier;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * TODO: Document
@@ -32,17 +33,17 @@ import io.skelp.verifier.type.base.BaseTimeVerifier;
  */
 public final class CalendarVerifier extends BaseTimeVerifier<Calendar, CalendarVerifier> {
 
-  /**
-   * TODO: Document
-   *
-   * @param verification
-   */
-  public CalendarVerifier(final Verification<Calendar> verification) {
-    super(verification);
-  }
+    /**
+     * TODO: Document
+     *
+     * @param verification
+     */
+    public CalendarVerifier(final Verification<Calendar> verification) {
+        super(verification);
+    }
 
-  @Override
-  protected Calendar getCalendar(final Calendar value) {
-    return value;
-  }
+    @Override
+    protected Calendar getCalendar(final Calendar value) {
+        return value;
+    }
 }

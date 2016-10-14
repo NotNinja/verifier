@@ -32,8 +32,8 @@ import io.skelp.verifier.verification.DefaultVerification;
  */
 public final class DefaultVerificationFactory implements VerificationFactory {
 
-  @Override
-  public <T> DefaultVerification<T> create(final MessageFormatterFactory messageFormatterFactory, final T value, final Object name) throws VerifierFactoryException {
-    return new DefaultVerification<>(messageFormatterFactory, value, name);
-  }
+    @Override
+    public <T> DefaultVerification<T> create(final MessageFormatterFactory messageFormatterFactory, final T value, final Object name) throws VerifierFactoryException {
+        return new DefaultVerification<>(messageFormatterFactory, value, name);
+    }
 }

@@ -27,9 +27,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import io.skelp.verifier.AbstractCustomVerifier;
-import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * TODO: Document
@@ -38,201 +39,201 @@ import io.skelp.verifier.VerifierException;
  */
 public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVerifier> {
 
-  private static final Set<Class<?>> PRIMITIVE_WRAPPERS;
+    private static final Set<Class<?>> PRIMITIVE_WRAPPERS;
 
-  static {
-    final List<Class<?>> primitiveWrappers = Arrays.asList(Boolean.class, Byte.class, Character.class, Double.class, Float.class, Integer.class, Long.class, Short.class, Void.TYPE);
-    PRIMITIVE_WRAPPERS = Collections.unmodifiableSet(new HashSet<>(primitiveWrappers));
-  }
+    static {
+        final List<Class<?>> primitiveWrappers = Arrays.asList(Boolean.class, Byte.class, Character.class, Double.class, Float.class, Integer.class, Long.class, Short.class, Void.TYPE);
+        PRIMITIVE_WRAPPERS = Collections.unmodifiableSet(new HashSet<>(primitiveWrappers));
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @param verification
-   */
-  public ClassVerifier(final Verification<Class> verification) {
-    super(verification);
-  }
+    /**
+     * TODO: Document
+     *
+     * @param verification
+     */
+    public ClassVerifier(final Verification<Class> verification) {
+        super(verification);
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @param type
-   * @return
-   * @throws VerifierException
-   */
-  public ClassVerifier annotated(final Class<? extends Annotation> type) throws VerifierException {
-    final Class<?> value = verification.getValue();
-    final boolean result = value != null && value.isAnnotationPresent(type);
+    /**
+     * TODO: Document
+     *
+     * @param type
+     * @return
+     * @throws VerifierException
+     */
+    public ClassVerifier annotated(final Class<? extends Annotation> type) throws VerifierException {
+        final Class<?> value = verification.getValue();
+        final boolean result = value != null && value.isAnnotationPresent(type);
 
-    verification.check(result, "be annotated with '%s'", type);
+        verification.check(result, "be annotated with '%s'", type);
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public ClassVerifier annotation() throws VerifierException {
-    final Class<?> value = verification.getValue();
-    final boolean result = value != null && value.isAnnotation();
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public ClassVerifier annotation() throws VerifierException {
+        final Class<?> value = verification.getValue();
+        final boolean result = value != null && value.isAnnotation();
 
-    verification.check(result, "be an annotation");
+        verification.check(result, "be an annotation");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public ClassVerifier anonymous() throws VerifierException {
-    final Class<?> value = verification.getValue();
-    final boolean result = value != null && value.isAnonymousClass();
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public ClassVerifier anonymous() throws VerifierException {
+        final Class<?> value = verification.getValue();
+        final boolean result = value != null && value.isAnonymousClass();
 
-    verification.check(result, "be anonymous");
+        verification.check(result, "be anonymous");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public ClassVerifier array() throws VerifierException {
-    final Class<?> value = verification.getValue();
-    final boolean result = value != null && value.isArray();
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public ClassVerifier array() throws VerifierException {
+        final Class<?> value = verification.getValue();
+        final boolean result = value != null && value.isArray();
 
-    verification.check(result, "be an array");
+        verification.check(result, "be an array");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @param type
-   * @return
-   * @throws VerifierException
-   */
-  public ClassVerifier assignableFrom(final Class<?> type) throws VerifierException {
-    final Class<?> value = verification.getValue();
-    final boolean result = value != null && value.isAssignableFrom(type);
+    /**
+     * TODO: Document
+     *
+     * @param type
+     * @return
+     * @throws VerifierException
+     */
+    public ClassVerifier assignableFrom(final Class<?> type) throws VerifierException {
+        final Class<?> value = verification.getValue();
+        final boolean result = value != null && value.isAssignableFrom(type);
 
-    verification.check(result, "be assignable from '%s'", type);
+        verification.check(result, "be assignable from '%s'", type);
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public ClassVerifier enumeration() throws VerifierException {
-    final Class<?> value = verification.getValue();
-    final boolean result = value != null && value.isEnum();
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public ClassVerifier enumeration() throws VerifierException {
+        final Class<?> value = verification.getValue();
+        final boolean result = value != null && value.isEnum();
 
-    verification.check(result, "be an enum");
+        verification.check(result, "be an enum");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public ClassVerifier interfacing() throws VerifierException {
-    final Class<?> value = verification.getValue();
-    final boolean result = value != null && value.isInterface();
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public ClassVerifier interfacing() throws VerifierException {
+        final Class<?> value = verification.getValue();
+        final boolean result = value != null && value.isInterface();
 
-    verification.check(result, "be an interface");
+        verification.check(result, "be an interface");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public ClassVerifier nested() throws VerifierException {
-    final Class<?> value = verification.getValue();
-    final boolean result = value != null && value.getEnclosingClass() != null;
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public ClassVerifier nested() throws VerifierException {
+        final Class<?> value = verification.getValue();
+        final boolean result = value != null && value.getEnclosingClass() != null;
 
-    verification.check(result, "be nested");
+        verification.check(result, "be nested");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public ClassVerifier primitive() throws VerifierException {
-    final Class<?> value = verification.getValue();
-    final boolean result = value != null && value.isPrimitive();
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public ClassVerifier primitive() throws VerifierException {
+        final Class<?> value = verification.getValue();
+        final boolean result = value != null && value.isPrimitive();
 
-    verification.check(result, "be a primitive");
+        verification.check(result, "be a primitive");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public ClassVerifier primitiveOrWrapper() throws VerifierException {
-    final Class<?> value = verification.getValue();
-    final boolean result = value != null && (value.isPrimitive() || PRIMITIVE_WRAPPERS.contains(value));
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public ClassVerifier primitiveOrWrapper() throws VerifierException {
+        final Class<?> value = verification.getValue();
+        final boolean result = value != null && (value.isPrimitive() || PRIMITIVE_WRAPPERS.contains(value));
 
-    verification.check(result, "be a primitive or primitive wrapper");
+        verification.check(result, "be a primitive or primitive wrapper");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public ClassVerifier primitiveWrapper() throws VerifierException {
-    final Class<?> value = verification.getValue();
-    final boolean result = PRIMITIVE_WRAPPERS.contains(value);
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public ClassVerifier primitiveWrapper() throws VerifierException {
+        final Class<?> value = verification.getValue();
+        final boolean result = PRIMITIVE_WRAPPERS.contains(value);
 
-    verification.check(result, "be a primitive wrapper");
+        verification.check(result, "be a primitive wrapper");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public ClassVerifier synthetic() throws VerifierException {
-    final Class<?> value = verification.getValue();
-    final boolean result = value != null && value.isSynthetic();
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public ClassVerifier synthetic() throws VerifierException {
+        final Class<?> value = verification.getValue();
+        final boolean result = value != null && value.isSynthetic();
 
-    verification.check(result, "be synthetic");
+        verification.check(result, "be synthetic");
 
-    return this;
-  }
+        return this;
+    }
 }

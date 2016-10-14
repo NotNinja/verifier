@@ -21,8 +21,6 @@
  */
 package io.skelp.verifier;
 
-import static org.junit.Assert.*;
-
 /**
  * Tests for the {@link AbstractCustomVerifier} class.
  *

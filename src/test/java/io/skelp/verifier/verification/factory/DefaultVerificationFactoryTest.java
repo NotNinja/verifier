@@ -24,14 +24,15 @@ package io.skelp.verifier.verification.factory;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import io.skelp.verifier.message.MessageFormatter;
-import io.skelp.verifier.message.factory.MessageFormatterFactory;
-import io.skelp.verifier.verification.DefaultVerification;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import io.skelp.verifier.message.MessageFormatter;
+import io.skelp.verifier.message.factory.MessageFormatterFactory;
+import io.skelp.verifier.verification.DefaultVerification;
 
 /**
  * Tests for the {@link DefaultVerificationFactory} class.
@@ -41,27 +42,27 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultVerificationFactoryTest {
 
-  @Mock
-  private MessageFormatter mockMessageFormatter;
-  @Mock
-  private MessageFormatterFactory mockMessageFormatterFactory;
+    @Mock
+    private MessageFormatter mockMessageFormatter;
+    @Mock
+    private MessageFormatterFactory mockMessageFormatterFactory;
 
-  private DefaultVerificationFactory factory;
+    private DefaultVerificationFactory factory;
 
-  @Before
-  public void setup() {
-    factory = new DefaultVerificationFactory();
+    @Before
+    public void setup() {
+        factory = new DefaultVerificationFactory();
 
-    when(mockMessageFormatterFactory.create()).thenReturn(mockMessageFormatter);
-  }
+        when(mockMessageFormatterFactory.create()).thenReturn(mockMessageFormatter);
+    }
 
-  @Test
-  public void testCreate() {
-    DefaultVerification<Integer> instance = factory.create(mockMessageFormatterFactory, 123, "foo");
+    @Test
+    public void testCreate() {
+        DefaultVerification<Integer> instance = factory.create(mockMessageFormatterFactory, 123, "foo");
 
-    assertNotNull("Never null", instance);
-    assertSame("Passed message formatter factory", mockMessageFormatter, instance.getMessageFormatter());
-    assertEquals("Passed name", "foo", instance.getName());
-    assertEquals("Passed value", Integer.valueOf(123), instance.getValue());
-  }
+        assertNotNull("Never null", instance);
+        assertSame("Passed message formatter factory", mockMessageFormatter, instance.getMessageFormatter());
+        assertEquals("Passed name", "foo", instance.getName());
+        assertEquals("Passed value", Integer.valueOf(123), instance.getValue());
+    }
 }

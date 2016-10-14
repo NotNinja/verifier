@@ -32,36 +32,36 @@ import org.junit.Test;
  */
 public class VerifierExceptionTest {
 
-  private static final Throwable TEST_CAUSE = new Exception("test-cause");
-  private static final String TEST_MESSAGE = "test-message";
+    private static final Throwable TEST_CAUSE = new Exception("test-cause");
+    private static final String TEST_MESSAGE = "test-message";
 
-  private static void assertVerifierException(VerifierException exception, String message, Throwable cause) {
-    assertEquals("Has correct detail message", message, exception.getMessage());
-    assertEquals("Has correct cause", cause, exception.getCause());
-  }
+    private static void assertVerifierException(VerifierException exception, String message, Throwable cause) {
+        assertEquals("Has correct detail message", message, exception.getMessage());
+        assertEquals("Has correct cause", cause, exception.getCause());
+    }
 
-  @Test
-  public void testConstructorWithMessage() {
-    assertVerifierException(new VerifierException(TEST_MESSAGE), TEST_MESSAGE, null);
-  }
+    @Test
+    public void testConstructorWithMessage() {
+        assertVerifierException(new VerifierException(TEST_MESSAGE), TEST_MESSAGE, null);
+    }
 
-  @Test
-  public void testConstructorWithMessageAndCause() {
-    assertVerifierException(new VerifierException(TEST_MESSAGE, TEST_CAUSE), TEST_MESSAGE, TEST_CAUSE);
-  }
+    @Test
+    public void testConstructorWithMessageAndCause() {
+        assertVerifierException(new VerifierException(TEST_MESSAGE, TEST_CAUSE), TEST_MESSAGE, TEST_CAUSE);
+    }
 
-  @Test
-  public void testConstructorWithNoArgs() {
-    assertVerifierException(new VerifierException(), null, null);
-  }
+    @Test
+    public void testConstructorWithNoArgs() {
+        assertVerifierException(new VerifierException(), null, null);
+    }
 
-  @Test
-  public void testConstructorWithCause() {
-    assertVerifierException(new VerifierException(TEST_CAUSE), TEST_CAUSE.toString(), TEST_CAUSE);
-  }
+    @Test
+    public void testConstructorWithCause() {
+        assertVerifierException(new VerifierException(TEST_CAUSE), TEST_CAUSE.toString(), TEST_CAUSE);
+    }
 
-  @Test(expected = VerifierException.class)
-  public void testThrowable() {
-    throw new VerifierException();
-  }
+    @Test(expected = VerifierException.class)
+    public void testThrowable() {
+        throw new VerifierException();
+    }
 }

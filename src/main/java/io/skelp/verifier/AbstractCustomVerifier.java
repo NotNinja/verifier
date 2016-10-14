@@ -34,162 +34,162 @@ import io.skelp.verifier.verification.Verification;
  */
 public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier<T, V>> implements CustomVerifier<T, V> {
 
-  private static <T> boolean matchAny(final T[] inputs, final Function<Boolean, T> matcher) {
-    for (final T input : inputs) {
-      if (matcher.apply(input)) {
-        return true;
-      }
+    private static <T> boolean matchAny(final T[] inputs, final Function<Boolean, T> matcher) {
+        for (final T input : inputs) {
+            if (matcher.apply(input)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    return false;
-  }
+    /** TODO: Document */
+    protected final Verification<T> verification;
 
-  /** TODO: Document */
-  protected final Verification<T> verification;
-
-  /**
-   * TODO: Document
-   *
-   * @param verification
-   */
-  public AbstractCustomVerifier(final Verification<T> verification) {
-    this.verification = verification;
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  @SuppressWarnings("unchecked")
-  protected V chain() {
-    return (V) this;
-  }
-
-  @Override
-  public V equalTo(final Object other) throws VerifierException {
-    return equalTo(other, other);
-  }
-
-  @Override
-  public V equalTo(final Object other, final Object name) throws VerifierException {
-    final T value = verification.getValue();
-    final boolean result = other == null ? value == null : other.equals(value);
-
-    verification.check(result, "be equal to '%s'", name);
-
-    return chain();
-  }
-
-  @Override
-  public V equalToAny(final Object... others) throws VerifierException {
-    final T value = verification.getValue();
-    final boolean result = matchAny(others, new Function<Boolean, Object>() {
-      @Override
-      public Boolean apply(final Object input) {
-        return input == null ? value == null : input.equals(value);
-      }
-    });
-
-    verification.check(result, "be equal to any %s", new ArrayFormatter<>(others));
-
-    return chain();
-  }
-
-  @Override
-  public V hashed(final int hashCode) throws VerifierException {
-    final T value = verification.getValue();
-    final boolean result = value != null && value.hashCode() == hashCode;
-
-    verification.check(result, "have hash code '%d'", hashCode);
-
-    return chain();
-  }
-
-  @Override
-  public V instanceOf(final Class<?> cls) throws VerifierException {
-    final boolean result = cls.isInstance(verification.getValue());
-
-    verification.check(result, "be an instance of '%s'", cls);
-
-    return chain();
-  }
-
-  @Override
-  public V instanceOfAny(final Class<?>... classes) throws VerifierException {
-    final T value = verification.getValue();
-    final boolean result = matchAny(classes, new Function<Boolean, Class<?>>() {
-      @Override
-      public Boolean apply(final Class<?> input) {
-        return input.isInstance(value);
-      }
-    });
-
-    verification.check(result, "be an instance of any %s", new ArrayFormatter<>(classes));
-
-    return chain();
-  }
-
-  @Override
-  public V not() {
-    verification.setNegated(!verification.isNegated());
-
-    return chain();
-  }
-
-  @Override
-  public V nulled() throws VerifierException {
-    final boolean result = verification.getValue() == null;
-
-    verification.check(result, "be null");
-
-    return chain();
-  }
-
-  @Override
-  public V sameAs(final Object other) throws VerifierException {
-    return sameAs(other, other);
-  }
-
-  @Override
-  public V sameAs(final Object other, final Object name) throws VerifierException {
-    final boolean result = verification.getValue() == other;
-
-    verification.check(result, "be same as %s", name);
-
-    return chain();
-  }
-
-  @Override
-  public V sameAsAny(final Object... others) throws VerifierException {
-    final T value = verification.getValue();
-    final boolean result = matchAny(others, new Function<Boolean, Object>() {
-      @Override
-      public Boolean apply(final Object input) {
-        return value == input;
-      }
-    });
-
-    verification.check(result, "be same as any %s", new ArrayFormatter<>(others));
-
-    return chain();
-  }
-
-  @Override
-  public V that(final VerifierAssertion<T> assertion) throws VerifierException {
-    return that(assertion, null);
-  }
-
-  @Override
-  public V that(final VerifierAssertion<T> assertion, final String message, final Object... args) throws VerifierException {
-    if (assertion == null) {
-      throw new VerifierException("assertion must not be null");
+    /**
+     * TODO: Document
+     *
+     * @param verification
+     */
+    public AbstractCustomVerifier(final Verification<T> verification) {
+        this.verification = verification;
     }
 
-    final boolean result = assertion.verify(verification.getValue());
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    protected V chain() {
+        return (V) this;
+    }
 
-    verification.check(result, message, args);
+    @Override
+    public V equalTo(final Object other) throws VerifierException {
+        return equalTo(other, other);
+    }
 
-    return chain();
-  }
+    @Override
+    public V equalTo(final Object other, final Object name) throws VerifierException {
+        final T value = verification.getValue();
+        final boolean result = other == null ? value == null : other.equals(value);
+
+        verification.check(result, "be equal to '%s'", name);
+
+        return chain();
+    }
+
+    @Override
+    public V equalToAny(final Object... others) throws VerifierException {
+        final T value = verification.getValue();
+        final boolean result = matchAny(others, new Function<Boolean, Object>() {
+            @Override
+            public Boolean apply(final Object input) {
+                return input == null ? value == null : input.equals(value);
+            }
+        });
+
+        verification.check(result, "be equal to any %s", new ArrayFormatter<>(others));
+
+        return chain();
+    }
+
+    @Override
+    public V hashed(final int hashCode) throws VerifierException {
+        final T value = verification.getValue();
+        final boolean result = value != null && value.hashCode() == hashCode;
+
+        verification.check(result, "have hash code '%d'", hashCode);
+
+        return chain();
+    }
+
+    @Override
+    public V instanceOf(final Class<?> cls) throws VerifierException {
+        final boolean result = cls.isInstance(verification.getValue());
+
+        verification.check(result, "be an instance of '%s'", cls);
+
+        return chain();
+    }
+
+    @Override
+    public V instanceOfAny(final Class<?>... classes) throws VerifierException {
+        final T value = verification.getValue();
+        final boolean result = matchAny(classes, new Function<Boolean, Class<?>>() {
+            @Override
+            public Boolean apply(final Class<?> input) {
+                return input.isInstance(value);
+            }
+        });
+
+        verification.check(result, "be an instance of any %s", new ArrayFormatter<>(classes));
+
+        return chain();
+    }
+
+    @Override
+    public V not() {
+        verification.setNegated(!verification.isNegated());
+
+        return chain();
+    }
+
+    @Override
+    public V nulled() throws VerifierException {
+        final boolean result = verification.getValue() == null;
+
+        verification.check(result, "be null");
+
+        return chain();
+    }
+
+    @Override
+    public V sameAs(final Object other) throws VerifierException {
+        return sameAs(other, other);
+    }
+
+    @Override
+    public V sameAs(final Object other, final Object name) throws VerifierException {
+        final boolean result = verification.getValue() == other;
+
+        verification.check(result, "be same as %s", name);
+
+        return chain();
+    }
+
+    @Override
+    public V sameAsAny(final Object... others) throws VerifierException {
+        final T value = verification.getValue();
+        final boolean result = matchAny(others, new Function<Boolean, Object>() {
+            @Override
+            public Boolean apply(final Object input) {
+                return value == input;
+            }
+        });
+
+        verification.check(result, "be same as any %s", new ArrayFormatter<>(others));
+
+        return chain();
+    }
+
+    @Override
+    public V that(final VerifierAssertion<T> assertion) throws VerifierException {
+        return that(assertion, null);
+    }
+
+    @Override
+    public V that(final VerifierAssertion<T> assertion, final String message, final Object... args) throws VerifierException {
+        if (assertion == null) {
+            throw new VerifierException("assertion must not be null");
+        }
+
+        final boolean result = assertion.verify(verification.getValue());
+
+        verification.check(result, message, args);
+
+        return chain();
+    }
 }

@@ -31,12 +31,12 @@ import io.skelp.verifier.verification.Verification;
  */
 public final class ObjectVerifier extends AbstractCustomVerifier<Object, ObjectVerifier> {
 
-  /**
-   * TODO: Document
-   *
-   * @param verification
-   */
-  public ObjectVerifier(final Verification<Object> verification) {
-    super(verification);
-  }
+    /**
+     * TODO: Document
+     *
+     * @param verification
+     */
+    public ObjectVerifier(final Verification<Object> verification) {
+        super(verification);
+    }
 }

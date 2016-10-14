@@ -30,13 +30,13 @@ import io.skelp.verifier.verification.Verification;
  */
 public interface MessageFormatter {
 
-  /**
-   * TODO: Document
-   *
-   * @param verification
-   * @param message
-   * @param args
-   * @return
-   */
-  String format(Verification<?> verification, String message, Object... args);
+    /**
+     * TODO: Document
+     *
+     * @param verification
+     * @param message
+     * @param args
+     * @return
+     */
+    String format(Verification<?> verification, String message, Object... args);
 }

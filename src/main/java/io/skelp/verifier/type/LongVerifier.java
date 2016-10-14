@@ -21,10 +21,10 @@
  */
 package io.skelp.verifier.type;
 
-import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseNumberVerifier;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * TODO: Document
@@ -33,92 +33,92 @@ import io.skelp.verifier.type.base.BaseNumberVerifier;
  */
 public final class LongVerifier extends BaseComparableVerifier<Long, LongVerifier> implements BaseNumberVerifier<Long, LongVerifier> {
 
-  /**
-   * TODO: Document
-   *
-   * @param verification
-   */
-  public LongVerifier(final Verification<Long> verification) {
-    super(verification);
-  }
+    /**
+     * TODO: Document
+     *
+     * @param verification
+     */
+    public LongVerifier(final Verification<Long> verification) {
+        super(verification);
+    }
 
-  @Override
-  public LongVerifier even() throws VerifierException {
-    final Long value = verification.getValue();
-    final boolean result = value != null && value % 2L == 0;
+    @Override
+    public LongVerifier even() throws VerifierException {
+        final Long value = verification.getValue();
+        final boolean result = value != null && value % 2L == 0;
 
-    verification.check(result, "be even");
+        verification.check(result, "be even");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public LongVerifier falsehood() throws VerifierException {
-    final Long value = verification.getValue();
-    final boolean result = value != null && value == 0L;
+    @Override
+    public LongVerifier falsehood() throws VerifierException {
+        final Long value = verification.getValue();
+        final boolean result = value != null && value == 0L;
 
-    verification.check(result, "be false");
+        verification.check(result, "be false");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public LongVerifier negative() throws VerifierException {
-    final Long value = verification.getValue();
-    final boolean result = value != null && value < 0L;
+    @Override
+    public LongVerifier negative() throws VerifierException {
+        final Long value = verification.getValue();
+        final boolean result = value != null && value < 0L;
 
-    verification.check(result, "be negative");
+        verification.check(result, "be negative");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public LongVerifier odd() throws VerifierException {
-    final Long value = verification.getValue();
-    final boolean result = value != null && value % 2 != 0L;
+    @Override
+    public LongVerifier odd() throws VerifierException {
+        final Long value = verification.getValue();
+        final boolean result = value != null && value % 2 != 0L;
 
-    verification.check(result, "be odd");
+        verification.check(result, "be odd");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public LongVerifier one() throws VerifierException {
-    final Long value = verification.getValue();
-    final boolean result = value != null && value == 1L;
+    @Override
+    public LongVerifier one() throws VerifierException {
+        final Long value = verification.getValue();
+        final boolean result = value != null && value == 1L;
 
-    verification.check(result, "be one");
+        verification.check(result, "be one");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public LongVerifier positive() throws VerifierException {
-    final Long value = verification.getValue();
-    final boolean result = value != null && value >= 0L;
+    @Override
+    public LongVerifier positive() throws VerifierException {
+        final Long value = verification.getValue();
+        final boolean result = value != null && value >= 0L;
 
-    verification.check(result, "be positive");
+        verification.check(result, "be positive");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public LongVerifier truth() throws VerifierException {
-    final Long value = verification.getValue();
-    final boolean result = value != null && value == 0L;
+    @Override
+    public LongVerifier truth() throws VerifierException {
+        final Long value = verification.getValue();
+        final boolean result = value != null && value == 0L;
 
-    verification.check(result, "be true");
+        verification.check(result, "be true");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public LongVerifier zero() throws VerifierException {
-    final Long value = verification.getValue();
-    final boolean result = value != null && value == 0L;
+    @Override
+    public LongVerifier zero() throws VerifierException {
+        final Long value = verification.getValue();
+        final boolean result = value != null && value == 0L;
 
-    verification.check(result, "be zero");
+        verification.check(result, "be zero");
 
-    return this;
-  }
+        return this;
+    }
 }

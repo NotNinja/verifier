@@ -23,9 +23,10 @@ package io.skelp.verifier.type;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import io.skelp.verifier.AbstractCustomVerifier;
-import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * TODO: Document
@@ -34,90 +35,90 @@ import io.skelp.verifier.VerifierException;
  */
 public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, ThrowableVerifier> {
 
-  private static List<Throwable> getThrowables(Throwable throwable) {
-    final List<Throwable> throwables = new ArrayList<>();
-    while (throwable != null && !throwables.contains(throwable)) {
-      throwables.add(throwable);
-      throwable = throwable.getCause();
+    private static List<Throwable> getThrowables(Throwable throwable) {
+        final List<Throwable> throwables = new ArrayList<>();
+        while (throwable != null && !throwables.contains(throwable)) {
+            throwables.add(throwable);
+            throwable = throwable.getCause();
+        }
+
+        return throwables;
     }
 
-    return throwables;
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param verification
-   */
-  public ThrowableVerifier(final Verification<Throwable> verification) {
-    super(verification);
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public ThrowableVerifier checked() throws VerifierException {
-    final Throwable value = verification.getValue();
-    final boolean result = value != null && !(value instanceof RuntimeException);
-
-    verification.check(result, "be checked");
-
-    return this;
-  }
-
-  /**
-   * TODO: Document
-   *
-   * @param type
-   * @return
-   * @throws VerifierException
-   */
-  public ThrowableVerifier causedBy(final Class<?> type) throws VerifierException {
-    final Throwable value = verification.getValue();
-    boolean result = false;
-    for (final Throwable throwable : getThrowables(value)) {
-      if (type.isAssignableFrom(throwable.getClass())) {
-        result = true;
-        break;
-      }
+    /**
+     * TODO: Document
+     *
+     * @param verification
+     */
+    public ThrowableVerifier(final Verification<Throwable> verification) {
+        super(verification);
     }
 
-    verification.check(result, "have been caused by %s", type);
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public ThrowableVerifier checked() throws VerifierException {
+        final Throwable value = verification.getValue();
+        final boolean result = value != null && !(value instanceof RuntimeException);
 
-    return this;
-  }
+        verification.check(result, "be checked");
 
-  /**
-   * TODO: Document
-   *
-   * @param cause
-   * @return
-   * @throws VerifierException
-   */
-  public ThrowableVerifier causedBy(final Throwable cause) throws VerifierException {
-    final Throwable value = verification.getValue();
-    final boolean result = getThrowables(value).contains(cause);
+        return this;
+    }
 
-    verification.check(result, "have been caused by %s", cause);
+    /**
+     * TODO: Document
+     *
+     * @param type
+     * @return
+     * @throws VerifierException
+     */
+    public ThrowableVerifier causedBy(final Class<?> type) throws VerifierException {
+        final Throwable value = verification.getValue();
+        boolean result = false;
+        for (final Throwable throwable : getThrowables(value)) {
+            if (type.isAssignableFrom(throwable.getClass())) {
+                result = true;
+                break;
+            }
+        }
 
-    return this;
-  }
+        verification.check(result, "have been caused by %s", type);
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   * @throws VerifierException
-   */
-  public ThrowableVerifier unchecked() throws VerifierException {
-    final Throwable value = verification.getValue();
-    final boolean result = value instanceof RuntimeException;
+        return this;
+    }
 
-    verification.check(result, "be unchecked");
+    /**
+     * TODO: Document
+     *
+     * @param cause
+     * @return
+     * @throws VerifierException
+     */
+    public ThrowableVerifier causedBy(final Throwable cause) throws VerifierException {
+        final Throwable value = verification.getValue();
+        final boolean result = getThrowables(value).contains(cause);
 
-    return this;
-  }
+        verification.check(result, "have been caused by %s", cause);
+
+        return this;
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @return
+     * @throws VerifierException
+     */
+    public ThrowableVerifier unchecked() throws VerifierException {
+        final Throwable value = verification.getValue();
+        final boolean result = value instanceof RuntimeException;
+
+        verification.check(result, "be unchecked");
+
+        return this;
+    }
 }

@@ -21,10 +21,10 @@
  */
 package io.skelp.verifier.type;
 
-import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseNumberVerifier;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * TODO: Document
@@ -33,92 +33,92 @@ import io.skelp.verifier.type.base.BaseNumberVerifier;
  */
 public final class FloatVerifier extends BaseComparableVerifier<Float, FloatVerifier> implements BaseNumberVerifier<Float, FloatVerifier> {
 
-  /**
-   * TODO: Document
-   *
-   * @param verification
-   */
-  public FloatVerifier(final Verification<Float> verification) {
-    super(verification);
-  }
+    /**
+     * TODO: Document
+     *
+     * @param verification
+     */
+    public FloatVerifier(final Verification<Float> verification) {
+        super(verification);
+    }
 
-  @Override
-  public FloatVerifier even() throws VerifierException {
-    final Float value = verification.getValue();
-    final boolean result = value != null && value % 2F == 0;
+    @Override
+    public FloatVerifier even() throws VerifierException {
+        final Float value = verification.getValue();
+        final boolean result = value != null && value % 2F == 0;
 
-    verification.check(result, "be even");
+        verification.check(result, "be even");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public FloatVerifier falsehood() throws VerifierException {
-    final Float value = verification.getValue();
-    final boolean result = value != null && value == 0F;
+    @Override
+    public FloatVerifier falsehood() throws VerifierException {
+        final Float value = verification.getValue();
+        final boolean result = value != null && value == 0F;
 
-    verification.check(result, "be false");
+        verification.check(result, "be false");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public FloatVerifier negative() throws VerifierException {
-    final Float value = verification.getValue();
-    final boolean result = value != null && value < 0F;
+    @Override
+    public FloatVerifier negative() throws VerifierException {
+        final Float value = verification.getValue();
+        final boolean result = value != null && value < 0F;
 
-    verification.check(result, "be negative");
+        verification.check(result, "be negative");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public FloatVerifier odd() throws VerifierException {
-    final Float value = verification.getValue();
-    final boolean result = value != null && value % 2 != 0F;
+    @Override
+    public FloatVerifier odd() throws VerifierException {
+        final Float value = verification.getValue();
+        final boolean result = value != null && value % 2 != 0F;
 
-    verification.check(result, "be odd");
+        verification.check(result, "be odd");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public FloatVerifier one() throws VerifierException {
-    final Float value = verification.getValue();
-    final boolean result = value != null && value == 1F;
+    @Override
+    public FloatVerifier one() throws VerifierException {
+        final Float value = verification.getValue();
+        final boolean result = value != null && value == 1F;
 
-    verification.check(result, "be one");
+        verification.check(result, "be one");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public FloatVerifier positive() throws VerifierException {
-    final Float value = verification.getValue();
-    final boolean result = value != null && value >= 0F;
+    @Override
+    public FloatVerifier positive() throws VerifierException {
+        final Float value = verification.getValue();
+        final boolean result = value != null && value >= 0F;
 
-    verification.check(result, "be positive");
+        verification.check(result, "be positive");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public FloatVerifier truth() throws VerifierException {
-    final Float value = verification.getValue();
-    final boolean result = value != null && value == 1F;
+    @Override
+    public FloatVerifier truth() throws VerifierException {
+        final Float value = verification.getValue();
+        final boolean result = value != null && value == 1F;
 
-    verification.check(result, "be true");
+        verification.check(result, "be true");
 
-    return this;
-  }
+        return this;
+    }
 
-  @Override
-  public FloatVerifier zero() throws VerifierException {
-    final Float value = verification.getValue();
-    final boolean result = value != null && value == 0F;
+    @Override
+    public FloatVerifier zero() throws VerifierException {
+        final Float value = verification.getValue();
+        final boolean result = value != null && value == 0F;
 
-    verification.check(result, "be zero");
+        verification.check(result, "be zero");
 
-    return this;
-  }
+        return this;
+    }
 }

@@ -31,15 +31,15 @@ import io.skelp.verifier.verification.Verification;
  */
 public interface CustomVerifierFactory {
 
-  /**
-   * TODO: Document
-   *
-   * @param cls
-   * @param verification
-   * @param <T>
-   * @param <V>
-   * @return
-   * @throws VerifierFactoryException
-   */
-  <T, V extends CustomVerifier<T, V>> V create(Class<V> cls, Verification<T> verification) throws VerifierFactoryException;
+    /**
+     * TODO: Document
+     *
+     * @param cls
+     * @param verification
+     * @param <T>
+     * @param <V>
+     * @return
+     * @throws VerifierFactoryException
+     */
+    <T, V extends CustomVerifier<T, V>> V create(Class<V> cls, Verification<T> verification) throws VerifierFactoryException;
 }

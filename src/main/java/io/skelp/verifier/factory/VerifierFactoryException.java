@@ -30,43 +30,43 @@ import io.skelp.verifier.VerifierException;
  */
 public class VerifierFactoryException extends VerifierException {
 
-  /**
-   * Creates a new instance of {@link VerifierFactoryException} with no detail message or cause.
-   */
-  public VerifierFactoryException() {
-    super();
-  }
+    /**
+     * Creates a new instance of {@link VerifierFactoryException} with no detail message or cause.
+     */
+    public VerifierFactoryException() {
+        super();
+    }
 
-  /**
-   * Creates a new instance of {@link VerifierFactoryException} with the detail {@code message} provided but no cause.
-   *
-   * @param message
-   *         the detail message to be used
-   */
-  public VerifierFactoryException(final String message) {
-    super(message);
-  }
+    /**
+     * Creates a new instance of {@link VerifierFactoryException} with the detail {@code message} provided but no cause.
+     *
+     * @param message
+     *         the detail message to be used
+     */
+    public VerifierFactoryException(final String message) {
+        super(message);
+    }
 
-  /**
-   * Creates a new instance of {@link VerifierFactoryException} with the detail {@code message} and {@code cause}
-   * provided.
-   *
-   * @param message
-   *         the detail message to be used
-   * @param cause
-   *         the {@code Throwable} cause to be used
-   */
-  public VerifierFactoryException(final String message, final Throwable cause) {
-    super(message, cause);
-  }
+    /**
+     * Creates a new instance of {@link VerifierFactoryException} with the detail {@code message} and {@code cause}
+     * provided.
+     *
+     * @param message
+     *         the detail message to be used
+     * @param cause
+     *         the {@code Throwable} cause to be used
+     */
+    public VerifierFactoryException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
 
-  /**
-   * Creates a new instance of {@link VerifierFactoryException} with the {@code cause} provided but no detail message.
-   *
-   * @param cause
-   *         the {@code Throwable} cause to be used
-   */
-  public VerifierFactoryException(final Throwable cause) {
-    super(cause);
-  }
+    /**
+     * Creates a new instance of {@link VerifierFactoryException} with the {@code cause} provided but no detail message.
+     *
+     * @param cause
+     *         the {@code Throwable} cause to be used
+     */
+    public VerifierFactoryException(final Throwable cause) {
+        super(cause);
+    }
 }

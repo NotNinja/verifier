@@ -21,8 +21,6 @@
  */
 package io.skelp.verifier.type.base;
 
-import static org.junit.Assert.*;
-
 /**
  * Tests for the {@link BaseComparableVerifier} class.
  *

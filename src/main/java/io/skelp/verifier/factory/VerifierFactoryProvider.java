@@ -31,24 +31,24 @@ import io.skelp.verifier.verification.factory.VerificationFactory;
  */
 public interface VerifierFactoryProvider {
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  CustomVerifierFactory getCustomVerifierFactory();
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    CustomVerifierFactory getCustomVerifierFactory();
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  MessageFormatterFactory getMessageFormatterFactory();
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    MessageFormatterFactory getMessageFormatterFactory();
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  VerificationFactory getVerificationFactory();
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    VerificationFactory getVerificationFactory();
 }

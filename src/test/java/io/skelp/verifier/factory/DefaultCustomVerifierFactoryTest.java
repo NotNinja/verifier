@@ -23,14 +23,15 @@ package io.skelp.verifier.factory;
 
 import static org.junit.Assert.*;
 
-import io.skelp.verifier.AbstractCustomVerifier;
-import io.skelp.verifier.CustomVerifier;
-import io.skelp.verifier.verification.Verification;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import io.skelp.verifier.AbstractCustomVerifier;
+import io.skelp.verifier.CustomVerifier;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * Tests for the {@link DefaultCustomVerifierFactory} class.
@@ -40,45 +41,45 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultCustomVerifierFactoryTest {
 
-  @Mock
-  private Verification<Object> mockVerification;
+    @Mock
+    private Verification<Object> mockVerification;
 
-  private DefaultCustomVerifierFactory factory;
+    private DefaultCustomVerifierFactory factory;
 
-  @Before
-  public void setup() {
-    factory = new DefaultCustomVerifierFactory();
-  }
-
-  @Test
-  public void testCreate() {
-    TestCustomVerifierImpl instance = factory.create(TestCustomVerifierImpl.class, mockVerification);
-
-    assertNotNull("Never null", instance);
-    assertSame("Passed verification", mockVerification, instance.verification);
-  }
-
-  @Test(expected = VerifierFactoryException.class)
-  public void testCreateThrowsIfClassCannotBeInstantiated() {
-    factory.create(TestCustomVerifier.class, mockVerification);
-  }
-
-  @Test(expected = VerifierFactoryException.class)
-  public void testCreateThrowsIfClassIsNull() {
-    factory.create(null, mockVerification);
-  }
-
-  private interface TestCustomVerifier<T, V extends TestCustomVerifier<T, V>> extends CustomVerifier<T, V> {
-  }
-
-  private static class TestCustomVerifierImpl extends AbstractCustomVerifier<Object, TestCustomVerifierImpl> implements TestCustomVerifier<Object, TestCustomVerifierImpl> {
-
-    final Verification<Object> verification;
-
-    public TestCustomVerifierImpl(Verification<Object> verification) {
-      super(verification);
-
-      this.verification = verification;
+    @Before
+    public void setup() {
+        factory = new DefaultCustomVerifierFactory();
     }
-  }
+
+    @Test
+    public void testCreate() {
+        TestCustomVerifierImpl instance = factory.create(TestCustomVerifierImpl.class, mockVerification);
+
+        assertNotNull("Never null", instance);
+        assertSame("Passed verification", mockVerification, instance.verification);
+    }
+
+    @Test(expected = VerifierFactoryException.class)
+    public void testCreateThrowsIfClassCannotBeInstantiated() {
+        factory.create(TestCustomVerifier.class, mockVerification);
+    }
+
+    @Test(expected = VerifierFactoryException.class)
+    public void testCreateThrowsIfClassIsNull() {
+        factory.create(null, mockVerification);
+    }
+
+    private interface TestCustomVerifier<T, V extends TestCustomVerifier<T, V>> extends CustomVerifier<T, V> {
+    }
+
+    private static class TestCustomVerifierImpl extends AbstractCustomVerifier<Object, TestCustomVerifierImpl> implements TestCustomVerifier<Object, TestCustomVerifierImpl> {
+
+        final Verification<Object> verification;
+
+        public TestCustomVerifierImpl(Verification<Object> verification) {
+            super(verification);
+
+            this.verification = verification;
+        }
+    }
 }

@@ -32,36 +32,36 @@ import org.junit.Test;
  */
 public class VerifierFactoryExceptionTest {
 
-  private static final Throwable TEST_CAUSE = new Exception("test-cause");
-  private static final String TEST_MESSAGE = "test-message";
+    private static final Throwable TEST_CAUSE = new Exception("test-cause");
+    private static final String TEST_MESSAGE = "test-message";
 
-  private static void assertVerifierFactoryException(VerifierFactoryException exception, String message, Throwable cause) {
-    assertEquals("Has correct detail message", message, exception.getMessage());
-    assertEquals("Has correct cause", cause, exception.getCause());
-  }
+    private static void assertVerifierFactoryException(VerifierFactoryException exception, String message, Throwable cause) {
+        assertEquals("Has correct detail message", message, exception.getMessage());
+        assertEquals("Has correct cause", cause, exception.getCause());
+    }
 
-  @Test
-  public void testConstructorWithMessage() {
-    assertVerifierFactoryException(new VerifierFactoryException(TEST_MESSAGE), TEST_MESSAGE, null);
-  }
+    @Test
+    public void testConstructorWithMessage() {
+        assertVerifierFactoryException(new VerifierFactoryException(TEST_MESSAGE), TEST_MESSAGE, null);
+    }
 
-  @Test
-  public void testConstructorWithMessageAndCause() {
-    assertVerifierFactoryException(new VerifierFactoryException(TEST_MESSAGE, TEST_CAUSE), TEST_MESSAGE, TEST_CAUSE);
-  }
+    @Test
+    public void testConstructorWithMessageAndCause() {
+        assertVerifierFactoryException(new VerifierFactoryException(TEST_MESSAGE, TEST_CAUSE), TEST_MESSAGE, TEST_CAUSE);
+    }
 
-  @Test
-  public void testConstructorWithNoArgs() {
-    assertVerifierFactoryException(new VerifierFactoryException(), null, null);
-  }
+    @Test
+    public void testConstructorWithNoArgs() {
+        assertVerifierFactoryException(new VerifierFactoryException(), null, null);
+    }
 
-  @Test
-  public void testConstructorWithCause() {
-    assertVerifierFactoryException(new VerifierFactoryException(TEST_CAUSE), TEST_CAUSE.toString(), TEST_CAUSE);
-  }
+    @Test
+    public void testConstructorWithCause() {
+        assertVerifierFactoryException(new VerifierFactoryException(TEST_CAUSE), TEST_CAUSE.toString(), TEST_CAUSE);
+    }
 
-  @Test(expected = VerifierFactoryException.class)
-  public void testThrowable() {
-    throw new VerifierFactoryException();
-  }
+    @Test(expected = VerifierFactoryException.class)
+    public void testThrowable() {
+        throw new VerifierFactoryException();
+    }
 }

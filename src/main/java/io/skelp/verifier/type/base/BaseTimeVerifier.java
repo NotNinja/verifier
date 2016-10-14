@@ -22,8 +22,9 @@
 package io.skelp.verifier.type.base;
 
 import java.util.Calendar;
-import io.skelp.verifier.verification.Verification;
+
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * TODO: Document
@@ -34,136 +35,136 @@ import io.skelp.verifier.VerifierException;
  */
 public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extends BaseTimeVerifier<T, V>> extends BaseComparableVerifier<T, V> {
 
-  /**
-   * TODO: Document
-   *
-   * @param verification
-   */
-  public BaseTimeVerifier(final Verification<T> verification) {
-    super(verification);
-  }
+    /**
+     * TODO: Document
+     *
+     * @param verification
+     */
+    public BaseTimeVerifier(final Verification<T> verification) {
+        super(verification);
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @param other
-   * @return
-   * @throws VerifierException
-   */
-  public V sameDay(final T other) throws VerifierException {
-    final Calendar calendar1 = getCalendar(verification.getValue());
-    final Calendar calendar2 = getCalendar(other);
-    final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
-      calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
-      calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR));
+    /**
+     * TODO: Document
+     *
+     * @param other
+     * @return
+     * @throws VerifierException
+     */
+    public V sameDay(final T other) throws VerifierException {
+        final Calendar calendar1 = getCalendar(verification.getValue());
+        final Calendar calendar2 = getCalendar(other);
+        final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
+            calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
+            calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR));
 
-    verification.check(result, "be same day as '%s'", other);
+        verification.check(result, "be same day as '%s'", other);
 
-    return chain();
-  }
+        return chain();
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @param other
-   * @return
-   * @throws VerifierException
-   */
-  public V sameHour(final T other) throws VerifierException {
-    final Calendar calendar1 = getCalendar(verification.getValue());
-    final Calendar calendar2 = getCalendar(other);
-    final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
-      calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
-      calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR) &&
-      calendar1.get(Calendar.HOUR_OF_DAY) == calendar2.get(Calendar.HOUR_OF_DAY));
+    /**
+     * TODO: Document
+     *
+     * @param other
+     * @return
+     * @throws VerifierException
+     */
+    public V sameHour(final T other) throws VerifierException {
+        final Calendar calendar1 = getCalendar(verification.getValue());
+        final Calendar calendar2 = getCalendar(other);
+        final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
+            calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
+            calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR) &&
+            calendar1.get(Calendar.HOUR_OF_DAY) == calendar2.get(Calendar.HOUR_OF_DAY));
 
-    verification.check(result, "be same hour as '%s'", other);
+        verification.check(result, "be same hour as '%s'", other);
 
-    return chain();
-  }
+        return chain();
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @param other
-   * @return
-   * @throws VerifierException
-   */
-  public V sameMinute(final T other) throws VerifierException {
-    final Calendar calendar1 = getCalendar(verification.getValue());
-    final Calendar calendar2 = getCalendar(other);
-    final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
-      calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
-      calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR) &&
-      calendar1.get(Calendar.HOUR_OF_DAY) == calendar2.get(Calendar.HOUR_OF_DAY) &&
-      calendar1.get(Calendar.MINUTE) == calendar2.get(Calendar.MINUTE));
+    /**
+     * TODO: Document
+     *
+     * @param other
+     * @return
+     * @throws VerifierException
+     */
+    public V sameMinute(final T other) throws VerifierException {
+        final Calendar calendar1 = getCalendar(verification.getValue());
+        final Calendar calendar2 = getCalendar(other);
+        final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
+            calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
+            calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR) &&
+            calendar1.get(Calendar.HOUR_OF_DAY) == calendar2.get(Calendar.HOUR_OF_DAY) &&
+            calendar1.get(Calendar.MINUTE) == calendar2.get(Calendar.MINUTE));
 
-    verification.check(result, "be same minute as '%s'", other);
+        verification.check(result, "be same minute as '%s'", other);
 
-    return chain();
-  }
+        return chain();
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @param other
-   * @return
-   * @throws VerifierException
-   */
-  public V sameMonth(final T other) throws VerifierException {
-    final Calendar calendar1 = getCalendar(verification.getValue());
-    final Calendar calendar2 = getCalendar(other);
-    final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
-      calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
-      calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH));
+    /**
+     * TODO: Document
+     *
+     * @param other
+     * @return
+     * @throws VerifierException
+     */
+    public V sameMonth(final T other) throws VerifierException {
+        final Calendar calendar1 = getCalendar(verification.getValue());
+        final Calendar calendar2 = getCalendar(other);
+        final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
+            calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
+            calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH));
 
-    verification.check(result, "be same month as '%s'", other);
+        verification.check(result, "be same month as '%s'", other);
 
-    return chain();
-  }
+        return chain();
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @param other
-   * @return
-   * @throws VerifierException
-   */
-  public V sameWeek(final T other) throws VerifierException {
-    final Calendar calendar1 = getCalendar(verification.getValue());
-    final Calendar calendar2 = getCalendar(other);
-    final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
-      calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
-      calendar1.get(Calendar.WEEK_OF_YEAR) == calendar2.get(Calendar.WEEK_OF_YEAR));
+    /**
+     * TODO: Document
+     *
+     * @param other
+     * @return
+     * @throws VerifierException
+     */
+    public V sameWeek(final T other) throws VerifierException {
+        final Calendar calendar1 = getCalendar(verification.getValue());
+        final Calendar calendar2 = getCalendar(other);
+        final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
+            calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
+            calendar1.get(Calendar.WEEK_OF_YEAR) == calendar2.get(Calendar.WEEK_OF_YEAR));
 
-    verification.check(result, "be same week as '%s'", other);
+        verification.check(result, "be same week as '%s'", other);
 
-    return chain();
-  }
+        return chain();
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @param other
-   * @return
-   * @throws VerifierException
-   */
-  public V sameYear(final T other) throws VerifierException {
-    final Calendar calendar1 = getCalendar(verification.getValue());
-    final Calendar calendar2 = getCalendar(other);
-    final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
-      calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR));
+    /**
+     * TODO: Document
+     *
+     * @param other
+     * @return
+     * @throws VerifierException
+     */
+    public V sameYear(final T other) throws VerifierException {
+        final Calendar calendar1 = getCalendar(verification.getValue());
+        final Calendar calendar2 = getCalendar(other);
+        final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
+            calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR));
 
-    verification.check(result, "be same year as '%s'", other);
+        verification.check(result, "be same year as '%s'", other);
 
-    return chain();
-  }
+        return chain();
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @param value
-   * @return
-   */
-  protected abstract Calendar getCalendar(T value);
+    /**
+     * TODO: Document
+     *
+     * @param value
+     * @return
+     */
+    protected abstract Calendar getCalendar(T value);
 }

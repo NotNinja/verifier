@@ -34,57 +34,57 @@ import io.skelp.verifier.message.factory.MessageFormatterFactory;
  */
 public class DefaultVerification<T> implements Verification<T> {
 
-  private final MessageFormatterFactory messageFormatterFactory;
-  private final Object name;
-  private boolean negated;
-  private final T value;
+    private final MessageFormatterFactory messageFormatterFactory;
+    private final Object name;
+    private boolean negated;
+    private final T value;
 
-  /**
-   * TODO: Document
-   *
-   * @param messageFormatterFactory
-   * @param value
-   * @param name
-   */
-  public DefaultVerification(final MessageFormatterFactory messageFormatterFactory, final T value, final Object name) {
-    this.messageFormatterFactory = messageFormatterFactory;
-    this.value = value;
-    this.name = name;
-  }
-
-  @Override
-  public DefaultVerification<T> check(final boolean result, final String message, final Object... args) throws VerifierException {
-    if (result && negated || !result && !negated) {
-      throw new VerifierException(getMessageFormatter().format(this, message, args));
+    /**
+     * TODO: Document
+     *
+     * @param messageFormatterFactory
+     * @param value
+     * @param name
+     */
+    public DefaultVerification(final MessageFormatterFactory messageFormatterFactory, final T value, final Object name) {
+        this.messageFormatterFactory = messageFormatterFactory;
+        this.value = value;
+        this.name = name;
     }
 
-    negated = false;
+    @Override
+    public DefaultVerification<T> check(final boolean result, final String message, final Object... args) throws VerifierException {
+        if (result && negated || !result && !negated) {
+            throw new VerifierException(getMessageFormatter().format(this, message, args));
+        }
 
-    return this;
-  }
+        negated = false;
 
-  @Override
-  public MessageFormatter getMessageFormatter() throws VerifierFactoryException {
-    return messageFormatterFactory.create();
-  }
+        return this;
+    }
 
-  @Override
-  public Object getName() {
-    return name;
-  }
+    @Override
+    public MessageFormatter getMessageFormatter() throws VerifierFactoryException {
+        return messageFormatterFactory.create();
+    }
 
-  @Override
-  public boolean isNegated() {
-    return negated;
-  }
+    @Override
+    public Object getName() {
+        return name;
+    }
 
-  @Override
-  public void setNegated(final boolean negated) {
-    this.negated = negated;
-  }
+    @Override
+    public boolean isNegated() {
+        return negated;
+    }
 
-  @Override
-  public T getValue() {
-    return value;
-  }
+    @Override
+    public void setNegated(final boolean negated) {
+        this.negated = negated;
+    }
+
+    @Override
+    public T getValue() {
+        return value;
+    }
 }

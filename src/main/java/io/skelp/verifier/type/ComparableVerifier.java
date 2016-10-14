@@ -21,8 +21,8 @@
  */
 package io.skelp.verifier.type;
 
-import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * TODO: Document
@@ -32,12 +32,12 @@ import io.skelp.verifier.type.base.BaseComparableVerifier;
  */
 public final class ComparableVerifier<T extends Comparable<? super T>> extends BaseComparableVerifier<T, ComparableVerifier<T>> {
 
-  /**
-   * TODO: Document
-   *
-   * @param verification
-   */
-  public ComparableVerifier(final Verification<T> verification) {
-    super(verification);
-  }
+    /**
+     * TODO: Document
+     *
+     * @param verification
+     */
+    public ComparableVerifier(final Verification<T> verification) {
+        super(verification);
+    }
 }

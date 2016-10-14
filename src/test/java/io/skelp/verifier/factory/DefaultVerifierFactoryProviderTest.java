@@ -24,12 +24,13 @@ package io.skelp.verifier.factory;
 import static org.junit.Assert.*;
 
 import java.lang.reflect.Constructor;
+import org.junit.Before;
+import org.junit.Test;
+
 import io.skelp.verifier.message.factory.DefaultMessageFormatterFactory;
 import io.skelp.verifier.message.factory.MessageFormatterFactory;
 import io.skelp.verifier.verification.factory.DefaultVerificationFactory;
 import io.skelp.verifier.verification.factory.VerificationFactory;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the {@link DefaultVerifierFactoryProvider} class.
@@ -38,46 +39,46 @@ import org.junit.Test;
  */
 public class DefaultVerifierFactoryProviderTest {
 
-  private DefaultVerifierFactoryProvider provider;
+    private DefaultVerifierFactoryProvider provider;
 
-  @Before
-  public void setup() {
-    provider = new DefaultVerifierFactoryProvider();
-  }
+    @Before
+    public void setup() {
+        provider = new DefaultVerifierFactoryProvider();
+    }
 
-  @Test
-  public void hackCoverage() throws Exception {
-    // TODO: Determine how to avoid this
-    Class<?> cls = Class.forName(DefaultVerifierFactoryProvider.class.getName() + "$LazyHolder");
-    Constructor<?> constructor = cls.getDeclaredConstructor();
-    constructor.setAccessible(true);
-    constructor.newInstance();
-  }
+    @Test
+    public void hackCoverage() throws Exception {
+        // TODO: Determine how to avoid this
+        Class<?> cls = Class.forName(DefaultVerifierFactoryProvider.class.getName() + "$LazyHolder");
+        Constructor<?> constructor = cls.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        constructor.newInstance();
+    }
 
-  @Test
-  public void testGetCustomVerifierFactory() {
-    CustomVerifierFactory factory = provider.getCustomVerifierFactory();
+    @Test
+    public void testGetCustomVerifierFactory() {
+        CustomVerifierFactory factory = provider.getCustomVerifierFactory();
 
-    assertNotNull("Never null", factory);
-    assertTrue("Instance is a DefaultCustomVerifierFactory", factory instanceof DefaultCustomVerifierFactory);
-    assertSame("Instance is singleton", factory, provider.getCustomVerifierFactory());
-  }
+        assertNotNull("Never null", factory);
+        assertTrue("Instance is a DefaultCustomVerifierFactory", factory instanceof DefaultCustomVerifierFactory);
+        assertSame("Instance is singleton", factory, provider.getCustomVerifierFactory());
+    }
 
-  @Test
-  public void testGetMessageFormatterFactory() {
-    MessageFormatterFactory factory = provider.getMessageFormatterFactory();
+    @Test
+    public void testGetMessageFormatterFactory() {
+        MessageFormatterFactory factory = provider.getMessageFormatterFactory();
 
-    assertNotNull("Never null", factory);
-    assertTrue("Instance is a DefaultMessageFormatterFactory", factory instanceof DefaultMessageFormatterFactory);
-    assertSame("Instance is singleton", factory, provider.getMessageFormatterFactory());
-  }
+        assertNotNull("Never null", factory);
+        assertTrue("Instance is a DefaultMessageFormatterFactory", factory instanceof DefaultMessageFormatterFactory);
+        assertSame("Instance is singleton", factory, provider.getMessageFormatterFactory());
+    }
 
-  @Test
-  public void testGetVerificationFactory() {
-    VerificationFactory factory = provider.getVerificationFactory();
+    @Test
+    public void testGetVerificationFactory() {
+        VerificationFactory factory = provider.getVerificationFactory();
 
-    assertNotNull("Never null", factory);
-    assertTrue("Instance is a DefaultVerificationFactory", factory instanceof DefaultVerificationFactory);
-    assertSame("Instance is singleton", factory, provider.getVerificationFactory());
-  }
+        assertNotNull("Never null", factory);
+        assertTrue("Instance is a DefaultVerificationFactory", factory instanceof DefaultVerificationFactory);
+        assertSame("Instance is singleton", factory, provider.getVerificationFactory());
+    }
 }
