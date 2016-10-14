@@ -16,44 +16,6 @@ TODO: Document
 
 TODO: Document
 
-## Dream Code
-
-Some dream code to drive design and development:
-
-``` java
-Verifier.verify(num)
-  .even(optionalMessage)
-  .odd(optionalMessage)
-  .positive(optionalMessage)
-  .negative(optionalMessage)
-  .lessThan(otherValue, optionalMessage)
-  .lessThanOrEqualTo(otherValue, optionalMessage)
-  .greaterThan(otherValue, optionalMessage)
-  .greaterThanOrEqualTo(otherValue, optionalMessage)
-  .equalTo(otherValue, optionalMessage)
-  .sameAs(otherValue, optionalMessage)
-  .that(VerifierAssertion, optionalMessage);
-
-Verifier.verify(num, NumberVerifier.class)
-  .not().even(optionalMessage)
-  .not().odd(optionalMessage)
-  .not().positive(optionalMessage)
-  .not().negative(optionalMessage)
-  .not().lessThan(otherValue, optionalMessage)
-  .not().lessThanOrEqualTo(otherValue, optionalMessage)
-  .not().greaterThan(otherValue, optionalMessage)
-  .not().greaterThanOrEqualTo(otherValue, optionalMessage)
-  .not().equalTo(otherValue, optionalMessage)
-  .not().sameAs(otherValue, optionalMessage)
-  .not().that(VerifierAssertion, optionalMessage);
-
-Verifier.verify(post, MyCustomVerifier.class)
-  .owned(myUser, optionalMessage)
-  .not().owned(otherUser, optionalMessage);
-```
-
-Right now, that's what we want to achieve with this library.
-
 ## Bugs
 
 If you have any problems with Verifier or would like to see changes currently in development you can do so
