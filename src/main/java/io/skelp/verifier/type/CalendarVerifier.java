@@ -22,8 +22,8 @@
 package io.skelp.verifier.type;
 
 import java.util.Calendar;
-import java.util.Date;
 import io.skelp.verifier.Verification;
+import io.skelp.verifier.VerifierException;
 
 /**
  * TODO: Document
@@ -31,26 +31,19 @@ import io.skelp.verifier.Verification;
  * @param <V>
  * @author Alasdair Mercer
  */
-public class DateVerifier<V extends DateVerifier> extends TimeVerifier<Date, V> {
+public class CalendarVerifier<V extends CalendarVerifier> extends TimeVerifier<Calendar, V> {
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public DateVerifier(final Verification verification) {
+  public CalendarVerifier(final Verification verification) {
     super(verification);
   }
 
   @Override
   Calendar getCalendar(final Object value) {
-    if (value == null) {
-      return null;
-    }
-
-    final Calendar calendar = Calendar.getInstance();
-    calendar.setTime((Date) value);
-
-    return calendar;
+    return (Calendar) value;
   }
 }
