@@ -72,7 +72,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
 
   @Override
   public V equalTo(final Object other, final Object name) throws VerifierException {
-    final Object value = verification.getValue();
+    final T value = verification.getValue();
     final boolean result = other == null ? value == null : other.equals(value);
 
     verification.check(result, "be equal to '%s'", name);
@@ -82,7 +82,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
 
   @Override
   public V equalToAny(final Object... others) throws VerifierException {
-    final Object value = verification.getValue();
+    final T value = verification.getValue();
     final boolean result = matchAny(others, new Function<Boolean, Object>() {
       @Override
       public Boolean apply(final Object input) {
@@ -91,6 +91,16 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     });
 
     verification.check(result, "be equal to any %s", new ArrayFormatter<>(others));
+
+    return chain();
+  }
+
+  @Override
+  public V hashed(final int hashCode) throws VerifierException {
+    final T value = verification.getValue();
+    final boolean result = value != null && value.hashCode() == hashCode;
+
+    verification.check(result, "have hash code '%d'", hashCode);
 
     return chain();
   }
@@ -106,7 +116,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
 
   @Override
   public V instanceOfAny(final Class<?>... classes) throws VerifierException {
-    final Object value = verification.getValue();
+    final T value = verification.getValue();
     final boolean result = matchAny(classes, new Function<Boolean, Class<?>>() {
       @Override
       public Boolean apply(final Class<?> input) {
@@ -151,7 +161,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
 
   @Override
   public V sameAsAny(final Object... others) throws VerifierException {
-    final Object value = verification.getValue();
+    final T value = verification.getValue();
     final boolean result = matchAny(others, new Function<Boolean, Object>() {
       @Override
       public Boolean apply(final Object input) {

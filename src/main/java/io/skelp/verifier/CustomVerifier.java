@@ -61,6 +61,15 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
   /**
    * TODO: Document
    *
+   * @param hashCode
+   * @return
+   * @throws VerifierException
+   */
+  V hashed(int hashCode) throws VerifierException;
+
+  /**
+   * TODO: Document
+   *
    * @param cls
    * @return
    * @throws VerifierException
