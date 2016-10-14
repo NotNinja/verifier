@@ -24,14 +24,14 @@ package io.skelp.verifier.type;
 import java.util.Calendar;
 import java.util.Date;
 import io.skelp.verifier.Verification;
+import io.skelp.verifier.type.base.BaseTimeVerifier;
 
 /**
  * TODO: Document
  *
- * @param <V>
  * @author Alasdair Mercer
  */
-public class DateVerifier<V extends DateVerifier<V>> extends TimeVerifier<Date, V> {
+public final class DateVerifier extends BaseTimeVerifier<Date, DateVerifier> {
 
   /**
    * TODO: Document
@@ -43,7 +43,7 @@ public class DateVerifier<V extends DateVerifier<V>> extends TimeVerifier<Date, 
   }
 
   @Override
-  Calendar getCalendar(final Date value) {
+  protected Calendar getCalendar(final Date value) {
     if (value == null) {
       return null;
     }

@@ -22,11 +22,21 @@
 package io.skelp.verifier.type;
 
 import io.skelp.verifier.AbstractCustomVerifier;
+import io.skelp.verifier.Verification;
 
 /**
- * Tests for the {@link AbstractCustomVerifier} class.
+ * TODO: Document
  *
  * @author Alasdair Mercer
  */
-public class BaseTypeVerifierTest {
+public final class ObjectVerifier extends AbstractCustomVerifier<Object, ObjectVerifier> {
+
+  /**
+   * TODO: Document
+   *
+   * @param verification
+   */
+  public ObjectVerifier(final Verification<Object> verification) {
+    super(verification);
+  }
 }

@@ -22,14 +22,16 @@
 package io.skelp.verifier.type;
 
 import io.skelp.verifier.Verification;
+import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.type.base.BaseComparableVerifier;
+import io.skelp.verifier.type.base.BaseTruthVerifier;
 
 /**
  * TODO: Document
  *
- * @param <V>
  * @author Alasdair Mercer
  */
-public class BooleanVerifier<V extends BooleanVerifier<V>> extends ComparableVerifier<Boolean, V> implements TruthVerifier<Boolean, V> {
+public final class BooleanVerifier extends BaseComparableVerifier<Boolean, BooleanVerifier> implements BaseTruthVerifier<Boolean, BooleanVerifier> {
 
   /**
    * TODO: Document
@@ -41,20 +43,20 @@ public class BooleanVerifier<V extends BooleanVerifier<V>> extends ComparableVer
   }
 
   @Override
-  public V falsehood() {
+  public BooleanVerifier falsehood() throws VerifierException {
     final boolean result = !Boolean.TRUE.equals(verification.getValue());
 
     verification.check(result, "be false");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V truth() {
+  public BooleanVerifier truth() throws VerifierException {
     final boolean result = Boolean.TRUE.equals(verification.getValue());
 
     verification.check(result, "be true");
 
-    return chain();
+    return this;
   }
 }

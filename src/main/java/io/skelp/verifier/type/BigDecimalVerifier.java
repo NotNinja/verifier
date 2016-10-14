@@ -23,14 +23,16 @@ package io.skelp.verifier.type;
 
 import java.math.BigDecimal;
 import io.skelp.verifier.Verification;
+import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.type.base.BaseComparableVerifier;
+import io.skelp.verifier.type.base.BaseNumberVerifier;
 
 /**
  * TODO: Document
  *
- * @param <V>
  * @author Alasdair Mercer
  */
-public class BigDecimalVerifier<V extends BigDecimalVerifier<V>> extends ComparableVerifier<BigDecimal, V> implements NumberVerifier<BigDecimal, V> {
+public final class BigDecimalVerifier extends BaseComparableVerifier<BigDecimal, BigDecimalVerifier> implements BaseNumberVerifier<BigDecimal, BigDecimalVerifier> {
 
   /**
    * TODO: Document
@@ -42,82 +44,82 @@ public class BigDecimalVerifier<V extends BigDecimalVerifier<V>> extends Compara
   }
 
   @Override
-  public V even() {
+  public BigDecimalVerifier even() throws VerifierException {
     final BigDecimal value = verification.getValue();
     final boolean result = value != null && !value.stripTrailingZeros().unscaledValue().testBit(0);
 
     verification.check(result, "be even");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V falsehood() {
+  public BigDecimalVerifier falsehood() throws VerifierException {
     final BigDecimal value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigDecimal.ZERO) == 0;
 
     verification.check(result, "be false");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V negative() {
+  public BigDecimalVerifier negative() throws VerifierException {
     final BigDecimal value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigDecimal.ZERO) < 0;
 
     verification.check(result, "be negative");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V odd() {
+  public BigDecimalVerifier odd() throws VerifierException {
     final BigDecimal value = verification.getValue();
     final boolean result = value != null && value.stripTrailingZeros().unscaledValue().testBit(0);
 
     verification.check(result, "be odd");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V one() {
+  public BigDecimalVerifier one() throws VerifierException {
     final BigDecimal value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigDecimal.ONE) == 0;
 
     verification.check(result, "be one");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V positive() {
+  public BigDecimalVerifier positive() throws VerifierException {
     final BigDecimal value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigDecimal.ZERO) >= 0;
 
     verification.check(result, "be positive");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V truth() {
+  public BigDecimalVerifier truth() throws VerifierException {
     final BigDecimal value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigDecimal.ONE) == 0;
 
     verification.check(result, "be true");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V zero() {
+  public BigDecimalVerifier zero() throws VerifierException {
     final BigDecimal value = verification.getValue();
     final boolean result = value != null && value.compareTo(BigDecimal.ZERO) == 0;
 
     verification.check(result, "be zero");
 
-    return chain();
+    return this;
   }
 }

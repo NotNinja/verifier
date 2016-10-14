@@ -23,16 +23,16 @@ package io.skelp.verifier.type;
 
 import java.util.ArrayList;
 import java.util.List;
+import io.skelp.verifier.AbstractCustomVerifier;
 import io.skelp.verifier.Verification;
 import io.skelp.verifier.VerifierException;
 
 /**
  * TODO: Document
  *
- * @param <V>
  * @author Alasdair Mercer
  */
-public class ThrowableVerifier<V extends ThrowableVerifier<V>> extends BaseTypeVerifier<Throwable, V> {
+public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, ThrowableVerifier> {
 
   private static List<Throwable> getThrowables(Throwable throwable) {
     final List<Throwable> throwables = new ArrayList<>();
@@ -59,12 +59,13 @@ public class ThrowableVerifier<V extends ThrowableVerifier<V>> extends BaseTypeV
    * @return
    * @throws VerifierException
    */
-  public V checked() {
+  public ThrowableVerifier checked() throws VerifierException {
     final Throwable value = verification.getValue();
     final boolean result = value != null && !(value instanceof RuntimeException);
-    verification.check(result, "checked");
 
-    return chain();
+    verification.check(result, "be checked");
+
+    return this;
   }
 
   /**
@@ -74,7 +75,7 @@ public class ThrowableVerifier<V extends ThrowableVerifier<V>> extends BaseTypeV
    * @return
    * @throws VerifierException
    */
-  public V causedBy(final Class<?> type) {
+  public ThrowableVerifier causedBy(final Class<?> type) throws VerifierException {
     final Throwable value = verification.getValue();
     boolean result = false;
     for (final Throwable throwable : getThrowables(value)) {
@@ -83,9 +84,10 @@ public class ThrowableVerifier<V extends ThrowableVerifier<V>> extends BaseTypeV
         break;
       }
     }
-    verification.check(result, "been caused by %s", type);
 
-    return chain();
+    verification.check(result, "have been caused by %s", type);
+
+    return this;
   }
 
   /**
@@ -95,12 +97,13 @@ public class ThrowableVerifier<V extends ThrowableVerifier<V>> extends BaseTypeV
    * @return
    * @throws VerifierException
    */
-  public V causedBy(final Throwable cause) {
+  public ThrowableVerifier causedBy(final Throwable cause) throws VerifierException {
     final Throwable value = verification.getValue();
     final boolean result = getThrowables(value).contains(cause);
-    verification.check(result, "been caused by %s", cause);
 
-    return chain();
+    verification.check(result, "have been caused by %s", cause);
+
+    return this;
   }
 
   /**
@@ -109,11 +112,12 @@ public class ThrowableVerifier<V extends ThrowableVerifier<V>> extends BaseTypeV
    * @return
    * @throws VerifierException
    */
-  public V unchecked() {
+  public ThrowableVerifier unchecked() throws VerifierException {
     final Throwable value = verification.getValue();
     final boolean result = value instanceof RuntimeException;
-    verification.check(result, "unchecked");
 
-    return chain();
+    verification.check(result, "be unchecked");
+
+    return this;
   }
 }

@@ -19,8 +19,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier.type;
+package io.skelp.verifier.type.base;
 
+import io.skelp.verifier.CustomVerifier;
 import io.skelp.verifier.VerifierException;
 
 /**
@@ -30,7 +31,7 @@ import io.skelp.verifier.VerifierException;
  * @param <V>
  * @author Alasdair Mercer
  */
-public interface TruthVerifier<T, V extends TruthVerifier<T, V>> extends TypeVerifier<T, V> {
+public interface BaseTruthVerifier<T, V extends BaseTruthVerifier<T, V>> extends CustomVerifier<T, V> {
 
   /**
    * TODO: Document
@@ -38,7 +39,7 @@ public interface TruthVerifier<T, V extends TruthVerifier<T, V>> extends TypeVer
    * @return
    * @throws VerifierException
    */
-  V falsehood();
+  V falsehood() throws VerifierException;
 
   /**
    * TODO: Document
@@ -46,5 +47,5 @@ public interface TruthVerifier<T, V extends TruthVerifier<T, V>> extends TypeVer
    * @return
    * @throws VerifierException
    */
-  V truth();
+  V truth() throws VerifierException;
 }

@@ -22,14 +22,16 @@
 package io.skelp.verifier.type;
 
 import io.skelp.verifier.Verification;
+import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.type.base.BaseComparableVerifier;
+import io.skelp.verifier.type.base.BaseNumberVerifier;
 
 /**
  * TODO: Document
  *
- * @param <V>
  * @author Alasdair Mercer
  */
-public class LongVerifier<V extends LongVerifier<V>> extends ComparableVerifier<Long, V> implements NumberVerifier<Long, V> {
+public final class LongVerifier extends BaseComparableVerifier<Long, LongVerifier> implements BaseNumberVerifier<Long, LongVerifier> {
 
   /**
    * TODO: Document
@@ -41,82 +43,82 @@ public class LongVerifier<V extends LongVerifier<V>> extends ComparableVerifier<
   }
 
   @Override
-  public V even() {
+  public LongVerifier even() throws VerifierException {
     final Long value = verification.getValue();
     final boolean result = value != null && value % 2L == 0;
 
     verification.check(result, "be even");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V falsehood() {
+  public LongVerifier falsehood() throws VerifierException {
     final Long value = verification.getValue();
     final boolean result = value != null && value == 0L;
 
     verification.check(result, "be false");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V negative() {
+  public LongVerifier negative() throws VerifierException {
     final Long value = verification.getValue();
     final boolean result = value != null && value < 0L;
 
     verification.check(result, "be negative");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V odd() {
+  public LongVerifier odd() throws VerifierException {
     final Long value = verification.getValue();
     final boolean result = value != null && value % 2 != 0L;
 
     verification.check(result, "be odd");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V one() {
+  public LongVerifier one() throws VerifierException {
     final Long value = verification.getValue();
     final boolean result = value != null && value == 1L;
 
     verification.check(result, "be one");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V positive() {
+  public LongVerifier positive() throws VerifierException {
     final Long value = verification.getValue();
     final boolean result = value != null && value >= 0L;
 
     verification.check(result, "be positive");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V truth() {
+  public LongVerifier truth() throws VerifierException {
     final Long value = verification.getValue();
     final boolean result = value != null && value == 0L;
 
     verification.check(result, "be true");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V zero() {
+  public LongVerifier zero() throws VerifierException {
     final Long value = verification.getValue();
     final boolean result = value != null && value == 0L;
 
     verification.check(result, "be zero");
 
-    return chain();
+    return this;
   }
 }

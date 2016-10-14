@@ -19,9 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier.type;
-
-import io.skelp.verifier.VerifierException;
+package io.skelp.verifier;
 
 /**
  * TODO: Document
@@ -30,7 +28,60 @@ import io.skelp.verifier.VerifierException;
  * @param <V>
  * @author Alasdair Mercer
  */
-public interface NumberVerifier<T extends Number, V extends NumberVerifier<T, V>> extends TruthVerifier<T, V> {
+public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
+
+  /**
+   * TODO: Document
+   *
+   * @param other
+   * @return
+   * @throws VerifierException
+   */
+  V equalTo(Object other) throws VerifierException;
+
+  /**
+   * TODO: Document
+   *
+   * @param other
+   * @param name
+   * @return
+   * @throws VerifierException
+   */
+  V equalTo(Object other, Object name) throws VerifierException;
+
+  /**
+   * TODO: Document
+   *
+   * @param others
+   * @return
+   * @throws VerifierException
+   */
+  V equalToAny(Object... others) throws VerifierException;
+
+  /**
+   * TODO: Document
+   *
+   * @param cls
+   * @return
+   * @throws VerifierException
+   */
+  V instanceOf(Class<?> cls) throws VerifierException;
+
+  /**
+   * TODO: Document
+   *
+   * @param classes
+   * @return
+   * @throws VerifierException
+   */
+  V instanceOfAny(Class<?>... classes) throws VerifierException;
+
+  /**
+   * TODO: Document
+   *
+   * @return
+   */
+  V not();
 
   /**
    * TODO: Document
@@ -38,45 +89,53 @@ public interface NumberVerifier<T extends Number, V extends NumberVerifier<T, V>
    * @return
    * @throws VerifierException
    */
-  V even();
+  V nulled() throws VerifierException;
 
   /**
    * TODO: Document
    *
+   * @param other
    * @return
    * @throws VerifierException
    */
-  V negative();
+  V sameAs(Object other) throws VerifierException;
 
   /**
    * TODO: Document
    *
+   * @param other
+   * @param name
    * @return
    * @throws VerifierException
    */
-  V odd();
+  V sameAs(Object other, Object name) throws VerifierException;
 
   /**
    * TODO: Document
    *
+   * @param others
    * @return
    * @throws VerifierException
    */
-  V one();
+  V sameAsAny(Object... others) throws VerifierException;
 
   /**
    * TODO: Document
    *
+   * @param assertion
    * @return
    * @throws VerifierException
    */
-  V positive();
+  V that(VerifierAssertion<T> assertion) throws VerifierException;
 
   /**
    * TODO: Document
    *
+   * @param assertion
+   * @param message
+   * @param args
    * @return
    * @throws VerifierException
    */
-  V zero();
+  V that(VerifierAssertion<T> assertion, String message, Object... args) throws VerifierException;
 }

@@ -30,17 +30,10 @@ import io.skelp.verifier.Verification;
  */
 public class DefaultMessageFormatter implements MessageFormatter {
 
-  /** TODO: Document */
-  public static final String DEFAULT_MESSAGE = "valid";
-  /** TODO: Document */
-  public static final String DEFAULT_MESSAGE_NEGATED = "invalid";
-  /** TODO: Document */
-  public static final String DEFAULT_NAME = "Value";
-
   @Override
   public String format(final Verification<?> verification, final String message, final Object... args) {
     final StringBuilder buffer = new StringBuilder();
-    buffer.append(verification.getName() != null ? verification.getName() : DEFAULT_NAME);
+    buffer.append(verification.getName() != null ? verification.getName() : "Value");
     buffer.append(" must ");
     if (verification.isNegated()) {
       buffer.append("not ");
@@ -48,7 +41,7 @@ public class DefaultMessageFormatter implements MessageFormatter {
     if (message != null) {
       buffer.append(String.format(message, args));
     } else {
-      buffer.append(!verification.isNegated() ? DEFAULT_MESSAGE : DEFAULT_MESSAGE_NEGATED);
+      buffer.append(!verification.isNegated() ? "valid" : "invalid");
     }
     buffer.append(": ");
     buffer.append(verification.getValue());

@@ -22,14 +22,16 @@
 package io.skelp.verifier.type;
 
 import io.skelp.verifier.Verification;
+import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.type.base.BaseComparableVerifier;
+import io.skelp.verifier.type.base.BaseNumberVerifier;
 
 /**
  * TODO: Document
  *
- * @param <V>
  * @author Alasdair Mercer
  */
-public class ByteVerifier<V extends ByteVerifier<V>> extends ComparableVerifier<Byte, V> implements NumberVerifier<Byte, V> {
+public final class ByteVerifier extends BaseComparableVerifier<Byte, ByteVerifier> implements BaseNumberVerifier<Byte, ByteVerifier> {
 
   /**
    * TODO: Document
@@ -41,82 +43,82 @@ public class ByteVerifier<V extends ByteVerifier<V>> extends ComparableVerifier<
   }
 
   @Override
-  public V even() {
+  public ByteVerifier even() throws VerifierException {
     final Byte value = verification.getValue();
     final boolean result = value != null && value % 2 == 0;
 
     verification.check(result, "be even");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V falsehood() {
+  public ByteVerifier falsehood() throws VerifierException {
     final Byte value = verification.getValue();
     final boolean result = value != null && value == 0;
 
     verification.check(result, "be false");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V negative() {
+  public ByteVerifier negative() throws VerifierException {
     final Byte value = verification.getValue();
     final boolean result = value != null && value < 0;
 
     verification.check(result, "be negative");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V odd() {
+  public ByteVerifier odd() throws VerifierException {
     final Byte value = verification.getValue();
     final boolean result = value != null && value % 2 != 0;
 
     verification.check(result, "be odd");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V one() {
+  public ByteVerifier one() throws VerifierException {
     final Byte value = verification.getValue();
     final boolean result = value != null && value == 1;
 
     verification.check(result, "be one");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V positive() {
+  public ByteVerifier positive() throws VerifierException {
     final Byte value = verification.getValue();
     final boolean result = value != null && value >= 0;
 
     verification.check(result, "be positive");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V truth() {
+  public ByteVerifier truth() throws VerifierException {
     final Byte value = verification.getValue();
     final boolean result = value != null && value == 1;
 
     verification.check(result, "be true");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V zero() {
+  public ByteVerifier zero() throws VerifierException {
     final Byte value = verification.getValue();
     final boolean result = value != null && value == 0;
 
     verification.check(result, "be zero");
 
-    return chain();
+    return this;
   }
 }

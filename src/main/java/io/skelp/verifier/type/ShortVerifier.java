@@ -22,14 +22,16 @@
 package io.skelp.verifier.type;
 
 import io.skelp.verifier.Verification;
+import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.type.base.BaseComparableVerifier;
+import io.skelp.verifier.type.base.BaseNumberVerifier;
 
 /**
  * TODO: Document
  *
- * @param <V>
  * @author Alasdair Mercer
  */
-public class ShortVerifier<V extends ShortVerifier<V>> extends ComparableVerifier<Short, V> implements NumberVerifier<Short, V> {
+public final class ShortVerifier extends BaseComparableVerifier<Short, ShortVerifier> implements BaseNumberVerifier<Short, ShortVerifier> {
 
   /**
    * TODO: Document
@@ -41,82 +43,82 @@ public class ShortVerifier<V extends ShortVerifier<V>> extends ComparableVerifie
   }
 
   @Override
-  public V even() {
+  public ShortVerifier even() throws VerifierException {
     final Short value = verification.getValue();
     final boolean result = value != null && value % 2 == 0;
 
     verification.check(result, "be even");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V falsehood() {
+  public ShortVerifier falsehood() throws VerifierException {
     final Short value = verification.getValue();
     final boolean result = value != null && value == 0;
 
     verification.check(result, "be false");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V negative() {
+  public ShortVerifier negative() throws VerifierException {
     final Short value = verification.getValue();
     final boolean result = value != null && value < 0;
 
     verification.check(result, "be negative");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V odd() {
+  public ShortVerifier odd() throws VerifierException {
     final Short value = verification.getValue();
     final boolean result = value != null && value % 2 != 0;
 
     verification.check(result, "be odd");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V one() {
+  public ShortVerifier one() throws VerifierException {
     final Short value = verification.getValue();
     final boolean result = value != null && value == 1;
 
     verification.check(result, "be one");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V positive() {
+  public ShortVerifier positive() throws VerifierException {
     final Short value = verification.getValue();
     final boolean result = value != null && value >= 0;
 
     verification.check(result, "be positive");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V truth() {
+  public ShortVerifier truth() throws VerifierException {
     final Short value = verification.getValue();
     final boolean result = value != null && value == 0;
 
     verification.check(result, "be true");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V zero() {
+  public ShortVerifier zero() throws VerifierException {
     final Short value = verification.getValue();
     final boolean result = value != null && value == 0;
 
     verification.check(result, "be zero");
 
-    return chain();
+    return this;
   }
 }

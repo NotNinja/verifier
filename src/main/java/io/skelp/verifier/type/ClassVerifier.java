@@ -27,16 +27,16 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import io.skelp.verifier.AbstractCustomVerifier;
 import io.skelp.verifier.Verification;
 import io.skelp.verifier.VerifierException;
 
 /**
  * TODO: Document
  *
- * @param <V>
  * @author Alasdair Mercer
  */
-public class ClassVerifier<V extends ClassVerifier<V>> extends BaseTypeVerifier<Class<?>, V> {
+public final class ClassVerifier extends AbstractCustomVerifier<Class<?>, ClassVerifier> {
 
   private static final Set<Class<?>> PRIMITIVE_WRAPPERS;
 
@@ -61,13 +61,13 @@ public class ClassVerifier<V extends ClassVerifier<V>> extends BaseTypeVerifier<
    * @return
    * @throws VerifierException
    */
-  public V annotated(final Class<? extends Annotation> type) {
+  public ClassVerifier annotated(final Class<? extends Annotation> type) throws VerifierException {
     final Class<?> value = verification.getValue();
     final boolean result = value != null && value.isAnnotationPresent(type);
 
     verification.check(result, "be annotated with '%s'", type);
 
-    return chain();
+    return this;
   }
 
   /**
@@ -76,13 +76,13 @@ public class ClassVerifier<V extends ClassVerifier<V>> extends BaseTypeVerifier<
    * @return
    * @throws VerifierException
    */
-  public V annotation() {
+  public ClassVerifier annotation() throws VerifierException {
     final Class<?> value = verification.getValue();
     final boolean result = value != null && value.isAnnotation();
 
     verification.check(result, "be an annotation");
 
-    return chain();
+    return this;
   }
 
   /**
@@ -91,13 +91,13 @@ public class ClassVerifier<V extends ClassVerifier<V>> extends BaseTypeVerifier<
    * @return
    * @throws VerifierException
    */
-  public V anonymous() {
+  public ClassVerifier anonymous() throws VerifierException {
     final Class<?> value = verification.getValue();
     final boolean result = value != null && value.isAnonymousClass();
 
     verification.check(result, "be anonymous");
 
-    return chain();
+    return this;
   }
 
   /**
@@ -106,13 +106,13 @@ public class ClassVerifier<V extends ClassVerifier<V>> extends BaseTypeVerifier<
    * @return
    * @throws VerifierException
    */
-  public V array() {
+  public ClassVerifier array() throws VerifierException {
     final Class<?> value = verification.getValue();
     final boolean result = value != null && value.isArray();
 
     verification.check(result, "be an array");
 
-    return chain();
+    return this;
   }
 
   /**
@@ -122,13 +122,13 @@ public class ClassVerifier<V extends ClassVerifier<V>> extends BaseTypeVerifier<
    * @return
    * @throws VerifierException
    */
-  public V assignableFrom(final Class<?> type) {
+  public ClassVerifier assignableFrom(final Class<?> type) throws VerifierException {
     final Class<?> value = verification.getValue();
     final boolean result = value != null && value.isAssignableFrom(type);
 
     verification.check(result, "be assignable from '%s'", type);
 
-    return chain();
+    return this;
   }
 
   /**
@@ -137,13 +137,13 @@ public class ClassVerifier<V extends ClassVerifier<V>> extends BaseTypeVerifier<
    * @return
    * @throws VerifierException
    */
-  public V enumeration() {
+  public ClassVerifier enumeration() throws VerifierException {
     final Class<?> value = verification.getValue();
     final boolean result = value != null && value.isEnum();
 
     verification.check(result, "be an enum");
 
-    return chain();
+    return this;
   }
 
   /**
@@ -152,13 +152,13 @@ public class ClassVerifier<V extends ClassVerifier<V>> extends BaseTypeVerifier<
    * @return
    * @throws VerifierException
    */
-  public V interfacing() {
+  public ClassVerifier interfacing() throws VerifierException {
     final Class<?> value = verification.getValue();
     final boolean result = value != null && value.isInterface();
 
     verification.check(result, "be an interface");
 
-    return chain();
+    return this;
   }
 
   /**
@@ -167,13 +167,13 @@ public class ClassVerifier<V extends ClassVerifier<V>> extends BaseTypeVerifier<
    * @return
    * @throws VerifierException
    */
-  public V nested() {
+  public ClassVerifier nested() throws VerifierException {
     final Class<?> value = verification.getValue();
     final boolean result = value != null && value.getEnclosingClass() != null;
 
     verification.check(result, "be nested");
 
-    return chain();
+    return this;
   }
 
   /**
@@ -182,13 +182,13 @@ public class ClassVerifier<V extends ClassVerifier<V>> extends BaseTypeVerifier<
    * @return
    * @throws VerifierException
    */
-  public V primitive() {
+  public ClassVerifier primitive() throws VerifierException {
     final Class<?> value = verification.getValue();
     final boolean result = value != null && value.isPrimitive();
 
     verification.check(result, "be a primitive");
 
-    return chain();
+    return this;
   }
 
   /**
@@ -197,13 +197,13 @@ public class ClassVerifier<V extends ClassVerifier<V>> extends BaseTypeVerifier<
    * @return
    * @throws VerifierException
    */
-  public V primitiveOrWrapper() {
+  public ClassVerifier primitiveOrWrapper() throws VerifierException {
     final Class<?> value = verification.getValue();
     final boolean result = value != null && (value.isPrimitive() || PRIMITIVE_WRAPPERS.contains(value));
 
     verification.check(result, "be a primitive or primitive wrapper");
 
-    return chain();
+    return this;
   }
 
   /**
@@ -212,13 +212,13 @@ public class ClassVerifier<V extends ClassVerifier<V>> extends BaseTypeVerifier<
    * @return
    * @throws VerifierException
    */
-  public V primitiveWrapper() {
+  public ClassVerifier primitiveWrapper() throws VerifierException {
     final Class<?> value = verification.getValue();
     final boolean result = PRIMITIVE_WRAPPERS.contains(value);
 
     verification.check(result, "be a primitive wrapper");
 
-    return chain();
+    return this;
   }
 
   /**
@@ -227,12 +227,12 @@ public class ClassVerifier<V extends ClassVerifier<V>> extends BaseTypeVerifier<
    * @return
    * @throws VerifierException
    */
-  public V synthetic() {
+  public ClassVerifier synthetic() throws VerifierException {
     final Class<?> value = verification.getValue();
     final boolean result = value != null && value.isSynthetic();
 
     verification.check(result, "be synthetic");
 
-    return chain();
+    return this;
   }
 }

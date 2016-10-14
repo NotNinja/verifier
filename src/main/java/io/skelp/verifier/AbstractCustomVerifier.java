@@ -19,11 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier.type;
+package io.skelp.verifier;
 
-import io.skelp.verifier.Verification;
-import io.skelp.verifier.VerifierAssertion;
-import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.message.ArrayFormatter;
 import io.skelp.verifier.util.Function;
 
@@ -34,7 +31,7 @@ import io.skelp.verifier.util.Function;
  * @param <V>
  * @author Alasdair Mercer
  */
-public class BaseTypeVerifier<T, V extends BaseTypeVerifier<T, V>> implements TypeVerifier<T, V> {
+public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier<T, V>> implements CustomVerifier<T, V> {
 
   private static <T> boolean matchAny(final T[] inputs, final Function<Boolean, T> matcher) {
     for (final T input : inputs) {
@@ -46,14 +43,15 @@ public class BaseTypeVerifier<T, V extends BaseTypeVerifier<T, V>> implements Ty
     return false;
   }
 
-  final Verification<T> verification;
+  /** TODO: Document */
+  protected final Verification<T> verification;
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public BaseTypeVerifier(final Verification<T> verification) {
+  public AbstractCustomVerifier(final Verification<T> verification) {
     this.verification = verification;
   }
 
@@ -63,17 +61,17 @@ public class BaseTypeVerifier<T, V extends BaseTypeVerifier<T, V>> implements Ty
    * @return
    */
   @SuppressWarnings("unchecked")
-  V chain() {
+  protected V chain() {
     return (V) this;
   }
 
   @Override
-  public V equalTo(final Object other) {
+  public V equalTo(final Object other) throws VerifierException {
     return equalTo(other, other);
   }
 
   @Override
-  public V equalTo(final Object other, final Object name) {
+  public V equalTo(final Object other, final Object name) throws VerifierException {
     final Object value = verification.getValue();
     final boolean result = other == null ? value == null : other.equals(value);
 
@@ -83,7 +81,7 @@ public class BaseTypeVerifier<T, V extends BaseTypeVerifier<T, V>> implements Ty
   }
 
   @Override
-  public V equalToAny(final Object... others) {
+  public V equalToAny(final Object... others) throws VerifierException {
     final Object value = verification.getValue();
     final boolean result = matchAny(others, new Function<Boolean, Object>() {
       @Override
@@ -92,13 +90,13 @@ public class BaseTypeVerifier<T, V extends BaseTypeVerifier<T, V>> implements Ty
       }
     });
 
-    verification.check(result, "be equal to any %s", new ArrayFormatter(others));
+    verification.check(result, "be equal to any %s", new ArrayFormatter<>(others));
 
     return chain();
   }
 
   @Override
-  public V instanceOf(final Class<?> cls) {
+  public V instanceOf(final Class<?> cls) throws VerifierException {
     final boolean result = cls.isInstance(verification.getValue());
 
     verification.check(result, "be an instance of '%s'", cls);
@@ -107,7 +105,7 @@ public class BaseTypeVerifier<T, V extends BaseTypeVerifier<T, V>> implements Ty
   }
 
   @Override
-  public V instanceOfAny(final Class<?>... classes) {
+  public V instanceOfAny(final Class<?>... classes) throws VerifierException {
     final Object value = verification.getValue();
     final boolean result = matchAny(classes, new Function<Boolean, Class<?>>() {
       @Override
@@ -116,7 +114,7 @@ public class BaseTypeVerifier<T, V extends BaseTypeVerifier<T, V>> implements Ty
       }
     });
 
-    verification.check(result, "be an instance of any %s", new ArrayFormatter(classes));
+    verification.check(result, "be an instance of any %s", new ArrayFormatter<>(classes));
 
     return chain();
   }
@@ -129,7 +127,7 @@ public class BaseTypeVerifier<T, V extends BaseTypeVerifier<T, V>> implements Ty
   }
 
   @Override
-  public V nulled() {
+  public V nulled() throws VerifierException {
     final boolean result = verification.getValue() == null;
 
     verification.check(result, "be null");
@@ -138,12 +136,12 @@ public class BaseTypeVerifier<T, V extends BaseTypeVerifier<T, V>> implements Ty
   }
 
   @Override
-  public V sameAs(final Object other) {
+  public V sameAs(final Object other) throws VerifierException {
     return sameAs(other, other);
   }
 
   @Override
-  public V sameAs(final Object other, final Object name) {
+  public V sameAs(final Object other, final Object name) throws VerifierException {
     final boolean result = verification.getValue() == other;
 
     verification.check(result, "be same as %s", name);
@@ -152,7 +150,7 @@ public class BaseTypeVerifier<T, V extends BaseTypeVerifier<T, V>> implements Ty
   }
 
   @Override
-  public V sameAsAny(final Object... others) {
+  public V sameAsAny(final Object... others) throws VerifierException {
     final Object value = verification.getValue();
     final boolean result = matchAny(others, new Function<Boolean, Object>() {
       @Override
@@ -161,18 +159,18 @@ public class BaseTypeVerifier<T, V extends BaseTypeVerifier<T, V>> implements Ty
       }
     });
 
-    verification.check(result, "be same as any %s", new ArrayFormatter(others));
+    verification.check(result, "be same as any %s", new ArrayFormatter<>(others));
 
     return chain();
   }
 
   @Override
-  public V that(final VerifierAssertion<T> assertion) {
+  public V that(final VerifierAssertion<T> assertion) throws VerifierException {
     return that(assertion, null);
   }
 
   @Override
-  public V that(final VerifierAssertion<T> assertion, final String message, final Object... args) {
+  public V that(final VerifierAssertion<T> assertion, final String message, final Object... args) throws VerifierException {
     if (assertion == null) {
       throw new VerifierException("assertion must not be null");
     }

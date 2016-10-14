@@ -22,6 +22,7 @@
 package io.skelp.verifier.type;
 
 import java.util.Arrays;
+import io.skelp.verifier.AbstractCustomVerifier;
 import io.skelp.verifier.Verification;
 import io.skelp.verifier.VerifierException;
 
@@ -29,10 +30,9 @@ import io.skelp.verifier.VerifierException;
  * TODO: Document
  *
  * @param <T>
- * @param <V>
  * @author Alasdair Mercer
  */
-public class ArrayVerifier<T, V extends ArrayVerifier<T, V>> extends BaseTypeVerifier<T[], V> {
+public final class ArrayVerifier<T> extends AbstractCustomVerifier<T[], ArrayVerifier<T>> {
 
   /**
    * TODO: Document
@@ -50,13 +50,13 @@ public class ArrayVerifier<T, V extends ArrayVerifier<T, V>> extends BaseTypeVer
    * @return
    * @throws VerifierException
    */
-  public V contain(final T item) {
+  public ArrayVerifier<T> contain(final T item) throws VerifierException {
     final T[] value = verification.getValue();
     final boolean result = value != null && Arrays.asList(value).contains(item);
 
     verification.check(result, "contain '%s'", item);
 
-    return chain();
+    return this;
   }
 
   /**
@@ -65,13 +65,13 @@ public class ArrayVerifier<T, V extends ArrayVerifier<T, V>> extends BaseTypeVer
    * @return
    * @throws VerifierException
    */
-  public V empty() {
+  public ArrayVerifier<T> empty() throws VerifierException {
     final T[] value = verification.getValue();
     final boolean result = value == null || value.length == 0;
 
     verification.check(result, "be empty");
 
-    return chain();
+    return this;
   }
 
   /**
@@ -81,12 +81,12 @@ public class ArrayVerifier<T, V extends ArrayVerifier<T, V>> extends BaseTypeVer
    * @return
    * @throws VerifierException
    */
-  public V length(final int length) {
+  public ArrayVerifier<T> length(final int length) throws VerifierException {
     final T[] value = verification.getValue();
     final boolean result = value != null && value.length == length;
 
     verification.check(result, "have length of '%d'", length);
 
-    return chain();
+    return this;
   }
 }

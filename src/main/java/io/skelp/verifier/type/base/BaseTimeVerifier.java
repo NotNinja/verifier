@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier.type;
+package io.skelp.verifier.type.base;
 
 import java.util.Calendar;
 import io.skelp.verifier.Verification;
@@ -32,14 +32,14 @@ import io.skelp.verifier.VerifierException;
  * @param <V>
  * @author Alasdair Mercer
  */
-public abstract class TimeVerifier<T extends Comparable<? super T>, V extends TimeVerifier<T, V>> extends ComparableVerifier<T, V> {
+public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extends BaseTimeVerifier<T, V>> extends BaseComparableVerifier<T, V> {
 
   /**
    * TODO: Document
    *
    * @param verification
    */
-  public TimeVerifier(final Verification<T> verification) {
+  public BaseTimeVerifier(final Verification<T> verification) {
     super(verification);
   }
 
@@ -50,7 +50,7 @@ public abstract class TimeVerifier<T extends Comparable<? super T>, V extends Ti
    * @return
    * @throws VerifierException
    */
-  public V sameDay(final T other) {
+  public V sameDay(final T other) throws VerifierException {
     final Calendar calendar1 = getCalendar(verification.getValue());
     final Calendar calendar2 = getCalendar(other);
     final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
@@ -69,7 +69,7 @@ public abstract class TimeVerifier<T extends Comparable<? super T>, V extends Ti
    * @return
    * @throws VerifierException
    */
-  public V sameHour(final T other) {
+  public V sameHour(final T other) throws VerifierException {
     final Calendar calendar1 = getCalendar(verification.getValue());
     final Calendar calendar2 = getCalendar(other);
     final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
@@ -89,7 +89,7 @@ public abstract class TimeVerifier<T extends Comparable<? super T>, V extends Ti
    * @return
    * @throws VerifierException
    */
-  public V sameMinute(final T other) {
+  public V sameMinute(final T other) throws VerifierException {
     final Calendar calendar1 = getCalendar(verification.getValue());
     final Calendar calendar2 = getCalendar(other);
     final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
@@ -110,7 +110,7 @@ public abstract class TimeVerifier<T extends Comparable<? super T>, V extends Ti
    * @return
    * @throws VerifierException
    */
-  public V sameMonth(final T other) {
+  public V sameMonth(final T other) throws VerifierException {
     final Calendar calendar1 = getCalendar(verification.getValue());
     final Calendar calendar2 = getCalendar(other);
     final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
@@ -129,7 +129,7 @@ public abstract class TimeVerifier<T extends Comparable<? super T>, V extends Ti
    * @return
    * @throws VerifierException
    */
-  public V sameWeek(final T other) {
+  public V sameWeek(final T other) throws VerifierException {
     final Calendar calendar1 = getCalendar(verification.getValue());
     final Calendar calendar2 = getCalendar(other);
     final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
@@ -148,7 +148,7 @@ public abstract class TimeVerifier<T extends Comparable<? super T>, V extends Ti
    * @return
    * @throws VerifierException
    */
-  public V sameYear(final T other) {
+  public V sameYear(final T other) throws VerifierException {
     final Calendar calendar1 = getCalendar(verification.getValue());
     final Calendar calendar2 = getCalendar(other);
     final boolean result = calendar1 != null && (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
@@ -165,5 +165,5 @@ public abstract class TimeVerifier<T extends Comparable<? super T>, V extends Ti
    * @param value
    * @return
    */
-  abstract Calendar getCalendar(T value);
+  protected abstract Calendar getCalendar(T value);
 }

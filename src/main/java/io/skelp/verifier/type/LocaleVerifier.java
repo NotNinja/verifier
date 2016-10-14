@@ -27,16 +27,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import io.skelp.verifier.AbstractCustomVerifier;
 import io.skelp.verifier.Verification;
 import io.skelp.verifier.VerifierException;
 
 /**
  * TODO: Document
  *
- * @param <V>
  * @author Alasdair Mercer
  */
-public class LocaleVerifier<V extends LocaleVerifier<V>> extends BaseTypeVerifier<Locale, V> {
+public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleVerifier> {
 
   /**
    * TODO: Document
@@ -53,13 +53,13 @@ public class LocaleVerifier<V extends LocaleVerifier<V>> extends BaseTypeVerifie
    * @return
    * @throws VerifierException
    */
-  public V available() {
+  public LocaleVerifier available() throws VerifierException {
     final Locale value = verification.getValue();
     final boolean result = LazyHolder.AVAILABLE_LOCALES.contains(value);
 
     verification.check(result, "be available");
 
-    return chain();
+    return this;
   }
 
   /**
@@ -69,13 +69,13 @@ public class LocaleVerifier<V extends LocaleVerifier<V>> extends BaseTypeVerifie
    * @return
    * @throws VerifierException
    */
-  public V country(final String country) {
+  public LocaleVerifier country(final String country) throws VerifierException {
     final Locale value = verification.getValue();
     final boolean result = value != null && value.getCountry().equals(country);
 
     verification.check(result, "be country '%s'", country);
 
-    return chain();
+    return this;
   }
 
   /**
@@ -84,13 +84,13 @@ public class LocaleVerifier<V extends LocaleVerifier<V>> extends BaseTypeVerifie
    * @return
    * @throws VerifierException
    */
-  public V defaulting() {
+  public LocaleVerifier defaulting() throws VerifierException {
     final Locale value = verification.getValue();
     final boolean result = Locale.getDefault().equals(value);
 
     verification.check(result, "be default");
 
-    return chain();
+    return this;
   }
 
   /**
@@ -100,13 +100,13 @@ public class LocaleVerifier<V extends LocaleVerifier<V>> extends BaseTypeVerifie
    * @return
    * @throws VerifierException
    */
-  public V language(final String language) {
+  public LocaleVerifier language(final String language) throws VerifierException {
     final Locale value = verification.getValue();
     final boolean result = value != null && value.getLanguage().equals(language);
 
     verification.check(result, "be language '%s'", language);
 
-    return chain();
+    return this;
   }
 
   /**
@@ -116,13 +116,13 @@ public class LocaleVerifier<V extends LocaleVerifier<V>> extends BaseTypeVerifie
    * @return
    * @throws VerifierException
    */
-  public V script(final String script) {
+  public LocaleVerifier script(final String script) throws VerifierException {
     final Locale value = verification.getValue();
     final boolean result = value != null && value.getScript().equals(script);
 
     verification.check(result, "be script '%s'", script);
 
-    return chain();
+    return this;
   }
 
   /**
@@ -132,13 +132,13 @@ public class LocaleVerifier<V extends LocaleVerifier<V>> extends BaseTypeVerifie
    * @return
    * @throws VerifierException
    */
-  public V variant(final String variant) {
+  public LocaleVerifier variant(final String variant) throws VerifierException {
     final Locale value = verification.getValue();
     final boolean result = value != null && value.getVariant().equals(variant);
 
     verification.check(result, "be variant '%s'", variant);
 
-    return chain();
+    return this;
   }
 
   private static class LazyHolder {

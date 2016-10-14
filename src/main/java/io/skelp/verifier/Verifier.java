@@ -23,8 +23,6 @@ package io.skelp.verifier;
 
 import io.skelp.verifier.message.DefaultMessageFormatter;
 import io.skelp.verifier.message.MessageFormatter;
-import io.skelp.verifier.type.BaseTypeVerifier;
-import io.skelp.verifier.type.TypeVerifier;
 
 /**
  * TODO: Document
@@ -46,7 +44,7 @@ public final class Verifier {
    * @return
    * @throws VerifierException
    */
-  public static <T, V extends TypeVerifier<T, V>> V verify(final T value, final Object name, final Class<V> verifierType) {
+  public static <T, V extends CustomVerifier<T, V>> V verify(final T value, final Object name, final Class<V> verifierType) {
     return verify(value, name, verifierType, null);
   }
 
@@ -62,7 +60,7 @@ public final class Verifier {
    * @return
    * @throws VerifierException
    */
-  public static <T, V extends TypeVerifier<T, V>> V verify(final T value, final Object name, final Class<V> verifierType, final MessageFormatter messageFormatter) {
+  public static <T, V extends CustomVerifier<T, V>> V verify(final T value, final Object name, final Class<V> verifierType, final MessageFormatter messageFormatter) {
     if (verifierType == null) {
       throw new VerifierException("type must not be null");
     }

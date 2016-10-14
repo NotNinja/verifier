@@ -22,14 +22,16 @@
 package io.skelp.verifier.type;
 
 import io.skelp.verifier.Verification;
+import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.type.base.BaseComparableVerifier;
+import io.skelp.verifier.type.base.BaseNumberVerifier;
 
 /**
  * TODO: Document
  *
- * @param <V>
  * @author Alasdair Mercer
  */
-public class IntegerVerifier<V extends IntegerVerifier<V>> extends ComparableVerifier<Integer, V> implements NumberVerifier<Integer, V> {
+public final class IntegerVerifier extends BaseComparableVerifier<Integer, IntegerVerifier> implements BaseNumberVerifier<Integer, IntegerVerifier> {
 
   /**
    * TODO: Document
@@ -41,82 +43,82 @@ public class IntegerVerifier<V extends IntegerVerifier<V>> extends ComparableVer
   }
 
   @Override
-  public V even() {
+  public IntegerVerifier even() throws VerifierException {
     final Integer value = verification.getValue();
     final boolean result = value != null && value % 2 == 0;
 
     verification.check(result, "be even");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V falsehood() {
+  public IntegerVerifier falsehood() throws VerifierException {
     final Integer value = verification.getValue();
     final boolean result = value != null && value == 0;
 
     verification.check(result, "be false");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V negative() {
+  public IntegerVerifier negative() throws VerifierException {
     final Integer value = verification.getValue();
     final boolean result = value != null && value < 0;
 
     verification.check(result, "be negative");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V odd() {
+  public IntegerVerifier odd() throws VerifierException {
     final Integer value = verification.getValue();
     final boolean result = value != null && value % 2 != 0;
 
     verification.check(result, "be odd");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V one() {
+  public IntegerVerifier one() throws VerifierException {
     final Integer value = verification.getValue();
     final boolean result = value != null && value == 1;
 
     verification.check(result, "be one");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V positive() {
+  public IntegerVerifier positive() throws VerifierException {
     final Integer value = verification.getValue();
     final boolean result = value != null && value >= 0;
 
     verification.check(result, "be positive");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V truth() {
+  public IntegerVerifier truth() throws VerifierException {
     final Integer value = verification.getValue();
     final boolean result = value != null && value == 1;
 
     verification.check(result, "be true");
 
-    return chain();
+    return this;
   }
 
   @Override
-  public V zero() {
+  public IntegerVerifier zero() throws VerifierException {
     final Integer value = verification.getValue();
     final boolean result = value != null && value == 0;
 
     verification.check(result, "be zero");
 
-    return chain();
+    return this;
   }
 }
