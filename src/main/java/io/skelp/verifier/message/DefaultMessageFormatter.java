@@ -41,7 +41,7 @@ public class DefaultMessageFormatter implements MessageFormatter {
     if (message != null) {
       buffer.append(String.format(message, args));
     } else {
-      buffer.append(!verification.isNegated() ? "valid" : "invalid");
+      buffer.append("match");
     }
     buffer.append(": ");
     buffer.append(verification.getValue());
