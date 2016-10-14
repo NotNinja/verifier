@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import io.skelp.verifier.AbstractCustomVerifier;
-import io.skelp.verifier.Verification;
+import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.VerifierException;
 
 /**

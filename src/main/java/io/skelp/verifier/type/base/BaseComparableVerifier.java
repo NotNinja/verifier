@@ -22,7 +22,7 @@
 package io.skelp.verifier.type.base;
 
 import io.skelp.verifier.AbstractCustomVerifier;
-import io.skelp.verifier.Verification;
+import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.VerifierException;
 
 /**

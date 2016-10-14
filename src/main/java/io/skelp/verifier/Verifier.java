@@ -47,6 +47,7 @@ import io.skelp.verifier.type.ObjectVerifier;
 import io.skelp.verifier.type.ShortVerifier;
 import io.skelp.verifier.type.StringVerifier;
 import io.skelp.verifier.type.ThrowableVerifier;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * TODO: Document

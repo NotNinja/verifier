@@ -22,7 +22,7 @@
 package io.skelp.verifier.type;
 
 import java.math.BigDecimal;
-import io.skelp.verifier.Verification;
+import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseNumberVerifier;

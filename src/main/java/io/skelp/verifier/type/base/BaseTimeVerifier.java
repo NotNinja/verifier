@@ -22,7 +22,7 @@
 package io.skelp.verifier.type.base;
 
 import java.util.Calendar;
-import io.skelp.verifier.Verification;
+import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.VerifierException;
 
 /**

@@ -19,8 +19,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier;
+package io.skelp.verifier.verification;
 
+import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.message.MessageFormatter;
 
 /**
@@ -58,7 +59,7 @@ public class Verification<T> {
    * @return
    * @throws VerifierException
    */
-  public Verification check(final boolean result, final String message, final Object... args) {
+  public Verification<T> check(final boolean result, final String message, final Object... args) {
     if (result && negated || !result && !negated) {
       throw new VerifierException(messageFormatter.format(this, message, args));
     }

@@ -21,7 +21,7 @@
  */
 package io.skelp.verifier.message;
 
-import io.skelp.verifier.Verification;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * TODO: Document

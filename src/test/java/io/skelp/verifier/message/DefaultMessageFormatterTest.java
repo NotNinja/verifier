@@ -23,7 +23,7 @@ package io.skelp.verifier.message;
 
 import static org.junit.Assert.*;
 
-import io.skelp.verifier.Verification;
+import io.skelp.verifier.verification.Verification;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

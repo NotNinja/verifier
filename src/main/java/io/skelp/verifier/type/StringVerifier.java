@@ -22,7 +22,7 @@
 package io.skelp.verifier.type;
 
 import java.util.regex.Pattern;
-import io.skelp.verifier.Verification;
+import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseTruthVerifier;

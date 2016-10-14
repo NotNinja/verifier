@@ -23,7 +23,7 @@ package io.skelp.verifier.type;
 
 import java.util.Arrays;
 import io.skelp.verifier.AbstractCustomVerifier;
-import io.skelp.verifier.Verification;
+import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.VerifierException;
 
 /**

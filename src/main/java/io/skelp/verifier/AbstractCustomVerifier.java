@@ -23,6 +23,7 @@ package io.skelp.verifier;
 
 import io.skelp.verifier.message.ArrayFormatter;
 import io.skelp.verifier.util.Function;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * TODO: Document
