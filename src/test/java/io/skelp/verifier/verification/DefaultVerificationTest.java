@@ -35,12 +35,12 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
- * Tests for the {@link Verification} class.
+ * Tests for the {@link DefaultVerification} class.
  *
  * @author Alasdair Mercer
  */
 @RunWith(MockitoJUnitRunner.class)
-public class VerificationTest {
+public class DefaultVerificationTest {
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
@@ -53,7 +53,7 @@ public class VerificationTest {
     thrown.expect(VerifierException.class);
     thrown.expectMessage("i am expected");
 
-    Verification<?> verification = new Verification<>(mockMessageFormatter, null, null);
+    DefaultVerification<?> verification = new DefaultVerification<>(mockMessageFormatter, null, null);
 
     when(mockMessageFormatter.format(same(verification), eq("test"), Matchers.anyVararg())).thenReturn("i am expected");
 
@@ -62,7 +62,7 @@ public class VerificationTest {
 
   @Test
   public void testCheckWithBadResultWhenNegated() {
-    Verification<?> verification = new Verification<>(mockMessageFormatter, null, null);
+    DefaultVerification<?> verification = new DefaultVerification<>(mockMessageFormatter, null, null);
     verification.setNegated(true);
 
     assertSame("Chains reference", verification, verification.check(false, "test", "foo", "bar"));
@@ -71,7 +71,7 @@ public class VerificationTest {
 
   @Test
   public void testCheckWithGoodResult() {
-    Verification<?> verification = new Verification<>(mockMessageFormatter, null, null);
+    DefaultVerification<?> verification = new DefaultVerification<>(mockMessageFormatter, null, null);
 
     assertSame("Chains reference", verification, verification.check(true, "test", "foo", "bar"));
     assertFalse("Still not negated", verification.isNegated());
@@ -82,7 +82,7 @@ public class VerificationTest {
     thrown.expect(VerifierException.class);
     thrown.expectMessage("i am expected");
 
-    Verification<?> verification = new Verification<>(mockMessageFormatter, null, null);
+    DefaultVerification<?> verification = new DefaultVerification<>(mockMessageFormatter, null, null);
     verification.setNegated(true);
 
     when(mockMessageFormatter.format(same(verification), eq("test"), Matchers.anyVararg())).thenReturn("i am expected");
@@ -92,21 +92,21 @@ public class VerificationTest {
 
   @Test
   public void testMessageFormatter() {
-    Verification<?> verification = new Verification<>(mockMessageFormatter, null, null);
+    DefaultVerification<?> verification = new DefaultVerification<>(mockMessageFormatter, null, null);
 
     assertEquals("Message formatter property is readable", mockMessageFormatter, verification.getMessageFormatter());
   }
 
   @Test
   public void testName() {
-    Verification<?> verification = new Verification<>(null, null, "foo");
+    DefaultVerification<?> verification = new DefaultVerification<>(null, null, "foo");
 
     assertEquals("Name property is readable", "foo", verification.getName());
   }
 
   @Test
   public void testNegated() {
-    Verification<?> verification = new Verification<>(null, null, null);
+    DefaultVerification<?> verification = new DefaultVerification<>(null, null, null);
 
     assertFalse("Negated property is readable", verification.isNegated());
 
@@ -117,7 +117,7 @@ public class VerificationTest {
 
   @Test
   public void testValue() {
-    Verification<?> verification = new Verification<>(null, 123, null);
+    DefaultVerification<?> verification = new DefaultVerification<>(null, 123, null);
 
     assertEquals("Value property is readable", 123, verification.getValue());
   }

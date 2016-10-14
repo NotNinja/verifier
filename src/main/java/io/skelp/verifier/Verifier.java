@@ -47,6 +47,7 @@ import io.skelp.verifier.type.ObjectVerifier;
 import io.skelp.verifier.type.ShortVerifier;
 import io.skelp.verifier.type.StringVerifier;
 import io.skelp.verifier.type.ThrowableVerifier;
+import io.skelp.verifier.verification.DefaultVerification;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -504,7 +505,7 @@ public final class Verifier {
   }
 
   private static <T> Verification<T> createVerification(final T value, final Object name, final MessageFormatter messageFormatter) {
-    return new Verification<>(messageFormatter != null ? messageFormatter : defaultMessageFormatter, value, name);
+    return new DefaultVerification<>(messageFormatter != null ? messageFormatter : defaultMessageFormatter, value, name);
   }
 
   /**

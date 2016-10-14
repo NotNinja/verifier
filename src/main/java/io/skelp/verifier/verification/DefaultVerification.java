@@ -30,51 +30,59 @@ import io.skelp.verifier.message.MessageFormatter;
  * @param <T>
  * @author Alasdair Mercer
  */
-public interface Verification<T> {
+public class DefaultVerification<T> implements Verification<T> {
+
+  private final MessageFormatter messageFormatter;
+  private final Object name;
+  private boolean negated;
+  private final T value;
 
   /**
    * TODO: Document
    *
-   * @param result
-   * @param message
-   * @param args
-   * @return
-   * @throws VerifierException
+   * @param messageFormatter
+   * @param value
+   * @param name
    */
-  Verification<T> check(boolean result, String message, Object... args) throws VerifierException;
+  public DefaultVerification(final MessageFormatter messageFormatter, final T value, final Object name) {
+    this.messageFormatter = messageFormatter;
+    this.value = value;
+    this.name = name;
+  }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  MessageFormatter getMessageFormatter();
+  @Override
+  public DefaultVerification<T> check(final boolean result, final String message, final Object... args) throws VerifierException {
+    if (result && negated || !result && !negated) {
+      throw new VerifierException(messageFormatter.format(this, message, args));
+    }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  Object getName();
+    negated = false;
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  boolean isNegated();
+    return this;
+  }
 
-  /**
-   * TODO: Document
-   *
-   * @param negated
-   */
-  void setNegated(boolean negated);
+  @Override
+  public MessageFormatter getMessageFormatter() {
+    return messageFormatter;
+  }
 
-  /**
-   * TODO: Document
-   *
-   * @return
-   */
-  T getValue();
+  @Override
+  public Object getName() {
+    return name;
+  }
+
+  @Override
+  public boolean isNegated() {
+    return negated;
+  }
+
+  @Override
+  public void setNegated(final boolean negated) {
+    this.negated = negated;
+  }
+
+  @Override
+  public T getValue() {
+    return value;
+  }
 }
