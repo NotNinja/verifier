@@ -21,10 +21,47 @@
  */
 package io.skelp.verifier.type;
 
+import io.skelp.verifier.type.base.BaseComparableVerifierTestBase;
+
 /**
  * Tests for the {@link ComparableVerifier} class.
  *
  * @author Alasdair Mercer
  */
-public class ComparableVerifierTest {
+public class ComparableVerifierTest extends BaseComparableVerifierTestBase<Integer, ComparableVerifier<Integer>> {
+
+    @Override
+    protected ComparableVerifier<Integer> createCustomVerifier() {
+        return new ComparableVerifier<>(getMockVerification());
+    }
+
+    @Override
+    protected ComparableValues<Integer> getComparableValues() {
+        return new ComparableValues<Integer>() {
+            @Override
+            public Integer getBase() {
+                return 50;
+            }
+
+            @Override
+            public Integer getHigher() {
+                return 75;
+            }
+
+            @Override
+            public Integer getHighest() {
+                return 100;
+            }
+
+            @Override
+            public Integer getLower() {
+                return 25;
+            }
+
+            @Override
+            public Integer getLowest() {
+                return 0;
+            }
+        };
+    }
 }

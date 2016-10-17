@@ -35,6 +35,10 @@ import io.skelp.verifier.verification.Verification;
 public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier<T, V>> implements CustomVerifier<T, V> {
 
     private static <T> boolean matchAny(final T[] inputs, final Function<Boolean, T> matcher) {
+        if (inputs == null) {
+            return false;
+        }
+
         for (final T input : inputs) {
             if (matcher.apply(input)) {
                 return true;
@@ -97,7 +101,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     }
 
     @Override
-    public V hashed(final int hashCode) throws VerifierException {
+    public V hashedAs(final int hashCode) throws VerifierException {
         final T value = verification.getValue();
         final boolean result = value != null && value.hashCode() == hashCode;
 
@@ -108,7 +112,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
 
     @Override
     public V instanceOf(final Class<?> cls) throws VerifierException {
-        final boolean result = cls.isInstance(verification.getValue());
+        final boolean result = cls != null && cls.isInstance(verification.getValue());
 
         verification.check(result, "be an instance of '%s'", cls);
 
@@ -121,7 +125,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
         final boolean result = matchAny(classes, new Function<Boolean, Class<?>>() {
             @Override
             public Boolean apply(final Class<?> input) {
-                return input.isInstance(value);
+                return input != null && input.isInstance(value);
             }
         });
 
@@ -155,7 +159,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     public V sameAs(final Object other, final Object name) throws VerifierException {
         final boolean result = verification.getValue() == other;
 
-        verification.check(result, "be same as %s", name);
+        verification.check(result, "be same as '%s'", name);
 
         return chain();
     }

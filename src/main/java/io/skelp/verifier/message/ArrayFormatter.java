@@ -73,6 +73,15 @@ public class ArrayFormatter<T> {
         }
     }
 
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    public T[] getArray() {
+        return array;
+    }
+
     @Override
     public String toString() {
         return format();

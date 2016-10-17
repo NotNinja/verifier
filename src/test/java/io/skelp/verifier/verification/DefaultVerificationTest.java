@@ -54,7 +54,7 @@ public class DefaultVerificationTest {
     private MessageFormatterFactory mockMessageFormatterFactory;
 
     @Before
-    public void setup() {
+    public void setUp() {
         when(mockMessageFormatterFactory.create()).thenReturn(mockMessageFormatter);
     }
 

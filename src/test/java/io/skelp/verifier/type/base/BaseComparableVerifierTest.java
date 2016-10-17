@@ -21,10 +21,79 @@
  */
 package io.skelp.verifier.type.base;
 
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import io.skelp.verifier.verification.Verification;
+
 /**
  * Tests for the {@link BaseComparableVerifier} class.
  *
  * @author Alasdair Mercer
  */
-public class BaseComparableVerifierTest {
+public class BaseComparableVerifierTest extends BaseComparableVerifierTestBase<BaseComparableVerifierTest.ComparableWrapper, BaseComparableVerifierTest.BaseComparableVerifierTestImpl> {
+
+    @Test
+    public void hackCoverage() throws Exception {
+        // TODO: Determine how to avoid this
+        assertEquals(4, BaseComparableVerifierTestImpl.ComparisonOperator.values().length);
+        assertEquals(BaseComparableVerifierTestImpl.ComparisonOperator.GREATER_THAN, BaseComparableVerifierTestImpl.ComparisonOperator.valueOf("GREATER_THAN"));
+    }
+
+    @Override
+    protected BaseComparableVerifierTestImpl createCustomVerifier() {
+        return new BaseComparableVerifierTestImpl(getMockVerification());
+    }
+
+    @Override
+    protected ComparableValues<ComparableWrapper> getComparableValues() {
+        return new ComparableValues<ComparableWrapper>() {
+            @Override
+            public ComparableWrapper getBase() {
+                return new ComparableWrapper(50);
+            }
+
+            @Override
+            public ComparableWrapper getHigher() {
+                return new ComparableWrapper(75);
+            }
+
+            @Override
+            public ComparableWrapper getHighest() {
+                return new ComparableWrapper(100);
+            }
+
+            @Override
+            public ComparableWrapper getLower() {
+                return new ComparableWrapper(25);
+            }
+
+            @Override
+            public ComparableWrapper getLowest() {
+                return new ComparableWrapper(0);
+            }
+        };
+    }
+
+    static class BaseComparableVerifierTestImpl extends BaseComparableVerifier<ComparableWrapper, BaseComparableVerifierTestImpl> {
+
+        BaseComparableVerifierTestImpl(Verification<ComparableWrapper> verification) {
+            super(verification);
+        }
+    }
+
+    static class ComparableWrapper implements Comparable<ComparableWrapper> {
+
+        final Integer comparable;
+
+        ComparableWrapper(Integer comparable) {
+            this.comparable = comparable;
+        }
+
+        @Override
+        public int compareTo(ComparableWrapper other) {
+            return comparable.compareTo(other.comparable);
+        }
+    }
 }

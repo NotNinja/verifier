@@ -65,7 +65,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * @return
      * @throws VerifierException
      */
-    V hashed(int hashCode) throws VerifierException;
+    V hashedAs(int hashCode) throws VerifierException;
 
     /**
      * TODO: Document

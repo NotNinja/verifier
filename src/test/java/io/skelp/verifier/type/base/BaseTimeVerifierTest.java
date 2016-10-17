@@ -21,10 +21,50 @@
  */
 package io.skelp.verifier.type.base;
 
+import java.util.Calendar;
+
+import io.skelp.verifier.verification.Verification;
+
 /**
  * Tests for the {@link BaseTimeVerifier} class.
  *
  * @author Alasdair Mercer
  */
-public class BaseTimeVerifierTest {
+public class BaseTimeVerifierTest extends BaseTimeVerifierTestBase<BaseTimeVerifierTest.CalendarWrapper, BaseTimeVerifierTest.BaseTimeVerifierTestImpl> {
+
+    @Override
+    protected BaseTimeVerifierTestImpl createCustomVerifier() {
+        return new BaseTimeVerifierTestImpl(getMockVerification());
+    }
+
+    @Override
+    protected CalendarWrapper getValueForCalendar(Calendar calendar) {
+        return calendar == null ? null : new CalendarWrapper(calendar);
+    }
+
+    static class BaseTimeVerifierTestImpl extends BaseTimeVerifier<CalendarWrapper, BaseTimeVerifierTestImpl> {
+
+        BaseTimeVerifierTestImpl(Verification<CalendarWrapper> verification) {
+            super(verification);
+        }
+
+        @Override
+        protected Calendar getCalendar(CalendarWrapper value) {
+            return value == null ? null : value.calendar;
+        }
+    }
+
+    static class CalendarWrapper implements Comparable<CalendarWrapper> {
+
+        final Calendar calendar;
+
+        CalendarWrapper(Calendar calendar) {
+            this.calendar = calendar;
+        }
+
+        @Override
+        public int compareTo(CalendarWrapper other) {
+            return calendar.compareTo(other.calendar);
+        }
+    }
 }

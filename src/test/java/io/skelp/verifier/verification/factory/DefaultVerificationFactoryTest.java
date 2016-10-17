@@ -50,7 +50,7 @@ public class DefaultVerificationFactoryTest {
     private DefaultVerificationFactory factory;
 
     @Before
-    public void setup() {
+    public void setUp() {
         factory = new DefaultVerificationFactory();
 
         when(mockMessageFormatterFactory.create()).thenReturn(mockMessageFormatter);

@@ -21,10 +21,24 @@
  */
 package io.skelp.verifier.type;
 
+import java.util.Calendar;
+
+import io.skelp.verifier.type.base.BaseTimeVerifierTestBase;
+
 /**
  * Tests for the {@link CalendarVerifier} class.
  *
  * @author Alasdair Mercer
  */
-public class CalendarVerifierTest {
+public class CalendarVerifierTest extends BaseTimeVerifierTestBase<Calendar, CalendarVerifier> {
+
+    @Override
+    protected CalendarVerifier createCustomVerifier() {
+        return new CalendarVerifier(getMockVerification());
+    }
+
+    @Override
+    protected Calendar getValueForCalendar(Calendar calendar) {
+        return calendar;
+    }
 }

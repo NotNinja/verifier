@@ -73,28 +73,6 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * TODO: Document
      *
      * @param start
-     * @param startComparison
-     * @param startName
-     * @param end
-     * @param endComparison
-     * @param endName
-     * @param message
-     * @return
-     * @throws VerifierException
-     */
-    protected V between(final T start, final Comparison startComparison, final Object startName, final T end, final Comparison endComparison, final Object endName, final String message) throws VerifierException {
-        final T value = verification.getValue();
-        final boolean result = value != null && startComparison.compare(value.compareTo(start)) && endComparison.compare(value.compareTo(end));
-
-        verification.check(result, message, startName, endName);
-
-        return chain();
-    }
-
-    /**
-     * TODO: Document
-     *
-     * @param start
      * @param end
      * @return
      * @throws VerifierException
@@ -115,25 +93,6 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      */
     public V betweenExclusive(final T start, final T end, final Object startName, final Object endName) throws VerifierException {
         return between(start, ComparisonOperator.GREATER_THAN, startName, end, ComparisonOperator.LESS_THAN, endName, "be between '%s' and '%s' (exclusive)");
-    }
-
-    /**
-     * TODO: Document
-     *
-     * @param comparison
-     * @param other
-     * @param name
-     * @param message
-     * @return
-     * @throws VerifierException
-     */
-    protected V comparesTo(final Comparison comparison, final T other, final Object name, final String message) throws VerifierException {
-        final T value = verification.getValue();
-        final boolean result = value != null && comparison.compare(value.compareTo(other));
-
-        verification.check(result, message, name);
-
-        return chain();
     }
 
     /**
@@ -228,18 +187,31 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
         return comparesTo(ComparisonOperator.LESS_THAN_OR_EQUAL_TO, other, name, "be less than or equal to '%s'");
     }
 
-    /**
-     * TODO: Document
-     */
-    protected interface Comparison {
+    private V between(final T start, final Comparison startComparison, final Object startName, final T end, final Comparison endComparison, final Object endName, final String message) throws VerifierException {
+        final T value = verification.getValue();
+        final boolean result = value != null && start != null && end != null &&
+            (startComparison.compare(value.compareTo(start)) && endComparison.compare(value.compareTo(end)));
+
+        verification.check(result, message, startName, endName);
+
+        return chain();
+    }
+
+    private V comparesTo(final Comparison comparison, final T other, final Object name, final String message) throws VerifierException {
+        final T value = verification.getValue();
+        final boolean result = value != null && other != null && comparison.compare(value.compareTo(other));
+
+        verification.check(result, message, name);
+
+        return chain();
+    }
+
+    interface Comparison {
 
         boolean compare(int result);
     }
 
-    /**
-     * TODO: Document
-     */
-    protected enum ComparisonOperator implements Comparison {
+    enum ComparisonOperator implements Comparison {
 
         GREATER_THAN() {
             @Override
@@ -262,7 +234,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
         LESS_THAN_OR_EQUAL_TO() {
             @Override
             public boolean compare(final int result) {
-                return result >= 0;
+                return result <= 0;
             }
         }
     }

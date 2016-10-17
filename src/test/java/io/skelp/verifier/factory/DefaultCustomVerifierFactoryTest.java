@@ -47,7 +47,7 @@ public class DefaultCustomVerifierFactoryTest {
     private DefaultCustomVerifierFactory factory;
 
     @Before
-    public void setup() {
+    public void setUp() {
         factory = new DefaultCustomVerifierFactory();
     }
 

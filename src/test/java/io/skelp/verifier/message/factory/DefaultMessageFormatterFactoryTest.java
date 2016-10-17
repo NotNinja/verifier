@@ -38,7 +38,7 @@ public class DefaultMessageFormatterFactoryTest {
     private DefaultMessageFormatterFactory factory;
 
     @Before
-    public void setup() {
+    public void setUp() {
         factory = new DefaultMessageFormatterFactory();
     }
 

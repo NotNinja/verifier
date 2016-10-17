@@ -46,7 +46,7 @@ public class DefaultMessageFormatterTest {
     private DefaultMessageFormatter formatter;
 
     @Before
-    public void setup() {
+    public void setUp() {
         when(mockVerification.getMessageFormatter()).thenReturn(formatter);
 
         formatter = new DefaultMessageFormatter();

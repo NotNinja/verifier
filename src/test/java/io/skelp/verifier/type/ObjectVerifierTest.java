@@ -21,10 +21,17 @@
  */
 package io.skelp.verifier.type;
 
+import io.skelp.verifier.AbstractCustomVerifierTestBase;
+
 /**
  * Tests for the {@link ObjectVerifier} class.
  *
  * @author Alasdair Mercer
  */
-public class ObjectVerifierTest {
+public class ObjectVerifierTest extends AbstractCustomVerifierTestBase<Object, ObjectVerifier> {
+
+    @Override
+    protected ObjectVerifier createCustomVerifier() {
+        return new ObjectVerifier(getMockVerification());
+    }
 }
