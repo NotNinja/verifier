@@ -22,6 +22,7 @@
 package io.skelp.verifier.type;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 import io.skelp.verifier.AbstractCustomVerifier;
 import io.skelp.verifier.VerifierException;
@@ -84,9 +85,58 @@ public final class ArrayVerifier<T> extends AbstractCustomVerifier<T[], ArrayVer
      */
     public ArrayVerifier<T> length(final int length) throws VerifierException {
         final T[] value = verification.getValue();
-        final boolean result = value != null && value.length == length;
+        final boolean result = value == null ? length == 0 : value.length == length;
 
         verification.check(result, "have length of '%d'", length);
+
+        return this;
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param comparator
+     * @return
+     * @throws VerifierException
+     */
+    public ArrayVerifier<T> sorted(final Comparator<T> comparator) throws VerifierException {
+        return sorted(comparator, comparator);
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param comparator
+     * @param name
+     * @return
+     * @throws VerifierException
+     */
+    public ArrayVerifier<T> sorted(final Comparator<T> comparator, final Object name) throws VerifierException {
+        if (comparator == null) {
+            throw new VerifierException("comparator must not be null");
+        }
+
+        final T[] value = verification.getValue();
+        boolean result = true;
+
+        if (value == null) {
+            result = false;
+        } else if (value.length >= 2) {
+            T previous = value[0];
+            final int length = value.length;
+
+            for (int i = 1; i < length; i++) {
+                final T current = value[i];
+                if (comparator.compare(previous, current) > 0) {
+                    result = false;
+                    break;
+                }
+
+                previous = current;
+            }
+        }
+
+        verification.check(result, "be sorted by '%s'", name);
 
         return this;
     }
