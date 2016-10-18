@@ -76,7 +76,7 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * @return
      * @throws VerifierException
      */
-    public ThrowableVerifier causedBy(final Class<?> type) throws VerifierException {
+    public ThrowableVerifier cause(final Class<?> type) throws VerifierException {
         final Throwable value = verification.getValue();
         boolean result = false;
         for (final Throwable throwable : getThrowables(value)) {
@@ -86,7 +86,7 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
             }
         }
 
-        verification.check(result, "have been caused by %s", type);
+        verification.check(result, "have been caused by '%s'", type);
 
         return this;
     }
@@ -98,11 +98,39 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * @return
      * @throws VerifierException
      */
-    public ThrowableVerifier causedBy(final Throwable cause) throws VerifierException {
+    public ThrowableVerifier cause(final Throwable cause) throws VerifierException {
+        return cause(cause, cause);
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param cause
+     * @param name
+     * @return
+     * @throws VerifierException
+     */
+    public ThrowableVerifier cause(final Throwable cause, final Object name) throws VerifierException {
         final Throwable value = verification.getValue();
         final boolean result = getThrowables(value).contains(cause);
 
-        verification.check(result, "have been caused by %s", cause);
+        verification.check(result, "have been caused by '%s'", name);
+
+        return this;
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param message
+     * @return
+     * @throws VerifierException
+     */
+    public ThrowableVerifier message(final String message) throws VerifierException {
+        final Throwable value = verification.getValue();
+        final boolean result = value != null && (value.getMessage() == null ? message == null : value.getMessage().equals(message));
+
+        verification.check(result, "have message '%s'", message);
 
         return this;
     }
