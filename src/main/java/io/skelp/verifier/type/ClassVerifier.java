@@ -64,7 +64,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      */
     public ClassVerifier annotated(final Class<? extends Annotation> type) throws VerifierException {
         final Class<?> value = verification.getValue();
-        final boolean result = value != null && value.isAnnotationPresent(type);
+        final boolean result = value != null && type != null && value.isAnnotationPresent(type);
 
         verification.check(result, "be annotated with '%s'", type);
 
@@ -218,21 +218,6 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         final boolean result = PRIMITIVE_WRAPPERS.contains(value);
 
         verification.check(result, "be a primitive wrapper");
-
-        return this;
-    }
-
-    /**
-     * TODO: Document
-     *
-     * @return
-     * @throws VerifierException
-     */
-    public ClassVerifier synthetic() throws VerifierException {
-        final Class<?> value = verification.getValue();
-        final boolean result = value != null && value.isSynthetic();
-
-        verification.check(result, "be synthetic");
 
         return this;
     }
