@@ -125,7 +125,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      */
     public ClassVerifier assignableFrom(final Class<?> type) throws VerifierException {
         final Class<?> value = verification.getValue();
-        final boolean result = value != null && value.isAssignableFrom(type);
+        final boolean result = value != null && type != null && value.isAssignableFrom(type);
 
         verification.check(result, "be assignable from '%s'", type);
 

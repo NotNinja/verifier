@@ -30,6 +30,9 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.Test;
 
 import io.skelp.verifier.AbstractCustomVerifierTestBase;
@@ -40,6 +43,9 @@ import io.skelp.verifier.AbstractCustomVerifierTestBase;
  * @author Alasdair Mercer
  */
 public class ClassVerifierTest extends AbstractCustomVerifierTestBase<Class, ClassVerifier> {
+
+    private static final Class<?>[] PRIMITIVES = {Boolean.TYPE, Byte.TYPE, Character.TYPE, Double.TYPE, Float.TYPE, Integer.TYPE, Long.TYPE, Short.TYPE, Void.TYPE};
+    private static final Class<?>[] PRIMITIVE_WRAPPERS = {Boolean.class, Byte.class, Character.class, Double.class, Float.class, Integer.class, Long.class, Short.class, Void.TYPE};
 
     @Override
     protected ClassVerifier createCustomVerifier() {
@@ -134,6 +140,64 @@ public class ClassVerifierTest extends AbstractCustomVerifierTestBase<Class, Cla
     }
 
     @Test
+    public void testArrayWhenValueIsArray() {
+        testArrayHelper(Object[].class, true);
+    }
+
+    @Test
+    public void testArrayWhenValueIsNotArray() {
+        testArrayHelper(ClassVerifierTest.class, false);
+    }
+
+    @Test
+    public void testArrayWhenValueIsNull() {
+        testArrayHelper(null, false);
+    }
+
+    private void testArrayHelper(Class<?> value, boolean expected) {
+        setValue(value);
+
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().array());
+
+        verify(getMockVerification()).check(expected, "be an array");
+    }
+
+    @Test
+    public void testAssignableFromWhenTypeIsNull() {
+        testAssignableFromHelper(Object.class, null, false);
+    }
+
+    @Test
+    public void testAssignableFromWhenValueIsAssignableFromType() {
+        testAssignableFromHelper(Object.class, ClassVerifierTest.class, true);
+    }
+
+    @Test
+    public void testAssignableFromWhenValueIsNotAssignableFromType() {
+        testAssignableFromHelper(ClassVerifierTest.class, Object.class, false);
+    }
+
+    @Test
+    public void testAssignableFromWhenValueIsNull() {
+        testAssignableFromHelper(null, Object.class, false);
+    }
+
+    @Test
+    public void testAssignableFromWhenValueIsType() {
+        testAssignableFromHelper(ClassVerifierTest.class, ClassVerifierTest.class, true);
+    }
+
+    private void testAssignableFromHelper(Class<?> value, Class<?> type, boolean expected) {
+        setValue(value);
+
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().assignableFrom(type));
+
+        verify(getMockVerification()).check(eq(expected), eq("be assignable from '%s'"), getArgsCaptor().capture());
+
+        assertSame("Passes type for message formatting", type, getArgsCaptor().getValue());
+    }
+
+    @Test
     public void testEnumerationWhenValueIsEnum() {
         testEnumerationHelper(AnEnum.class, true);
     }
@@ -200,6 +264,102 @@ public class ClassVerifierTest extends AbstractCustomVerifierTestBase<Class, Cla
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().nested());
 
         verify(getMockVerification()).check(expected, "be nested");
+    }
+
+    @Test
+    public void testPrimitiveWhenValueIsNotPrimitiveOrWrapper() {
+        testPrimitiveHelper(new Class<?>[]{Object.class}, false);
+    }
+
+    @Test
+    public void testPrimitiveWhenValueIsNull() {
+        testPrimitiveHelper(new Class<?>[]{null}, false);
+    }
+
+    @Test
+    public void testPrimitiveWhenValueIsPrimitive() {
+        testPrimitiveHelper(PRIMITIVES, true);
+    }
+
+    @Test
+    public void testPrimitiveWhenValueIsPrimitiveWrapper() {
+        List<Class<?>> primitiveWrappers = new ArrayList<>(Arrays.asList(PRIMITIVE_WRAPPERS));
+        primitiveWrappers.remove(Void.TYPE);
+
+        testPrimitiveHelper(primitiveWrappers.toArray(new Class<?>[0]), false);
+    }
+
+    private void testPrimitiveHelper(Class<?>[] values, boolean expected) {
+        for (Class<?> value : values) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().primitive());
+        }
+
+        verify(getMockVerification(), times(values.length)).check(expected, "be a primitive");
+    }
+
+    @Test
+    public void testPrimitiveOrWrapperWhenValueIsNotPrimitiveOrWrapper() {
+        testPrimitiveOrWrapperHelper(new Class<?>[]{Object.class}, false);
+    }
+
+    @Test
+    public void testPrimitiveOrWrapperWhenValueIsNull() {
+        testPrimitiveOrWrapperHelper(new Class<?>[]{null}, false);
+    }
+
+    @Test
+    public void testPrimitiveOrWrapperWhenValueIsPrimitive() {
+        testPrimitiveOrWrapperHelper(PRIMITIVES, true);
+    }
+
+    @Test
+    public void testPrimitiveOrWrapperWhenValueIsPrimitiveWrapper() {
+        testPrimitiveOrWrapperHelper(PRIMITIVE_WRAPPERS, true);
+    }
+
+    private void testPrimitiveOrWrapperHelper(Class<?>[] values, boolean expected) {
+        for (Class<?> value : values) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().primitiveOrWrapper());
+        }
+
+        verify(getMockVerification(), times(values.length)).check(expected, "be a primitive or primitive wrapper");
+    }
+
+    @Test
+    public void testPrimitiveWrapperWhenValueIsNotPrimitiveOrWrapper() {
+        testPrimitiveWrapperHelper(new Class<?>[]{Object.class}, false);
+    }
+
+    @Test
+    public void testPrimitiveWrapperWhenValueIsNull() {
+        testPrimitiveWrapperHelper(new Class<?>[]{null}, false);
+    }
+
+    @Test
+    public void testPrimitiveWrapperWhenValueIsPrimitive() {
+        List<Class<?>> primitives = new ArrayList<>(Arrays.asList(PRIMITIVES));
+        primitives.remove(Void.TYPE);
+
+        testPrimitiveWrapperHelper(primitives.toArray(new Class<?>[0]), false);
+    }
+
+    @Test
+    public void testPrimitiveWrapperWhenValueIsPrimitiveWrapper() {
+        testPrimitiveWrapperHelper(PRIMITIVE_WRAPPERS, true);
+    }
+
+    private void testPrimitiveWrapperHelper(Class<?>[] values, boolean expected) {
+        for (Class<?> value : values) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().primitiveWrapper());
+        }
+
+        verify(getMockVerification(), times(values.length)).check(expected, "be a primitive wrapper");
     }
 
     @AnnotationOne
