@@ -21,10 +21,132 @@
  */
 package io.skelp.verifier.type;
 
+import java.math.BigDecimal;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
+
+import io.skelp.verifier.AbstractCustomVerifierTestCase;
+import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
+import io.skelp.verifier.type.base.BaseNumberVerifierTestCase;
+import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
+
 /**
  * Tests for the {@link BigDecimalVerifier} class.
  *
  * @author Alasdair Mercer
  */
+@RunWith(Enclosed.class)
 public class BigDecimalVerifierTest {
+
+    public static class BigDecimalVerifierAbstractCustomVerifierTest extends AbstractCustomVerifierTestCase<BigDecimal, BigDecimalVerifier> {
+
+        @Override
+        protected BigDecimalVerifier createCustomVerifier() {
+            return new BigDecimalVerifier(getMockVerification());
+        }
+
+        @Override
+        protected BigDecimal createValueOne() {
+            return new BigDecimal(123);
+        }
+
+        @Override
+        protected BigDecimal createValueTwo() {
+            return new BigDecimal(321);
+        }
+
+        @Override
+        protected Class<?> getParentClass() {
+            return Number.class;
+        }
+
+        @Override
+        protected Class<?> getValueClass() {
+            return BigDecimal.class;
+        }
+    }
+
+    public static class BigDecimalVerifierBaseComparableVerifierTest extends BaseComparableVerifierTestCase<BigDecimal, BigDecimalVerifier> {
+
+        @Override
+        protected BigDecimalVerifier createCustomVerifier() {
+            return new BigDecimalVerifier(getMockVerification());
+        }
+
+        @Override
+        public BigDecimal getBase() {
+            return new BigDecimal(50);
+        }
+
+        @Override
+        public BigDecimal getHigher() {
+            return new BigDecimal(75);
+        }
+
+        @Override
+        public BigDecimal getHighest() {
+            return new BigDecimal(100);
+        }
+
+        @Override
+        public BigDecimal getLower() {
+            return new BigDecimal(25);
+        }
+
+        @Override
+        public BigDecimal getLowest() {
+            return BigDecimal.ZERO;
+        }
+    }
+
+    public static class BigDecimalVerifierBaseNumberVerifierTest extends BaseNumberVerifierTestCase<BigDecimal, BigDecimalVerifier> {
+
+        @Override
+        protected BigDecimalVerifier createCustomVerifier() {
+            return new BigDecimalVerifier(getMockVerification());
+        }
+
+        @Override
+        public BigDecimal getEvenValue() {
+            return new BigDecimal(2);
+        }
+
+        @Override
+        public BigDecimal getOddValue() {
+            return BigDecimal.ONE;
+        }
+
+        @Override
+        public BigDecimal getPositiveOneValue() {
+            return BigDecimal.ONE;
+        }
+
+        @Override
+        public BigDecimal getNegativeOneValue() {
+            return BigDecimal.ONE.negate();
+        }
+
+        @Override
+        public BigDecimal getZeroValue() {
+            return BigDecimal.ZERO;
+        }
+    }
+
+    public static class BigDecimalVerifierBaseTruthVerifierTest extends BaseTruthVerifierTestCase<BigDecimal, BigDecimalVerifier> {
+
+        @Override
+        protected BigDecimalVerifier createCustomVerifier() {
+            return new BigDecimalVerifier(getMockVerification());
+        }
+
+        @Override
+        protected BigDecimal[] getFalsehoodValues() {
+            return new BigDecimal[]{BigDecimal.ZERO};
+        }
+
+        @Override
+        protected BigDecimal[] getTruthValues() {
+            return new BigDecimal[]{BigDecimal.ONE};
+        }
+    }
 }

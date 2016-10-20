@@ -21,10 +21,131 @@
  */
 package io.skelp.verifier.type;
 
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
+
+import io.skelp.verifier.AbstractCustomVerifierTestCase;
+import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
+import io.skelp.verifier.type.base.BaseNumberVerifierTestCase;
+import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
+
 /**
  * Tests for the {@link ByteVerifier} class.
  *
  * @author Alasdair Mercer
  */
+@RunWith(Enclosed.class)
 public class ByteVerifierTest {
+
+    public static class ByteVerifierAbstractCustomVerifierTest extends AbstractCustomVerifierTestCase<Byte, ByteVerifier> {
+
+        @Override
+        protected ByteVerifier createCustomVerifier() {
+            return new ByteVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Byte createValueOne() {
+            return new Byte((byte) 123);
+        }
+
+        @Override
+        protected Byte createValueTwo() {
+            return new Byte((byte) 321);
+        }
+
+        @Override
+        protected Class<?> getParentClass() {
+            return Number.class;
+        }
+
+        @Override
+        protected Class<?> getValueClass() {
+            return Byte.class;
+        }
+    }
+
+    public static class ByteVerifierBaseComparableVerifierTest extends BaseComparableVerifierTestCase<Byte, ByteVerifier> {
+
+        @Override
+        protected ByteVerifier createCustomVerifier() {
+            return new ByteVerifier(getMockVerification());
+        }
+
+        @Override
+        public Byte getBase() {
+            return 50;
+        }
+
+        @Override
+        public Byte getHigher() {
+            return 75;
+        }
+
+        @Override
+        public Byte getHighest() {
+            return 100;
+        }
+
+        @Override
+        public Byte getLower() {
+            return 25;
+        }
+
+        @Override
+        public Byte getLowest() {
+            return 0;
+        }
+    }
+
+    public static class ByteVerifierBaseNumberVerifierTest extends BaseNumberVerifierTestCase<Byte, ByteVerifier> {
+
+        @Override
+        protected ByteVerifier createCustomVerifier() {
+            return new ByteVerifier(getMockVerification());
+        }
+
+        @Override
+        public Byte getEvenValue() {
+            return 2;
+        }
+
+        @Override
+        public Byte getOddValue() {
+            return 1;
+        }
+
+        @Override
+        public Byte getPositiveOneValue() {
+            return 1;
+        }
+
+        @Override
+        public Byte getNegativeOneValue() {
+            return -1;
+        }
+
+        @Override
+        public Byte getZeroValue() {
+            return 0;
+        }
+    }
+
+    public static class ByteVerifierBaseTruthVerifierTest extends BaseTruthVerifierTestCase<Byte, ByteVerifier> {
+
+        @Override
+        protected ByteVerifier createCustomVerifier() {
+            return new ByteVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Byte[] getFalsehoodValues() {
+            return new Byte[]{0};
+        }
+
+        @Override
+        protected Byte[] getTruthValues() {
+            return new Byte[]{1};
+        }
+    }
 }

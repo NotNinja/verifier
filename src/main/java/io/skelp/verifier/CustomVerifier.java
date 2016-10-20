@@ -21,6 +21,8 @@
  */
 package io.skelp.verifier;
 
+import io.skelp.verifier.verification.Verification;
+
 /**
  * TODO: Document
  *
@@ -147,4 +149,11 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * @throws VerifierException
      */
     V that(VerifierAssertion<T> assertion, String message, Object... args) throws VerifierException;
+
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    Verification<T> getVerification();
 }

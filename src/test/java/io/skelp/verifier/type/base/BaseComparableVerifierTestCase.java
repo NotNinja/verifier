@@ -27,10 +27,10 @@ import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 
-import io.skelp.verifier.AbstractCustomVerifierTestBase;
+import io.skelp.verifier.CustomVerifierTestCaseBase;
 
 /**
- * Base for tests of {@link BaseComparableVerifier} implementation classes.
+ * Test case for {@link BaseComparableVerifier} implementation classes.
  *
  * @param <T>
  *         the {@code Comparable} value type for the {@link BaseComparableVerifier} being tested
@@ -38,64 +38,55 @@ import io.skelp.verifier.AbstractCustomVerifierTestBase;
  *         the type of the {@link BaseComparableVerifier} being tested
  * @author Alasdair Mercer
  */
-public abstract class BaseComparableVerifierTestBase<T extends Comparable<? super T>, V extends BaseComparableVerifier<T, V>> extends AbstractCustomVerifierTestBase<T, V> {
+public abstract class BaseComparableVerifierTestCase<T extends Comparable<? super T>, V extends BaseComparableVerifier<T, V>> extends CustomVerifierTestCaseBase<T, V> {
 
-    // TODO: Test between & betweenExclusive with start greater than end and vice versa
+    // TODO: Test between & betweenExclusive with start greater than end and vice versa@Test
+
+    @Test
+    public void hackCoverage() throws Exception {
+        // TODO: Determine how to avoid this
+        assertEquals(4, BaseComparableVerifier.ComparisonOperator.values().length);
+        assertEquals(BaseComparableVerifier.ComparisonOperator.GREATER_THAN, BaseComparableVerifier.ComparisonOperator.valueOf("GREATER_THAN"));
+    }
 
     @Test
     public void testBetweenWhenEndIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenHelper(values.getBase(), values.getLower(), null, false);
+        testBetweenHelper(getBase(), getLower(), null, false);
     }
 
     @Test
     public void testBetweenWhenStartIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenHelper(values.getBase(), null, values.getHigher(), false);
+        testBetweenHelper(getBase(), null, getHigher(), false);
     }
 
     @Test
     public void testBetweenWhenValueInRange() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenHelper(values.getBase(), values.getLower(), values.getHigher(), true);
+        testBetweenHelper(getBase(), getLower(), getHigher(), true);
     }
 
     @Test
     public void testBetweenWhenValueIsAfterEnd() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenHelper(values.getHighest(), values.getLower(), values.getHigher(), false);
+        testBetweenHelper(getHighest(), getLower(), getHigher(), false);
     }
 
     @Test
     public void testBetweenWhenValueIsBeforeStart() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenHelper(values.getLowest(), values.getLower(), values.getHigher(), false);
+        testBetweenHelper(getLowest(), getLower(), getHigher(), false);
     }
 
     @Test
     public void testBetweenWhenValueIsEnd() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenHelper(values.getHigher(), values.getLower(), values.getHigher(), true);
+        testBetweenHelper(getHigher(), getLower(), getHigher(), true);
     }
 
     @Test
     public void testBetweenWhenValueIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenHelper(null, values.getLower(), values.getHigher(), false);
+        testBetweenHelper(null, getLower(), getHigher(), false);
     }
 
     @Test
     public void testBetweenWhenValueIsStart() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenHelper(values.getLower(), values.getLower(), values.getHigher(), true);
+        testBetweenHelper(getLower(), getLower(), getHigher(), true);
     }
 
     private void testBetweenHelper(T value, T start, T end, boolean expected) {
@@ -110,58 +101,42 @@ public abstract class BaseComparableVerifierTestBase<T extends Comparable<? supe
 
     @Test
     public void testBetweenWithStartAndEndNamesBetweenWhenEndIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenHelper(values.getBase(), values.getLower(), null, "start", "end", false);
+        testBetweenHelper(getBase(), getLower(), null, "start", "end", false);
     }
 
     @Test
     public void testBetweenWithStartAndEndNamesBetweenWhenStartIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenHelper(values.getBase(), null, values.getHigher(), "start", "end", false);
+        testBetweenHelper(getBase(), null, getHigher(), "start", "end", false);
     }
 
     @Test
     public void testBetweenWithStartAndEndNamesWhenValueInRange() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenHelper(values.getBase(), values.getLower(), values.getHigher(), "start", "end", true);
+        testBetweenHelper(getBase(), getLower(), getHigher(), "start", "end", true);
     }
 
     @Test
     public void testBetweenWithStartAndEndNamesWhenValueIsAfterEnd() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenHelper(values.getHighest(), values.getLower(), values.getHigher(), "start", "end", false);
+        testBetweenHelper(getHighest(), getLower(), getHigher(), "start", "end", false);
     }
 
     @Test
     public void testBetweenWithStartAndEndNamesWhenValueIsBeforeStart() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenHelper(values.getLowest(), values.getLower(), values.getHigher(), "start", "end", false);
+        testBetweenHelper(getLowest(), getLower(), getHigher(), "start", "end", false);
     }
 
     @Test
     public void testBetweenWithStartAndEndNamesWhenValueIsEnd() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenHelper(values.getHigher(), values.getLower(), values.getHigher(), "start", "end", true);
+        testBetweenHelper(getHigher(), getLower(), getHigher(), "start", "end", true);
     }
 
     @Test
     public void testBetweenWithStartAndEndNamesBetweenWhenValueIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenHelper(null, values.getLower(), values.getHigher(), "start", "end", false);
+        testBetweenHelper(null, getLower(), getHigher(), "start", "end", false);
     }
 
     @Test
     public void testBetweenWithStartAndEndNamesWhenValueIsStart() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenHelper(values.getLower(), values.getLower(), values.getHigher(), "start", "end", true);
+        testBetweenHelper(getLower(), getLower(), getHigher(), "start", "end", true);
     }
 
     private void testBetweenHelper(T value, T start, T end, Object startName, Object endName, boolean expected) {
@@ -176,58 +151,42 @@ public abstract class BaseComparableVerifierTestBase<T extends Comparable<? supe
 
     @Test
     public void testBetweenExclusiveWhenEndIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenExclusiveHelper(values.getBase(), values.getLower(), null, false);
+        testBetweenExclusiveHelper(getBase(), getLower(), null, false);
     }
 
     @Test
     public void testBetweenExclusiveWhenStartIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenExclusiveHelper(values.getBase(), null, values.getHigher(), false);
+        testBetweenExclusiveHelper(getBase(), null, getHigher(), false);
     }
 
     @Test
     public void testBetweenExclusiveWhenValueInRange() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenExclusiveHelper(values.getBase(), values.getLower(), values.getHigher(), true);
+        testBetweenExclusiveHelper(getBase(), getLower(), getHigher(), true);
     }
 
     @Test
     public void testBetweenExclusiveWhenValueIsAfterEnd() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenExclusiveHelper(values.getHighest(), values.getLower(), values.getHigher(), false);
+        testBetweenExclusiveHelper(getHighest(), getLower(), getHigher(), false);
     }
 
     @Test
     public void testBetweenExclusiveWhenValueIsBeforeStart() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenExclusiveHelper(values.getLowest(), values.getLower(), values.getHigher(), false);
+        testBetweenExclusiveHelper(getLowest(), getLower(), getHigher(), false);
     }
 
     @Test
     public void testBetweenExclusiveWhenValueIsEnd() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenExclusiveHelper(values.getHigher(), values.getLower(), values.getHigher(), false);
+        testBetweenExclusiveHelper(getHigher(), getLower(), getHigher(), false);
     }
 
     @Test
     public void testBetweenExclusiveWhenValueIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenExclusiveHelper(null, values.getLower(), values.getHigher(), false);
+        testBetweenExclusiveHelper(null, getLower(), getHigher(), false);
     }
 
     @Test
     public void testBetweenExclusiveWhenValueIsStart() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenExclusiveHelper(values.getLower(), values.getLower(), values.getHigher(), false);
+        testBetweenExclusiveHelper(getLower(), getLower(), getHigher(), false);
     }
 
     private void testBetweenExclusiveHelper(T value, T start, T end, boolean expected) {
@@ -242,58 +201,42 @@ public abstract class BaseComparableVerifierTestBase<T extends Comparable<? supe
 
     @Test
     public void testBetweenExclusiveWithStartAndEndNamesBetweenWhenEndIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenExclusiveHelper(values.getBase(), values.getLower(), null, "start", "end", false);
+        testBetweenExclusiveHelper(getBase(), getLower(), null, "start", "end", false);
     }
 
     @Test
     public void testBetweenExclusiveWithStartAndEndNamesBetweenWhenStartIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenExclusiveHelper(values.getBase(), null, values.getHigher(), "start", "end", false);
+        testBetweenExclusiveHelper(getBase(), null, getHigher(), "start", "end", false);
     }
 
     @Test
     public void testBetweenExclusiveWithStartAndEndNamesWhenValueInRange() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenExclusiveHelper(values.getBase(), values.getLower(), values.getHigher(), "start", "end", true);
+        testBetweenExclusiveHelper(getBase(), getLower(), getHigher(), "start", "end", true);
     }
 
     @Test
     public void testBetweenExclusiveWithStartAndEndNamesWhenValueIsAfterEnd() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenExclusiveHelper(values.getHighest(), values.getLower(), values.getHigher(), "start", "end", false);
+        testBetweenExclusiveHelper(getHighest(), getLower(), getHigher(), "start", "end", false);
     }
 
     @Test
     public void testBetweenExclusiveWithStartAndEndNamesWhenValueIsBeforeStart() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenExclusiveHelper(values.getLowest(), values.getLower(), values.getHigher(), "start", "end", false);
+        testBetweenExclusiveHelper(getLowest(), getLower(), getHigher(), "start", "end", false);
     }
 
     @Test
     public void testBetweenExclusiveWithStartAndEndNamesWhenValueIsEnd() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenExclusiveHelper(values.getHigher(), values.getLower(), values.getHigher(), "start", "end", false);
+        testBetweenExclusiveHelper(getHigher(), getLower(), getHigher(), "start", "end", false);
     }
 
     @Test
     public void testBetweenExclusiveWithStartAndEndNamesBetweenWhenValueIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenExclusiveHelper(null, values.getLower(), values.getHigher(), "start", "end", false);
+        testBetweenExclusiveHelper(null, getLower(), getHigher(), "start", "end", false);
     }
 
     @Test
     public void testBetweenExclusiveWithStartAndEndNamesWhenValueIsStart() {
-        ComparableValues<T> values = getComparableValues();
-
-        testBetweenExclusiveHelper(values.getLower(), values.getLower(), values.getHigher(), "start", "end", false);
+        testBetweenExclusiveHelper(getLower(), getLower(), getHigher(), "start", "end", false);
     }
 
     private void testBetweenExclusiveHelper(T value, T start, T end, Object startName, Object endName, boolean expected) {
@@ -308,37 +251,27 @@ public abstract class BaseComparableVerifierTestBase<T extends Comparable<? supe
 
     @Test
     public void testGreaterThanWhenValueIsEqualToOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanHelper(values.getBase(), values.getBase(), false);
+        testGreaterThanHelper(getBase(), getBase(), false);
     }
 
     @Test
     public void testGreaterThanWhenValueIsGreaterThanOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanHelper(values.getBase(), values.getLower(), true);
+        testGreaterThanHelper(getBase(), getLower(), true);
     }
 
     @Test
     public void testGreaterThanWhenValueIsLessThanOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanHelper(values.getBase(), values.getHigher(), false);
+        testGreaterThanHelper(getBase(), getHigher(), false);
     }
 
     @Test
     public void testGreaterThanWhenValueIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanHelper(null, values.getBase(), false);
+        testGreaterThanHelper(null, getBase(), false);
     }
 
     @Test
     public void testGreaterThanWhenOtherIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanHelper(values.getBase(), null, false);
+        testGreaterThanHelper(getBase(), null, false);
     }
 
     private void testGreaterThanHelper(T value, T other, boolean expected) {
@@ -353,37 +286,27 @@ public abstract class BaseComparableVerifierTestBase<T extends Comparable<? supe
 
     @Test
     public void testGreaterThanWithOtherNameWhenValueIsEqualToOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanHelper(values.getBase(), values.getBase(), "other", false);
+        testGreaterThanHelper(getBase(), getBase(), "other", false);
     }
 
     @Test
     public void testGreaterThanWithOtherNameWhenValueIsGreaterThanOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanHelper(values.getBase(), values.getLower(), "other", true);
+        testGreaterThanHelper(getBase(), getLower(), "other", true);
     }
 
     @Test
     public void testGreaterThanWithOtherNameWhenValueIsLessThanOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanHelper(values.getBase(), values.getHigher(), "other", false);
+        testGreaterThanHelper(getBase(), getHigher(), "other", false);
     }
 
     @Test
     public void testGreaterThanWithOtherNameWhenValueIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanHelper(null, values.getBase(), "other", false);
+        testGreaterThanHelper(null, getBase(), "other", false);
     }
 
     @Test
     public void testGreaterThanWithOtherNameWhenOtherIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanHelper(values.getBase(), null, "other", false);
+        testGreaterThanHelper(getBase(), null, "other", false);
     }
 
     private void testGreaterThanHelper(T value, T other, Object otherName, boolean expected) {
@@ -398,37 +321,27 @@ public abstract class BaseComparableVerifierTestBase<T extends Comparable<? supe
 
     @Test
     public void testGreaterThanOrEqualToWhenValueIsEqualToOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanOrEqualToHelper(values.getBase(), values.getBase(), true);
+        testGreaterThanOrEqualToHelper(getBase(), getBase(), true);
     }
 
     @Test
     public void testGreaterThanOrEqualToWhenValueIsGreaterThanOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanOrEqualToHelper(values.getBase(), values.getLower(), true);
+        testGreaterThanOrEqualToHelper(getBase(), getLower(), true);
     }
 
     @Test
     public void testGreaterThanOrEqualToWhenValueIsLessThanOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanOrEqualToHelper(values.getBase(), values.getHigher(), false);
+        testGreaterThanOrEqualToHelper(getBase(), getHigher(), false);
     }
 
     @Test
     public void testGreaterThanOrEqualToWhenValueIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanOrEqualToHelper(null, values.getBase(), false);
+        testGreaterThanOrEqualToHelper(null, getBase(), false);
     }
 
     @Test
     public void testGreaterThanOrEqualToWhenOtherIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanHelper(values.getBase(), null, false);
+        testGreaterThanHelper(getBase(), null, false);
     }
 
     private void testGreaterThanOrEqualToHelper(T value, T other, boolean expected) {
@@ -443,37 +356,27 @@ public abstract class BaseComparableVerifierTestBase<T extends Comparable<? supe
 
     @Test
     public void testGreaterThanOrEqualToWithOtherNameWhenValueIsEqualToOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanOrEqualToHelper(values.getBase(), values.getBase(), "other", true);
+        testGreaterThanOrEqualToHelper(getBase(), getBase(), "other", true);
     }
 
     @Test
     public void testGreaterThanOrEqualToWithOtherNameWhenValueIsGreaterThanOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanOrEqualToHelper(values.getBase(), values.getLower(), "other", true);
+        testGreaterThanOrEqualToHelper(getBase(), getLower(), "other", true);
     }
 
     @Test
     public void testGreaterThanOrEqualToWithOtherNameWhenValueIsLessThanOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanOrEqualToHelper(values.getBase(), values.getHigher(), "other", false);
+        testGreaterThanOrEqualToHelper(getBase(), getHigher(), "other", false);
     }
 
     @Test
     public void testGreaterThanOrEqualToWithOtherNameWhenValueIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanOrEqualToHelper(null, values.getBase(), "other", false);
+        testGreaterThanOrEqualToHelper(null, getBase(), "other", false);
     }
 
     @Test
     public void testGreaterThanOrEqualToWithOtherNameWhenOtherIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanOrEqualToHelper(values.getBase(), null, "other", false);
+        testGreaterThanOrEqualToHelper(getBase(), null, "other", false);
     }
 
     private void testGreaterThanOrEqualToHelper(T value, T other, Object otherName, boolean expected) {
@@ -488,37 +391,27 @@ public abstract class BaseComparableVerifierTestBase<T extends Comparable<? supe
 
     @Test
     public void testLessThanWhenValueIsEqualToOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanHelper(values.getBase(), values.getBase(), false);
+        testLessThanHelper(getBase(), getBase(), false);
     }
 
     @Test
     public void testLessThanWhenValueIsGreaterThanOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanHelper(values.getBase(), values.getLower(), false);
+        testLessThanHelper(getBase(), getLower(), false);
     }
 
     @Test
     public void testLessThanWhenValueIsLessThanOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanHelper(values.getBase(), values.getHigher(), true);
+        testLessThanHelper(getBase(), getHigher(), true);
     }
 
     @Test
     public void testLessThanWhenValueIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanHelper(null, values.getBase(), false);
+        testLessThanHelper(null, getBase(), false);
     }
 
     @Test
     public void testLessThanWhenOtherIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanHelper(values.getBase(), null, false);
+        testLessThanHelper(getBase(), null, false);
     }
 
     private void testLessThanHelper(T value, T other, boolean expected) {
@@ -533,37 +426,27 @@ public abstract class BaseComparableVerifierTestBase<T extends Comparable<? supe
 
     @Test
     public void testLessThanWithOtherNameWhenValueIsEqualToOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanHelper(values.getBase(), values.getBase(), "other", false);
+        testLessThanHelper(getBase(), getBase(), "other", false);
     }
 
     @Test
     public void testLessThanWithOtherNameWhenValueIsGreaterThanOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanHelper(values.getBase(), values.getLower(), "other", false);
+        testLessThanHelper(getBase(), getLower(), "other", false);
     }
 
     @Test
     public void testLessThanWithOtherNameWhenValueIsLessThanOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanHelper(values.getBase(), values.getHigher(), "other", true);
+        testLessThanHelper(getBase(), getHigher(), "other", true);
     }
 
     @Test
     public void testLessThanWithOtherNameWhenValueIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanHelper(null, values.getBase(), "other", false);
+        testLessThanHelper(null, getBase(), "other", false);
     }
 
     @Test
     public void testLessThanWithOtherNameWhenOtherIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanHelper(values.getBase(), null, "other", false);
+        testLessThanHelper(getBase(), null, "other", false);
     }
 
     private void testLessThanHelper(T value, T other, Object otherName, boolean expected) {
@@ -578,37 +461,27 @@ public abstract class BaseComparableVerifierTestBase<T extends Comparable<? supe
 
     @Test
     public void testLessThanOrEqualToWhenValueIsEqualToOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanOrEqualToHelper(values.getBase(), values.getBase(), true);
+        testLessThanOrEqualToHelper(getBase(), getBase(), true);
     }
 
     @Test
     public void testLessThanOrEqualToWhenValueIsGreaterThanOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanOrEqualToHelper(values.getBase(), values.getLower(), false);
+        testLessThanOrEqualToHelper(getBase(), getLower(), false);
     }
 
     @Test
     public void testLessThanOrEqualToWhenValueIsLessThanOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanOrEqualToHelper(values.getBase(), values.getHigher(), true);
+        testLessThanOrEqualToHelper(getBase(), getHigher(), true);
     }
 
     @Test
     public void testLessThanOrEqualToWhenValueIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanOrEqualToHelper(null, values.getBase(), false);
+        testLessThanOrEqualToHelper(null, getBase(), false);
     }
 
     @Test
     public void testLessThanOrEqualToWhenOtherIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testGreaterThanHelper(values.getBase(), null, false);
+        testGreaterThanHelper(getBase(), null, false);
     }
 
     private void testLessThanOrEqualToHelper(T value, T other, boolean expected) {
@@ -623,37 +496,27 @@ public abstract class BaseComparableVerifierTestBase<T extends Comparable<? supe
 
     @Test
     public void testLessThanOrEqualToWithOtherNameWhenValueIsEqualToOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanOrEqualToHelper(values.getBase(), values.getBase(), "other", true);
+        testLessThanOrEqualToHelper(getBase(), getBase(), "other", true);
     }
 
     @Test
     public void testLessThanOrEqualToWithOtherNameWhenValueIsGreaterThanOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanOrEqualToHelper(values.getBase(), values.getLower(), "other", false);
+        testLessThanOrEqualToHelper(getBase(), getLower(), "other", false);
     }
 
     @Test
     public void testLessThanOrEqualToWithOtherNameWhenValueIsLessThanOther() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanOrEqualToHelper(values.getBase(), values.getHigher(), "other", true);
+        testLessThanOrEqualToHelper(getBase(), getHigher(), "other", true);
     }
 
     @Test
     public void testLessThanOrEqualToWithOtherNameWhenValueIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanOrEqualToHelper(null, values.getBase(), "other", false);
+        testLessThanOrEqualToHelper(null, getBase(), "other", false);
     }
 
     @Test
     public void testLessThanOrEqualToWithOtherNameWhenOtherIsNull() {
-        ComparableValues<T> values = getComparableValues();
-
-        testLessThanOrEqualToHelper(values.getBase(), null, "other", false);
+        testLessThanOrEqualToHelper(getBase(), null, "other", false);
     }
 
     private void testLessThanOrEqualToHelper(T value, T other, Object otherName, boolean expected) {
@@ -667,66 +530,47 @@ public abstract class BaseComparableVerifierTestBase<T extends Comparable<? supe
     }
 
     /**
-     * Returns the {@code Comparable} values to be used for testing the {@link BaseComparableVerifier} methods.
+     * Returns the base value for comparisons.
+     * <p>
+     * This value provides a baseline and all other values should either be less than or greater than this value.
      *
-     * @return An instance of {@link ComparableValues} containing values for {@code Comparable} testing.
+     * @return The base value.
      */
-    protected abstract ComparableValues<T> getComparableValues();
+    protected abstract T getBase();
 
     /**
-     * Contains specific values which can be used to perform predictable and thorough tests for {@code Comparable}
-     * objects.
-     * <p/>
-     * The different values can be used for range and comparison testing and can cover any {@code Comparable} type.
+     * Returns the higher value for comparisons.
+     * <p>
+     * This value should be higher than {@link #getBase()} but less than {@link #getHighest()}.
      *
-     * @param <T>
-     *         the {@code Comparable} type being tested
+     * @return The higher value.
      */
-    protected interface ComparableValues<T extends Comparable<? super T>> {
+    protected abstract T getHigher();
 
-        /**
-         * Returns the base value for this {@link ComparableValues}.
-         * <p>
-         * This value provides a baseline and all other values should either be less than or greater than this value.
-         *
-         * @return The base value.
-         */
-        T getBase();
+    /**
+     * Returns the highest value for comparisons.
+     * <p>
+     * This value should be higher than all other
+     *
+     * @return The highest value.
+     */
+    protected abstract T getHighest();
 
-        /**
-         * Returns the higher value for this {@link ComparableValues}.
-         * <p>
-         * This value should be higher than {@link #getBase()} but less than {@link #getHighest()}.
-         *
-         * @return The higher value.
-         */
-        T getHigher();
+    /**
+     * Returns the lower value for comparisons.
+     * <p>
+     * This value should be lower than {@link #getBase()} but greater than {@link #getLowest()}.
+     *
+     * @return The lower value.
+     */
+    protected abstract T getLower();
 
-        /**
-         * Returns the highest value for this {@link ComparableValues}.
-         * <p>
-         * This value should be higher than all other values.
-         *
-         * @return The highest value.
-         */
-        T getHighest();
-
-        /**
-         * Returns the lower value for this {@link ComparableValues}.
-         * <p>
-         * This value should be lower than {@link #getBase()} but greater than {@link #getLowest()}.
-         *
-         * @return The lower value.
-         */
-        T getLower();
-
-        /**
-         * Returns the lowest value for this {@link ComparableValues}.
-         * <p>
-         * This value should be lower than all other values.
-         *
-         * @return The lowest value.
-         */
-        T getLowest();
-    }
+    /**
+     * Returns the lowest value for comparisons.
+     * <p>
+     * This value should be lower than all other
+     *
+     * @return The lowest value.
+     */
+    protected abstract T getLowest();
 }

@@ -26,238 +26,294 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 
-import io.skelp.verifier.AbstractCustomVerifierTestBase;
+import io.skelp.verifier.AbstractCustomVerifierTestCase;
+import io.skelp.verifier.CustomVerifierTestCaseBase;
 
 /**
  * Tests for the {@link ThrowableVerifier} class.
  *
  * @author Alasdair Mercer
  */
-public class ThrowableVerifierTest extends AbstractCustomVerifierTestBase<Throwable, ThrowableVerifier> {
+@RunWith(Enclosed.class)
+public class ThrowableVerifierTest {
 
-    @Test
-    public void testCheckedWhenValueIsChecked() {
-        testCheckedHelper(new CheckedException(null, null), true);
+    public static class ThrowableVerifierAbstractCustomVerifierTest extends AbstractCustomVerifierTestCase<Throwable, ThrowableVerifier> {
+
+        @Override
+        protected ThrowableVerifier createCustomVerifier() {
+            return new ThrowableVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Throwable createValueOne() {
+            return new CheckedException("foo", null);
+        }
+
+        @Override
+        protected Throwable createValueTwo() {
+            return new CheckedException("bar", null);
+        }
+
+        @Override
+        protected Class<?> getParentClass() {
+            return Exception.class;
+        }
+
+        @Override
+        protected Class<?> getValueClass() {
+            return CheckedException.class;
+        }
     }
 
-    @Test
-    public void testCheckedWhenValueIsNull() {
-        testCheckedHelper(null, false);
-    }
+    public static class ThrowableVerifierMiscTest extends CustomVerifierTestCaseBase<Throwable, ThrowableVerifier> {
 
-    @Test
-    public void testCheckedWhenValueIsUnchecked() {
-        testCheckedHelper(new UncheckedException(null, null), false);
-    }
+        @Test
+        public void testCheckedWhenValueIsChecked() {
+            testCheckedHelper(new CheckedException(null, null), true);
+        }
 
-    private void testCheckedHelper(Throwable value, boolean expected) {
-        setValue(value);
+        @Test
+        public void testCheckedWhenValueIsNull() {
+            testCheckedHelper(null, false);
+        }
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().checked());
+        @Test
+        public void testCheckedWhenValueIsUnchecked() {
+            testCheckedHelper(new UncheckedException(null, null), false);
+        }
 
-        verify(getMockVerification()).check(expected, "be checked");
-    }
+        private void testCheckedHelper(Throwable value, boolean expected) {
+            setValue(value);
 
-    @Test
-    public void testCauseWithClassWhenValueHasCircularCause() {
-        testCauseHelper(new CheckedException(null, new CircularException()), CircularException.class, true);
-    }
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().checked());
 
-    @Test
-    public void testCauseWithClassWhenValueHasCausesWithDifferentType() {
-        testCauseHelper(new CheckedException(null, new NullPointerException()), UncheckedException.class, false);
-    }
+            verify(getMockVerification()).check(expected, "be checked");
+        }
 
-    @Test
-    public void testCauseWithClassWhenValueHasCausesWithSameType() {
-        testCauseHelper(new CheckedException(null, new UncheckedException(null, null)), UncheckedException.class, true);
-    }
+        @Test
+        public void testCauseWithClassWhenValueHasCircularCause() {
+            testCauseHelper(new CheckedException(null, new CircularException()), CircularException.class, true);
+        }
 
-    @Test
-    public void testCauseWithClassWhenValueHasDifferentTypeAndNoCause() {
-        testCauseHelper(new CheckedException(null, null), UncheckedException.class, false);
-    }
+        @Test
+        public void testCauseWithClassWhenValueHasCausesWithDifferentType() {
+            testCauseHelper(new CheckedException(null, new NullPointerException()), UncheckedException.class, false);
+        }
 
-    @Test
-    public void testCauseWithClassWhenValueHasSameTypeAndNoCause() {
-        testCauseHelper(new CheckedException(null, null), CheckedException.class, true);
-    }
+        @Test
+        public void testCauseWithClassWhenValueHasCausesWithSameType() {
+            testCauseHelper(new CheckedException(null, new UncheckedException(null, null)), UncheckedException.class, true);
+        }
 
-    @Test
-    public void testCauseWithClassWhenValueIsNull() {
-        testCauseHelper(null, Exception.class, false);
-    }
+        @Test
+        public void testCauseWithClassWhenValueHasDifferentTypeAndNoCause() {
+            testCauseHelper(new CheckedException(null, null), UncheckedException.class, false);
+        }
 
-    private void testCauseHelper(Throwable value, Class<?> type, boolean expected) {
-        setValue(value);
+        @Test
+        public void testCauseWithClassWhenValueHasSameTypeAndNoCause() {
+            testCauseHelper(new CheckedException(null, null), CheckedException.class, true);
+        }
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().cause(type));
+        @Test
+        public void testCauseWithClassWhenValueIsNull() {
+            testCauseHelper(null, Exception.class, false);
+        }
 
-        verify(getMockVerification()).check(eq(expected), eq("have been caused by '%s'"), getArgsCaptor().capture());
+        private void testCauseHelper(Throwable value, Class<?> type, boolean expected) {
+            setValue(value);
 
-        assertSame("Passes type for message formatting", type, getArgsCaptor().getValue());
-    }
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().cause(type));
 
-    @Test
-    public void testCauseWithThrowableWhenValueHasCircularCause() {
-        Throwable cause = new CircularException();
+            verify(getMockVerification()).check(eq(expected), eq("have been caused by '%s'"), getArgsCaptor().capture());
 
-        testCauseHelper(new CheckedException(null, cause), cause, true);
-    }
+            assertSame("Passes type for message formatting", type, getArgsCaptor().getValue());
+        }
 
-    @Test
-    public void testCauseWithThrowableWhenValueHasDifferentCauses() {
-        testCauseHelper(new CheckedException(null, new NullPointerException()), new UncheckedException(null, null), false);
-    }
+        @Test
+        public void testCauseWithThrowableWhenValueHasCircularCause() {
+            Throwable cause = new CircularException();
 
-    @Test
-    public void testCauseWithThrowableWhenValueHasSameCause() {
-        Throwable cause = new UncheckedException(null, null);
+            testCauseHelper(new CheckedException(null, cause), cause, true);
+        }
 
-        testCauseHelper(new CheckedException(null, cause), cause, true);
-    }
+        @Test
+        public void testCauseWithThrowableWhenValueHasDifferentCauses() {
+            testCauseHelper(new CheckedException(null, new NullPointerException()), new UncheckedException(null, null), false);
+        }
 
-    @Test
-    public void testCauseWithThrowableWhenValueIsDifferentAndHasNoCause() {
-        testCauseHelper(new CheckedException(null, null), new UncheckedException(null, null), false);
-    }
+        @Test
+        public void testCauseWithThrowableWhenValueHasSameCause() {
+            Throwable cause = new UncheckedException(null, null);
 
-    @Test
-    public void testCauseWithThrowableWhenValueIsSameAndHasNoCause() {
-        Throwable cause = new CheckedException(null, null);
+            testCauseHelper(new CheckedException(null, cause), cause, true);
+        }
 
-        testCauseHelper(cause, cause, true);
-    }
+        @Test
+        public void testCauseWithThrowableWhenValueIsDifferentAndHasNoCause() {
+            testCauseHelper(new CheckedException(null, null), new UncheckedException(null, null), false);
+        }
 
-    @Test
-    public void testCauseWithThrowableWhenValueIsNull() {
-        testCauseHelper(null, new Exception(), false);
-    }
+        @Test
+        public void testCauseWithThrowableWhenValueIsSameAndHasNoCause() {
+            Throwable cause = new CheckedException(null, null);
 
-    private void testCauseHelper(Throwable value, Throwable cause, boolean expected) {
-        setValue(value);
+            testCauseHelper(cause, cause, true);
+        }
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().cause(cause));
+        @Test
+        public void testCauseWithThrowableWhenValueIsNull() {
+            testCauseHelper(null, new Exception(), false);
+        }
 
-        verify(getMockVerification()).check(eq(expected), eq("have been caused by '%s'"), getArgsCaptor().capture());
+        private void testCauseHelper(Throwable value, Throwable cause, boolean expected) {
+            setValue(value);
 
-        assertSame("Passes cause for message formatting", cause, getArgsCaptor().getValue());
-    }
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().cause(cause));
 
-    @Test
-    public void testCauseWithThrowableAndNameWhenValueHasCircularCause() {
-        Throwable cause = new CircularException();
+            verify(getMockVerification()).check(eq(expected), eq("have been caused by '%s'"), getArgsCaptor().capture());
 
-        testCauseHelper(new CheckedException(null, cause), cause, "cause", true);
-    }
+            assertSame("Passes cause for message formatting", cause, getArgsCaptor().getValue());
+        }
 
-    @Test
-    public void testCauseWithThrowableAndNameWhenValueHasDifferentCauses() {
-        testCauseHelper(new CheckedException(null, new NullPointerException()), new UncheckedException(null, null), "cause", false);
-    }
+        @Test
+        public void testCauseWithThrowableAndNameWhenValueHasCircularCause() {
+            Throwable cause = new CircularException();
 
-    @Test
-    public void testCauseWithThrowableAndNameWhenValueHasSameCause() {
-        Throwable cause = new UncheckedException(null, null);
+            testCauseHelper(new CheckedException(null, cause), cause, "cause", true);
+        }
 
-        testCauseHelper(new CheckedException(null, cause), cause, "cause", true);
-    }
+        @Test
+        public void testCauseWithThrowableAndNameWhenValueHasDifferentCauses() {
+            testCauseHelper(new CheckedException(null, new NullPointerException()), new UncheckedException(null, null), "cause", false);
+        }
 
-    @Test
-    public void testCauseWithThrowableAndNameWhenValueIsDifferentAndHasNoCause() {
-        testCauseHelper(new CheckedException(null, null), new UncheckedException(null, null), "cause", false);
-    }
+        @Test
+        public void testCauseWithThrowableAndNameWhenValueHasSameCause() {
+            Throwable cause = new UncheckedException(null, null);
 
-    @Test
-    public void testCauseWithThrowableAndNameWhenValueIsSameAndHasNoCause() {
-        Throwable cause = new CheckedException(null, null);
+            testCauseHelper(new CheckedException(null, cause), cause, "cause", true);
+        }
 
-        testCauseHelper(cause, cause, "cause", true);
-    }
+        @Test
+        public void testCauseWithThrowableAndNameWhenValueIsDifferentAndHasNoCause() {
+            testCauseHelper(new CheckedException(null, null), new UncheckedException(null, null), "cause", false);
+        }
 
-    @Test
-    public void testCauseWithThrowableAndNameWhenValueIsNull() {
-        testCauseHelper(null, new Exception(), "cause", false);
-    }
+        @Test
+        public void testCauseWithThrowableAndNameWhenValueIsSameAndHasNoCause() {
+            Throwable cause = new CheckedException(null, null);
 
-    private void testCauseHelper(Throwable value, Throwable cause, Object name, boolean expected) {
-        setValue(value);
+            testCauseHelper(cause, cause, "cause", true);
+        }
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().cause(cause, name));
+        @Test
+        public void testCauseWithThrowableAndNameWhenValueIsNull() {
+            testCauseHelper(null, new Exception(), "cause", false);
+        }
 
-        verify(getMockVerification()).check(eq(expected), eq("have been caused by '%s'"), getArgsCaptor().capture());
+        private void testCauseHelper(Throwable value, Throwable cause, Object name, boolean expected) {
+            setValue(value);
 
-        assertSame("Passes name for message formatting", name, getArgsCaptor().getValue());
-    }
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().cause(cause, name));
 
-    @Test
-    public void testMessageWhenValueHasDifferentMessage() {
-        testMessageHelper(new CheckedException("foo", null), "bar", false);
-    }
+            verify(getMockVerification()).check(eq(expected), eq("have been caused by '%s'"), getArgsCaptor().capture());
 
-    @Test
-    public void testMessageWhenValueIsNull() {
-        testMessageHelper(null, "foo", false);
-    }
+            assertSame("Passes name for message formatting", name, getArgsCaptor().getValue());
+        }
 
-    @Test
-    public void testMessageWhenValueHasNullMessageAndMessageIsNotNull() {
-        testMessageHelper(new CheckedException(null, null), "foo", false);
-    }
+        @Test
+        public void testMessageWhenValueHasDifferentMessage() {
+            testMessageHelper(new CheckedException("foo", null), "bar", false);
+        }
 
-    @Test
-    public void testMessageWhenValueHasNullMessageAndMessageIsNull() {
-        testMessageHelper(new CheckedException(null, null), null, true);
-    }
+        @Test
+        public void testMessageWhenValueIsNull() {
+            testMessageHelper(null, "foo", false);
+        }
 
-    @Test
-    public void testMessageWhenValueHasSameMessage() {
-        testMessageHelper(new CheckedException("foo", null), "foo", true);
-    }
+        @Test
+        public void testMessageWhenValueHasNullMessageAndMessageIsNotNull() {
+            testMessageHelper(new CheckedException(null, null), "foo", false);
+        }
 
-    private void testMessageHelper(Throwable value, String message, boolean expected) {
-        setValue(value);
+        @Test
+        public void testMessageWhenValueHasNullMessageAndMessageIsNull() {
+            testMessageHelper(new CheckedException(null, null), null, true);
+        }
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().message(message));
+        @Test
+        public void testMessageWhenValueHasSameMessage() {
+            testMessageHelper(new CheckedException("foo", null), "foo", true);
+        }
 
-        verify(getMockVerification()).check(eq(expected), eq("have message '%s'"), getArgsCaptor().capture());
+        private void testMessageHelper(Throwable value, String message, boolean expected) {
+            setValue(value);
 
-        assertSame("Passes message for message formatting", message, getArgsCaptor().getValue());
-    }
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().message(message));
 
-    @Test
-    public void testUncheckedWhenValueIsChecked() {
-        testUncheckedHelper(new CheckedException(null, null), false);
-    }
+            verify(getMockVerification()).check(eq(expected), eq("have message '%s'"), getArgsCaptor().capture());
 
-    @Test
-    public void testUncheckedWhenValueIsNull() {
-        testUncheckedHelper(null, false);
-    }
+            assertSame("Passes message for message formatting", message, getArgsCaptor().getValue());
+        }
 
-    @Test
-    public void testUncheckedWhenValueIsUnchecked() {
-        testUncheckedHelper(new UncheckedException(null, null), true);
-    }
+        @Test
+        public void testUncheckedWhenValueIsChecked() {
+            testUncheckedHelper(new CheckedException(null, null), false);
+        }
 
-    private void testUncheckedHelper(Throwable value, boolean expected) {
-        setValue(value);
+        @Test
+        public void testUncheckedWhenValueIsNull() {
+            testUncheckedHelper(null, false);
+        }
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().unchecked());
+        @Test
+        public void testUncheckedWhenValueIsUnchecked() {
+            testUncheckedHelper(new UncheckedException(null, null), true);
+        }
 
-        verify(getMockVerification()).check(expected, "be unchecked");
-    }
+        private void testUncheckedHelper(Throwable value, boolean expected) {
+            setValue(value);
 
-    @Override
-    protected ThrowableVerifier createCustomVerifier() {
-        return new ThrowableVerifier(getMockVerification());
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().unchecked());
+
+            verify(getMockVerification()).check(expected, "be unchecked");
+        }
+
+        @Override
+        protected ThrowableVerifier createCustomVerifier() {
+            return new ThrowableVerifier(getMockVerification());
+        }
     }
 
     private static class CheckedException extends Exception {
 
         CheckedException(String message, Throwable cause) {
             super(message, cause);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (obj == this) {
+                return true;
+            }
+            if (obj.getClass() != getClass()) {
+                return false;
+            }
+
+            CheckedException other = (CheckedException) obj;
+            return getMessage() == null ? other.getMessage() == null : getMessage().equals(other.getMessage());
+        }
+
+        @Override
+        public int hashCode() {
+            return getMessage() == null ? 0 : getMessage().hashCode();
         }
     }
 

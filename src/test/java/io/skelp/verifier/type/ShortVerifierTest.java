@@ -21,10 +21,131 @@
  */
 package io.skelp.verifier.type;
 
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
+
+import io.skelp.verifier.AbstractCustomVerifierTestCase;
+import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
+import io.skelp.verifier.type.base.BaseNumberVerifierTestCase;
+import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
+
 /**
  * Tests for the {@link ShortVerifier} class.
  *
  * @author Alasdair Mercer
  */
+@RunWith(Enclosed.class)
 public class ShortVerifierTest {
+
+    public static class ShortVerifierAbstractCustomVerifierTest extends AbstractCustomVerifierTestCase<Short, ShortVerifier> {
+
+        @Override
+        protected ShortVerifier createCustomVerifier() {
+            return new ShortVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Short createValueOne() {
+            return new Short((short) 123);
+        }
+
+        @Override
+        protected Short createValueTwo() {
+            return new Short((short) 321);
+        }
+
+        @Override
+        protected Class<?> getParentClass() {
+            return Number.class;
+        }
+
+        @Override
+        protected Class<?> getValueClass() {
+            return Short.class;
+        }
+    }
+
+    public static class ShortVerifierBaseComparableVerifierTest extends BaseComparableVerifierTestCase<Short, ShortVerifier> {
+
+        @Override
+        protected ShortVerifier createCustomVerifier() {
+            return new ShortVerifier(getMockVerification());
+        }
+
+        @Override
+        public Short getBase() {
+            return 50;
+        }
+
+        @Override
+        public Short getHigher() {
+            return 75;
+        }
+
+        @Override
+        public Short getHighest() {
+            return 100;
+        }
+
+        @Override
+        public Short getLower() {
+            return 25;
+        }
+
+        @Override
+        public Short getLowest() {
+            return 0;
+        }
+    }
+
+    public static class ShortVerifierBaseNumberVerifierTest extends BaseNumberVerifierTestCase<Short, ShortVerifier> {
+
+        @Override
+        protected ShortVerifier createCustomVerifier() {
+            return new ShortVerifier(getMockVerification());
+        }
+
+        @Override
+        public Short getEvenValue() {
+            return 2;
+        }
+
+        @Override
+        public Short getOddValue() {
+            return 1;
+        }
+
+        @Override
+        public Short getPositiveOneValue() {
+            return 1;
+        }
+
+        @Override
+        public Short getNegativeOneValue() {
+            return -1;
+        }
+
+        @Override
+        public Short getZeroValue() {
+            return 0;
+        }
+    }
+
+    public static class ShortVerifierBaseTruthVerifierTest extends BaseTruthVerifierTestCase<Short, ShortVerifier> {
+
+        @Override
+        protected ShortVerifier createCustomVerifier() {
+            return new ShortVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Short[] getFalsehoodValues() {
+            return new Short[]{0};
+        }
+
+        @Override
+        protected Short[] getTruthValues() {
+            return new Short[]{1};
+        }
+    }
 }

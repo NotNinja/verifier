@@ -65,10 +65,10 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * @throws VerifierException
      */
     public CharacterVerifier ascii() throws VerifierException {
-        final Character value = verification.getValue();
+        final Character value = getVerification().getValue();
         final boolean result = value != null && value < 128;
 
-        verification.check(result, "be ASCII");
+        getVerification().check(result, "be ASCII");
 
         return this;
     }
@@ -80,10 +80,10 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * @throws VerifierException
      */
     public CharacterVerifier asciiAlpha() throws VerifierException {
-        final Character value = verification.getValue();
+        final Character value = getVerification().getValue();
         final boolean result = value != null && isAsciiAlpha(value);
 
-        verification.check(result, "be an ASCII letter");
+        getVerification().check(result, "be an ASCII letter");
 
         return this;
     }
@@ -95,10 +95,10 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * @throws VerifierException
      */
     public CharacterVerifier asciiAlphaLowerCase() throws VerifierException {
-        final Character value = verification.getValue();
+        final Character value = getVerification().getValue();
         final boolean result = value != null && isAsciiAlphaLowerCase(value);
 
-        verification.check(result, "be an ASCII lower case letter");
+        getVerification().check(result, "be an ASCII lower case letter");
 
         return this;
     }
@@ -110,10 +110,10 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * @throws VerifierException
      */
     public CharacterVerifier asciiAlphaUpperCase() throws VerifierException {
-        final Character value = verification.getValue();
+        final Character value = getVerification().getValue();
         final boolean result = value != null && isAsciiAlphaUpperCase(value);
 
-        verification.check(result, "be an ASCII upper case letter");
+        getVerification().check(result, "be an ASCII upper case letter");
 
         return this;
     }
@@ -125,10 +125,10 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * @throws VerifierException
      */
     public CharacterVerifier asciiAlphanumeric() throws VerifierException {
-        final Character value = verification.getValue();
+        final Character value = getVerification().getValue();
         final boolean result = value != null && (isAsciiAlpha(value) || isAsciiNumeric(value));
 
-        verification.check(result, "be an ASCII letter or digit");
+        getVerification().check(result, "be an ASCII letter or digit");
 
         return this;
     }
@@ -140,10 +140,10 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * @throws VerifierException
      */
     public CharacterVerifier asciiControl() throws VerifierException {
-        final Character value = verification.getValue();
+        final Character value = getVerification().getValue();
         final boolean result = value != null && (value < 32 || value == 127);
 
-        verification.check(result, "be an ASCII control");
+        getVerification().check(result, "be an ASCII control");
 
         return this;
     }
@@ -155,10 +155,10 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * @throws VerifierException
      */
     public CharacterVerifier asciiNumeric() throws VerifierException {
-        final Character value = verification.getValue();
+        final Character value = getVerification().getValue();
         final boolean result = value != null && isAsciiNumeric(value);
 
-        verification.check(result, "be an ASCII digit");
+        getVerification().check(result, "be an ASCII digit");
 
         return this;
     }
@@ -170,30 +170,30 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * @throws VerifierException
      */
     public CharacterVerifier asciiPrintable() throws VerifierException {
-        final Character value = verification.getValue();
+        final Character value = getVerification().getValue();
         final boolean result = value != null && value >= 32 && value < 127;
 
-        verification.check(result, "be ASCII printable");
+        getVerification().check(result, "be ASCII printable");
 
         return this;
     }
 
     @Override
     public CharacterVerifier falsehood() throws VerifierException {
-        final Character value = verification.getValue();
+        final Character value = getVerification().getValue();
         final boolean result = value != null && value == '0';
 
-        verification.check(result, "be false");
+        getVerification().check(result, "be false");
 
         return this;
     }
 
     @Override
     public CharacterVerifier truth() throws VerifierException {
-        final Character value = verification.getValue();
+        final Character value = getVerification().getValue();
         final boolean result = value != null && value == '1';
 
-        verification.check(result, "be true");
+        getVerification().check(result, "be true");
 
         return this;
     }

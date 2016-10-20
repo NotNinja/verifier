@@ -44,80 +44,80 @@ public final class ShortVerifier extends BaseComparableVerifier<Short, ShortVeri
 
     @Override
     public ShortVerifier even() throws VerifierException {
-        final Short value = verification.getValue();
+        final Short value = getVerification().getValue();
         final boolean result = value != null && value % 2 == 0;
 
-        verification.check(result, "be even");
+        getVerification().check(result, "be even");
 
         return this;
     }
 
     @Override
     public ShortVerifier falsehood() throws VerifierException {
-        final Short value = verification.getValue();
+        final Short value = getVerification().getValue();
         final boolean result = value != null && value == 0;
 
-        verification.check(result, "be false");
+        getVerification().check(result, "be false");
 
         return this;
     }
 
     @Override
     public ShortVerifier negative() throws VerifierException {
-        final Short value = verification.getValue();
+        final Short value = getVerification().getValue();
         final boolean result = value != null && value < 0;
 
-        verification.check(result, "be negative");
+        getVerification().check(result, "be negative");
 
         return this;
     }
 
     @Override
     public ShortVerifier odd() throws VerifierException {
-        final Short value = verification.getValue();
+        final Short value = getVerification().getValue();
         final boolean result = value != null && value % 2 != 0;
 
-        verification.check(result, "be odd");
+        getVerification().check(result, "be odd");
 
         return this;
     }
 
     @Override
     public ShortVerifier one() throws VerifierException {
-        final Short value = verification.getValue();
+        final Short value = getVerification().getValue();
         final boolean result = value != null && value == 1;
 
-        verification.check(result, "be one");
+        getVerification().check(result, "be one");
 
         return this;
     }
 
     @Override
     public ShortVerifier positive() throws VerifierException {
-        final Short value = verification.getValue();
+        final Short value = getVerification().getValue();
         final boolean result = value != null && value >= 0;
 
-        verification.check(result, "be positive");
+        getVerification().check(result, "be positive");
 
         return this;
     }
 
     @Override
     public ShortVerifier truth() throws VerifierException {
-        final Short value = verification.getValue();
-        final boolean result = value != null && value == 0;
+        final Short value = getVerification().getValue();
+        final boolean result = value != null && value == 1;
 
-        verification.check(result, "be true");
+        getVerification().check(result, "be true");
 
         return this;
     }
 
     @Override
     public ShortVerifier zero() throws VerifierException {
-        final Short value = verification.getValue();
+        final Short value = getVerification().getValue();
         final boolean result = value != null && value == 0;
 
-        verification.check(result, "be zero");
+        getVerification().check(result, "be zero");
 
         return this;
     }

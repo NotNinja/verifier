@@ -28,8 +28,11 @@ import static org.mockito.Mockito.*;
 
 import java.util.Comparator;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 
-import io.skelp.verifier.AbstractCustomVerifierTestBase;
+import io.skelp.verifier.AbstractCustomVerifierTestCase;
+import io.skelp.verifier.CustomVerifierTestCaseBase;
 import io.skelp.verifier.VerifierException;
 
 /**
@@ -37,198 +40,230 @@ import io.skelp.verifier.VerifierException;
  *
  * @author Alasdair Mercer
  */
-public class ArrayVerifierTest extends AbstractCustomVerifierTestBase<Integer[], ArrayVerifier<Integer>> {
+@RunWith(Enclosed.class)
+public class ArrayVerifierTest {
 
-    @Test
-    public void testContainWhenItemIsNotPresentInValue() {
-        testContainHelper(new Integer[]{123, 456, 789}, 321, false);
+    public static class ArrayVerifierAbstractCustomVerifierTest extends AbstractCustomVerifierTestCase<Integer[], ArrayVerifier<Integer>> {
+
+        @Override
+        protected ArrayVerifier<Integer> createCustomVerifier() {
+            return new ArrayVerifier<>(getMockVerification());
+        }
+
+        @Override
+        protected Integer[] createValueOne() {
+            return new Integer[]{123, 456, 789};
+        }
+
+        @Override
+        protected Integer[] createValueTwo() {
+            return new Integer[]{987, 654, 321};
+        }
+
+        @Override
+        protected Class<?> getParentClass() {
+            return Object.class;
+        }
+
+        @Override
+        protected Class<?> getValueClass() {
+            return Integer[].class;
+        }
     }
 
-    @Test
-    public void testContainWhenItemIsPresentInValue() {
-        testContainHelper(new Integer[]{123, 456, 789}, 789, true);
-    }
+    public static class ArrayVerifierMiscTest extends CustomVerifierTestCaseBase<Integer[], ArrayVerifier<Integer>> {
 
-    @Test
-    public void testContainWithNullItem() {
-        testContainHelper(new Integer[]{123, 456, null}, null, true);
-    }
+        @Test
+        public void testContainWhenItemIsNotPresentInValue() {
+            testContainHelper(new Integer[]{123, 456, 789}, 321, false);
+        }
 
-    @Test
-    public void testContainWithNullValue() {
-        testContainHelper(null, 123, false);
-    }
+        @Test
+        public void testContainWhenItemIsPresentInValue() {
+            testContainHelper(new Integer[]{123, 456, 789}, 789, true);
+        }
 
-    private void testContainHelper(Integer[] value, Integer item, boolean expected) {
-        setValue(value);
+        @Test
+        public void testContainWithNullItem() {
+            testContainHelper(new Integer[]{123, 456, null}, null, true);
+        }
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().contain(item));
+        @Test
+        public void testContainWithNullValue() {
+            testContainHelper(null, 123, false);
+        }
 
-        verify(getMockVerification()).check(eq(expected), eq("contain '%s'"), getArgsCaptor().capture());
+        private void testContainHelper(Integer[] value, Integer item, boolean expected) {
+            setValue(value);
 
-        assertSame("Passes item for message formatting", item, getArgsCaptor().getValue());
-    }
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().contain(item));
 
-    @Test
-    public void testEmptyWithEmptyValue() {
-        testEmptyHelper(new Integer[0], true);
-    }
+            verify(getMockVerification()).check(eq(expected), eq("contain '%s'"), getArgsCaptor().capture());
 
-    @Test
-    public void testEmptyWithNonEmptyValue() {
-        testEmptyHelper(new Integer[]{123}, false);
-    }
+            assertSame("Passes item for message formatting", item, getArgsCaptor().getValue());
+        }
 
-    @Test
-    public void testEmptyWithNullValue() {
-        testEmptyHelper(null, true);
-    }
+        @Test
+        public void testEmptyWithEmptyValue() {
+            testEmptyHelper(new Integer[0], true);
+        }
 
-    private void testEmptyHelper(Integer[] value, boolean expected) {
-        setValue(value);
+        @Test
+        public void testEmptyWithNonEmptyValue() {
+            testEmptyHelper(new Integer[]{123}, false);
+        }
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().empty());
+        @Test
+        public void testEmptyWithNullValue() {
+            testEmptyHelper(null, true);
+        }
 
-        verify(getMockVerification()).check(expected, "be empty");
-    }
+        private void testEmptyHelper(Integer[] value, boolean expected) {
+            setValue(value);
 
-    @Test
-    public void testLengthWithEmptyValue() {
-        testLengthHelper(new Integer[0], 0, true);
-    }
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().empty());
 
-    @Test
-    public void testLengthWithEmptyValueAndIncorrectLength() {
-        testLengthHelper(new Integer[0], 1, false);
-    }
+            verify(getMockVerification()).check(expected, "be empty");
+        }
 
-    @Test
-    public void testLengthWithNonEmptyValue() {
-        testLengthHelper(new Integer[]{123, 456, 789}, 3, true);
-    }
+        @Test
+        public void testLengthWithEmptyValue() {
+            testLengthHelper(new Integer[0], 0, true);
+        }
 
-    @Test
-    public void testLengthWithNonEmptyValueAndIncorrectLength() {
-        testLengthHelper(new Integer[]{123, 456, 789}, 4, false);
-    }
+        @Test
+        public void testLengthWithEmptyValueAndIncorrectLength() {
+            testLengthHelper(new Integer[0], 1, false);
+        }
 
-    @Test
-    public void testLengthWithNullValue() {
-        testLengthHelper(null, 0, true);
-    }
+        @Test
+        public void testLengthWithNonEmptyValue() {
+            testLengthHelper(new Integer[]{123, 456, 789}, 3, true);
+        }
 
-    @Test
-    public void testLengthWithNullValueAndIncorrectLength() {
-        testLengthHelper(null, 1, false);
-    }
+        @Test
+        public void testLengthWithNonEmptyValueAndIncorrectLength() {
+            testLengthHelper(new Integer[]{123, 456, 789}, 4, false);
+        }
 
-    private void testLengthHelper(Integer[] value, int length, boolean expected) {
-        setValue(value);
+        @Test
+        public void testLengthWithNullValue() {
+            testLengthHelper(null, 0, true);
+        }
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().length(length));
+        @Test
+        public void testLengthWithNullValueAndIncorrectLength() {
+            testLengthHelper(null, 1, false);
+        }
 
-        verify(getMockVerification()).check(eq(expected), eq("have length of '%d'"), getArgsCaptor().capture());
+        private void testLengthHelper(Integer[] value, int length, boolean expected) {
+            setValue(value);
 
-        assertSame("Passes length for message formatting", length, getArgsCaptor().getValue());
-    }
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().length(length));
 
-    @Test
-    public void testSortedWithEmptyValue() {
-        testSortedHelper(new Integer[0], new StandardComparator<Integer>(), false, true);
-    }
+            verify(getMockVerification()).check(eq(expected), eq("have length of '%d'"), getArgsCaptor().capture());
 
-    @Test
-    public void testSortedWithNullValue() {
-        testSortedHelper(null, new StandardComparator<Integer>(), false, false);
-    }
+            assertSame("Passes length for message formatting", length, getArgsCaptor().getValue());
+        }
 
-    @Test
-    public void testSortedWithSingleElementValue() {
-        testSortedHelper(new Integer[]{123}, new StandardComparator<Integer>(), false, true);
-    }
+        @Test
+        public void testSortedWithEmptyValue() {
+            testSortedHelper(new Integer[0], new StandardComparator<Integer>(), false, true);
+        }
 
-    @Test
-    public void testSortedWithSortedValue() {
-        testSortedHelper(new Integer[]{123, 456, 789}, new StandardComparator<Integer>(), true, true);
-    }
+        @Test
+        public void testSortedWithNullValue() {
+            testSortedHelper(null, new StandardComparator<Integer>(), false, false);
+        }
 
-    @Test
-    public void testSortedWithUnsortedValue() {
-        testSortedHelper(new Integer[]{123, 789, 456}, new StandardComparator<Integer>(), true, false);
-    }
+        @Test
+        public void testSortedWithSingleElementValue() {
+            testSortedHelper(new Integer[]{123}, new StandardComparator<Integer>(), false, true);
+        }
 
-    @Test
-    public void testSortedThrowsIfComparatorIsNull() {
-        thrown.expect(VerifierException.class);
-        thrown.expectMessage("comparator must not be null");
+        @Test
+        public void testSortedWithSortedValue() {
+            testSortedHelper(new Integer[]{123, 456, 789}, new StandardComparator<Integer>(), true, true);
+        }
 
-        getCustomVerifier().sorted(null);
-    }
+        @Test
+        public void testSortedWithUnsortedValue() {
+            testSortedHelper(new Integer[]{123, 789, 456}, new StandardComparator<Integer>(), true, false);
+        }
 
-    private void testSortedHelper(Integer[] value, Comparator<Integer> comparator, boolean comparatorUseExpected, boolean expected) {
-        comparator = spy(comparator);
+        @Test
+        public void testSortedThrowsIfComparatorIsNull() {
+            thrown.expect(VerifierException.class);
+            thrown.expectMessage("comparator must not be null");
 
-        setValue(value);
+            getCustomVerifier().sorted(null);
+        }
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sorted(comparator));
+        private void testSortedHelper(Integer[] value, Comparator<Integer> comparator, boolean comparatorUseExpected, boolean expected) {
+            comparator = spy(comparator);
 
-        verify(comparator, comparatorUseExpected ? atLeastOnce() : never()).compare(any(Integer.class), any(Integer.class));
+            setValue(value);
 
-        verify(getMockVerification()).check(eq(expected), eq("be sorted by '%s'"), getArgsCaptor().capture());
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sorted(comparator));
 
-        assertSame("Passes comparator for message formatting", comparator, getArgsCaptor().getValue());
-    }
+            verify(comparator, comparatorUseExpected ? atLeastOnce() : never()).compare(any(Integer.class), any(Integer.class));
 
-    @Test
-    public void testSortedWithNameAndEmptyValue() {
-        testSortedHelper(new Integer[0], new StandardComparator<Integer>(), "comparator", false, true);
-    }
+            verify(getMockVerification()).check(eq(expected), eq("be sorted by '%s'"), getArgsCaptor().capture());
 
-    @Test
-    public void testSortedWithNameAndNullValue() {
-        testSortedHelper(null, new StandardComparator<Integer>(), "comparator", false, false);
-    }
+            assertSame("Passes comparator for message formatting", comparator, getArgsCaptor().getValue());
+        }
 
-    @Test
-    public void testSortedWithNameAndSingleElementValue() {
-        testSortedHelper(new Integer[]{123}, new StandardComparator<Integer>(), "comparator", false, true);
-    }
+        @Test
+        public void testSortedWithNameAndEmptyValue() {
+            testSortedHelper(new Integer[0], new StandardComparator<Integer>(), "comparator", false, true);
+        }
 
-    @Test
-    public void testSortedWithNameAndSortedValue() {
-        testSortedHelper(new Integer[]{123, 456, 789}, new StandardComparator<Integer>(), "comparator", true, true);
-    }
+        @Test
+        public void testSortedWithNameAndNullValue() {
+            testSortedHelper(null, new StandardComparator<Integer>(), "comparator", false, false);
+        }
 
-    @Test
-    public void testSortedWithNameAndUnsortedValue() {
-        testSortedHelper(new Integer[]{123, 789, 456}, new StandardComparator<Integer>(), "comparator", true, false);
-    }
+        @Test
+        public void testSortedWithNameAndSingleElementValue() {
+            testSortedHelper(new Integer[]{123}, new StandardComparator<Integer>(), "comparator", false, true);
+        }
 
-    @Test
-    public void testSortedWithNameThrowsIfComparatorIsNull() {
-        thrown.expect(VerifierException.class);
-        thrown.expectMessage("comparator must not be null");
+        @Test
+        public void testSortedWithNameAndSortedValue() {
+            testSortedHelper(new Integer[]{123, 456, 789}, new StandardComparator<Integer>(), "comparator", true, true);
+        }
 
-        getCustomVerifier().sorted(null, "comparator");
-    }
+        @Test
+        public void testSortedWithNameAndUnsortedValue() {
+            testSortedHelper(new Integer[]{123, 789, 456}, new StandardComparator<Integer>(), "comparator", true, false);
+        }
 
-    private void testSortedHelper(Integer[] value, Comparator<Integer> comparator, Object name, boolean comparatorUseExpected, boolean expected) {
-        comparator = spy(comparator);
+        @Test
+        public void testSortedWithNameThrowsIfComparatorIsNull() {
+            thrown.expect(VerifierException.class);
+            thrown.expectMessage("comparator must not be null");
 
-        setValue(value);
+            getCustomVerifier().sorted(null, "comparator");
+        }
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sorted(comparator, name));
+        private void testSortedHelper(Integer[] value, Comparator<Integer> comparator, Object name, boolean comparatorUseExpected, boolean expected) {
+            comparator = spy(comparator);
 
-        verify(comparator, comparatorUseExpected ? atLeastOnce() : never()).compare(any(Integer.class), any(Integer.class));
+            setValue(value);
 
-        verify(getMockVerification()).check(eq(expected), eq("be sorted by '%s'"), getArgsCaptor().capture());
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sorted(comparator, name));
 
-        assertSame("Passes name for message formatting", name, getArgsCaptor().getValue());
-    }
+            verify(comparator, comparatorUseExpected ? atLeastOnce() : never()).compare(any(Integer.class), any(Integer.class));
 
-    @Override
-    protected ArrayVerifier<Integer> createCustomVerifier() {
-        return new ArrayVerifier<>(getMockVerification());
+            verify(getMockVerification()).check(eq(expected), eq("be sorted by '%s'"), getArgsCaptor().capture());
+
+            assertSame("Passes name for message formatting", name, getArgsCaptor().getValue());
+        }
+
+        @Override
+        protected ArrayVerifier<Integer> createCustomVerifier() {
+            return new ArrayVerifier<>(getMockVerification());
+        }
     }
 
     private static class StandardComparator<T extends Comparable<? super T>> implements Comparator<T> {

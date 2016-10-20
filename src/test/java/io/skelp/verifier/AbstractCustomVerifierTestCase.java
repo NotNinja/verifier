@@ -22,41 +22,42 @@
 package io.skelp.verifier;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
 import org.junit.Test;
 
 import io.skelp.verifier.message.ArrayFormatter;
-import io.skelp.verifier.verification.Verification;
 
 /**
- * Tests for the {@link AbstractCustomVerifier} class.
+ * TODO: Document
  *
+ * @param <T>
+ * @param <V>
  * @author Alasdair Mercer
  */
-public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<AbstractCustomVerifierTest.Child, AbstractCustomVerifierTest.AbstractCustomVerifierTestImpl> {
+public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustomVerifier<T, V>> extends CustomVerifierTestCaseBase<T, V> {
 
     @Test
     public void testEqualToWithDifferentInstance() {
-        testEqualToHelper(new Child(123), new Child(321), false);
+        testEqualToHelper(createValueOne(), createValueTwo(), false);
     }
 
     @Test
     public void testEqualToWithEqualInstance() {
-        testEqualToHelper(new Child(123), new Child(123), true);
+        testEqualToHelper(createValueOne(), createValueOne(), true);
     }
 
     @Test
     public void testEqualToWithNullOther() {
-        testEqualToHelper(new Child(), null, false);
+        testEqualToHelper(createValueOne(), null, false);
     }
 
     @Test
     public void testEqualToWithNullValue() {
-        testEqualToHelper(null, new Child(), false);
+        testEqualToHelper(null, createValueOne(), false);
     }
 
     @Test
@@ -66,12 +67,12 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
 
     @Test
     public void testEqualToWithSameInstance() {
-        Child value = new Child();
+        T value = createValueOne();
 
         testEqualToHelper(value, value, true);
     }
 
-    private void testEqualToHelper(Child value, Object other, boolean expected) {
+    private void testEqualToHelper(T value, Object other, boolean expected) {
         setValue(value);
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().equalTo(other));
@@ -83,22 +84,22 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
 
     @Test
     public void testEqualToWithNameAndDifferentInstance() {
-        testEqualToHelper(new Child(123), new Child(321), "other", false);
+        testEqualToHelper(createValueOne(), createValueTwo(), "other", false);
     }
 
     @Test
     public void testEqualToWithNameAndEqualInstance() {
-        testEqualToHelper(new Child(123), new Child(123), "other", true);
+        testEqualToHelper(createValueOne(), createValueOne(), "other", true);
     }
 
     @Test
     public void testEqualToWithNameAndNullOther() {
-        testEqualToHelper(new Child(), null, "other", false);
+        testEqualToHelper(createValueOne(), null, "other", false);
     }
 
     @Test
     public void testEqualToWithNameAndNullValue() {
-        testEqualToHelper(null, new Child(), "other", false);
+        testEqualToHelper(null, createValueOne(), "other", false);
     }
 
     @Test
@@ -108,12 +109,12 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
 
     @Test
     public void testEqualToWithNameAndSameInstance() {
-        Child value = new Child();
+        T value = createValueOne();
 
         testEqualToHelper(value, value, "other", true);
     }
 
-    private void testEqualToHelper(Child value, Object other, Object name, boolean expected) {
+    private void testEqualToHelper(T value, Object other, Object name, boolean expected) {
         setValue(value);
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().equalTo(other, name));
@@ -125,27 +126,27 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
 
     @Test
     public void testEqualToAnyWithDifferentInstance() {
-        testEqualToAnyHelper(new Child(123), new Object[]{new Child(987), new Child(654), new Child(321)}, false);
+        testEqualToAnyHelper(createValueOne(), new Object[]{createValueTwo(), new Object()}, false);
     }
 
     @Test
     public void testEqualToAnyWithEqualInstance() {
-        testEqualToAnyHelper(new Child(123), new Object[]{new Child(456), new Child(789), new Child(123)}, true);
+        testEqualToAnyHelper(createValueOne(), new Object[]{createValueTwo(), new Object(), createValueOne()}, true);
     }
 
     @Test
     public void testEqualToAnyWithNullOther() {
-        testEqualToAnyHelper(new Child(), new Object[]{null}, false);
+        testEqualToAnyHelper(createValueOne(), new Object[]{null}, false);
     }
 
     @Test
     public void testEqualToAnyWithNullOthers() {
-        testEqualToAnyHelper(new Child(), null, false);
+        testEqualToAnyHelper(createValueOne(), null, false);
     }
 
     @Test
     public void testEqualToAnyWithNullValue() {
-        testEqualToAnyHelper(null, new Object[]{new Child(), new Child(), new Child()}, false);
+        testEqualToAnyHelper(null, new Object[]{createValueOne(), createValueTwo(), new Object()}, false);
     }
 
     @Test
@@ -160,12 +161,12 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
 
     @Test
     public void testEqualToAnyWithSameInstance() {
-        Child value = new Child();
+        T value = createValueOne();
 
-        testEqualToAnyHelper(value, new Object[]{new Child(), new Child(), value}, true);
+        testEqualToAnyHelper(value, new Object[]{createValueTwo(), new Object(), value}, true);
     }
 
-    private void testEqualToAnyHelper(Child value, Object[] others, boolean expected) {
+    private void testEqualToAnyHelper(T value, Object[] others, boolean expected) {
         setValue(value);
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().equalToAny(others));
@@ -181,12 +182,16 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
 
     @Test
     public void testHashedAsWithMatch() {
-        testHashedAsHelper(new Child(123), 123, true);
+        T value = createValueOne();
+
+        testHashedAsHelper(value, value.hashCode(), true);
     }
 
     @Test
     public void testHashedAsWithNoMatch() {
-        testHashedAsHelper(new Child(123), 321, false);
+        T value = createValueOne();
+
+        testHashedAsHelper(value, value.hashCode() + 1, false);
     }
 
     @Test
@@ -194,7 +199,7 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
         testHashedAsHelper(null, 123, false);
     }
 
-    private void testHashedAsHelper(Child value, int hashCode, boolean expected) {
+    private void testHashedAsHelper(T value, int hashCode, boolean expected) {
         setValue(value);
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().hashedAs(hashCode));
@@ -206,35 +211,35 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
 
     @Test
     public void testInstanceOfWithObjectClass() {
-        testInstanceOfHelper(new Child(), Object.class, true);
+        testInstanceOfHelper(createValueOne(), Object.class, true);
     }
 
     @Test
     public void testInstanceOfWithNoMatch() {
-        testInstanceOfHelper(new Child(), Collection.class, false);
+        testInstanceOfHelper(createValueOne(), UnrelatedClass.class, false);
     }
 
     @Test
     public void testInstanceOfWithSameClass() {
-        testInstanceOfHelper(new Child(), Child.class, true);
+        testInstanceOfHelper(createValueOne(), getValueClass(), true);
     }
 
     @Test
     public void testInstanceOfWithSuperClass() {
-        testInstanceOfHelper(new Child(), Parent.class, true);
+        testInstanceOfHelper(createValueOne(), getParentClass(), true);
     }
 
     @Test
     public void testInstanceOfWithNullClass() {
-        testInstanceOfHelper(new Child(), null, false);
+        testInstanceOfHelper(createValueOne(), null, false);
     }
 
     @Test
     public void testInstanceOfWithNullValue() {
-        testInstanceOfHelper(null, Child.class, false);
+        testInstanceOfHelper(null, getValueClass(), false);
     }
 
-    private void testInstanceOfHelper(Child value, Class<?> cls, boolean expected) {
+    private void testInstanceOfHelper(T value, Class<?> cls, boolean expected) {
         setValue(value);
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().instanceOf(cls));
@@ -246,45 +251,45 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
 
     @Test
     public void testInstanceAnyOfWithObjectClass() {
-        testInstanceOfAnyHelper(new Child(), new Class<?>[]{Collection.class, Map.class, Object.class}, true);
+        testInstanceOfAnyHelper(createValueOne(), new Class<?>[]{UnrelatedClass.class, Object.class}, true);
     }
 
     @Test
     public void testInstanceOfAnyWithNoMatches() {
-        testInstanceOfAnyHelper(null, new Class<?>[]{Collection.class, Map.class}, false);
+        testInstanceOfAnyHelper(createValueOne(), new Class<?>[]{UnrelatedClass.class}, false);
     }
 
     @Test
     public void testInstanceOfAnyWithSameClass() {
-        testInstanceOfAnyHelper(new Child(), new Class<?>[]{Collection.class, Map.class, Child.class}, true);
+        testInstanceOfAnyHelper(createValueOne(), new Class<?>[]{UnrelatedClass.class, getValueClass()}, true);
     }
 
     @Test
     public void testInstanceOfAnyWithSuperClass() {
-        testInstanceOfAnyHelper(new Child(), new Class<?>[]{Collection.class, Map.class, Parent.class}, true);
+        testInstanceOfAnyHelper(createValueOne(), new Class<?>[]{UnrelatedClass.class, getParentClass()}, true);
     }
 
     @Test
     public void testInstanceOfAnyWithNullClass() {
-        testInstanceOfAnyHelper(new Child(), new Class<?>[]{null, Child.class}, true);
+        testInstanceOfAnyHelper(createValueOne(), new Class<?>[]{null, getValueClass()}, true);
     }
 
     @Test
     public void testInstanceOfAnyWithNullClassAndNoMatches() {
-        testInstanceOfAnyHelper(new Child(), new Class<?>[]{null, Collection.class}, false);
+        testInstanceOfAnyHelper(createValueOne(), new Class<?>[]{null, UnrelatedClass.class}, false);
     }
 
     @Test
     public void testInstanceOfAnyWithNullClasses() {
-        testInstanceOfAnyHelper(new Child(), null, false);
+        testInstanceOfAnyHelper(createValueOne(), null, false);
     }
 
     @Test
     public void testInstanceOfAnyWithNullValue() {
-        testInstanceOfAnyHelper(null, new Class<?>[]{Child.class, Parent.class, Object.class}, false);
+        testInstanceOfAnyHelper(null, new Class<?>[]{getValueClass(), getParentClass(), Object.class}, false);
     }
 
-    private void testInstanceOfAnyHelper(Child value, Class<?>[] classes, boolean expected) {
+    private void testInstanceOfAnyHelper(T value, Class<?>[] classes, boolean expected) {
         setValue(value);
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().instanceOfAny(classes));
@@ -316,7 +321,7 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
 
     @Test
     public void testNulledWithNonNullValue() {
-        testNulledHelper(new Child(), false);
+        testNulledHelper(createValueOne(), false);
     }
 
     @Test
@@ -324,7 +329,7 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
         testNulledHelper(null, true);
     }
 
-    private void testNulledHelper(Child value, boolean expected) {
+    private void testNulledHelper(T value, boolean expected) {
         setValue(value);
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().nulled());
@@ -334,22 +339,22 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
 
     @Test
     public void testSameAsWithDifferentInstance() {
-        testSameAsHelper(new Child(), new Child(), false);
+        testSameAsHelper(createValueOne(), createValueTwo(), false);
     }
 
     @Test
     public void testSameAsWithEqualInstance() {
-        testSameAsHelper(new Child(123), new Child(123), false);
+        testSameAsHelper(createValueOne(), createValueOne(), isEqualValueSame());
     }
 
     @Test
     public void testSameAsWithNullOther() {
-        testSameAsHelper(new Child(), null, false);
+        testSameAsHelper(createValueOne(), null, false);
     }
 
     @Test
     public void testSameAsWithNullValue() {
-        testSameAsHelper(null, new Child(), false);
+        testSameAsHelper(null, createValueOne(), false);
     }
 
     @Test
@@ -359,12 +364,12 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
 
     @Test
     public void testSameAsWithSameInstance() {
-        Child value = new Child();
+        T value = createValueOne();
 
         testSameAsHelper(value, value, true);
     }
 
-    private void testSameAsHelper(Child value, Object other, boolean expected) {
+    private void testSameAsHelper(T value, Object other, boolean expected) {
         setValue(value);
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameAs(other));
@@ -376,22 +381,22 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
 
     @Test
     public void testSameAsWithNameAndDifferentInstance() {
-        testSameAsHelper(new Child(), new Child(), "other", false);
+        testSameAsHelper(createValueOne(), createValueTwo(), "other", false);
     }
 
     @Test
     public void testSameAsWithNameAndEqualInstance() {
-        testSameAsHelper(new Child(123), new Child(123), "other", false);
+        testSameAsHelper(createValueOne(), createValueOne(), "other", isEqualValueSame());
     }
 
     @Test
     public void testSameAsWithNameAndNullOther() {
-        testSameAsHelper(new Child(), null, "other", false);
+        testSameAsHelper(createValueOne(), null, "other", false);
     }
 
     @Test
     public void testSameAsWithNameAndNullValue() {
-        testSameAsHelper(null, new Child(), "other", false);
+        testSameAsHelper(null, createValueOne(), "other", false);
     }
 
     @Test
@@ -401,12 +406,12 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
 
     @Test
     public void testSameAsWithNameAndSameInstance() {
-        Child value = new Child();
+        T value = createValueOne();
 
         testSameAsHelper(value, value, "other", true);
     }
 
-    private void testSameAsHelper(Child value, Object other, Object name, boolean expected) {
+    private void testSameAsHelper(T value, Object other, Object name, boolean expected) {
         setValue(value);
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameAs(other, name));
@@ -418,27 +423,27 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
 
     @Test
     public void testSameAsAnyWithDifferentInstance() {
-        testSameAsAnyHelper(new Child(), new Object[]{new Child(), new Child(), new Child()}, false);
+        testSameAsAnyHelper(createValueOne(), new Object[]{createValueTwo(), new Object()}, false);
     }
 
     @Test
     public void testSameAsAnyWithEqualInstance() {
-        testSameAsAnyHelper(new Child(123), new Object[]{new Child(456), new Child(789), new Child(123)}, false);
+        testSameAsAnyHelper(createValueOne(), new Object[]{createValueTwo(), new Object(), createValueOne()}, isEqualValueSame());
     }
 
     @Test
     public void testSameAsAnyWithNullOther() {
-        testSameAsAnyHelper(new Child(), new Object[]{null}, false);
+        testSameAsAnyHelper(createValueOne(), new Object[]{null}, false);
     }
 
     @Test
     public void testSameAsAnyWithNullOthers() {
-        testSameAsAnyHelper(new Child(), null, false);
+        testSameAsAnyHelper(createValueOne(), null, false);
     }
 
     @Test
     public void testSameAsAnyWithNullValue() {
-        testSameAsAnyHelper(null, new Object[]{new Child(), new Child(), new Child()}, false);
+        testSameAsAnyHelper(null, new Object[]{createValueOne(), createValueTwo(), new Object()}, false);
     }
 
     @Test
@@ -453,12 +458,12 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
 
     @Test
     public void testSameAsAnyWithSameInstance() {
-        Child value = new Child();
+        T value = createValueOne();
 
-        testSameAsAnyHelper(value, new Object[]{new Child(), new Child(), value}, true);
+        testSameAsAnyHelper(value, new Object[]{createValueTwo(), new Object(), value}, true);
     }
 
-    private void testSameAsAnyHelper(Child value, Object[] others, boolean expected) {
+    private void testSameAsAnyHelper(T value, Object[] others, boolean expected) {
         setValue(value);
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameAsAny(others));
@@ -491,11 +496,11 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
     }
 
     private void testThatHelper(boolean expected) {
-        Child value = new Child();
+        T value = createValueOne();
         setValue(value);
 
         @SuppressWarnings("unchecked")
-        VerifierAssertion<Child> mockAssertion = (VerifierAssertion<Child>) mock(VerifierAssertion.class);
+        VerifierAssertion<T> mockAssertion = (VerifierAssertion<T>) mock(VerifierAssertion.class);
         when(mockAssertion.verify(value)).thenReturn(expected);
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().that(mockAssertion));
@@ -523,11 +528,11 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
     }
 
     private void testThatHelper(boolean expected, String message, Object[] args) {
-        Child value = new Child();
+        T value = createValueOne();
         setValue(value);
 
         @SuppressWarnings("unchecked")
-        VerifierAssertion<Child> mockAssertion = (VerifierAssertion<Child>) mock(VerifierAssertion.class);
+        VerifierAssertion<T> mockAssertion = (VerifierAssertion<T>) mock(VerifierAssertion.class);
         when(mockAssertion.verify(value)).thenReturn(expected);
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().that(mockAssertion, message, args));
@@ -538,57 +543,48 @@ public class AbstractCustomVerifierTest extends AbstractCustomVerifierTestBase<A
         assertEquals("Passes args for message formatting", Arrays.asList(args), getArgsCaptor().getAllValues());
     }
 
-    @Override
-    protected AbstractCustomVerifierTestImpl createCustomVerifier() {
-        return new AbstractCustomVerifierTestImpl(getMockVerification());
+    @Test
+    public void testVerification() {
+        assertSame("Verification field is correct", getMockVerification(), getCustomVerifier().getVerification());
     }
 
-    static class AbstractCustomVerifierTestImpl extends AbstractCustomVerifier<Child, AbstractCustomVerifierTestImpl> {
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    protected abstract T createValueOne();
 
-        AbstractCustomVerifierTestImpl(Verification<Child> verification) {
-            super(verification);
-        }
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    protected abstract T createValueTwo();
+
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    protected boolean isEqualValueSame() {
+        return false;
     }
 
-    static class Parent {
-    }
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    protected abstract Class<?> getParentClass();
 
-    static class Child extends Parent {
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    protected abstract Class<?> getValueClass();
 
-        final Integer id;
-
-        Child() {
-            this(null);
-        }
-
-        Child(Integer id) {
-            this.id = id;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj == null) {
-                return false;
-            }
-            if (obj == this) {
-                return true;
-            }
-            if (obj.getClass() != getClass()) {
-                return false;
-            }
-
-            Child other = (Child) obj;
-            return id == null ? other.id == null : id.equals(other.id);
-        }
-
-        @Override
-        public int hashCode() {
-            return id == null ? super.hashCode() : id.hashCode();
-        }
-
-        @Override
-        public String toString() {
-            return id == null ? super.toString() : id.toString();
-        }
+    private static class UnrelatedClass {
     }
 }

@@ -21,10 +21,131 @@
  */
 package io.skelp.verifier.type;
 
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
+
+import io.skelp.verifier.AbstractCustomVerifierTestCase;
+import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
+import io.skelp.verifier.type.base.BaseNumberVerifierTestCase;
+import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
+
 /**
  * Tests for the {@link DoubleVerifier} class.
  *
  * @author Alasdair Mercer
  */
+@RunWith(Enclosed.class)
 public class DoubleVerifierTest {
+
+    public static class DoubleVerifierAbstractCustomVerifierTest extends AbstractCustomVerifierTestCase<Double, DoubleVerifier> {
+
+        @Override
+        protected DoubleVerifier createCustomVerifier() {
+            return new DoubleVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Double createValueOne() {
+            return new Double(123);
+        }
+
+        @Override
+        protected Double createValueTwo() {
+            return new Double(321);
+        }
+
+        @Override
+        protected Class<?> getParentClass() {
+            return Number.class;
+        }
+
+        @Override
+        protected Class<?> getValueClass() {
+            return Double.class;
+        }
+    }
+
+    public static class DoubleVerifierBaseComparableVerifierTest extends BaseComparableVerifierTestCase<Double, DoubleVerifier> {
+
+        @Override
+        protected DoubleVerifier createCustomVerifier() {
+            return new DoubleVerifier(getMockVerification());
+        }
+
+        @Override
+        public Double getBase() {
+            return 50D;
+        }
+
+        @Override
+        public Double getHigher() {
+            return 75D;
+        }
+
+        @Override
+        public Double getHighest() {
+            return 100D;
+        }
+
+        @Override
+        public Double getLower() {
+            return 25D;
+        }
+
+        @Override
+        public Double getLowest() {
+            return 0D;
+        }
+    }
+
+    public static class DoubleVerifierBaseNumberVerifierTest extends BaseNumberVerifierTestCase<Double, DoubleVerifier> {
+
+        @Override
+        protected DoubleVerifier createCustomVerifier() {
+            return new DoubleVerifier(getMockVerification());
+        }
+
+        @Override
+        public Double getEvenValue() {
+            return 2D;
+        }
+
+        @Override
+        public Double getOddValue() {
+            return 1D;
+        }
+
+        @Override
+        public Double getPositiveOneValue() {
+            return 1D;
+        }
+
+        @Override
+        public Double getNegativeOneValue() {
+            return -1D;
+        }
+
+        @Override
+        public Double getZeroValue() {
+            return 0D;
+        }
+    }
+
+    public static class DoubleVerifierBaseTruthVerifierTest extends BaseTruthVerifierTestCase<Double, DoubleVerifier> {
+
+        @Override
+        protected DoubleVerifier createCustomVerifier() {
+            return new DoubleVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Double[] getFalsehoodValues() {
+            return new Double[]{0D};
+        }
+
+        @Override
+        protected Double[] getTruthValues() {
+            return new Double[]{1D};
+        }
+    }
 }

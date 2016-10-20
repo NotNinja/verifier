@@ -188,20 +188,20 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
     }
 
     private V between(final T start, final Comparison startComparison, final Object startName, final T end, final Comparison endComparison, final Object endName, final String message) throws VerifierException {
-        final T value = verification.getValue();
+        final T value = getVerification().getValue();
         final boolean result = value != null && start != null && end != null &&
             (startComparison.compare(value.compareTo(start)) && endComparison.compare(value.compareTo(end)));
 
-        verification.check(result, message, startName, endName);
+        getVerification().check(result, message, startName, endName);
 
         return chain();
     }
 
     private V comparesTo(final Comparison comparison, final T other, final Object name, final String message) throws VerifierException {
-        final T value = verification.getValue();
+        final T value = getVerification().getValue();
         final boolean result = value != null && other != null && comparison.compare(value.compareTo(other));
 
-        verification.check(result, message, name);
+        getVerification().check(result, message, name);
 
         return chain();
     }

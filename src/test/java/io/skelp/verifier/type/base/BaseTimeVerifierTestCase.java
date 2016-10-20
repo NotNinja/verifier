@@ -28,8 +28,10 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.junit.Test;
 
+import io.skelp.verifier.CustomVerifierTestCaseBase;
+
 /**
- * Base for tests of {@link BaseTimeVerifier} implementation classes.
+ * Test case for {@link BaseTimeVerifier} implementation classes.
  *
  * @param <T>
  *         the {@code Comparable} value type for the {@link BaseTimeVerifier} being tested
@@ -37,9 +39,20 @@ import org.junit.Test;
  *         the type of the {@link BaseTimeVerifier} being tested
  * @author Alasdair Mercer
  */
-public abstract class BaseTimeVerifierTestBase<T extends Comparable<? super T>, V extends BaseTimeVerifier<T, V>> extends BaseComparableVerifierTestBase<T, V> {
+public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, V extends BaseTimeVerifier<T, V>> extends CustomVerifierTestCaseBase<T, V> {
 
-    private static Calendar createCalendar(int era, int year, int dayOfYear, int hourOfDay, int minute, int second) {
+    /**
+     * TODO: Document
+     *
+     * @param era
+     * @param year
+     * @param dayOfYear
+     * @param hourOfDay
+     * @param minute
+     * @param second
+     * @return
+     */
+    public static Calendar createCalendar(int era, int year, int dayOfYear, int hourOfDay, int minute, int second) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.ERA, era);
         calendar.set(Calendar.YEAR, year);
@@ -128,8 +141,8 @@ public abstract class BaseTimeVerifierTestBase<T extends Comparable<? super T>, 
     }
 
     private void testSameDayHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
-        T value = getValueForCalendar(valueCalendar);
-        T other = getValueForCalendar(otherCalendar);
+        T value = createValueForCalendar(valueCalendar);
+        T other = createValueForCalendar(otherCalendar);
 
         setValue(value);
 
@@ -196,8 +209,8 @@ public abstract class BaseTimeVerifierTestBase<T extends Comparable<? super T>, 
     }
 
     private void testSameHourHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
-        T value = getValueForCalendar(valueCalendar);
-        T other = getValueForCalendar(otherCalendar);
+        T value = createValueForCalendar(valueCalendar);
+        T other = createValueForCalendar(otherCalendar);
 
         setValue(value);
 
@@ -272,8 +285,8 @@ public abstract class BaseTimeVerifierTestBase<T extends Comparable<? super T>, 
     }
 
     private void testSameMinuteHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
-        T value = getValueForCalendar(valueCalendar);
-        T other = getValueForCalendar(otherCalendar);
+        T value = createValueForCalendar(valueCalendar);
+        T other = createValueForCalendar(otherCalendar);
 
         setValue(value);
 
@@ -332,8 +345,8 @@ public abstract class BaseTimeVerifierTestBase<T extends Comparable<? super T>, 
     }
 
     private void testSameMonthHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
-        T value = getValueForCalendar(valueCalendar);
-        T other = getValueForCalendar(otherCalendar);
+        T value = createValueForCalendar(valueCalendar);
+        T other = createValueForCalendar(otherCalendar);
 
         setValue(value);
 
@@ -416,8 +429,8 @@ public abstract class BaseTimeVerifierTestBase<T extends Comparable<? super T>, 
     }
 
     private void testSameSecondHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
-        T value = getValueForCalendar(valueCalendar);
-        T other = getValueForCalendar(otherCalendar);
+        T value = createValueForCalendar(valueCalendar);
+        T other = createValueForCalendar(otherCalendar);
 
         setValue(value);
 
@@ -460,8 +473,8 @@ public abstract class BaseTimeVerifierTestBase<T extends Comparable<? super T>, 
     }
 
     private void testSameTimeHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
-        T value = getValueForCalendar(valueCalendar);
-        T other = getValueForCalendar(otherCalendar);
+        T value = createValueForCalendar(valueCalendar);
+        T other = createValueForCalendar(otherCalendar);
 
         setValue(value);
 
@@ -520,8 +533,8 @@ public abstract class BaseTimeVerifierTestBase<T extends Comparable<? super T>, 
     }
 
     private void testSameWeekHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
-        T value = getValueForCalendar(valueCalendar);
-        T other = getValueForCalendar(otherCalendar);
+        T value = createValueForCalendar(valueCalendar);
+        T other = createValueForCalendar(otherCalendar);
 
         setValue(value);
 
@@ -572,8 +585,8 @@ public abstract class BaseTimeVerifierTestBase<T extends Comparable<? super T>, 
     }
 
     private void testSameYearHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
-        T value = getValueForCalendar(valueCalendar);
-        T other = getValueForCalendar(otherCalendar);
+        T value = createValueForCalendar(valueCalendar);
+        T other = createValueForCalendar(otherCalendar);
 
         setValue(value);
 
@@ -584,38 +597,8 @@ public abstract class BaseTimeVerifierTestBase<T extends Comparable<? super T>, 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }
 
-    @Override
-    protected ComparableValues<T> getComparableValues() {
-        return new ComparableValues<T>() {
-            @Override
-            public T getBase() {
-                return getValueForCalendar(createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 30));
-            }
-
-            @Override
-            public T getHigher() {
-                return getValueForCalendar(createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 45));
-            }
-
-            @Override
-            public T getHighest() {
-                return getValueForCalendar(createCalendar(GregorianCalendar.AD, 2016, 1, 0, 1, 0));
-            }
-
-            @Override
-            public T getLower() {
-                return getValueForCalendar(createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 15));
-            }
-
-            @Override
-            public T getLowest() {
-                return getValueForCalendar(createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0));
-            }
-        };
-    }
-
     /**
-     * Returns an instance of the value being verified that represents the specified {@code calendar}.
+     * Creates an instance of the value being verified that represents the specified {@code calendar}.
      * <p/>
      * {@code calendar} may be {@literal null} in which case an appropriate value should be returned, which may itself
      * be {@literal null}.
@@ -625,5 +608,5 @@ public abstract class BaseTimeVerifierTestBase<T extends Comparable<? super T>, 
      * @return The value representation for {@code calendar} which may be {@literal null} if  {@code calendar} is
      * {@literal null} and that is the best representation for the value.
      */
-    protected abstract T getValueForCalendar(Calendar calendar);
+    protected abstract T createValueForCalendar(Calendar calendar);
 }

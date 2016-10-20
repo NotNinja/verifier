@@ -21,10 +21,131 @@
  */
 package io.skelp.verifier.type;
 
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
+
+import io.skelp.verifier.AbstractCustomVerifierTestCase;
+import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
+import io.skelp.verifier.type.base.BaseNumberVerifierTestCase;
+import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
+
 /**
  * Tests for the {@link LongVerifier} class.
  *
  * @author Alasdair Mercer
  */
+@RunWith(Enclosed.class)
 public class LongVerifierTest {
+
+    public static class LongVerifierAbstractCustomVerifierTest extends AbstractCustomVerifierTestCase<Long, LongVerifier> {
+
+        @Override
+        protected LongVerifier createCustomVerifier() {
+            return new LongVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Long createValueOne() {
+            return new Long(123);
+        }
+
+        @Override
+        protected Long createValueTwo() {
+            return new Long(321);
+        }
+
+        @Override
+        protected Class<?> getParentClass() {
+            return Number.class;
+        }
+
+        @Override
+        protected Class<?> getValueClass() {
+            return Long.class;
+        }
+    }
+
+    public static class LongVerifierBaseComparableVerifierTest extends BaseComparableVerifierTestCase<Long, LongVerifier> {
+
+        @Override
+        protected LongVerifier createCustomVerifier() {
+            return new LongVerifier(getMockVerification());
+        }
+
+        @Override
+        public Long getBase() {
+            return 50L;
+        }
+
+        @Override
+        public Long getHigher() {
+            return 75L;
+        }
+
+        @Override
+        public Long getHighest() {
+            return 100L;
+        }
+
+        @Override
+        public Long getLower() {
+            return 25L;
+        }
+
+        @Override
+        public Long getLowest() {
+            return 0L;
+        }
+    }
+
+    public static class LongVerifierBaseNumberVerifierTest extends BaseNumberVerifierTestCase<Long, LongVerifier> {
+
+        @Override
+        protected LongVerifier createCustomVerifier() {
+            return new LongVerifier(getMockVerification());
+        }
+
+        @Override
+        public Long getEvenValue() {
+            return 2L;
+        }
+
+        @Override
+        public Long getOddValue() {
+            return 1L;
+        }
+
+        @Override
+        public Long getPositiveOneValue() {
+            return 1L;
+        }
+
+        @Override
+        public Long getNegativeOneValue() {
+            return -1L;
+        }
+
+        @Override
+        public Long getZeroValue() {
+            return 0L;
+        }
+    }
+
+    public static class LongVerifierBaseTruthVerifierTest extends BaseTruthVerifierTestCase<Long, LongVerifier> {
+
+        @Override
+        protected LongVerifier createCustomVerifier() {
+            return new LongVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Long[] getFalsehoodValues() {
+            return new Long[]{0L};
+        }
+
+        @Override
+        protected Long[] getTruthValues() {
+            return new Long[]{1L};
+        }
+    }
 }

@@ -48,8 +48,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
         return false;
     }
 
-    /** TODO: Document */
-    protected final Verification<T> verification;
+    private final Verification<T> verification;
 
     /**
      * TODO: Document
@@ -78,7 +77,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     @Override
     public V equalTo(final Object other, final Object name) throws VerifierException {
         final T value = verification.getValue();
-        final boolean result = other == null ? value == null : other.equals(value);
+        final boolean result = isEqualTo(value, other);
 
         verification.check(result, "be equal to '%s'", name);
 
@@ -91,7 +90,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
         final boolean result = matchAny(others, new Function<Boolean, Object>() {
             @Override
             public Boolean apply(final Object input) {
-                return input == null ? value == null : input.equals(value);
+                return isEqualTo(value, input);
             }
         });
 
@@ -132,6 +131,17 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
         verification.check(result, "be an instance of any %s", new ArrayFormatter<>(classes));
 
         return chain();
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param value
+     * @param other
+     * @return
+     */
+    protected boolean isEqualTo(final T value, final Object other) {
+        return other == null ? value == null : other.equals(value);
     }
 
     @Override
@@ -195,5 +205,10 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
         verification.check(result, message, args);
 
         return chain();
+    }
+
+    @Override
+    public Verification<T> getVerification() {
+        return verification;
     }
 }

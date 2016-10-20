@@ -26,209 +26,212 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 
-import io.skelp.verifier.AbstractCustomVerifierTestBase;
-import io.skelp.verifier.type.base.BaseComparableVerifier;
-import io.skelp.verifier.type.base.BaseComparableVerifierTestBase;
+import io.skelp.verifier.AbstractCustomVerifierTestCase;
+import io.skelp.verifier.CustomVerifierTestCaseBase;
+import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
 
 /**
  * Tests for the {@link BooleanVerifier} class.
- * <p>
- * Due to the binary nature of booleans this class does not extend {@link BaseComparableVerifierTestBase} and instead
- * performs basic tests on the {@link BaseComparableVerifier} methods for booleans.
  *
  * @author Alasdair Mercer
  */
-public class BooleanVerifierTest extends AbstractCustomVerifierTestBase<Boolean, BooleanVerifier> {
+@RunWith(Enclosed.class)
+public class BooleanVerifierTest {
 
-    @Test
-    public void testBetweenWhenValueIsFalse() {
-        testBetweenHelper(false);
+    public static class BooleanVerifierAbstractCustomVerifierTest extends AbstractCustomVerifierTestCase<Boolean, BooleanVerifier> {
+
+        @Override
+        protected BooleanVerifier createCustomVerifier() {
+            return new BooleanVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Boolean createValueOne() {
+            return new Boolean(false);
+        }
+
+        @Override
+        protected Boolean createValueTwo() {
+            return new Boolean(true);
+        }
+
+        @Override
+        protected Class<?> getParentClass() {
+            return Object.class;
+        }
+
+        @Override
+        protected Class<?> getValueClass() {
+            return Boolean.class;
+        }
     }
 
-    @Test
-    public void testBetweenWhenValueIsTrue() {
-        testBetweenHelper(true);
+    public static class BooleanVerifierBaseComparableVerifierTest extends CustomVerifierTestCaseBase<Boolean, BooleanVerifier> {
+
+        @Test
+        public void testBetweenWhenValueIsFalse() {
+            testBetweenHelper(false);
+        }
+
+        @Test
+        public void testBetweenWhenValueIsTrue() {
+            testBetweenHelper(true);
+        }
+
+        private void testBetweenHelper(Boolean value) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().between(false, true));
+
+            verify(getMockVerification()).check(eq(true), eq("be between '%s' and '%s' (inclusive)"), getArgsCaptor().capture());
+
+            assertArrayEquals("Passes start and end for message formatting", new Object[]{false, true}, getArgsCaptor().getAllValues().toArray());
+        }
+
+        @Test
+        public void testBetweenExclusiveWhenValueIsFalse() {
+            testBetweenExclusiveHelper(false);
+        }
+
+        @Test
+        public void testBetweenExclusiveWhenValueIsTrue() {
+            testBetweenExclusiveHelper(true);
+        }
+
+        private void testBetweenExclusiveHelper(Boolean value) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().betweenExclusive(false, true));
+
+            verify(getMockVerification()).check(eq(false), eq("be between '%s' and '%s' (exclusive)"), getArgsCaptor().capture());
+
+            assertArrayEquals("Passes start and end for message formatting", new Object[]{false, true}, getArgsCaptor().getAllValues().toArray());
+        }
+
+        @Test
+        public void testLessThanWhenValueIsEqualToOther() {
+            testLessThanHelper(false, false, false);
+        }
+
+        @Test
+        public void testLessThanWhenValueIsGreaterThanOther() {
+            testLessThanHelper(true, false, false);
+        }
+
+        @Test
+        public void testLessThanWhenValueIsLessThanOther() {
+            testLessThanHelper(false, true, true);
+        }
+
+        private void testLessThanHelper(Boolean value, Boolean other, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().lessThan(other));
+
+            verify(getMockVerification()).check(eq(expected), eq("be less than '%s'"), getArgsCaptor().capture());
+
+            assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
+        }
+
+        @Test
+        public void testLessThanOrEqualToWhenValueIsEqualToOther() {
+            testLessThanOrEqualToHelper(false, false, true);
+        }
+
+        @Test
+        public void testLessThanOrEqualToWhenValueIsGreaterThanOther() {
+            testLessThanOrEqualToHelper(true, false, false);
+        }
+
+        @Test
+        public void testLessThanOrEqualToWhenValueIsLessThanOther() {
+            testLessThanOrEqualToHelper(false, true, true);
+        }
+
+        private void testLessThanOrEqualToHelper(Boolean value, Boolean other, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().lessThanOrEqualTo(other));
+
+            verify(getMockVerification()).check(eq(expected), eq("be less than or equal to '%s'"), getArgsCaptor().capture());
+
+            assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
+        }
+
+        @Test
+        public void testGreaterThanWhenValueIsEqualToOther() {
+            testGreaterThanHelper(false, false, false);
+        }
+
+        @Test
+        public void testGreaterThanWhenValueIsGreaterThanOther() {
+            testGreaterThanHelper(true, false, true);
+        }
+
+        @Test
+        public void testGreaterWhenValueIsLessThanOther() {
+            testGreaterThanHelper(false, true, false);
+        }
+
+        private void testGreaterThanHelper(Boolean value, Boolean other, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().greaterThan(other));
+
+            verify(getMockVerification()).check(eq(expected), eq("be greater than '%s'"), getArgsCaptor().capture());
+
+            assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
+        }
+
+        @Test
+        public void testGreaterThanOrEqualToWhenValueIsEqualToOther() {
+            testGreaterThanOrEqualToHelper(false, false, true);
+        }
+
+        @Test
+        public void testGreaterThanOrEqualToWhenValueIsGreaterThanOther() {
+            testGreaterThanOrEqualToHelper(true, false, true);
+        }
+
+        @Test
+        public void testGreaterThanOrEqualToWhenValueIsLessThanOther() {
+            testGreaterThanOrEqualToHelper(false, true, false);
+        }
+
+        private void testGreaterThanOrEqualToHelper(Boolean value, Boolean other, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().greaterThanOrEqualTo(other));
+
+            verify(getMockVerification()).check(eq(expected), eq("be greater than or equal to '%s'"), getArgsCaptor().capture());
+
+            assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
+        }
+
+        @Override
+        protected BooleanVerifier createCustomVerifier() {
+            return new BooleanVerifier(getMockVerification());
+        }
     }
 
-    private void testBetweenHelper(Boolean value) {
-        setValue(value);
+    public static class BooleanVerifierBaseTruthVerifierTest extends BaseTruthVerifierTestCase<Boolean, BooleanVerifier> {
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().between(false, true));
+        @Override
+        protected BooleanVerifier createCustomVerifier() {
+            return new BooleanVerifier(getMockVerification());
+        }
 
-        verify(getMockVerification()).check(eq(true), eq("be between '%s' and '%s' (inclusive)"), getArgsCaptor().capture());
+        @Override
+        protected Boolean[] getFalsehoodValues() {
+            return new Boolean[]{null, false};
+        }
 
-        assertArrayEquals("Passes start and end for message formatting", new Object[]{false, true}, getArgsCaptor().getAllValues().toArray());
-    }
-
-    @Test
-    public void testBetweenExclusiveWhenValueIsFalse() {
-        testBetweenExclusiveHelper(false);
-    }
-
-    @Test
-    public void testBetweenExclusiveWhenValueIsTrue() {
-        testBetweenExclusiveHelper(true);
-    }
-
-    private void testBetweenExclusiveHelper(Boolean value) {
-        setValue(value);
-
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().betweenExclusive(false, true));
-
-        verify(getMockVerification()).check(eq(false), eq("be between '%s' and '%s' (exclusive)"), getArgsCaptor().capture());
-
-        assertArrayEquals("Passes start and end for message formatting", new Object[]{false, true}, getArgsCaptor().getAllValues().toArray());
-    }
-
-    @Test
-    public void testLessThanWhenValueIsEqualToOther() {
-        testLessThanHelper(false, false, false);
-    }
-
-    @Test
-    public void testLessThanWhenValueIsGreaterThanOther() {
-        testLessThanHelper(true, false, false);
-    }
-
-    @Test
-    public void testLessThanWhenValueIsLessThanOther() {
-        testLessThanHelper(false, true, true);
-    }
-
-    private void testLessThanHelper(Boolean value, Boolean other, boolean expected) {
-        setValue(value);
-
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().lessThan(other));
-
-        verify(getMockVerification()).check(eq(expected), eq("be less than '%s'"), getArgsCaptor().capture());
-
-        assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
-    }
-
-    @Test
-    public void testLessThanOrEqualToWhenValueIsEqualToOther() {
-        testLessThanOrEqualToHelper(false, false, true);
-    }
-
-    @Test
-    public void testLessThanOrEqualToWhenValueIsGreaterThanOther() {
-        testLessThanOrEqualToHelper(true, false, false);
-    }
-
-    @Test
-    public void testLessThanOrEqualToWhenValueIsLessThanOther() {
-        testLessThanOrEqualToHelper(false, true, true);
-    }
-
-    private void testLessThanOrEqualToHelper(Boolean value, Boolean other, boolean expected) {
-        setValue(value);
-
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().lessThanOrEqualTo(other));
-
-        verify(getMockVerification()).check(eq(expected), eq("be less than or equal to '%s'"), getArgsCaptor().capture());
-
-        assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
-    }
-
-    @Test
-    public void testGreaterThanWhenValueIsEqualToOther() {
-        testGreaterThanHelper(false, false, false);
-    }
-
-    @Test
-    public void testGreaterThanWhenValueIsGreaterThanOther() {
-        testGreaterThanHelper(true, false, true);
-    }
-
-    @Test
-    public void testGreaterWhenValueIsLessThanOther() {
-        testGreaterThanHelper(false, true, false);
-    }
-
-    private void testGreaterThanHelper(Boolean value, Boolean other, boolean expected) {
-        setValue(value);
-
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().greaterThan(other));
-
-        verify(getMockVerification()).check(eq(expected), eq("be greater than '%s'"), getArgsCaptor().capture());
-
-        assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
-    }
-
-    @Test
-    public void testGreaterThanOrEqualToWhenValueIsEqualToOther() {
-        testGreaterThanOrEqualToHelper(false, false, true);
-    }
-
-    @Test
-    public void testGreaterThanOrEqualToWhenValueIsGreaterThanOther() {
-        testGreaterThanOrEqualToHelper(true, false, true);
-    }
-
-    @Test
-    public void testGreaterThanOrEqualToWhenValueIsLessThanOther() {
-        testGreaterThanOrEqualToHelper(false, true, false);
-    }
-
-    private void testGreaterThanOrEqualToHelper(Boolean value, Boolean other, boolean expected) {
-        setValue(value);
-
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().greaterThanOrEqualTo(other));
-
-        verify(getMockVerification()).check(eq(expected), eq("be greater than or equal to '%s'"), getArgsCaptor().capture());
-
-        assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
-    }
-
-    @Test
-    public void testFalsehoodWhenValueIsFalse() {
-        testFalsehoodHelper(false, true);
-    }
-
-    @Test
-    public void testFalsehoodWhenValueIsNull() {
-        testFalsehoodHelper(null, true);
-    }
-
-    @Test
-    public void testFalsehoodWhenValueIsTrue() {
-        testFalsehoodHelper(true, false);
-    }
-
-    private void testFalsehoodHelper(Boolean value, boolean expected) {
-        setValue(value);
-
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().falsehood());
-
-        verify(getMockVerification()).check(expected, "be false");
-    }
-
-    @Test
-    public void testTruthWhenValueIsFalse() {
-        testTruthHelper(false, false);
-    }
-
-    @Test
-    public void testTruthWhenValueIsNull() {
-        testTruthHelper(null, false);
-    }
-
-    @Test
-    public void testTruthWhenValueIsTrue() {
-        testTruthHelper(true, true);
-    }
-
-    private void testTruthHelper(Boolean value, boolean expected) {
-        setValue(value);
-
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().truth());
-
-        verify(getMockVerification()).check(expected, "be true");
-    }
-
-    @Override
-    protected BooleanVerifier createCustomVerifier() {
-        return new BooleanVerifier(getMockVerification());
+        @Override
+        protected Boolean[] getTruthValues() {
+            return new Boolean[]{true};
+        }
     }
 }

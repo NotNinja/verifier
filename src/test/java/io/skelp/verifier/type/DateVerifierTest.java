@@ -23,23 +23,93 @@ package io.skelp.verifier.type;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 
-import io.skelp.verifier.type.base.BaseTimeVerifierTestBase;
+import io.skelp.verifier.AbstractCustomVerifierTestCase;
+import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
+import io.skelp.verifier.type.base.BaseTimeVerifierTestCase;
 
 /**
  * Tests for the {@link DateVerifier} class.
  *
  * @author Alasdair Mercer
  */
-public class DateVerifierTest extends BaseTimeVerifierTestBase<Date, DateVerifier> {
+@RunWith(Enclosed.class)
+public class DateVerifierTest {
 
-    @Override
-    protected DateVerifier createCustomVerifier() {
-        return new DateVerifier(getMockVerification());
+    public static class DateVerifierAbstractCustomVerifierTest extends AbstractCustomVerifierTestCase<Date, DateVerifier> {
+
+        @Override
+        protected DateVerifier createCustomVerifier() {
+            return new DateVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Date createValueOne() {
+            return BaseTimeVerifierTestCase.createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0).getTime();
+        }
+
+        @Override
+        protected Date createValueTwo() {
+            return BaseTimeVerifierTestCase.createCalendar(GregorianCalendar.AD, 2016, 1, 0, 1, 0).getTime();
+        }
+
+        @Override
+        protected Class<?> getParentClass() {
+            return Object.class;
+        }
+
+        @Override
+        protected Class<?> getValueClass() {
+            return Date.class;
+        }
     }
 
-    @Override
-    protected Date getValueForCalendar(Calendar calendar) {
-        return calendar == null ? null : calendar.getTime();
+    public static class DateVerifierBaseComparableVerifierTest extends BaseComparableVerifierTestCase<Date, DateVerifier> {
+
+        @Override
+        protected DateVerifier createCustomVerifier() {
+            return new DateVerifier(getMockVerification());
+        }
+
+        @Override
+        public Date getBase() {
+            return BaseTimeVerifierTestCase.createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 30).getTime();
+        }
+
+        @Override
+        public Date getHigher() {
+            return BaseTimeVerifierTestCase.createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 45).getTime();
+        }
+
+        @Override
+        public Date getHighest() {
+            return BaseTimeVerifierTestCase.createCalendar(GregorianCalendar.AD, 2016, 1, 0, 1, 0).getTime();
+        }
+
+        @Override
+        public Date getLower() {
+            return BaseTimeVerifierTestCase.createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 15).getTime();
+        }
+
+        @Override
+        public Date getLowest() {
+            return BaseTimeVerifierTestCase.createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0).getTime();
+        }
+    }
+
+    public static class DateVerifierBaseTimeVerifierTest extends BaseTimeVerifierTestCase<Date, DateVerifier> {
+
+        @Override
+        protected DateVerifier createCustomVerifier() {
+            return new DateVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Date createValueForCalendar(Calendar calendar) {
+            return calendar == null ? null : calendar.getTime();
+        }
     }
 }

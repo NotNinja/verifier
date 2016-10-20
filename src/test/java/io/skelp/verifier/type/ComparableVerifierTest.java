@@ -21,47 +21,113 @@
  */
 package io.skelp.verifier.type;
 
-import io.skelp.verifier.type.base.BaseComparableVerifierTestBase;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
+
+import io.skelp.verifier.AbstractCustomVerifierTestCase;
+import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
 
 /**
  * Tests for the {@link ComparableVerifier} class.
  *
  * @author Alasdair Mercer
  */
-public class ComparableVerifierTest extends BaseComparableVerifierTestBase<Integer, ComparableVerifier<Integer>> {
+@RunWith(Enclosed.class)
+public class ComparableVerifierTest {
 
-    @Override
-    protected ComparableVerifier<Integer> createCustomVerifier() {
-        return new ComparableVerifier<>(getMockVerification());
+    public static class ComparableVerifierAbstractCustomVerifierTest extends AbstractCustomVerifierTestCase<ComparableWrapper, ComparableVerifier<ComparableWrapper>> {
+
+        @Override
+        protected ComparableVerifier<ComparableWrapper> createCustomVerifier() {
+            return new ComparableVerifier<>(getMockVerification());
+        }
+
+        @Override
+        protected ComparableWrapper createValueOne() {
+            return new ComparableWrapper(0);
+        }
+
+        @Override
+        protected ComparableWrapper createValueTwo() {
+            return new ComparableWrapper(100);
+        }
+
+        @Override
+        protected Class<?> getParentClass() {
+            return Object.class;
+        }
+
+        @Override
+        protected Class<?> getValueClass() {
+            return ComparableWrapper.class;
+        }
     }
 
-    @Override
-    protected ComparableValues<Integer> getComparableValues() {
-        return new ComparableValues<Integer>() {
-            @Override
-            public Integer getBase() {
-                return 50;
+    public static class ComparableVerifierBaseComparableVerifierTest extends BaseComparableVerifierTestCase<ComparableWrapper, ComparableVerifier<ComparableWrapper>> {
+
+        @Override
+        protected ComparableVerifier<ComparableWrapper> createCustomVerifier() {
+            return new ComparableVerifier<>(getMockVerification());
+        }
+
+        @Override
+        public ComparableWrapper getBase() {
+            return new ComparableWrapper(50);
+        }
+
+        @Override
+        public ComparableWrapper getHigher() {
+            return new ComparableWrapper(75);
+        }
+
+        @Override
+        public ComparableWrapper getHighest() {
+            return new ComparableWrapper(100);
+        }
+
+        @Override
+        public ComparableWrapper getLower() {
+            return new ComparableWrapper(25);
+        }
+
+        @Override
+        public ComparableWrapper getLowest() {
+            return new ComparableWrapper(0);
+        }
+    }
+
+    private static class ComparableWrapper implements Comparable<ComparableWrapper> {
+
+        final Integer comparable;
+
+        ComparableWrapper(Integer comparable) {
+            this.comparable = comparable;
+        }
+
+        @Override
+        public int compareTo(ComparableWrapper other) {
+            return comparable.compareTo(other.comparable);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (obj == this) {
+                return true;
+            }
+            if (obj.getClass() != getClass()) {
+                return false;
             }
 
-            @Override
-            public Integer getHigher() {
-                return 75;
-            }
+            ComparableWrapper other = (ComparableWrapper) obj;
+            return comparable.equals(other.comparable);
+        }
 
-            @Override
-            public Integer getHighest() {
-                return 100;
-            }
-
-            @Override
-            public Integer getLower() {
-                return 25;
-            }
-
-            @Override
-            public Integer getLowest() {
-                return 0;
-            }
-        };
+        @Override
+        public int hashCode() {
+            return comparable.hashCode();
+        }
     }
 }

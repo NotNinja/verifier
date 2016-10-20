@@ -21,10 +21,131 @@
  */
 package io.skelp.verifier.type;
 
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
+
+import io.skelp.verifier.AbstractCustomVerifierTestCase;
+import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
+import io.skelp.verifier.type.base.BaseNumberVerifierTestCase;
+import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
+
 /**
  * Tests for the {@link FloatVerifier} class.
  *
  * @author Alasdair Mercer
  */
+@RunWith(Enclosed.class)
 public class FloatVerifierTest {
+
+    public static class FloatVerifierAbstractCustomVerifierTest extends AbstractCustomVerifierTestCase<Float, FloatVerifier> {
+
+        @Override
+        protected FloatVerifier createCustomVerifier() {
+            return new FloatVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Float createValueOne() {
+            return new Float(123);
+        }
+
+        @Override
+        protected Float createValueTwo() {
+            return new Float(321);
+        }
+
+        @Override
+        protected Class<?> getParentClass() {
+            return Number.class;
+        }
+
+        @Override
+        protected Class<?> getValueClass() {
+            return Float.class;
+        }
+    }
+
+    public static class FloatVerifierBaseComparableVerifierTest extends BaseComparableVerifierTestCase<Float, FloatVerifier> {
+
+        @Override
+        protected FloatVerifier createCustomVerifier() {
+            return new FloatVerifier(getMockVerification());
+        }
+
+        @Override
+        public Float getBase() {
+            return 50F;
+        }
+
+        @Override
+        public Float getHigher() {
+            return 75F;
+        }
+
+        @Override
+        public Float getHighest() {
+            return 100F;
+        }
+
+        @Override
+        public Float getLower() {
+            return 25F;
+        }
+
+        @Override
+        public Float getLowest() {
+            return 0F;
+        }
+    }
+
+    public static class FloatVerifierBaseNumberVerifierTest extends BaseNumberVerifierTestCase<Float, FloatVerifier> {
+
+        @Override
+        protected FloatVerifier createCustomVerifier() {
+            return new FloatVerifier(getMockVerification());
+        }
+
+        @Override
+        public Float getEvenValue() {
+            return 2F;
+        }
+
+        @Override
+        public Float getOddValue() {
+            return 1F;
+        }
+
+        @Override
+        public Float getPositiveOneValue() {
+            return 1F;
+        }
+
+        @Override
+        public Float getNegativeOneValue() {
+            return -1F;
+        }
+
+        @Override
+        public Float getZeroValue() {
+            return 0F;
+        }
+    }
+
+    public static class FloatVerifierBaseTruthVerifierTest extends BaseTruthVerifierTestCase<Float, FloatVerifier> {
+
+        @Override
+        protected FloatVerifier createCustomVerifier() {
+            return new FloatVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Float[] getFalsehoodValues() {
+            return new Float[]{0F};
+        }
+
+        @Override
+        protected Float[] getTruthValues() {
+            return new Float[]{1F};
+        }
+    }
 }

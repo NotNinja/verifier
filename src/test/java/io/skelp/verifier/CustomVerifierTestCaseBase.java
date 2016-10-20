@@ -21,12 +21,10 @@
  */
 package io.skelp.verifier;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -39,16 +37,16 @@ import org.mockito.stubbing.Answer;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * Base for tests of {@link AbstractCustomVerifier} implementation classes.
+ * Base for test cases for {@link CustomVerifier} implementation classes.
  *
  * @param <T>
- *         the value type for the {@link AbstractCustomVerifier} being tested
+ *         the value type for the {@link CustomVerifier} being tested
  * @param <V>
- *         the type of the {@link AbstractCustomVerifier} being tested
+ *         the type of the {@link CustomVerifier} being tested
  * @author Alasdair Mercer
  */
 @RunWith(MockitoJUnitRunner.class)
-public abstract class AbstractCustomVerifierTestBase<T, V extends AbstractCustomVerifier<T, V>> {
+public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, V>> {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -74,11 +72,6 @@ public abstract class AbstractCustomVerifierTestBase<T, V extends AbstractCustom
         value = null;
 
         customVerifier = createCustomVerifier();
-    }
-
-    @Test
-    public void testVerification() {
-        assertSame("Verification field is correct", mockVerification, customVerifier.verification);
     }
 
     /**

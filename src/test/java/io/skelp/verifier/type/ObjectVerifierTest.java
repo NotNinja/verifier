@@ -21,17 +21,82 @@
  */
 package io.skelp.verifier.type;
 
-import io.skelp.verifier.AbstractCustomVerifierTestBase;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
+
+import io.skelp.verifier.AbstractCustomVerifierTestCase;
 
 /**
  * Tests for the {@link ObjectVerifier} class.
  *
  * @author Alasdair Mercer
  */
-public class ObjectVerifierTest extends AbstractCustomVerifierTestBase<Object, ObjectVerifier> {
+@RunWith(Enclosed.class)
+public class ObjectVerifierTest {
 
-    @Override
-    protected ObjectVerifier createCustomVerifier() {
-        return new ObjectVerifier(getMockVerification());
+    public static class ObjectVerifierAbstractCustomVerifierTest extends AbstractCustomVerifierTestCase<Object, ObjectVerifier> {
+
+        @Override
+        protected ObjectVerifier createCustomVerifier() {
+            return new ObjectVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Object createValueOne() {
+            return new Child(123);
+        }
+
+        @Override
+        protected Object createValueTwo() {
+            return new Child(321);
+        }
+
+        @Override
+        protected Class<?> getParentClass() {
+            return Parent.class;
+        }
+
+        @Override
+        protected Class<?> getValueClass() {
+            return Child.class;
+        }
+    }
+
+    private static class Child extends Parent {
+
+        final int id;
+
+        Child(int id) {
+            this.id = id;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (obj == this) {
+                return true;
+            }
+            if (obj.getClass() != getClass()) {
+                return false;
+            }
+
+            Child other = (Child) obj;
+            return id == other.id;
+        }
+
+        @Override
+        public int hashCode() {
+            return id;
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(id);
+        }
+    }
+
+    private static class Parent {
     }
 }

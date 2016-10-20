@@ -44,80 +44,80 @@ public final class ByteVerifier extends BaseComparableVerifier<Byte, ByteVerifie
 
     @Override
     public ByteVerifier even() throws VerifierException {
-        final Byte value = verification.getValue();
+        final Byte value = getVerification().getValue();
         final boolean result = value != null && value % 2 == 0;
 
-        verification.check(result, "be even");
+        getVerification().check(result, "be even");
 
         return this;
     }
 
     @Override
     public ByteVerifier falsehood() throws VerifierException {
-        final Byte value = verification.getValue();
+        final Byte value = getVerification().getValue();
         final boolean result = value != null && value == 0;
 
-        verification.check(result, "be false");
+        getVerification().check(result, "be false");
 
         return this;
     }
 
     @Override
     public ByteVerifier negative() throws VerifierException {
-        final Byte value = verification.getValue();
+        final Byte value = getVerification().getValue();
         final boolean result = value != null && value < 0;
 
-        verification.check(result, "be negative");
+        getVerification().check(result, "be negative");
 
         return this;
     }
 
     @Override
     public ByteVerifier odd() throws VerifierException {
-        final Byte value = verification.getValue();
+        final Byte value = getVerification().getValue();
         final boolean result = value != null && value % 2 != 0;
 
-        verification.check(result, "be odd");
+        getVerification().check(result, "be odd");
 
         return this;
     }
 
     @Override
     public ByteVerifier one() throws VerifierException {
-        final Byte value = verification.getValue();
+        final Byte value = getVerification().getValue();
         final boolean result = value != null && value == 1;
 
-        verification.check(result, "be one");
+        getVerification().check(result, "be one");
 
         return this;
     }
 
     @Override
     public ByteVerifier positive() throws VerifierException {
-        final Byte value = verification.getValue();
+        final Byte value = getVerification().getValue();
         final boolean result = value != null && value >= 0;
 
-        verification.check(result, "be positive");
+        getVerification().check(result, "be positive");
 
         return this;
     }
 
     @Override
     public ByteVerifier truth() throws VerifierException {
-        final Byte value = verification.getValue();
+        final Byte value = getVerification().getValue();
         final boolean result = value != null && value == 1;
 
-        verification.check(result, "be true");
+        getVerification().check(result, "be true");
 
         return this;
     }
 
     @Override
     public ByteVerifier zero() throws VerifierException {
-        final Byte value = verification.getValue();
+        final Byte value = getVerification().getValue();
         final boolean result = value != null && value == 0;
 
-        verification.check(result, "be zero");
+        getVerification().check(result, "be zero");
 
         return this;
     }

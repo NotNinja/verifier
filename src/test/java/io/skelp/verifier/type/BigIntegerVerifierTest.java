@@ -21,10 +21,133 @@
  */
 package io.skelp.verifier.type;
 
+import java.math.BigInteger;
+
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
+
+import io.skelp.verifier.AbstractCustomVerifierTestCase;
+import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
+import io.skelp.verifier.type.base.BaseNumberVerifierTestCase;
+import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
+
 /**
  * Tests for the {@link BigIntegerVerifier} class.
  *
  * @author Alasdair Mercer
  */
+@RunWith(Enclosed.class)
 public class BigIntegerVerifierTest {
+
+    public static class BigIntegerVerifierAbstractCustomVerifierTest extends AbstractCustomVerifierTestCase<BigInteger, BigIntegerVerifier> {
+
+        @Override
+        protected BigIntegerVerifier createCustomVerifier() {
+            return new BigIntegerVerifier(getMockVerification());
+        }
+
+        @Override
+        protected BigInteger createValueOne() {
+            return new BigInteger("123");
+        }
+
+        @Override
+        protected BigInteger createValueTwo() {
+            return new BigInteger("321");
+        }
+
+        @Override
+        protected Class<?> getParentClass() {
+            return Number.class;
+        }
+
+        @Override
+        protected Class<?> getValueClass() {
+            return BigInteger.class;
+        }
+    }
+
+    public static class BigIntegerVerifierBaseComparableVerifierTest extends BaseComparableVerifierTestCase<BigInteger, BigIntegerVerifier> {
+
+        @Override
+        protected BigIntegerVerifier createCustomVerifier() {
+            return new BigIntegerVerifier(getMockVerification());
+        }
+
+        @Override
+        public BigInteger getBase() {
+            return new BigInteger("50");
+        }
+
+        @Override
+        public BigInteger getHigher() {
+            return new BigInteger("75");
+        }
+
+        @Override
+        public BigInteger getHighest() {
+            return new BigInteger("100");
+        }
+
+        @Override
+        public BigInteger getLower() {
+            return new BigInteger("25");
+        }
+
+        @Override
+        public BigInteger getLowest() {
+            return BigInteger.ZERO;
+        }
+    }
+
+    public static class BigIntegerVerifierBaseNumberVerifierTest extends BaseNumberVerifierTestCase<BigInteger, BigIntegerVerifier> {
+
+        @Override
+        protected BigIntegerVerifier createCustomVerifier() {
+            return new BigIntegerVerifier(getMockVerification());
+        }
+
+        @Override
+        public BigInteger getEvenValue() {
+            return new BigInteger("2");
+        }
+
+        @Override
+        public BigInteger getOddValue() {
+            return BigInteger.ONE;
+        }
+
+        @Override
+        public BigInteger getPositiveOneValue() {
+            return BigInteger.ONE;
+        }
+
+        @Override
+        public BigInteger getNegativeOneValue() {
+            return BigInteger.ONE.negate();
+        }
+
+        @Override
+        public BigInteger getZeroValue() {
+            return BigInteger.ZERO;
+        }
+    }
+
+    public static class BigIntegerVerifierBaseTruthVerifierTest extends BaseTruthVerifierTestCase<BigInteger, BigIntegerVerifier> {
+
+        @Override
+        protected BigIntegerVerifier createCustomVerifier() {
+            return new BigIntegerVerifier(getMockVerification());
+        }
+
+        @Override
+        protected BigInteger[] getFalsehoodValues() {
+            return new BigInteger[]{BigInteger.ZERO};
+        }
+
+        @Override
+        protected BigInteger[] getTruthValues() {
+            return new BigInteger[]{BigInteger.ONE};
+        }
+    }
 }

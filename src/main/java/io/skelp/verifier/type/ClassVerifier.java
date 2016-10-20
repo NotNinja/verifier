@@ -63,10 +63,10 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      */
     public ClassVerifier annotated(final Class<? extends Annotation> type) throws VerifierException {
-        final Class<?> value = verification.getValue();
+        final Class<?> value = getVerification().getValue();
         final boolean result = value != null && type != null && value.isAnnotationPresent(type);
 
-        verification.check(result, "be annotated with '%s'", type);
+        getVerification().check(result, "be annotated with '%s'", type);
 
         return this;
     }
@@ -78,10 +78,10 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      */
     public ClassVerifier annotation() throws VerifierException {
-        final Class<?> value = verification.getValue();
+        final Class<?> value = getVerification().getValue();
         final boolean result = value != null && value.isAnnotation();
 
-        verification.check(result, "be an annotation");
+        getVerification().check(result, "be an annotation");
 
         return this;
     }
@@ -93,10 +93,10 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      */
     public ClassVerifier anonymous() throws VerifierException {
-        final Class<?> value = verification.getValue();
+        final Class<?> value = getVerification().getValue();
         final boolean result = value != null && value.isAnonymousClass();
 
-        verification.check(result, "be anonymous");
+        getVerification().check(result, "be anonymous");
 
         return this;
     }
@@ -108,10 +108,10 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      */
     public ClassVerifier array() throws VerifierException {
-        final Class<?> value = verification.getValue();
+        final Class<?> value = getVerification().getValue();
         final boolean result = value != null && value.isArray();
 
-        verification.check(result, "be an array");
+        getVerification().check(result, "be an array");
 
         return this;
     }
@@ -124,10 +124,10 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      */
     public ClassVerifier assignableFrom(final Class<?> type) throws VerifierException {
-        final Class<?> value = verification.getValue();
+        final Class<?> value = getVerification().getValue();
         final boolean result = value != null && type != null && value.isAssignableFrom(type);
 
-        verification.check(result, "be assignable from '%s'", type);
+        getVerification().check(result, "be assignable from '%s'", type);
 
         return this;
     }
@@ -139,10 +139,10 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      */
     public ClassVerifier enumeration() throws VerifierException {
-        final Class<?> value = verification.getValue();
+        final Class<?> value = getVerification().getValue();
         final boolean result = value != null && value.isEnum();
 
-        verification.check(result, "be an enum");
+        getVerification().check(result, "be an enum");
 
         return this;
     }
@@ -154,10 +154,10 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      */
     public ClassVerifier interfacing() throws VerifierException {
-        final Class<?> value = verification.getValue();
+        final Class<?> value = getVerification().getValue();
         final boolean result = value != null && value.isInterface();
 
-        verification.check(result, "be an interface");
+        getVerification().check(result, "be an interface");
 
         return this;
     }
@@ -169,10 +169,10 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      */
     public ClassVerifier nested() throws VerifierException {
-        final Class<?> value = verification.getValue();
+        final Class<?> value = getVerification().getValue();
         final boolean result = value != null && value.getEnclosingClass() != null;
 
-        verification.check(result, "be nested");
+        getVerification().check(result, "be nested");
 
         return this;
     }
@@ -184,10 +184,10 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      */
     public ClassVerifier primitive() throws VerifierException {
-        final Class<?> value = verification.getValue();
+        final Class<?> value = getVerification().getValue();
         final boolean result = value != null && value.isPrimitive();
 
-        verification.check(result, "be a primitive");
+        getVerification().check(result, "be a primitive");
 
         return this;
     }
@@ -199,10 +199,10 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      */
     public ClassVerifier primitiveOrWrapper() throws VerifierException {
-        final Class<?> value = verification.getValue();
+        final Class<?> value = getVerification().getValue();
         final boolean result = value != null && (value.isPrimitive() || PRIMITIVE_WRAPPERS.contains(value));
 
-        verification.check(result, "be a primitive or primitive wrapper");
+        getVerification().check(result, "be a primitive or primitive wrapper");
 
         return this;
     }
@@ -214,10 +214,10 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      */
     public ClassVerifier primitiveWrapper() throws VerifierException {
-        final Class<?> value = verification.getValue();
+        final Class<?> value = getVerification().getValue();
         final boolean result = PRIMITIVE_WRAPPERS.contains(value);
 
-        verification.check(result, "be a primitive wrapper");
+        getVerification().check(result, "be a primitive wrapper");
 
         return this;
     }

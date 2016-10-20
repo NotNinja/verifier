@@ -21,10 +21,131 @@
  */
 package io.skelp.verifier.type;
 
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
+
+import io.skelp.verifier.AbstractCustomVerifierTestCase;
+import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
+import io.skelp.verifier.type.base.BaseNumberVerifierTestCase;
+import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
+
 /**
  * Tests for the {@link IntegerVerifier} class.
  *
  * @author Alasdair Mercer
  */
+@RunWith(Enclosed.class)
 public class IntegerVerifierTest {
+
+    public static class IntegerVerifierAbstractCustomVerifierTest extends AbstractCustomVerifierTestCase<Integer, IntegerVerifier> {
+
+        @Override
+        protected IntegerVerifier createCustomVerifier() {
+            return new IntegerVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Integer createValueOne() {
+            return new Integer(123);
+        }
+
+        @Override
+        protected Integer createValueTwo() {
+            return new Integer(321);
+        }
+
+        @Override
+        protected Class<?> getParentClass() {
+            return Number.class;
+        }
+
+        @Override
+        protected Class<?> getValueClass() {
+            return Integer.class;
+        }
+    }
+
+    public static class IntegerVerifierBaseComparableVerifierTest extends BaseComparableVerifierTestCase<Integer, IntegerVerifier> {
+
+        @Override
+        protected IntegerVerifier createCustomVerifier() {
+            return new IntegerVerifier(getMockVerification());
+        }
+
+        @Override
+        public Integer getBase() {
+            return 50;
+        }
+
+        @Override
+        public Integer getHigher() {
+            return 75;
+        }
+
+        @Override
+        public Integer getHighest() {
+            return 100;
+        }
+
+        @Override
+        public Integer getLower() {
+            return 25;
+        }
+
+        @Override
+        public Integer getLowest() {
+            return 0;
+        }
+    }
+
+    public static class IntegerVerifierBaseNumberVerifierTest extends BaseNumberVerifierTestCase<Integer, IntegerVerifier> {
+
+        @Override
+        protected IntegerVerifier createCustomVerifier() {
+            return new IntegerVerifier(getMockVerification());
+        }
+
+        @Override
+        public Integer getEvenValue() {
+            return 2;
+        }
+
+        @Override
+        public Integer getOddValue() {
+            return 1;
+        }
+
+        @Override
+        public Integer getPositiveOneValue() {
+            return 1;
+        }
+
+        @Override
+        public Integer getNegativeOneValue() {
+            return -1;
+        }
+
+        @Override
+        public Integer getZeroValue() {
+            return 0;
+        }
+    }
+
+    public static class IntegerVerifierBaseTruthVerifierTest extends BaseTruthVerifierTestCase<Integer, IntegerVerifier> {
+
+        @Override
+        protected IntegerVerifier createCustomVerifier() {
+            return new IntegerVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Integer[] getFalsehoodValues() {
+            return new Integer[]{0};
+        }
+
+        @Override
+        protected Integer[] getTruthValues() {
+            return new Integer[]{1};
+        }
+    }
 }

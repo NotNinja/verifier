@@ -55,10 +55,10 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * @throws VerifierException
      */
     public LocaleVerifier available() throws VerifierException {
-        final Locale value = verification.getValue();
+        final Locale value = getVerification().getValue();
         final boolean result = LazyHolder.AVAILABLE_LOCALES.contains(value);
 
-        verification.check(result, "be available");
+        getVerification().check(result, "be available");
 
         return this;
     }
@@ -71,10 +71,10 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * @throws VerifierException
      */
     public LocaleVerifier country(final String country) throws VerifierException {
-        final Locale value = verification.getValue();
+        final Locale value = getVerification().getValue();
         final boolean result = value != null && value.getCountry().equals(country);
 
-        verification.check(result, "be country '%s'", country);
+        getVerification().check(result, "be country '%s'", country);
 
         return this;
     }
@@ -86,10 +86,10 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * @throws VerifierException
      */
     public LocaleVerifier defaulting() throws VerifierException {
-        final Locale value = verification.getValue();
+        final Locale value = getVerification().getValue();
         final boolean result = Locale.getDefault().equals(value);
 
-        verification.check(result, "be default");
+        getVerification().check(result, "be default");
 
         return this;
     }
@@ -102,10 +102,10 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * @throws VerifierException
      */
     public LocaleVerifier language(final String language) throws VerifierException {
-        final Locale value = verification.getValue();
+        final Locale value = getVerification().getValue();
         final boolean result = value != null && value.getLanguage().equals(language);
 
-        verification.check(result, "be language '%s'", language);
+        getVerification().check(result, "be language '%s'", language);
 
         return this;
     }
@@ -118,10 +118,10 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * @throws VerifierException
      */
     public LocaleVerifier script(final String script) throws VerifierException {
-        final Locale value = verification.getValue();
+        final Locale value = getVerification().getValue();
         final boolean result = value != null && value.getScript().equals(script);
 
-        verification.check(result, "be script '%s'", script);
+        getVerification().check(result, "be script '%s'", script);
 
         return this;
     }
@@ -134,10 +134,10 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * @throws VerifierException
      */
     public LocaleVerifier variant(final String variant) throws VerifierException {
-        final Locale value = verification.getValue();
+        final Locale value = getVerification().getValue();
         final boolean result = value != null && value.getVariant().equals(variant);
 
-        verification.check(result, "be variant '%s'", variant);
+        getVerification().check(result, "be variant '%s'", variant);
 
         return this;
     }
