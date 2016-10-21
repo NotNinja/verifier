@@ -73,27 +73,27 @@ public class ShortVerifierTest {
         }
 
         @Override
-        public Short getBase() {
+        public Short getBaseValue() {
             return 50;
         }
 
         @Override
-        public Short getHigher() {
+        public Short getHigherValue() {
             return 75;
         }
 
         @Override
-        public Short getHighest() {
+        public Short getHighestValue() {
             return 100;
         }
 
         @Override
-        public Short getLower() {
+        public Short getLowerValue() {
             return 25;
         }
 
         @Override
-        public Short getLowest() {
+        public Short getLowestValue() {
             return 0;
         }
     }

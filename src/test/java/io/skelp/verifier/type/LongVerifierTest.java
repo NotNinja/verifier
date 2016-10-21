@@ -73,27 +73,27 @@ public class LongVerifierTest {
         }
 
         @Override
-        public Long getBase() {
+        public Long getBaseValue() {
             return 50L;
         }
 
         @Override
-        public Long getHigher() {
+        public Long getHigherValue() {
             return 75L;
         }
 
         @Override
-        public Long getHighest() {
+        public Long getHighestValue() {
             return 100L;
         }
 
         @Override
-        public Long getLower() {
+        public Long getLowerValue() {
             return 25L;
         }
 
         @Override
-        public Long getLowest() {
+        public Long getLowestValue() {
             return 0L;
         }
     }

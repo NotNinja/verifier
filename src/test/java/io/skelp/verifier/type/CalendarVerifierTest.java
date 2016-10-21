@@ -74,27 +74,27 @@ public class CalendarVerifierTest {
         }
 
         @Override
-        public Calendar getBase() {
+        public Calendar getBaseValue() {
             return BaseTimeVerifierTestCase.createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 30);
         }
 
         @Override
-        public Calendar getHigher() {
+        public Calendar getHigherValue() {
             return BaseTimeVerifierTestCase.createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 45);
         }
 
         @Override
-        public Calendar getHighest() {
+        public Calendar getHighestValue() {
             return BaseTimeVerifierTestCase.createCalendar(GregorianCalendar.AD, 2016, 1, 0, 1, 0);
         }
 
         @Override
-        public Calendar getLower() {
+        public Calendar getLowerValue() {
             return BaseTimeVerifierTestCase.createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 15);
         }
 
         @Override
-        public Calendar getLowest() {
+        public Calendar getLowestValue() {
             return BaseTimeVerifierTestCase.createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         }
     }

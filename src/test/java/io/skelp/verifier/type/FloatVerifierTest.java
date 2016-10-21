@@ -73,27 +73,27 @@ public class FloatVerifierTest {
         }
 
         @Override
-        public Float getBase() {
+        public Float getBaseValue() {
             return 50F;
         }
 
         @Override
-        public Float getHigher() {
+        public Float getHigherValue() {
             return 75F;
         }
 
         @Override
-        public Float getHighest() {
+        public Float getHighestValue() {
             return 100F;
         }
 
         @Override
-        public Float getLower() {
+        public Float getLowerValue() {
             return 25F;
         }
 
         @Override
-        public Float getLowest() {
+        public Float getLowestValue() {
             return 0F;
         }
     }

@@ -73,27 +73,27 @@ public class DoubleVerifierTest {
         }
 
         @Override
-        public Double getBase() {
+        public Double getBaseValue() {
             return 50D;
         }
 
         @Override
-        public Double getHigher() {
+        public Double getHigherValue() {
             return 75D;
         }
 
         @Override
-        public Double getHighest() {
+        public Double getHighestValue() {
             return 100D;
         }
 
         @Override
-        public Double getLower() {
+        public Double getLowerValue() {
             return 25D;
         }
 
         @Override
-        public Double getLowest() {
+        public Double getLowestValue() {
             return 0D;
         }
     }

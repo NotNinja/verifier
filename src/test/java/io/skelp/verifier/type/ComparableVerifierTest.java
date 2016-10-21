@@ -71,27 +71,27 @@ public class ComparableVerifierTest {
         }
 
         @Override
-        public ComparableWrapper getBase() {
+        public ComparableWrapper getBaseValue() {
             return new ComparableWrapper(50);
         }
 
         @Override
-        public ComparableWrapper getHigher() {
+        public ComparableWrapper getHigherValue() {
             return new ComparableWrapper(75);
         }
 
         @Override
-        public ComparableWrapper getHighest() {
+        public ComparableWrapper getHighestValue() {
             return new ComparableWrapper(100);
         }
 
         @Override
-        public ComparableWrapper getLower() {
+        public ComparableWrapper getLowerValue() {
             return new ComparableWrapper(25);
         }
 
         @Override
-        public ComparableWrapper getLowest() {
+        public ComparableWrapper getLowestValue() {
             return new ComparableWrapper(0);
         }
     }

@@ -74,27 +74,27 @@ public class BigDecimalVerifierTest {
         }
 
         @Override
-        public BigDecimal getBase() {
+        public BigDecimal getBaseValue() {
             return new BigDecimal(50);
         }
 
         @Override
-        public BigDecimal getHigher() {
+        public BigDecimal getHigherValue() {
             return new BigDecimal(75);
         }
 
         @Override
-        public BigDecimal getHighest() {
+        public BigDecimal getHighestValue() {
             return new BigDecimal(100);
         }
 
         @Override
-        public BigDecimal getLower() {
+        public BigDecimal getLowerValue() {
             return new BigDecimal(25);
         }
 
         @Override
-        public BigDecimal getLowest() {
+        public BigDecimal getLowestValue() {
             return BigDecimal.ZERO;
         }
     }

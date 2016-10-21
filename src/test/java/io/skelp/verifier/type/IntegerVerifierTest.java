@@ -73,27 +73,27 @@ public class IntegerVerifierTest {
         }
 
         @Override
-        public Integer getBase() {
+        public Integer getBaseValue() {
             return 50;
         }
 
         @Override
-        public Integer getHigher() {
+        public Integer getHigherValue() {
             return 75;
         }
 
         @Override
-        public Integer getHighest() {
+        public Integer getHighestValue() {
             return 100;
         }
 
         @Override
-        public Integer getLower() {
+        public Integer getLowerValue() {
             return 25;
         }
 
         @Override
-        public Integer getLowest() {
+        public Integer getLowestValue() {
             return 0;
         }
     }

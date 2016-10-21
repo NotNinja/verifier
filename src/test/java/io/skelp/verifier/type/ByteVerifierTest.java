@@ -73,27 +73,27 @@ public class ByteVerifierTest {
         }
 
         @Override
-        public Byte getBase() {
+        public Byte getBaseValue() {
             return 50;
         }
 
         @Override
-        public Byte getHigher() {
+        public Byte getHigherValue() {
             return 75;
         }
 
         @Override
-        public Byte getHighest() {
+        public Byte getHighestValue() {
             return 100;
         }
 
         @Override
-        public Byte getLower() {
+        public Byte getLowerValue() {
             return 25;
         }
 
         @Override
-        public Byte getLowest() {
+        public Byte getLowestValue() {
             return 0;
         }
     }

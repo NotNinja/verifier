@@ -75,27 +75,27 @@ public class BigIntegerVerifierTest {
         }
 
         @Override
-        public BigInteger getBase() {
+        public BigInteger getBaseValue() {
             return new BigInteger("50");
         }
 
         @Override
-        public BigInteger getHigher() {
+        public BigInteger getHigherValue() {
             return new BigInteger("75");
         }
 
         @Override
-        public BigInteger getHighest() {
+        public BigInteger getHighestValue() {
             return new BigInteger("100");
         }
 
         @Override
-        public BigInteger getLower() {
+        public BigInteger getLowerValue() {
             return new BigInteger("25");
         }
 
         @Override
-        public BigInteger getLowest() {
+        public BigInteger getLowestValue() {
             return BigInteger.ZERO;
         }
     }
