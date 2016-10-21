@@ -21,10 +21,110 @@
  */
 package io.skelp.verifier.type;
 
+import org.junit.Ignore;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
+
+import io.skelp.verifier.AbstractCustomVerifierTestCase;
+import io.skelp.verifier.CustomVerifierTestCaseBase;
+import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
+import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
+
 /**
  * Tests for the {@link CharacterVerifier} class.
  *
  * @author Alasdair Mercer
  */
+@RunWith(Enclosed.class)
 public class CharacterVerifierTest {
+
+    public static class CharacterVerifierAbstractCustomVerifierTest extends AbstractCustomVerifierTestCase<Character, CharacterVerifier> {
+
+        @Override
+        protected CharacterVerifier createCustomVerifier() {
+            return new CharacterVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Character createValueOne() {
+            return new Character('a');
+        }
+
+        @Override
+        protected Character createValueTwo() {
+            return new Character('z');
+        }
+
+        @Override
+        protected Class<?> getParentClass() {
+            return Object.class;
+        }
+
+        @Override
+        protected Class<?> getValueClass() {
+            return Character.class;
+        }
+    }
+
+    public static class CharacterVerifierBaseComparableVerifierTest extends BaseComparableVerifierTestCase<Character, CharacterVerifier> {
+
+        @Override
+        protected CharacterVerifier createCustomVerifier() {
+            return new CharacterVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Character getBaseValue() {
+            return 'm';
+        }
+
+        @Override
+        protected Character getHigherValue() {
+            return 't';
+        }
+
+        @Override
+        protected Character getHighestValue() {
+            return 'z';
+        }
+
+        @Override
+        protected Character getLowerValue() {
+            return 'f';
+        }
+
+        @Override
+        protected Character getLowestValue() {
+            return 'a';
+        }
+    }
+
+    public static class CharacterVerifierBaseTruthVerifierTest extends BaseTruthVerifierTestCase<Character, CharacterVerifier> {
+
+        @Override
+        protected CharacterVerifier createCustomVerifier() {
+            return new CharacterVerifier(getMockVerification());
+        }
+
+        @Override
+        protected Character[] getFalsehoodValues() {
+            return new Character[]{'0'};
+        }
+
+        @Override
+        protected Character[] getTruthValues() {
+            return new Character[]{'1'};
+        }
+    }
+
+    @Ignore
+    public static class CharacterVerifierMiscTest extends CustomVerifierTestCaseBase<Character, CharacterVerifier> {
+
+        // TODO: Complete
+
+        @Override
+        protected CharacterVerifier createCustomVerifier() {
+            return new CharacterVerifier(getMockVerification());
+        }
+    }
 }
