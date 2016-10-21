@@ -34,12 +34,20 @@ import io.skelp.verifier.verification.Verification;
  */
 public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier<T, V>> implements CustomVerifier<T, V> {
 
-    private static <T> boolean matchAny(final T[] inputs, final Function<Boolean, T> matcher) {
+    /**
+     * TODO: Document
+     *
+     * @param inputs
+     * @param matcher
+     * @param <I>
+     * @return
+     */
+    protected static <I> boolean matchAny(final I[] inputs, final Function<Boolean, I> matcher) {
         if (inputs == null) {
             return false;
         }
 
-        for (final T input : inputs) {
+        for (final I input : inputs) {
             if (matcher.apply(input)) {
                 return true;
             }
