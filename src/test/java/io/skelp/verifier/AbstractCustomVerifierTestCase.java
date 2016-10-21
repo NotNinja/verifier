@@ -544,6 +544,15 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
     }
 
     @Test
+    public void testValue() {
+        T value = createValueOne();
+
+        setValue(value);
+
+        assertSame("Verification value is returned", value, getCustomVerifier().value());
+    }
+
+    @Test
     public void testVerification() {
         assertSame("Verification field is correct", getMockVerification(), getCustomVerifier().getVerification());
     }

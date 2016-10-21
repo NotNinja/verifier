@@ -155,5 +155,12 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      *
      * @return
      */
+    T value();
+
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
     Verification<T> getVerification();
 }

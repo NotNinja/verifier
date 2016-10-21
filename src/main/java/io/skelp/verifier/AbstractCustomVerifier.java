@@ -216,6 +216,11 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     }
 
     @Override
+    public T value() {
+        return verification.getValue();
+    }
+
+    @Override
     public Verification<T> getVerification() {
         return verification;
     }
