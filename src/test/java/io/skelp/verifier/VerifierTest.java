@@ -21,10 +21,77 @@
  */
 package io.skelp.verifier;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import io.skelp.verifier.factory.CustomVerifierFactory;
+import io.skelp.verifier.factory.DefaultVerifierFactoryProvider;
+import io.skelp.verifier.factory.VerifierFactoryProvider;
+import io.skelp.verifier.message.factory.MessageFormatterFactory;
+import io.skelp.verifier.verification.factory.VerificationFactory;
+
 /**
  * Tests for the {@link Verifier} class.
  *
  * @author Alasdair Mercer
  */
+@RunWith(MockitoJUnitRunner.class)
 public class VerifierTest {
+
+    private static VerifierFactoryProvider originalFactoryProvider;
+
+    @BeforeClass
+    public static void setUpClass() {
+        originalFactoryProvider = Verifier.getFactoryProvider();
+    }
+
+    @Mock
+    private CustomVerifierFactory mockCustomVerifierFactory;
+    @Mock
+    private MessageFormatterFactory mockMessageFormatterFactory;
+    @Mock
+    private VerificationFactory mockVerificationFactory;
+    @Mock
+    private VerifierFactoryProvider mockVerifierFactoryProvider;
+
+    @Before
+    public void setUp() {
+        when(mockVerifierFactoryProvider.getCustomVerifierFactory()).thenReturn(mockCustomVerifierFactory);
+        when(mockVerifierFactoryProvider.getMessageFormatterFactory()).thenReturn(mockMessageFormatterFactory);
+        when(mockVerifierFactoryProvider.getVerificationFactory()).thenReturn(mockVerificationFactory);
+
+        Verifier.setFactoryProvider(mockVerifierFactoryProvider);
+    }
+
+    @After
+    public void tearDown() {
+        Verifier.setFactoryProvider(originalFactoryProvider);
+    }
+
+    @Test
+    public void hackCoverage() {
+        // TODO: Determine how to avoid this
+        new Verifier();
+    }
+
+    @Test
+    public void testFactoryProvider() {
+        assertTrue("DefaultVerifierFactoryProvider instance is used by default", originalFactoryProvider instanceof DefaultVerifierFactoryProvider);
+
+        Verifier.setFactoryProvider(mockVerifierFactoryProvider);
+
+        assertSame("Factory provider can be changed", mockVerifierFactoryProvider, Verifier.getFactoryProvider());
+
+        Verifier.setFactoryProvider(null);
+
+        assertTrue("DefaultVerifierFactoryProvider instance is used as fallback", Verifier.getFactoryProvider() instanceof DefaultVerifierFactoryProvider);
+    }
 }
