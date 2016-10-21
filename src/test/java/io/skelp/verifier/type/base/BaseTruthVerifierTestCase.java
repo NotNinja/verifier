@@ -43,6 +43,15 @@ public abstract class BaseTruthVerifierTestCase<T, V extends BaseTruthVerifier<T
     }
 
     @Test
+    public void testFalsehoodWhenValueIsNull() {
+        @SuppressWarnings("unchecked")
+        T[] values = (T[]) new Object[1];
+        values[0] = null;
+
+        testFalsehoodHelper(values, isNullFalsehood());
+    }
+
+    @Test
     public void testFalsehoodWhenValueIsTruth() {
         testFalsehoodHelper(getTruthValues(), false);
     }
@@ -60,6 +69,15 @@ public abstract class BaseTruthVerifierTestCase<T, V extends BaseTruthVerifier<T
     @Test
     public void testTruthWhenValueIsFalsehood() {
         testTruthHelper(getFalsehoodValues(), false);
+    }
+
+    @Test
+    public void testTruthWhenValueIsNull() {
+        @SuppressWarnings("unchecked")
+        T[] values = (T[]) new Object[1];
+        values[0] = null;
+
+        testTruthHelper(values, isNullTruth());
     }
 
     @Test
@@ -90,4 +108,22 @@ public abstract class BaseTruthVerifierTestCase<T, V extends BaseTruthVerifier<T
      * @return
      */
     protected abstract T[] getTruthValues();
+
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    protected boolean isNullFalsehood() {
+        return false;
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @return
+     */
+    protected boolean isNullTruth() {
+        return false;
+    }
 }
