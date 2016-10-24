@@ -360,6 +360,11 @@ public class StringVerifierTest {
         }
 
         @Test
+        public void testAsciiPrintableWhenValueIsAsciiControl() {
+            testAsciiPrintableHelper("\0", false);
+        }
+
+        @Test
         public void testAsciiPrintableWhenValueIsEmpty() {
             testAsciiPrintableHelper(EMPTY, true);
         }
