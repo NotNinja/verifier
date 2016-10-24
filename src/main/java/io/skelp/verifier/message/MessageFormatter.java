@@ -24,19 +24,41 @@ package io.skelp.verifier.message;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * A formatter for verification errors to provide meaningful and human-readable messages to help aid diagnosis of such
+ * errors.
  *
  * @author Alasdair Mercer
  */
 public interface MessageFormatter {
 
+    // TODO: Try to support multiple locales and possibly resources
+
     /**
-     * TODO: Document
+     * Formats the specified {@code verification} using the optional {@code message} and format {@code args} provided.
      *
      * @param verification
+     *         the {@link Verification} containing the verified value and states to be formatted
      * @param message
+     *         the optional message which provides a (slightly) more detailed explanation of what was verified
      * @param args
-     * @return
+     *         the optional format arguments which are only used to format {@code message}
+     * @return The formatted message based on {@code verification}.
      */
     String format(Verification<?> verification, String message, Object... args);
+
+    /**
+     * Returns an array formatter which wraps the specified {@code array} so that it is formatted in a readable fashion
+     * if/when required.
+     * <p>
+     * This method will not immediately format {@code array} and, instead, it's the responsibility of the calling code
+     * to do so only when appropriate. This attempts to avoid unnecessarily formatting arrays, which could be a time
+     * consuming process unless absolutely required.
+     *
+     * @param array
+     *         the array to be wrapped in an {@link ArrayFormatter} (may be {@literal null})
+     * @param <T>
+     *         the type of elements within {@code array}
+     * @return An {@link ArrayFormatter} for {@code array}.
+     */
+    <T> ArrayFormatter<T> formatArray(T[] array);
 }

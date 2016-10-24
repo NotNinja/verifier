@@ -32,7 +32,6 @@ import org.junit.runner.RunWith;
 
 import io.skelp.verifier.AbstractCustomVerifierTestCase;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
-import io.skelp.verifier.message.ArrayFormatter;
 import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
 import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
 
@@ -567,11 +566,7 @@ public class StringVerifierTest {
 
             verify(getMockVerification()).check(eq(expected), eq("contain any %s"), getArgsCaptor().capture());
 
-            Object capturedArg = getArgsCaptor().getValue();
-            assertTrue("Passes array formatter for message formatting", capturedArg instanceof ArrayFormatter);
-            @SuppressWarnings("unchecked")
-            ArrayFormatter<Class<?>> arrayFormatter = (ArrayFormatter<Class<?>>) capturedArg;
-            assertArrayEquals("Array formatter contains passed classes", others, arrayFormatter.getArray());
+            assertArrayFormatter(getArgsCaptor().getValue(), others);
         }
 
         @Test
@@ -646,11 +641,7 @@ public class StringVerifierTest {
 
             verify(getMockVerification()).check(eq(expected), eq("contain any %s (ignore case)"), getArgsCaptor().capture());
 
-            Object capturedArg = getArgsCaptor().getValue();
-            assertTrue("Passes array formatter for message formatting", capturedArg instanceof ArrayFormatter);
-            @SuppressWarnings("unchecked")
-            ArrayFormatter<Class<?>> arrayFormatter = (ArrayFormatter<Class<?>>) capturedArg;
-            assertArrayEquals("Array formatter contains passed classes", others, arrayFormatter.getArray());
+            assertArrayFormatter(getArgsCaptor().getValue(), others);
         }
 
         @Test
@@ -923,11 +914,7 @@ public class StringVerifierTest {
 
             verify(getMockVerification()).check(eq(expected), eq("end with any %s"), getArgsCaptor().capture());
 
-            Object capturedArg = getArgsCaptor().getValue();
-            assertTrue("Passes array formatter for message formatting", capturedArg instanceof ArrayFormatter);
-            @SuppressWarnings("unchecked")
-            ArrayFormatter<Class<?>> arrayFormatter = (ArrayFormatter<Class<?>>) capturedArg;
-            assertArrayEquals("Array formatter contains passed classes", others, arrayFormatter.getArray());
+            assertArrayFormatter(getArgsCaptor().getValue(), others);
         }
 
         @Test
@@ -1007,11 +994,7 @@ public class StringVerifierTest {
 
             verify(getMockVerification()).check(eq(expected), eq("end with any %s (ignore case)"), getArgsCaptor().capture());
 
-            Object capturedArg = getArgsCaptor().getValue();
-            assertTrue("Passes array formatter for message formatting", capturedArg instanceof ArrayFormatter);
-            @SuppressWarnings("unchecked")
-            ArrayFormatter<Class<?>> arrayFormatter = (ArrayFormatter<Class<?>>) capturedArg;
-            assertArrayEquals("Array formatter contains passed classes", others, arrayFormatter.getArray());
+            assertArrayFormatter(getArgsCaptor().getValue(), others);
         }
 
         @Test
@@ -1163,11 +1146,7 @@ public class StringVerifierTest {
 
             verify(getMockVerification()).check(eq(expected), eq("be equal to any %s (ignore case)"), getArgsCaptor().capture());
 
-            Object capturedArg = getArgsCaptor().getValue();
-            assertTrue("Passes array formatter for message formatting", capturedArg instanceof ArrayFormatter);
-            @SuppressWarnings("unchecked")
-            ArrayFormatter<Class<?>> arrayFormatter = (ArrayFormatter<Class<?>>) capturedArg;
-            assertArrayEquals("Array formatter contains passed classes", others, arrayFormatter.getArray());
+            assertArrayFormatter(getArgsCaptor().getValue(), others);
         }
 
         @Test
@@ -1668,11 +1647,7 @@ public class StringVerifierTest {
 
             verify(getMockVerification()).check(eq(expected), eq("start with any %s"), getArgsCaptor().capture());
 
-            Object capturedArg = getArgsCaptor().getValue();
-            assertTrue("Passes array formatter for message formatting", capturedArg instanceof ArrayFormatter);
-            @SuppressWarnings("unchecked")
-            ArrayFormatter<Class<?>> arrayFormatter = (ArrayFormatter<Class<?>>) capturedArg;
-            assertArrayEquals("Array formatter contains passed classes", others, arrayFormatter.getArray());
+            assertArrayFormatter(getArgsCaptor().getValue(), others);
         }
 
         @Test
@@ -1752,11 +1727,7 @@ public class StringVerifierTest {
 
             verify(getMockVerification()).check(eq(expected), eq("start with any %s (ignore case)"), getArgsCaptor().capture());
 
-            Object capturedArg = getArgsCaptor().getValue();
-            assertTrue("Passes array formatter for message formatting", capturedArg instanceof ArrayFormatter);
-            @SuppressWarnings("unchecked")
-            ArrayFormatter<Class<?>> arrayFormatter = (ArrayFormatter<Class<?>>) capturedArg;
-            assertArrayEquals("Array formatter contains passed classes", others, arrayFormatter.getArray());
+            assertArrayFormatter(getArgsCaptor().getValue(), others);
         }
 
         @Test

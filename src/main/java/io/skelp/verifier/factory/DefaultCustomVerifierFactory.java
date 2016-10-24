@@ -25,7 +25,9 @@ import io.skelp.verifier.CustomVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * The default implementation of {@link CustomVerifierFactory} which uses reflection to instantiate the {@link
+ * CustomVerifier} class while requiring that it has a constructor with a single {@link Verification} argument which can
+ * be used to pass the {@link Verification} into the instance at instantiation.
  *
  * @author Alasdair Mercer
  */

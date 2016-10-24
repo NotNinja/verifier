@@ -25,21 +25,26 @@ import io.skelp.verifier.CustomVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * A factory for creating instances of {@link CustomVerifier} from their class based on a given {@link Verification}.
  *
  * @author Alasdair Mercer
  */
 public interface CustomVerifierFactory {
 
     /**
-     * TODO: Document
+     * Creates an instance of the specified {@link CustomVerifier} class based on the {@code verification} provided.
      *
      * @param cls
+     *         the {@link CustomVerifier} class from which an instance is to be created
      * @param verification
+     *         the {@link Verification} to be passed to the instance
      * @param <T>
+     *         the type of the value to be verified
      * @param <V>
-     * @return
+     *         the type of the {@link CustomVerifier}
+     * @return The newly created {@link CustomVerifier} based on {@code cls} and using {@code verification}.
      * @throws VerifierFactoryException
+     *         If a problem occurs while creating the {@link CustomVerifier} instance.
      */
     <T, V extends CustomVerifier<T, V>> V create(Class<V> cls, Verification<T> verification) throws VerifierFactoryException;
 }

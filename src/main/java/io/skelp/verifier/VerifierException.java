@@ -22,7 +22,8 @@
 package io.skelp.verifier;
 
 /**
- * TODO: Document
+ * A runtime exception which is throughout Verifier to avoid consumers having to worry about lots of different types of
+ * exceptions.
  *
  * @author Alasdair Mercer
  */

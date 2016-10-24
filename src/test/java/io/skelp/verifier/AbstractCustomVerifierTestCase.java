@@ -29,8 +29,6 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import org.junit.Test;
 
-import io.skelp.verifier.message.ArrayFormatter;
-
 /**
  * Test case for {@link AbstractCustomVerifier} implementation classes.
  *
@@ -175,11 +173,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         verify(getMockVerification()).check(eq(expected), eq("be equal to any %s"), getArgsCaptor().capture());
 
-        Object capturedArg = getArgsCaptor().getValue();
-        assertTrue("Passes array formatter for message formatting", capturedArg instanceof ArrayFormatter);
-        @SuppressWarnings("unchecked")
-        ArrayFormatter<Class<?>> arrayFormatter = (ArrayFormatter<Class<?>>) capturedArg;
-        assertArrayEquals("Array formatter contains passed classes", others, arrayFormatter.getArray());
+        assertArrayFormatter(getArgsCaptor().getValue(), others);
     }
 
     @Test
@@ -298,11 +292,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         verify(getMockVerification()).check(eq(expected), eq("be an instance of any %s"), getArgsCaptor().capture());
 
-        Object capturedArg = getArgsCaptor().getValue();
-        assertTrue("Passes array formatter for message formatting", capturedArg instanceof ArrayFormatter);
-        @SuppressWarnings("unchecked")
-        ArrayFormatter<Class<?>> arrayFormatter = (ArrayFormatter<Class<?>>) capturedArg;
-        assertArrayEquals("Array formatter contains passed classes", classes, arrayFormatter.getArray());
+        assertArrayFormatter(getArgsCaptor().getValue(), classes);
     }
 
     @Test
@@ -472,11 +462,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         verify(getMockVerification()).check(eq(expected), eq("be same as any %s"), getArgsCaptor().capture());
 
-        Object capturedArg = getArgsCaptor().getValue();
-        assertTrue("Passes array formatter for message formatting", capturedArg instanceof ArrayFormatter);
-        @SuppressWarnings("unchecked")
-        ArrayFormatter<Class<?>> arrayFormatter = (ArrayFormatter<Class<?>>) capturedArg;
-        assertArrayEquals("Array formatter contains passed classes", others, arrayFormatter.getArray());
+        assertArrayFormatter(getArgsCaptor().getValue(), others);
     }
 
     @Test

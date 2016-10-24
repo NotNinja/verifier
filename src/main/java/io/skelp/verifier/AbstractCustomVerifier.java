@@ -21,7 +21,6 @@
  */
 package io.skelp.verifier;
 
-import io.skelp.verifier.message.ArrayFormatter;
 import io.skelp.verifier.util.Function;
 import io.skelp.verifier.verification.Verification;
 
@@ -102,7 +101,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
             }
         });
 
-        verification.check(result, "be equal to any %s", new ArrayFormatter<>(others));
+        verification.check(result, "be equal to any %s", verification.getMessageFormatter().formatArray(others));
 
         return chain();
     }
@@ -136,7 +135,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
             }
         });
 
-        verification.check(result, "be an instance of any %s", new ArrayFormatter<>(classes));
+        verification.check(result, "be an instance of any %s", verification.getMessageFormatter().formatArray(classes));
 
         return chain();
     }
@@ -192,7 +191,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
             }
         });
 
-        verification.check(result, "be same as any %s", new ArrayFormatter<>(others));
+        verification.check(result, "be same as any %s", verification.getMessageFormatter().formatArray(others));
 
         return chain();
     }

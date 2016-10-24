@@ -21,34 +21,37 @@
  */
 package io.skelp.verifier.factory;
 
+import io.skelp.verifier.CustomVerifier;
+import io.skelp.verifier.message.MessageFormatter;
 import io.skelp.verifier.message.factory.MessageFormatterFactory;
+import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.verification.factory.VerificationFactory;
 
 /**
- * TODO: Document
+ * A simple interface that provides factory instances.
  *
  * @author Alasdair Mercer
  */
 public interface VerifierFactoryProvider {
 
     /**
-     * TODO: Document
+     * Returns the factory instance for creating {@link CustomVerifier CustomVerifiers}.
      *
-     * @return
+     * @return An instance of {@link CustomVerifierFactory}.
      */
     CustomVerifierFactory getCustomVerifierFactory();
 
     /**
-     * TODO: Document
+     * Returns the factory instance for creating {@link MessageFormatter MessageFormatters}.
      *
-     * @return
+     * @return An instance of {@link MessageFormatterFactory}.
      */
     MessageFormatterFactory getMessageFormatterFactory();
 
     /**
-     * TODO: Document
+     * Returns the factory instance for creating {@link Verification Verification}.
      *
-     * @return
+     * @return An instance of {@link VerificationFactory}.
      */
     VerificationFactory getVerificationFactory();
 }

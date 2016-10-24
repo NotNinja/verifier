@@ -24,7 +24,6 @@ package io.skelp.verifier.type;
 import java.util.regex.Pattern;
 
 import io.skelp.verifier.VerifierException;
-import io.skelp.verifier.message.ArrayFormatter;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseTruthVerifier;
 import io.skelp.verifier.util.Function;
@@ -269,7 +268,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "contain any %s", new ArrayFormatter<>(others));
+        getVerification().check(result, "contain any %s", getVerification().getMessageFormatter().formatArray(others));
 
         return this;
     }
@@ -290,7 +289,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "contain any %s (ignore case)", new ArrayFormatter<>(others));
+        getVerification().check(result, "contain any %s (ignore case)", getVerification().getMessageFormatter().formatArray(others));
 
         return this;
     }
@@ -358,7 +357,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "end with any %s", new ArrayFormatter<>(others));
+        getVerification().check(result, "end with any %s", getVerification().getMessageFormatter().formatArray(others));
 
         return this;
     }
@@ -379,7 +378,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "end with any %s (ignore case)", new ArrayFormatter<>(others));
+        getVerification().check(result, "end with any %s (ignore case)", getVerification().getMessageFormatter().formatArray(others));
 
         return this;
     }
@@ -416,7 +415,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "be equal to any %s (ignore case)", new ArrayFormatter<>(others));
+        getVerification().check(result, "be equal to any %s (ignore case)", getVerification().getMessageFormatter().formatArray(others));
 
         return chain();
     }
@@ -587,7 +586,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "start with any %s", new ArrayFormatter<>(others));
+        getVerification().check(result, "start with any %s", getVerification().getMessageFormatter().formatArray(others));
 
         return this;
     }
@@ -608,7 +607,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "start with any %s (ignore case)", new ArrayFormatter<>(others));
+        getVerification().check(result, "start with any %s (ignore case)", getVerification().getMessageFormatter().formatArray(others));
 
         return this;
     }

@@ -24,7 +24,8 @@ package io.skelp.verifier.factory;
 import io.skelp.verifier.VerifierException;
 
 /**
- * TODO: Document
+ * An implementation of {@link VerifierException} which is to be used specifically for exceptions that occur during
+ * factory instance creation.
  *
  * @author Alasdair Mercer
  */

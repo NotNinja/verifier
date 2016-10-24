@@ -27,37 +27,29 @@ import io.skelp.verifier.verification.factory.DefaultVerificationFactory;
 import io.skelp.verifier.verification.factory.VerificationFactory;
 
 /**
- * TODO: Document
+ * The default implementation of {@link VerifierFactoryProvider} which provides the default implementations of each
+ * factory instance.
  *
  * @author Alasdair Mercer
  */
 public final class DefaultVerifierFactoryProvider implements VerifierFactoryProvider {
 
+    private final CustomVerifierFactory customVerifierFactory = new DefaultCustomVerifierFactory();
+    private final MessageFormatterFactory messageFormatterFactory = new DefaultMessageFormatterFactory();
+    private final VerificationFactory verificationFactory = new DefaultVerificationFactory();
+
     @Override
     public CustomVerifierFactory getCustomVerifierFactory() {
-        return LazyHolder.CUSTOM_VERIFIER_FACTORY;
+        return customVerifierFactory;
     }
 
     @Override
     public MessageFormatterFactory getMessageFormatterFactory() {
-        return LazyHolder.MESSAGE_FORMATTER_FACTORY;
+        return messageFormatterFactory;
     }
 
     @Override
     public VerificationFactory getVerificationFactory() {
-        return LazyHolder.VERIFICATION_FACTORY;
-    }
-
-    private static class LazyHolder {
-
-        static final CustomVerifierFactory CUSTOM_VERIFIER_FACTORY;
-        static final MessageFormatterFactory MESSAGE_FORMATTER_FACTORY;
-        static final VerificationFactory VERIFICATION_FACTORY;
-
-        static {
-            CUSTOM_VERIFIER_FACTORY = new DefaultCustomVerifierFactory();
-            MESSAGE_FORMATTER_FACTORY = new DefaultMessageFormatterFactory();
-            VERIFICATION_FACTORY = new DefaultVerificationFactory();
-        }
+        return verificationFactory;
     }
 }

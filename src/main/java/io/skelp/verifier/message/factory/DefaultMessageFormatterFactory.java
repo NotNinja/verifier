@@ -25,7 +25,8 @@ import io.skelp.verifier.factory.VerifierFactoryException;
 import io.skelp.verifier.message.DefaultMessageFormatter;
 
 /**
- * TODO: Document
+ * The default implementation of {@link MessageFormatterFactory} which creates instances of {@link
+ * DefaultMessageFormatter}.
  *
  * @author Alasdair Mercer
  */

@@ -21,6 +21,7 @@
  */
 package io.skelp.verifier;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
@@ -34,6 +35,8 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
+import io.skelp.verifier.message.ArrayFormatter;
+import io.skelp.verifier.message.MessageFormatter;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -54,6 +57,10 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     @Captor
     private ArgumentCaptor<Object> argsCaptor;
     @Mock
+    private ArrayFormatter<?> mockArrayFormatter;
+    @Mock
+    private MessageFormatter mockMessageFormatter;
+    @Mock
     private Verification<T> mockVerification;
 
     private T value;
@@ -62,6 +69,13 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
 
     @Before
     public void setUp() {
+        when(mockMessageFormatter.formatArray(any(Object[].class))).thenAnswer(new Answer<ArrayFormatter<?>>() {
+            @Override
+            public ArrayFormatter<?> answer(InvocationOnMock invocation) throws Throwable {
+                return mockArrayFormatter;
+            }
+        });
+        when(mockVerification.getMessageFormatter()).thenReturn(mockMessageFormatter);
         when(mockVerification.getValue()).thenAnswer(new Answer<T>() {
             @Override
             public T answer(InvocationOnMock invocation) throws Throwable {
@@ -72,6 +86,21 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
         value = null;
 
         customVerifier = createCustomVerifier();
+    }
+
+    /**
+     * Asserts that the an {@link ArrayFormatter} was passed as the specified {@code arg} for the {@code array}
+     * provided.
+     *
+     * @param arg
+     *         the captured argument to be checked
+     * @param array
+     *         the expected array to be formatted
+     */
+    protected void assertArrayFormatter(Object arg, Object[] array) {
+        assertSame("Passes array formatter for message formatting", getMockArrayFormatter(), arg);
+
+        verify(getMockMessageFormatter()).formatArray(array);
     }
 
     /**
@@ -101,7 +130,25 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     }
 
     /**
-     * Returns the mock verification being used being used to test the subject.
+     * Returns the mock array formatter being used to test the subject.
+     *
+     * @return The mock {@link ArrayFormatter}.
+     */
+    protected ArrayFormatter<?> getMockArrayFormatter() {
+        return mockArrayFormatter;
+    }
+
+    /**
+     * Returns the mock message formatter being used to test the subject.
+     *
+     * @return The mock {@link MessageFormatter}.
+     */
+    protected MessageFormatter getMockMessageFormatter() {
+        return mockMessageFormatter;
+    }
+
+    /**
+     * Returns the mock verification being used to test the subject.
      *
      * @return The mock {@link Verification}.
      */

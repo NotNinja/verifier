@@ -22,33 +22,64 @@
 package io.skelp.verifier.message;
 
 /**
- * A formatter which transforms an array of elements into a string.
+ * The default implementation of {@link ArrayFormatter}.
  *
  * @param <T>
  *         the type of elements within the array
  * @author Alasdair Mercer
  */
-public interface ArrayFormatter<T> {
+public final class DefaultArrayFormatter<T> implements ArrayFormatter<T> {
+
+    // TODO: Try to support nested arrays and circular references
+
+    private final T[] array;
 
     /**
-     * Formats the array into a string.
+     * Creates an instance of {@link DefaultArrayFormatter} for the {@code array} provided.
      *
-     * @return A formatted string based on the array and its elements.
+     * @param array
+     *         the array to be formatted
      */
-    String format();
+    public DefaultArrayFormatter(final T[] array) {
+        this.array = array;
+    }
 
-    /**
-     * Returns the array for this {@link ArrayFormatter}.
-     *
-     * @return The array.
-     */
-    T[] getArray();
+    @Override
+    public String format() {
+        if (array == null) {
+            return "null";
+        }
 
-    /**
-     * Delegates to {@link #format()} to provide a string representation of the array within this {@link
-     * ArrayFormatter}.
-     *
-     * @return A string representation based on the formatted array.
-     */
-    String toString();
+        final int last = array.length - 1;
+        if (last == -1) {
+            return "[]";
+        }
+
+        final StringBuilder buffer = new StringBuilder();
+        buffer.append('[');
+
+        int index = 0;
+        while (true) {
+            buffer.append('\'');
+            buffer.append(String.valueOf(array[index]));
+            buffer.append('\'');
+
+            if (index == last) {
+                return buffer.append(']').toString();
+            }
+
+            buffer.append(", ");
+            index++;
+        }
+    }
+
+    @Override
+    public T[] getArray() {
+        return array;
+    }
+
+    @Override
+    public String toString() {
+        return format();
+    }
 }

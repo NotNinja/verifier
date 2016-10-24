@@ -22,25 +22,34 @@
 package io.skelp.verifier.verification.factory;
 
 import io.skelp.verifier.factory.VerifierFactoryException;
+import io.skelp.verifier.message.MessageFormatter;
 import io.skelp.verifier.message.factory.MessageFormatterFactory;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * A factory for creating instances of {@link Verification} based on a given value and optional name.
  *
  * @author Alasdair Mercer
  */
 public interface VerificationFactory {
 
     /**
-     * TODO: Document
+     * Creates an instance of {@link Verification} based on the {@code value} and optional {@code name} provided.
+     * <p>
+     * The {@code messageFormatterFactory} is required to create a {@link MessageFormatter} while leaving it up to the
+     * implementation when this instance is created as it may not be used.
      *
      * @param messageFormatterFactory
+     *         the {@link MessageFormatterFactory} to be used to create an instance of {@link MessageFormatter}
      * @param value
+     *         the value being verified
      * @param name
+     *         the optional name for the value being verified
      * @param <T>
-     * @return
+     *         the type of the value being verified
+     * @return The newly created {@link Verification} based on {@code value} and {@code name}.
      * @throws VerifierFactoryException
+     *         If a problem occurs while creating the {@link Verification} instance.
      */
     <T> Verification<T> create(MessageFormatterFactory messageFormatterFactory, T value, Object name) throws VerifierFactoryException;
 }

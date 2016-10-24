@@ -23,7 +23,6 @@ package io.skelp.verifier.factory;
 
 import static org.junit.Assert.*;
 
-import java.lang.reflect.Constructor;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,15 +43,6 @@ public class DefaultVerifierFactoryProviderTest {
     @Before
     public void setUp() {
         provider = new DefaultVerifierFactoryProvider();
-    }
-
-    @Test
-    public void hackCoverage() throws Exception {
-        // TODO: Determine how to avoid this
-        Class<?> cls = Class.forName(DefaultVerifierFactoryProvider.class.getName() + "$LazyHolder");
-        Constructor<?> constructor = cls.getDeclaredConstructor();
-        constructor.setAccessible(true);
-        constructor.newInstance();
     }
 
     @Test

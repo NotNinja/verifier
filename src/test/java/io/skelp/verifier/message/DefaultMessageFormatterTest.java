@@ -76,6 +76,19 @@ public class DefaultMessageFormatterTest {
     }
 
     @Test
+    public void testFormatWithArrayValue() {
+        Integer[] array = new Integer[]{1, 2, 3};
+
+        when(mockVerification.getName()).thenReturn("foo");
+        when(mockVerification.getValue()).thenReturn(array);
+
+        String expected = "foo must be a test: ['1', '2', '3']";
+        String actual = formatter.format(mockVerification, "be a %s", "test");
+
+        assertEquals("Formats verification for array", expected, actual);
+    }
+
+    @Test
     public void testFormatWithNoName() {
         when(mockVerification.getValue()).thenReturn(123);
 
@@ -116,5 +129,15 @@ public class DefaultMessageFormatterTest {
         String actual = formatter.format(mockVerification, "be a %s", "test");
 
         assertEquals("Formats verification with null value", expected, actual);
+    }
+
+    @Test
+    public void testFormatArray() {
+        Integer[] array = new Integer[]{1, 2, 3};
+
+        DefaultArrayFormatter<Integer> arrayFormatter = formatter.formatArray(array);
+
+        assertNotNull("Never returns null", arrayFormatter);
+        assertArrayEquals("Passes array to formatter", array, arrayFormatter.getArray());
     }
 }
