@@ -42,15 +42,21 @@ import io.skelp.verifier.CustomVerifierTestCaseBase;
 public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, V extends BaseTimeVerifier<T, V>> extends CustomVerifierTestCaseBase<T, V> {
 
     /**
-     * TODO: Document
+     * Creates a {@code Calendar} instance based on the information provided.
      *
      * @param era
+     *         the era to be used
      * @param year
+     *         the year to be used
      * @param dayOfYear
+     *         the day of year to be used
      * @param hourOfDay
+     *         the hour of day to be used
      * @param minute
+     *         the minute to be used
      * @param second
-     * @return
+     *         the second to be used
+     * @return The newly created {@code Calendar}.
      */
     public static Calendar createCalendar(int era, int year, int dayOfYear, int hourOfDay, int minute, int second) {
         Calendar calendar = Calendar.getInstance();

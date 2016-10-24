@@ -550,7 +550,7 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
     /**
      * Returns the highest value for comparisons.
      * <p>
-     * This value should be higher than all other
+     * This value should be higher than all others.
      *
      * @return The highest value.
      */
@@ -568,7 +568,7 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
     /**
      * Returns the lowest value for comparisons.
      * <p>
-     * This value should be lower than all other
+     * This value should be lower than all others.
      *
      * @return The lowest value.
      */

@@ -29,10 +29,12 @@ import org.junit.Test;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
 
 /**
- * TODO: Document
+ * Test case for {@link BaseNumberVerifier} implementation classes.
  *
  * @param <T>
+ *         the {@code Number} value type for the {@link BaseNumberVerifier} being tested
  * @param <V>
+ *         the type of the {@link BaseNumberVerifier} being tested
  * @author Alasdair Mercer
  */
 public abstract class BaseNumberVerifierTestCase<T extends Number, V extends BaseNumberVerifier<T, V>> extends CustomVerifierTestCaseBase<T, V> {

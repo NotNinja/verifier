@@ -32,10 +32,12 @@ import org.junit.Test;
 import io.skelp.verifier.message.ArrayFormatter;
 
 /**
- * TODO: Document
+ * Test case for {@link AbstractCustomVerifier} implementation classes.
  *
  * @param <T>
+ *         the value type for the {@link AbstractCustomVerifier} being tested
  * @param <V>
+ *         the type of the {@link AbstractCustomVerifier} being tested
  * @author Alasdair Mercer
  */
 public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustomVerifier<T, V>> extends CustomVerifierTestCaseBase<T, V> {
@@ -558,39 +560,49 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
     }
 
     /**
-     * TODO: Document
+     * Creates a value to be used for testing.
+     * <p>
+     * This should always be different from {@link #createValueTwo()} to enable proper testing of equality methods.
      *
-     * @return
+     * @return A value.
      */
     protected abstract T createValueOne();
 
     /**
-     * TODO: Document
+     * Creates another value to be used for testing.
+     * <p>
+     * This should always be different from {@link #createValueOne()} to enable proper testing of equality methods.
      *
-     * @return
+     * @return Another value.
      */
     protected abstract T createValueTwo();
 
     /**
-     * TODO: Document
+     * Returns whether any values that are considered equal (i.e. {@link Object#equals(Object)}) will also be the same
+     * (i.e. {@code ==}).
+     * <p>
+     * By default this method returns {@literal false}, which is appropriate in most cases, however, it can be
+     * overridden where required (e.g. classes, enums, primitives).
      *
-     * @return
+     * @return {@literal true} if equal values are expected to be the same; otherwise {@literal false}.
      */
     protected boolean isEqualValueSame() {
         return false;
     }
 
     /**
-     * TODO: Document
+     * Returns a parent class of the value class for testing inheritance methods.
+     * <p>
+     * If the value class does not have a parent class, simply use {@code Object.class}.
      *
-     * @return
+     * @return The parent class.
      */
     protected abstract Class<?> getParentClass();
 
     /**
-     * TODO: Document
+     * Returns the class of the value for testing inheritance methods.
      *
-     * @return
+     * @return The value class.
      */
     protected abstract Class<?> getValueClass();
 

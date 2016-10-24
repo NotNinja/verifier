@@ -29,10 +29,12 @@ import org.junit.Test;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
 
 /**
- * TODO: Document
+ * Test case for {@link BaseTruthVerifier} implementation classes.
  *
  * @param <T>
+ *         the value type for the {@link BaseTruthVerifier} being tested
  * @param <V>
+ *         the type of the {@link BaseTruthVerifier} being tested
  * @author Alasdair Mercer
  */
 public abstract class BaseTruthVerifierTestCase<T, V extends BaseTruthVerifier<T, V>> extends CustomVerifierTestCaseBase<T, V> {
@@ -96,32 +98,42 @@ public abstract class BaseTruthVerifierTestCase<T, V extends BaseTruthVerifier<T
     }
 
     /**
-     * TODO: Document
+     * Returns the values expected to be treated as falsehoods.
+     * <p>
+     * If {@literal null} is treated as a falsehood {@link #isNullFalsehood()} should be overridden to return {@literal
+     * true} instead of including {@literal null} amongst these values.
      *
-     * @return
+     * @return The falsehood values.
      */
     protected abstract T[] getFalsehoodValues();
 
     /**
-     * TODO: Document
+     * Returns the values expected to be treated as truths.
+     * <p>
+     * If {@literal null} is treated as a truth {@link #isNullTruth()} should be overridden to return {@literal
+     * true} instead of including {@literal null} amongst these values.
      *
-     * @return
+     * @return The truth values.
      */
     protected abstract T[] getTruthValues();
 
     /**
-     * TODO: Document
+     * Returns whether {@literal null} is treated as a falsehood.
+     * <p>
+     * By default this method returns {@literal false}.
      *
-     * @return
+     * @return {@literal true} if {@literal null} is expected to be a falsehood; otherwise {@literal false}.
      */
     protected boolean isNullFalsehood() {
         return false;
     }
 
     /**
-     * TODO: Document
+     * Returns whether {@literal null} is treated as a truth.
+     * <p>
+     * By default this method returns {@literal false}.
      *
-     * @return
+     * @return {@literal true} if {@literal null} is expected to be a truth; otherwise {@literal false}.
      */
     protected boolean isNullTruth() {
         return false;
