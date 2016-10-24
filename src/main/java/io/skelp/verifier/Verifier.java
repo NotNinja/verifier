@@ -250,31 +250,6 @@ public final class Verifier {
      * TODO: Document
      *
      * @param value
-     * @param <T>
-     * @return
-     * @throws VerifierFactoryException
-     */
-    public static <T extends Comparable<? super T>> ComparableVerifier<T> verify(final T value) throws VerifierFactoryException {
-        return verify(value, null);
-    }
-
-    /**
-     * TODO: Document
-     *
-     * @param value
-     * @param name
-     * @param <T>
-     * @return
-     * @throws VerifierFactoryException
-     */
-    public static <T extends Comparable<? super T>> ComparableVerifier<T> verify(final T value, final Object name) throws VerifierFactoryException {
-        return new ComparableVerifier<>(createVerification(value, name));
-    }
-
-    /**
-     * TODO: Document
-     *
-     * @param value
      * @return
      * @throws VerifierFactoryException
      */
@@ -514,6 +489,31 @@ public final class Verifier {
      */
     public static <T, V extends CustomVerifier<T, V>> V verify(final T value, final Object name, final Class<V> cls) throws VerifierFactoryException {
         return getFactoryProvider().getCustomVerifierFactory().create(cls, createVerification(value, name));
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param value
+     * @param <T>
+     * @return
+     * @throws VerifierFactoryException
+     */
+    public static <T extends Comparable<? super T>> ComparableVerifier<T> verifyComparable(final T value) throws VerifierFactoryException {
+        return verifyComparable(value, null);
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param value
+     * @param name
+     * @param <T>
+     * @return
+     * @throws VerifierFactoryException
+     */
+    public static <T extends Comparable<? super T>> ComparableVerifier<T> verifyComparable(final T value, final Object name) throws VerifierFactoryException {
+        return new ComparableVerifier<>(createVerification(value, name));
     }
 
     private static <T> Verification<T> createVerification(final T value, final Object name) throws VerifierFactoryException {
