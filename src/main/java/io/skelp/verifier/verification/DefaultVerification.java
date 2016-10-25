@@ -22,29 +22,41 @@
 package io.skelp.verifier.verification;
 
 import io.skelp.verifier.VerifierException;
-import io.skelp.verifier.factory.VerifierFactoryException;
 import io.skelp.verifier.message.MessageFormatter;
 import io.skelp.verifier.message.factory.MessageFormatterFactory;
 
 /**
- * TODO: Document
+ * The default implementation of {@link Verification}.
+ * <p>
+ * Instead depending on a {@link MessageFormatter} instance which may never be used, this implementation depends on a
+ * {@link MessageFormatterFactory} instance which will be used to create a {@link MessageFormatter} instance only when
+ * required.
  *
  * @param <T>
+ *         the type of the value being verified
  * @author Alasdair Mercer
  */
 public class DefaultVerification<T> implements Verification<T> {
 
+    private MessageFormatter messageFormatter;
     private final MessageFormatterFactory messageFormatterFactory;
     private final Object name;
     private boolean negated;
     private final T value;
 
     /**
-     * TODO: Document
+     * Creates an instance of {@link DefaultVerification} based on the {@code value} and optional {@code name} provided.
+     * <p>
+     * {@code messageFormatterFactory} will be used to create a {@link MessageFormatter} instance only when
+     * required via {@link #getMessageFormatter()}.
      *
      * @param messageFormatterFactory
+     *         the {@link MessageFormatterFactory} which will be used to create an {@link MessageFormatter} instance
+     *         if/when required
      * @param value
+     *         the value being verified
      * @param name
+     *         the optional name used to represent {@code value}
      */
     public DefaultVerification(final MessageFormatterFactory messageFormatterFactory, final T value, final Object name) {
         this.messageFormatterFactory = messageFormatterFactory;
@@ -54,18 +66,23 @@ public class DefaultVerification<T> implements Verification<T> {
 
     @Override
     public DefaultVerification<T> check(final boolean result, final String message, final Object... args) throws VerifierException {
-        if (result && negated || !result && !negated) {
+        final boolean wasNegated = negated;
+        negated = false;
+
+        if (result && wasNegated || !result && !wasNegated) {
             throw new VerifierException(getMessageFormatter().format(this, message, args));
         }
-
-        negated = false;
 
         return this;
     }
 
     @Override
-    public MessageFormatter getMessageFormatter() throws VerifierFactoryException {
-        return messageFormatterFactory.create();
+    public MessageFormatter getMessageFormatter() throws VerifierException {
+        if (messageFormatter == null) {
+            messageFormatter = messageFormatterFactory.create();
+        }
+
+        return messageFormatter;
     }
 
     @Override

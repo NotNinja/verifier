@@ -25,57 +25,79 @@ import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.message.MessageFormatter;
 
 /**
- * TODO: Document
+ * Contains contextual information for a verification and also provides verifiers with a clean and simply way of
+ * checking the results of their verifications without having to handle negation, throwing errors, or message
+ * formatting.
+ * <p>
+ * A {@code Verification} encapsulates a single value which may well be verified multiple times.
  *
  * @param <T>
+ *         the type of the value being verified
  * @author Alasdair Mercer
  */
 public interface Verification<T> {
 
     /**
-     * TODO: Document
+     * Checks the specified {@code result} to determine whether it passes verification.
+     * <p>
+     * {@code result} will pass it is {@literal true} and this {@link Verification} has not be negated or if it has been
+     * negated and {@code result} is {@literal false}. If it does not pass, a {@link VerifierException} will be thrown
+     * with a suitable message, which can be enhanced using the optional {@code message} and format {@code args}
+     * provided.
+     * <p>
+     * This {@link Verification} will no longer be negated as a result of calling this method, regardless of whether
+     * {@code result} passes verification.
      *
      * @param result
+     *         the result of the verification
      * @param message
+     *         the optional message which provides a (slightly) more detailed explanation of what was verified
      * @param args
-     * @return
+     *         the optional format arguments which are only used to format {@code message}
+     * @return A reference to this {@link Verification} for chaining purposes.
      * @throws VerifierException
+     *         If {@code result} does not pass verification.
      */
     Verification<T> check(boolean result, String message, Object... args) throws VerifierException;
 
     /**
-     * TODO: Document
+     * Returns the message formatter that is being used by this {@link Verification} to format the messages for any
+     * {@link VerifierException VerifierExceptions} that are thrown by {@link #check(boolean, String, Object...)}.
      *
-     * @return
+     * @return The {@link MessageFormatter}.
      * @throws VerifierException
+     *         If a problem occurs while trying to retrieve the {@link MessageFormatter}.
      */
     MessageFormatter getMessageFormatter() throws VerifierException;
 
     /**
-     * TODO: Document
+     * Returns the optional name used to represent the value for this {@link Verification}.
      *
-     * @return
+     * @return The name representation for the value or {@literal null} if none was provided.
      */
     Object getName();
 
     /**
-     * TODO: Document
+     * Returns whether the next result that is passed to {@link #check(boolean, String, Object...)} is negated for this
+     * {@link Verification}.
      *
-     * @return
+     * @return {@literal true} if the next result will be negated; otherwise {@literal false}.
      */
     boolean isNegated();
 
     /**
-     * TODO: Document
+     * Sets whether the next result that is passed to {@link #check(boolean, String, Object...)} is negated for this
+     * {@link Verification} to {@code negated}.
      *
      * @param negated
+     *         {@literal true} to negate the next result; otherwise {@literal false}
      */
     void setNegated(boolean negated);
 
     /**
-     * TODO: Document
+     * Returns the value for this {@link Verification}.
      *
-     * @return
+     * @return The value being verified which may be {@literal null}.
      */
     T getValue();
 }

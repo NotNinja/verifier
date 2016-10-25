@@ -22,19 +22,25 @@
 package io.skelp.verifier.util;
 
 /**
- * TODO: Document
+ * A simple function that takes an input and returns and output of specific types. This is used throughout Verifier,
+ * mostly for iterations.
+ * <p>
+ * All implementations of {@code Function} should be stateless and predictable based on the input.
  *
  * @param <R>
+ *         the type of the return value
  * @param <T>
+ *         the type of the argument
  * @author Alasdair Mercer
  */
 public interface Function<R, T> {
 
     /**
-     * TODO: Document
+     * Applies the specified {@code value} to this {@link Function} and returns the output.
      *
      * @param input
-     * @return
+     *         the value to be applied
+     * @return The output based on {@code input}.
      */
     R apply(T input);
 }

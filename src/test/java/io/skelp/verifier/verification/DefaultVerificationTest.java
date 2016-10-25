@@ -67,7 +67,13 @@ public class DefaultVerificationTest {
 
         when(mockMessageFormatter.format(same(verification), eq("test"), Matchers.anyVararg())).thenReturn("i am expected");
 
-        verification.check(false, "test", "foo", "bar");
+        try {
+            verification.check(false, "test", "foo", "bar");
+            fail("VerifierException expected");
+        } catch (VerifierException e) {
+            assertFalse("Still not negated", verification.isNegated());
+            throw e;
+        }
     }
 
     @Test
@@ -97,14 +103,25 @@ public class DefaultVerificationTest {
 
         when(mockMessageFormatter.format(same(verification), eq("test"), Matchers.anyVararg())).thenReturn("i am expected");
 
-        verification.check(true, "test", "foo", "bar");
+        try {
+            verification.check(true, "test", "foo", "bar");
+            fail("VerifierException expected");
+        } catch (VerifierException e) {
+            assertFalse("No longer negated", verification.isNegated());
+            throw e;
+        }
     }
 
     @Test
     public void testMessageFormatter() {
         DefaultVerification<?> verification = new DefaultVerification<>(mockMessageFormatterFactory, null, null);
 
-        assertEquals("Message formatter property is readable and value is created using factory", mockMessageFormatter, verification.getMessageFormatter());
+        MessageFormatter messageFormatter = verification.getMessageFormatter();
+
+        assertEquals("Message formatter property is readable and value is created using factory", mockMessageFormatter, messageFormatter);
+        assertSame("Message formatter property returns same value for subsequent calls", messageFormatter, verification.getMessageFormatter());
+
+        verify(mockMessageFormatterFactory).create();
     }
 
     @Test
