@@ -36,7 +36,7 @@ import io.skelp.verifier.message.factory.MessageFormatterFactory;
  *         the type of the value being verified
  * @author Alasdair Mercer
  */
-public class DefaultVerification<T> implements Verification<T> {
+public final class DefaultVerification<T> implements Verification<T> {
 
     private MessageFormatter messageFormatter;
     private final MessageFormatterFactory messageFormatterFactory;
