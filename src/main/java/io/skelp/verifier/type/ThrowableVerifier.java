@@ -61,10 +61,10 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * @throws VerifierException
      */
     public ThrowableVerifier checked() throws VerifierException {
-        final Throwable value = getVerification().getValue();
+        final Throwable value = verification().getValue();
         final boolean result = value != null && !(value instanceof RuntimeException);
 
-        getVerification().check(result, "be checked");
+        verification().check(result, "be checked");
 
         return this;
     }
@@ -77,7 +77,7 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * @throws VerifierException
      */
     public ThrowableVerifier cause(final Class<?> type) throws VerifierException {
-        final Throwable value = getVerification().getValue();
+        final Throwable value = verification().getValue();
         boolean result = false;
         for (final Throwable throwable : getThrowables(value)) {
             if (type.isAssignableFrom(throwable.getClass())) {
@@ -86,7 +86,7 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
             }
         }
 
-        getVerification().check(result, "have been caused by '%s'", type);
+        verification().check(result, "have been caused by '%s'", type);
 
         return this;
     }
@@ -111,10 +111,10 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * @throws VerifierException
      */
     public ThrowableVerifier cause(final Throwable cause, final Object name) throws VerifierException {
-        final Throwable value = getVerification().getValue();
+        final Throwable value = verification().getValue();
         final boolean result = getThrowables(value).contains(cause);
 
-        getVerification().check(result, "have been caused by '%s'", name);
+        verification().check(result, "have been caused by '%s'", name);
 
         return this;
     }
@@ -127,10 +127,10 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * @throws VerifierException
      */
     public ThrowableVerifier message(final String message) throws VerifierException {
-        final Throwable value = getVerification().getValue();
+        final Throwable value = verification().getValue();
         final boolean result = value != null && (value.getMessage() == null ? message == null : value.getMessage().equals(message));
 
-        getVerification().check(result, "have message '%s'", message);
+        verification().check(result, "have message '%s'", message);
 
         return this;
     }
@@ -142,10 +142,10 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * @throws VerifierException
      */
     public ThrowableVerifier unchecked() throws VerifierException {
-        final Throwable value = getVerification().getValue();
+        final Throwable value = verification().getValue();
         final boolean result = value instanceof RuntimeException;
 
-        getVerification().check(result, "be unchecked");
+        verification().check(result, "be unchecked");
 
         return this;
     }

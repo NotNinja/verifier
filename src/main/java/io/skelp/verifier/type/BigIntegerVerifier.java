@@ -46,80 +46,80 @@ public final class BigIntegerVerifier extends BaseComparableVerifier<BigInteger,
 
     @Override
     public BigIntegerVerifier even() throws VerifierException {
-        final BigInteger value = getVerification().getValue();
+        final BigInteger value = verification().getValue();
         final boolean result = value != null && !value.testBit(0);
 
-        getVerification().check(result, "be even");
+        verification().check(result, "be even");
 
         return this;
     }
 
     @Override
     public BigIntegerVerifier falsehood() throws VerifierException {
-        final BigInteger value = getVerification().getValue();
+        final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ZERO) == 0;
 
-        getVerification().check(result, "be false");
+        verification().check(result, "be false");
 
         return this;
     }
 
     @Override
     public BigIntegerVerifier negative() throws VerifierException {
-        final BigInteger value = getVerification().getValue();
+        final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ZERO) < 0;
 
-        getVerification().check(result, "be negative");
+        verification().check(result, "be negative");
 
         return this;
     }
 
     @Override
     public BigIntegerVerifier odd() throws VerifierException {
-        final BigInteger value = getVerification().getValue();
+        final BigInteger value = verification().getValue();
         final boolean result = value != null && value.testBit(0);
 
-        getVerification().check(result, "be odd");
+        verification().check(result, "be odd");
 
         return this;
     }
 
     @Override
     public BigIntegerVerifier one() throws VerifierException {
-        final BigInteger value = getVerification().getValue();
+        final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ONE) == 0;
 
-        getVerification().check(result, "be one");
+        verification().check(result, "be one");
 
         return this;
     }
 
     @Override
     public BigIntegerVerifier positive() throws VerifierException {
-        final BigInteger value = getVerification().getValue();
+        final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ZERO) >= 0;
 
-        getVerification().check(result, "be positive");
+        verification().check(result, "be positive");
 
         return this;
     }
 
     @Override
     public BigIntegerVerifier truth() throws VerifierException {
-        final BigInteger value = getVerification().getValue();
+        final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ONE) == 0;
 
-        getVerification().check(result, "be true");
+        verification().check(result, "be true");
 
         return this;
     }
 
     @Override
     public BigIntegerVerifier zero() throws VerifierException {
-        final BigInteger value = getVerification().getValue();
+        final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ZERO) == 0;
 
-        getVerification().check(result, "be zero");
+        verification().check(result, "be zero");
 
         return this;
     }

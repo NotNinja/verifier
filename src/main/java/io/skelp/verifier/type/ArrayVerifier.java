@@ -53,10 +53,10 @@ public final class ArrayVerifier<T> extends AbstractCustomVerifier<T[], ArrayVer
      * @throws VerifierException
      */
     public ArrayVerifier<T> contain(final T item) throws VerifierException {
-        final T[] value = getVerification().getValue();
+        final T[] value = verification().getValue();
         final boolean result = value != null && Arrays.asList(value).contains(item);
 
-        getVerification().check(result, "contain '%s'", item);
+        verification().check(result, "contain '%s'", item);
 
         return this;
     }
@@ -68,10 +68,10 @@ public final class ArrayVerifier<T> extends AbstractCustomVerifier<T[], ArrayVer
      * @throws VerifierException
      */
     public ArrayVerifier<T> empty() throws VerifierException {
-        final T[] value = getVerification().getValue();
+        final T[] value = verification().getValue();
         final boolean result = value == null || value.length == 0;
 
-        getVerification().check(result, "be empty");
+        verification().check(result, "be empty");
 
         return this;
     }
@@ -89,10 +89,10 @@ public final class ArrayVerifier<T> extends AbstractCustomVerifier<T[], ArrayVer
      * @throws VerifierException
      */
     public ArrayVerifier<T> length(final int length) throws VerifierException {
-        final T[] value = getVerification().getValue();
+        final T[] value = verification().getValue();
         final boolean result = value == null ? length == 0 : value.length == length;
 
-        getVerification().check(result, "have length of '%d'", length);
+        verification().check(result, "have length of '%d'", length);
 
         return this;
     }
@@ -121,7 +121,7 @@ public final class ArrayVerifier<T> extends AbstractCustomVerifier<T[], ArrayVer
             throw new VerifierException("comparator must not be null");
         }
 
-        final T[] value = getVerification().getValue();
+        final T[] value = verification().getValue();
         boolean result = true;
 
         if (value == null) {
@@ -141,7 +141,7 @@ public final class ArrayVerifier<T> extends AbstractCustomVerifier<T[], ArrayVer
             }
         }
 
-        getVerification().check(result, "be sorted by '%s'", name);
+        verification().check(result, "be sorted by '%s'", name);
 
         return this;
     }

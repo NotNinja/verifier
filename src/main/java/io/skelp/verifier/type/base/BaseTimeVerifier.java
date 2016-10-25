@@ -52,14 +52,14 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @throws VerifierException
      */
     public V sameDay(final T other) throws VerifierException {
-        final Calendar calendar1 = getCalendar(getVerification().getValue());
+        final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
             (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
                 calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
                 calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR));
 
-        getVerification().check(result, "be same day as '%s'", other);
+        verification().check(result, "be same day as '%s'", other);
 
         return chain();
     }
@@ -72,7 +72,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @throws VerifierException
      */
     public V sameHour(final T other) throws VerifierException {
-        final Calendar calendar1 = getCalendar(getVerification().getValue());
+        final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
             (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
@@ -80,7 +80,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
                 calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR) &&
                 calendar1.get(Calendar.HOUR_OF_DAY) == calendar2.get(Calendar.HOUR_OF_DAY));
 
-        getVerification().check(result, "be same hour as '%s'", other);
+        verification().check(result, "be same hour as '%s'", other);
 
         return chain();
     }
@@ -93,7 +93,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @throws VerifierException
      */
     public V sameMinute(final T other) throws VerifierException {
-        final Calendar calendar1 = getCalendar(getVerification().getValue());
+        final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
             (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
@@ -102,7 +102,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
                 calendar1.get(Calendar.HOUR_OF_DAY) == calendar2.get(Calendar.HOUR_OF_DAY) &&
                 calendar1.get(Calendar.MINUTE) == calendar2.get(Calendar.MINUTE));
 
-        getVerification().check(result, "be same minute as '%s'", other);
+        verification().check(result, "be same minute as '%s'", other);
 
         return chain();
     }
@@ -115,14 +115,14 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @throws VerifierException
      */
     public V sameMonth(final T other) throws VerifierException {
-        final Calendar calendar1 = getCalendar(getVerification().getValue());
+        final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
             (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
                 calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
                 calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH));
 
-        getVerification().check(result, "be same month as '%s'", other);
+        verification().check(result, "be same month as '%s'", other);
 
         return chain();
     }
@@ -135,7 +135,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @throws VerifierException
      */
     public V sameSecond(final T other) throws VerifierException {
-        final Calendar calendar1 = getCalendar(getVerification().getValue());
+        final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
             (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
@@ -145,7 +145,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
                 calendar1.get(Calendar.MINUTE) == calendar2.get(Calendar.MINUTE) &&
                 calendar1.get(Calendar.SECOND) == calendar2.get(Calendar.SECOND));
 
-        getVerification().check(result, "be same second as '%s'", other);
+        verification().check(result, "be same second as '%s'", other);
 
         return chain();
     }
@@ -158,12 +158,12 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @throws VerifierException
      */
     public V sameTime(final T other) throws VerifierException {
-        final Calendar calendar1 = getCalendar(getVerification().getValue());
+        final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
             calendar1.getTimeInMillis() == calendar2.getTimeInMillis();
 
-        getVerification().check(result, "be same time as '%s'", other);
+        verification().check(result, "be same time as '%s'", other);
 
         return chain();
     }
@@ -176,14 +176,14 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @throws VerifierException
      */
     public V sameWeek(final T other) throws VerifierException {
-        final Calendar calendar1 = getCalendar(getVerification().getValue());
+        final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
             (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
                 calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
                 calendar1.get(Calendar.WEEK_OF_YEAR) == calendar2.get(Calendar.WEEK_OF_YEAR));
 
-        getVerification().check(result, "be same week as '%s'", other);
+        verification().check(result, "be same week as '%s'", other);
 
         return chain();
     }
@@ -196,13 +196,13 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @throws VerifierException
      */
     public V sameYear(final T other) throws VerifierException {
-        final Calendar calendar1 = getCalendar(getVerification().getValue());
+        final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
             (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
                 calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR));
 
-        getVerification().check(result, "be same year as '%s'", other);
+        verification().check(result, "be same year as '%s'", other);
 
         return chain();
     }

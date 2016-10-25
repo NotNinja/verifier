@@ -542,7 +542,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
     @Test
     public void testVerification() {
-        assertSame("Verification field is correct", getMockVerification(), getCustomVerifier().getVerification());
+        assertSame("Verification field is correct", getMockVerification(), getCustomVerifier().verification());
     }
 
     /**

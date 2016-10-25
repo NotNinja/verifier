@@ -128,7 +128,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier alpha() throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
             @Override
             public Boolean apply(final Character character) {
@@ -136,7 +136,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "contain only letters");
+        verification().check(result, "contain only letters");
 
         return this;
     }
@@ -148,7 +148,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier alphaSpace() throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
             @Override
             public Boolean apply(final Character character) {
@@ -156,7 +156,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "contain only letters or space");
+        verification().check(result, "contain only letters or space");
 
         return this;
     }
@@ -168,7 +168,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier alphanumeric() throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
             @Override
             public Boolean apply(final Character character) {
@@ -176,7 +176,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "contain only letters or digits");
+        verification().check(result, "contain only letters or digits");
 
         return this;
     }
@@ -188,7 +188,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier alphanumericSpace() throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
             @Override
             public Boolean apply(final Character character) {
@@ -196,7 +196,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "contain only letters or digits or space");
+        verification().check(result, "contain only letters or digits or space");
 
         return this;
     }
@@ -208,7 +208,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier asciiPrintable() throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
             @Override
             public Boolean apply(final Character character) {
@@ -216,7 +216,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "contain only ASCII printable characters");
+        verification().check(result, "contain only ASCII printable characters");
 
         return this;
     }
@@ -228,10 +228,10 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier blank() throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = value == null || value.trim().isEmpty();
 
-        getVerification().check(result, "be blank");
+        verification().check(result, "be blank");
 
         return this;
     }
@@ -244,10 +244,10 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier contain(final CharSequence other) throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = value != null && other != null && value.contains(other);
 
-        getVerification().check(result, "contain '%s'", other);
+        verification().check(result, "contain '%s'", other);
 
         return this;
     }
@@ -260,7 +260,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier containAny(final CharSequence... others) throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = value != null && matchAny(others, new Function<Boolean, CharSequence>() {
             @Override
             public Boolean apply(final CharSequence input) {
@@ -268,7 +268,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "contain any %s", getVerification().getMessageFormatter().formatArray(others));
+        verification().check(result, "contain any %s", verification().getMessageFormatter().formatArray(others));
 
         return this;
     }
@@ -281,7 +281,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier containAnyIgnoreCase(final CharSequence... others) throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = value != null && matchAny(others, new Function<Boolean, CharSequence>() {
             @Override
             public Boolean apply(final CharSequence input) {
@@ -289,7 +289,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "contain any %s (ignore case)", getVerification().getMessageFormatter().formatArray(others));
+        verification().check(result, "contain any %s (ignore case)", verification().getMessageFormatter().formatArray(others));
 
         return this;
     }
@@ -302,10 +302,10 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier containIgnoreCase(final CharSequence other) throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = value != null && containsIgnoreCase(value, other);
 
-        getVerification().check(result, "contain '%s' (ignore case)", other);
+        verification().check(result, "contain '%s' (ignore case)", other);
 
         return this;
     }
@@ -317,10 +317,10 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier empty() throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = value == null || value.isEmpty();
 
-        getVerification().check(result, "be empty");
+        verification().check(result, "be empty");
 
         return this;
     }
@@ -333,10 +333,10 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier endWith(final CharSequence other) throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = value != null && endsWith(value, other, false);
 
-        getVerification().check(result, "end with '%s'", other);
+        verification().check(result, "end with '%s'", other);
 
         return this;
     }
@@ -349,7 +349,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier endWithAny(final CharSequence... others) throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = value != null && matchAny(others, new Function<Boolean, CharSequence>() {
             @Override
             public Boolean apply(final CharSequence input) {
@@ -357,7 +357,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "end with any %s", getVerification().getMessageFormatter().formatArray(others));
+        verification().check(result, "end with any %s", verification().getMessageFormatter().formatArray(others));
 
         return this;
     }
@@ -370,7 +370,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier endWithAnyIgnoreCase(final CharSequence... others) throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = value != null && matchAny(others, new Function<Boolean, CharSequence>() {
             @Override
             public Boolean apply(final CharSequence input) {
@@ -378,7 +378,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "end with any %s (ignore case)", getVerification().getMessageFormatter().formatArray(others));
+        verification().check(result, "end with any %s (ignore case)", verification().getMessageFormatter().formatArray(others));
 
         return this;
     }
@@ -391,10 +391,10 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier endWithIgnoreCase(final CharSequence other) throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = value != null && endsWith(value, other, true);
 
-        getVerification().check(result, "end with '%s' (ignore case)", other);
+        verification().check(result, "end with '%s' (ignore case)", other);
 
         return this;
     }
@@ -407,7 +407,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier equalToAnyIgnoreCase(final CharSequence... others) throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = matchAny(others, new Function<Boolean, CharSequence>() {
             @Override
             public Boolean apply(final CharSequence input) {
@@ -415,7 +415,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "be equal to any %s (ignore case)", getVerification().getMessageFormatter().formatArray(others));
+        verification().check(result, "be equal to any %s (ignore case)", verification().getMessageFormatter().formatArray(others));
 
         return chain();
     }
@@ -428,20 +428,20 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier equalToIgnoreCase(final CharSequence other) throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = isEqualToIgnoreCase(value, other);
 
-        getVerification().check(result, "be equal to '%s' (ignore case)", other);
+        verification().check(result, "be equal to '%s' (ignore case)", other);
 
         return this;
     }
 
     @Override
     public StringVerifier falsehood() throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = Boolean.FALSE.toString().equalsIgnoreCase(value);
 
-        getVerification().check(result, "be false");
+        verification().check(result, "be false");
 
         return this;
     }
@@ -454,10 +454,10 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier length(final int length) throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = value == null ? length == 0 : value.length() == length;
 
-        getVerification().check(result, "have a length of '%d'", length);
+        verification().check(result, "have a length of '%d'", length);
 
         return this;
     }
@@ -469,7 +469,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier lowerCase() throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
             @Override
             public Boolean apply(final Character character) {
@@ -477,7 +477,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "be all lower case");
+        verification().check(result, "be all lower case");
 
         return this;
     }
@@ -490,10 +490,10 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier match(final CharSequence regex) throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = value != null && regex != null && value.matches(regex.toString());
 
-        getVerification().check(result, "match '%s'", regex);
+        verification().check(result, "match '%s'", regex);
 
         return this;
     }
@@ -506,10 +506,10 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier match(final Pattern pattern) throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = value != null && pattern != null && pattern.matcher(value).matches();
 
-        getVerification().check(result, "match '%s'", pattern);
+        verification().check(result, "match '%s'", pattern);
 
         return this;
     }
@@ -521,7 +521,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier numeric() throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
             @Override
             public Boolean apply(final Character character) {
@@ -529,7 +529,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "contain only digits");
+        verification().check(result, "contain only digits");
 
         return this;
     }
@@ -541,7 +541,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier numericSpace() throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
             @Override
             public Boolean apply(final Character character) {
@@ -549,7 +549,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "contain only digits or space");
+        verification().check(result, "contain only digits or space");
 
         return this;
     }
@@ -562,10 +562,10 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier startWith(final CharSequence other) throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = startsWith(value, other, false);
 
-        getVerification().check(result, "start with '%s'", other);
+        verification().check(result, "start with '%s'", other);
 
         return this;
     }
@@ -578,7 +578,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier startWithAny(final CharSequence... others) throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = matchAny(others, new Function<Boolean, CharSequence>() {
             @Override
             public Boolean apply(final CharSequence input) {
@@ -586,7 +586,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "start with any %s", getVerification().getMessageFormatter().formatArray(others));
+        verification().check(result, "start with any %s", verification().getMessageFormatter().formatArray(others));
 
         return this;
     }
@@ -599,7 +599,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier startWithAnyIgnoreCase(final CharSequence... others) throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = matchAny(others, new Function<Boolean, CharSequence>() {
             @Override
             public Boolean apply(final CharSequence input) {
@@ -607,7 +607,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "start with any %s (ignore case)", getVerification().getMessageFormatter().formatArray(others));
+        verification().check(result, "start with any %s (ignore case)", verification().getMessageFormatter().formatArray(others));
 
         return this;
     }
@@ -620,20 +620,20 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier startWithIgnoreCase(final CharSequence other) throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = startsWith(value, other, true);
 
-        getVerification().check(result, "start with '%s' (ignore case)", other);
+        verification().check(result, "start with '%s' (ignore case)", other);
 
         return this;
     }
 
     @Override
     public StringVerifier truth() throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = Boolean.TRUE.toString().equalsIgnoreCase(value);
 
-        getVerification().check(result, "be true");
+        verification().check(result, "be true");
 
         return this;
     }
@@ -645,7 +645,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier upperCase() throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
             @Override
             public Boolean apply(final Character character) {
@@ -653,7 +653,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "be all upper case");
+        verification().check(result, "be all upper case");
 
         return this;
     }
@@ -665,7 +665,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      */
     public StringVerifier whitespace() throws VerifierException {
-        final String value = getVerification().getValue();
+        final String value = verification().getValue();
         final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
             @Override
             public Boolean apply(final Character character) {
@@ -673,7 +673,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
             }
         });
 
-        getVerification().check(result, "contain only whitespace");
+        verification().check(result, "contain only whitespace");
 
         return this;
     }

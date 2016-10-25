@@ -425,7 +425,7 @@ public class VerifierTest {
 
     private <T, V extends CustomVerifier<T, V>> void testVerifyHelper(CustomVerifier<T, V> verifier, T value, Object name) {
         assertNotNull("Never returns null", verifier);
-        assertSame("Uses Verification created by factory", mockVerification, verifier.getVerification());
+        assertSame("Uses Verification created by factory", mockVerification, verifier.verification());
 
         verify(mockVerificationFactory).create(mockMessageFormatterFactory, value, name);
     }

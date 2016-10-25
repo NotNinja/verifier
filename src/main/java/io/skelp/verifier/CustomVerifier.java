@@ -162,5 +162,5 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      *
      * @return
      */
-    Verification<T> getVerification();
+    Verification<T> verification();
 }

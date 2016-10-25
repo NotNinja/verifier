@@ -44,18 +44,18 @@ public final class BooleanVerifier extends BaseComparableVerifier<Boolean, Boole
 
     @Override
     public BooleanVerifier falsehood() throws VerifierException {
-        final boolean result = !Boolean.TRUE.equals(getVerification().getValue());
+        final boolean result = !Boolean.TRUE.equals(verification().getValue());
 
-        getVerification().check(result, "be false");
+        verification().check(result, "be false");
 
         return this;
     }
 
     @Override
     public BooleanVerifier truth() throws VerifierException {
-        final boolean result = Boolean.TRUE.equals(getVerification().getValue());
+        final boolean result = Boolean.TRUE.equals(verification().getValue());
 
-        getVerification().check(result, "be true");
+        verification().check(result, "be true");
 
         return this;
     }

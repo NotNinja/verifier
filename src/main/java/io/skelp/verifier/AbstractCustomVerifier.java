@@ -220,7 +220,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     }
 
     @Override
-    public Verification<T> getVerification() {
+    public Verification<T> verification() {
         return verification;
     }
 }
