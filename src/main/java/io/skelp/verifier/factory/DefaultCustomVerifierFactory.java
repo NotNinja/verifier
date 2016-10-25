@@ -21,6 +21,10 @@
  */
 package io.skelp.verifier.factory;
 
+import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import java.util.Map;
+
 import io.skelp.verifier.CustomVerifier;
 import io.skelp.verifier.verification.Verification;
 
@@ -33,6 +37,21 @@ import io.skelp.verifier.verification.Verification;
  */
 public final class DefaultCustomVerifierFactory implements CustomVerifierFactory {
 
+    private static final Map<Class<?>, Constructor<?>> CONSTRUCTOR_CACHE = new HashMap<>();
+
+    private static <T> Constructor<T> getConstructor(final Class<T> cls) throws ReflectiveOperationException {
+        @SuppressWarnings("unchecked")
+        Constructor<T> constructor = (Constructor<T>) CONSTRUCTOR_CACHE.get(cls);
+
+        if (constructor == null) {
+            constructor = cls.getConstructor(Verification.class);
+
+            CONSTRUCTOR_CACHE.put(cls, constructor);
+        }
+
+        return constructor;
+    }
+
     @Override
     public <T, V extends CustomVerifier<T, V>> V create(final Class<V> cls, final Verification<T> verification) throws VerifierFactoryException {
         if (cls == null) {
@@ -40,7 +59,7 @@ public final class DefaultCustomVerifierFactory implements CustomVerifierFactory
         }
 
         try {
-            return cls.getConstructor(Verification.class).newInstance(verification);
+            return getConstructor(cls).newInstance(verification);
         } catch (ReflectiveOperationException e) {
             throw new VerifierFactoryException("cls could not be instantiated", e);
         }

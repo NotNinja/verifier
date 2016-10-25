@@ -55,8 +55,9 @@ public class DefaultCustomVerifierFactoryTest {
     public void testCreate() {
         TestCustomVerifierImpl instance = factory.create(TestCustomVerifierImpl.class, mockVerification);
 
-        assertNotNull("Never null", instance);
+        assertNotNull("Never returns null", instance);
         assertSame("Passed verification", mockVerification, instance.verification);
+        assertNotSame("Never returns same instance", instance, factory.create(TestCustomVerifierImpl.class, mockVerification));
     }
 
     @Test(expected = VerifierFactoryException.class)

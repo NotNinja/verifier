@@ -24,10 +24,13 @@ package io.skelp.verifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * A custom verifier provides a chain of handy verification methods which can be specific to a data type (e.g. {@code
+ * String}) and/or a use case (e.g. email address).
  *
  * @param <T>
+ *         the type of the value being verified
  * @param <V>
+ *         the type of the {@link CustomVerifier} for chaining purposes
  * @author Alasdair Mercer
  */
 public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
@@ -151,16 +154,16 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
     V that(VerifierAssertion<T> assertion, String message, Object... args) throws VerifierException;
 
     /**
-     * TODO: Document
+     * Returns the value being verified by this {@link CustomVerifier}.
      *
-     * @return
+     * @return The value.
      */
     T value();
 
     /**
-     * TODO: Document
+     * Returns the verification information for this {@link CustomVerifier}.
      *
-     * @return
+     * @return The {@link Verification}.
      */
     Verification<T> verification();
 }
