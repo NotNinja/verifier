@@ -22,18 +22,23 @@
 package io.skelp.verifier;
 
 /**
- * TODO: Document
+ * Asserts that a given value is valid based on custom criteria.
  *
  * @param <T>
+ *         the type of the value being verified
  * @author Alasdair Mercer
+ * @see CustomVerifier#that(VerifierAssertion)
+ * @see CustomVerifier#that(VerifierAssertion, String, Object...)
  */
 public interface VerifierAssertion<T> {
 
     /**
-     * TODO: Document
+     * Returns whether the specified {@code value} is valid based on the custom criteria of this {@link
+     * VerifierAssertion}.
      *
      * @param value
-     * @return
+     *         the value to be verified
+     * @return {@literal true} if {@code value} is valid; otherwise {@literal false}.
      */
     boolean verify(T value);
 }
