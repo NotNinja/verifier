@@ -30,7 +30,7 @@ import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
 import io.skelp.verifier.AbstractCustomVerifierTestCase;
-import io.skelp.verifier.type.base.BaseCollectionVerifierTestCase;
+import io.skelp.verifier.type.base.BaseSortableCollectionVerifierTestCase;
 
 /**
  * <p>
@@ -70,7 +70,7 @@ public class CollectionVerifierTest {
         }
     }
 
-    public static class CollectionVerifierBaseCollectionVerifierTest extends BaseCollectionVerifierTestCase<Integer, Collection<Integer>, CollectionVerifier<Integer>> {
+    public static class CollectionVerifierBaseSortableCollectionVerifierTest extends BaseSortableCollectionVerifierTestCase<Integer, Collection<Integer>, CollectionVerifier<Integer>> {
 
         @Override
         protected CollectionVerifier<Integer> createCustomVerifier() {
@@ -84,7 +84,22 @@ public class CollectionVerifierTest {
 
         @Override
         protected Collection<Integer> createFullValue() {
+            return createSortedValue();
+        }
+
+        @Override
+        protected Collection<Integer> createSingleValue() {
+            return Collections.singleton(123);
+        }
+
+        @Override
+        protected Collection<Integer> createSortedValue() {
             return new ArrayList<>(Arrays.asList(123, 456, 789));
+        }
+
+        @Override
+        protected Collection<Integer> createUnsortedValue() {
+            return new ArrayList<>(Arrays.asList(123, 789, 456));
         }
 
         @Override

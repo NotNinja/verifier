@@ -23,7 +23,7 @@ package io.skelp.verifier.type;
 
 import java.util.Collection;
 
-import io.skelp.verifier.type.base.BaseCollectionVerifier;
+import io.skelp.verifier.type.base.BaseSortableCollectionVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -32,7 +32,7 @@ import io.skelp.verifier.verification.Verification;
  * @param <E>
  * @author Alasdair Mercer
  */
-public final class CollectionVerifier<E> extends BaseCollectionVerifier<E, Collection<E>, CollectionVerifier<E>> {
+public final class CollectionVerifier<E> extends BaseSortableCollectionVerifier<E, Collection<E>, CollectionVerifier<E>> {
 
     /**
      * TODO: Document

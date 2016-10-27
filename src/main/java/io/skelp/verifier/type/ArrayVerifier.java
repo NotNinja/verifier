@@ -23,10 +23,8 @@ package io.skelp.verifier.type;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Comparator;
 
-import io.skelp.verifier.VerifierException;
-import io.skelp.verifier.type.base.BaseCollectionVerifier;
+import io.skelp.verifier.type.base.BaseSortableCollectionVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -35,7 +33,7 @@ import io.skelp.verifier.verification.Verification;
  * @param <E>
  * @author Alasdair Mercer
  */
-public final class ArrayVerifier<E> extends BaseCollectionVerifier<E, E[], ArrayVerifier<E>> {
+public final class ArrayVerifier<E> extends BaseSortableCollectionVerifier<E, E[], ArrayVerifier<E>> {
 
     /**
      * TODO: Document
@@ -44,55 +42,6 @@ public final class ArrayVerifier<E> extends BaseCollectionVerifier<E, E[], Array
      */
     public ArrayVerifier(final Verification<E[]> verification) {
         super(verification);
-    }
-
-    /**
-     * TODO: Document
-     *
-     * @param comparator
-     * @return
-     * @throws VerifierException
-     */
-    public ArrayVerifier<E> sorted(final Comparator<E> comparator) throws VerifierException {
-        return sorted(comparator, comparator);
-    }
-
-    /**
-     * TODO: Document
-     *
-     * @param comparator
-     * @param name
-     * @return
-     * @throws VerifierException
-     */
-    public ArrayVerifier<E> sorted(final Comparator<E> comparator, final Object name) throws VerifierException {
-        if (comparator == null) {
-            throw new VerifierException("comparator must not be null");
-        }
-
-        final E[] value = verification().getValue();
-        boolean result = true;
-
-        if (value == null) {
-            result = false;
-        } else if (value.length >= 2) {
-            E previous = value[0];
-            final int length = value.length;
-
-            for (int i = 1; i < length; i++) {
-                final E current = value[i];
-                if (comparator.compare(previous, current) > 0) {
-                    result = false;
-                    break;
-                }
-
-                previous = current;
-            }
-        }
-
-        verification().check(result, "be sorted by '%s'", name);
-
-        return this;
     }
 
     @Override
