@@ -30,6 +30,7 @@ import java.util.Set;
 
 import io.skelp.verifier.AbstractCustomVerifier;
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.util.Function;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -38,9 +39,6 @@ import io.skelp.verifier.verification.Verification;
  * @author Alasdair Mercer
  */
 public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVerifier> {
-
-    // TODO: Add annotated method
-    // TODO: Add annotatedWithAll & annotatedWithAny methods
 
     private static final Set<Class<?>> PRIMITIVE_WRAPPERS;
 
@@ -61,6 +59,21 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
     /**
      * TODO: Document
      *
+     * @return
+     * @throws VerifierException
+     */
+    public ClassVerifier annotated() throws VerifierException {
+        final Class<?> value = verification().getValue();
+        final boolean result = value != null && value.getAnnotations().length > 0;
+
+        verification().check(result, "be annotated");
+
+        return this;
+    }
+
+    /**
+     * TODO: Document
+     *
      * @param type
      * @return
      * @throws VerifierException
@@ -70,6 +83,48 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         final boolean result = value != null && type != null && value.isAnnotationPresent(type);
 
         verification().check(result, "be annotated with '%s'", type);
+
+        return this;
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param types
+     * @return
+     * @throws VerifierException
+     */
+    public ClassVerifier annotatedWithAll(final Class<? extends Annotation>... types) throws VerifierException {
+        final Class<?> value = verification().getValue();
+        final boolean result = value != null && matchAll(types, new Function<Boolean, Class<? extends Annotation>>() {
+            @Override
+            public Boolean apply(Class<? extends Annotation> input) {
+                return input != null && value.isAnnotationPresent(input);
+            }
+        });
+
+        verification().check(result, "be annotated with all %s", verification().getMessageFormatter().formatArray(types));
+
+        return this;
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param types
+     * @return
+     * @throws VerifierException
+     */
+    public ClassVerifier annotatedWithAny(final Class<? extends Annotation>... types) throws VerifierException {
+        final Class<?> value = verification().getValue();
+        final boolean result = value != null && matchAny(types, new Function<Boolean, Class<? extends Annotation>>() {
+            @Override
+            public Boolean apply(Class<? extends Annotation> input) {
+                return input != null && value.isAnnotationPresent(input);
+            }
+        });
+
+        verification().check(result, "be annotated with any %s", verification().getMessageFormatter().formatArray(types));
 
         return this;
     }

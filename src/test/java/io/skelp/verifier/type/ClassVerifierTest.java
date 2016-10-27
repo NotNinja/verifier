@@ -94,6 +94,29 @@ public class ClassVerifierTest {
         }
 
         @Test
+        public void testAnnotatedWhenValueIsAnnotated() {
+            testAnnotatedHelper(TypeWithAnnotationOne.class, true);
+        }
+
+        @Test
+        public void testAnnotatedWhenValueIsNotAnnotated() {
+            testAnnotatedHelper(TypeWithNoAnnotations.class, false);
+        }
+
+        @Test
+        public void testAnnotatedWhenValueIsNull() {
+            testAnnotatedHelper(null, false);
+        }
+
+        private void testAnnotatedHelper(Class<?> value, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotated());
+
+            verify(getMockVerification()).check(expected, "be annotated");
+        }
+
+        @Test
         public void testAnnotatedWithWhenTypeIsNull() {
             testAnnotatedWithHelper(TypeWithAnnotationOne.class, null, false);
         }
@@ -131,6 +154,116 @@ public class ClassVerifierTest {
             verify(getMockVerification()).check(eq(expected), eq("be annotated with '%s'"), getArgsCaptor().capture());
 
             assertSame("Passes type for message formatting", type, getArgsCaptor().getValue());
+        }
+
+        @Test
+        public void testAnnotatedWithAllWhenNoTypes() {
+            testAnnotatedWithAllHelper(TypeWithAnnotationOneAndTwo.class, createEmptyArray(Class.class), true);
+        }
+
+        @Test
+        public void testAnnotatedWithAllWhenNoTypesAndValueHasNoAnnotations() {
+            testAnnotatedWithAllHelper(TypeWithNoAnnotations.class, createEmptyArray(Class.class), true);
+        }
+
+        @Test
+        public void testAnnotatedWithAllWhenTypeIsNull() {
+            testAnnotatedWithAllHelper(TypeWithAnnotationOne.class, createArray((Class<? extends Annotation>) null), false);
+        }
+
+        @Test
+        public void testAnnotatedWithAllWhenTypesIsNull() {
+            testAnnotatedWithAllHelper(TypeWithNoAnnotations.class, null, true);
+        }
+
+        @Test
+        public void testAnnotatedWithAllWhenValueContainsAllTypes() {
+            testAnnotatedWithAllHelper(TypeWithAnnotationOneAndTwo.class, createArray(AnnotationOne.class, AnnotationTwo.class), true);
+        }
+
+        @Test
+        public void testAnnotatedWithAllWhenValueContainsSomeTypes() {
+            testAnnotatedWithAllHelper(TypeWithAnnotationOne.class, createArray(AnnotationOne.class, AnnotationTwo.class), false);
+        }
+
+        @Test
+        public void testAnnotatedWithAllWhenValueDoesNotContainType() {
+            testAnnotatedWithAllHelper(TypeWithNoAnnotations.class, createArray(AnnotationOne.class, AnnotationTwo.class), false);
+        }
+
+        @Test
+        public void testAnnotatedWithAllWhenValueIsNull() {
+            testAnnotatedWithAllHelper(null, createArray(AnnotationOne.class), false);
+        }
+
+        @Test
+        public void testAnnotatedWithAllWhenValueHasNoAnnotations() {
+            testAnnotatedWithAllHelper(TypeWithNoAnnotations.class, createArray(AnnotationOne.class), false);
+        }
+
+        private void testAnnotatedWithAllHelper(Class<?> value, Class<? extends Annotation>[] types, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotatedWithAll(types));
+
+            verify(getMockVerification()).check(eq(expected), eq("be annotated with all %s"), getArgsCaptor().capture());
+
+            assertArrayFormatter(getArgsCaptor().getValue(), types);
+        }
+
+        @Test
+        public void testAnnotatedWithAnyWhenNoTypes() {
+            testAnnotatedWithAnyHelper(TypeWithAnnotationOneAndTwo.class, createEmptyArray(Class.class), false);
+        }
+
+        @Test
+        public void testAnnotatedWithAnyWhenNoTypesAndValueHasNoAnnotations() {
+            testAnnotatedWithAnyHelper(TypeWithNoAnnotations.class, createEmptyArray(Class.class), false);
+        }
+
+        @Test
+        public void testAnnotatedWithAnyWhenTypeIsNull() {
+            testAnnotatedWithAnyHelper(TypeWithAnnotationOne.class, createArray((Class<? extends Annotation>) null), false);
+        }
+
+        @Test
+        public void testAnnotatedWithAnyWhenTypesIsNull() {
+            testAnnotatedWithAnyHelper(TypeWithNoAnnotations.class, null, false);
+        }
+
+        @Test
+        public void testAnnotatedWithAnyWhenValueContainsAllTypes() {
+            testAnnotatedWithAnyHelper(TypeWithAnnotationOneAndTwo.class, createArray(AnnotationOne.class, AnnotationTwo.class), true);
+        }
+
+        @Test
+        public void testAnnotatedWithAnyWhenValueContainsSomeTypes() {
+            testAnnotatedWithAnyHelper(TypeWithAnnotationOne.class, createArray(AnnotationTwo.class, AnnotationOne.class), true);
+        }
+
+        @Test
+        public void testAnnotatedWithAnyWhenValueDoesNotContainType() {
+            testAnnotatedWithAnyHelper(TypeWithNoAnnotations.class, createArray(AnnotationOne.class, AnnotationTwo.class), false);
+        }
+
+        @Test
+        public void testAnnotatedWithAnyWhenValueIsNull() {
+            testAnnotatedWithAnyHelper(null, createArray(AnnotationOne.class), false);
+        }
+
+        @Test
+        public void testAnnotatedWithAnyWhenValueHasNoAnnotations() {
+            testAnnotatedWithAnyHelper(TypeWithNoAnnotations.class, createArray(AnnotationOne.class), false);
+        }
+
+        private void testAnnotatedWithAnyHelper(Class<?> value, Class<? extends Annotation>[] types, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotatedWithAny(types));
+
+            verify(getMockVerification()).check(eq(expected), eq("be annotated with any %s"), getArgsCaptor().capture());
+
+            assertArrayFormatter(getArgsCaptor().getValue(), types);
         }
 
         @Test
