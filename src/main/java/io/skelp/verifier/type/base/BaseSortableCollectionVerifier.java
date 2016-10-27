@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import io.skelp.verifier.Verifier;
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.verification.Verification;
 
@@ -67,9 +68,8 @@ public abstract class BaseSortableCollectionVerifier<E, T, V extends BaseSortabl
      * @throws VerifierException
      */
     public V sorted(final Comparator<E> comparator, final Object name) throws VerifierException {
-        if (comparator == null) {
-            throw new VerifierException("comparator must not be null");
-        }
+        Verifier.verify(comparator, "comparator")
+            .not().nulled();
 
         final Collection<E> value = getCollection(verification().getValue());
         boolean result = true;

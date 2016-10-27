@@ -74,7 +74,7 @@ public abstract class BaseSortableCollectionVerifierTestCase<E extends Comparabl
     @Test
     public void testSortedThrowsIfComparatorIsNull() {
         thrown.expect(VerifierException.class);
-        thrown.expectMessage("comparator must not be null");
+        thrown.expectMessage("comparator must not be null: null");
 
         getCustomVerifier().sorted(null);
     }
@@ -121,7 +121,7 @@ public abstract class BaseSortableCollectionVerifierTestCase<E extends Comparabl
     @Test
     public void testSortedWithNameThrowsIfComparatorIsNull() {
         thrown.expect(VerifierException.class);
-        thrown.expectMessage("comparator must not be null");
+        thrown.expectMessage("comparator must not be null: null");
 
         getCustomVerifier().sorted(null, "comparator");
     }

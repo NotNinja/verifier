@@ -72,12 +72,14 @@ public final class DefaultVerification<T> implements Verification<T> {
 
     @Override
     public DefaultVerification<T> check(final boolean result, final String message, final Object... args) throws VerifierException {
-        final boolean wasNegated = negated;
-        negated = false;
+        if (result && negated || !result && !negated) {
+            final String errorMessage = getMessageFormatter().format(this, message, args);
+            negated = false;
 
-        if (result && wasNegated || !result && !wasNegated) {
-            throw new VerifierException(getMessageFormatter().format(this, message, args));
+            throw new VerifierException(errorMessage);
         }
+
+        negated = false;
 
         return this;
     }

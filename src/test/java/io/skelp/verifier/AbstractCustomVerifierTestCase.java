@@ -557,7 +557,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
     @Test
     public void testThatThrowsIfAssertionIsNull() {
         thrown.expect(VerifierException.class);
-        thrown.expectMessage("assertion must not be null");
+        thrown.expectMessage("assertion must not be null: null");
 
         getCustomVerifier().that(null);
     }
@@ -587,7 +587,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
     @Test
     public void testThatWithMessageThrowsIfAssertionIsNull() {
         thrown.expect(VerifierException.class);
-        thrown.expectMessage("assertion must not be null");
+        thrown.expectMessage("assertion must not be null: null");
 
         getCustomVerifier().that(null, "foo %s", "bar");
     }

@@ -24,6 +24,7 @@ package io.skelp.verifier.type.base;
 import java.util.Collection;
 
 import io.skelp.verifier.AbstractCustomVerifier;
+import io.skelp.verifier.Verifier;
 import io.skelp.verifier.VerifierAssertion;
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.util.Function;
@@ -157,9 +158,8 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @throws VerifierException
      */
     public V thatAll(final VerifierAssertion<E> assertion, final String message, final Object... args) throws VerifierException {
-        if (assertion == null) {
-            throw new VerifierException("assertion must not be null");
-        }
+        Verifier.verify(assertion, "assertion")
+            .not().nulled();
 
         final Collection<E> value = getCollection(verification().getValue());
         final boolean result = matchAll(value, new Function<Boolean, E>() {
@@ -195,9 +195,8 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @throws VerifierException
      */
     public V thatAny(final VerifierAssertion<E> assertion, final String message, final Object... args) throws VerifierException {
-        if (assertion == null) {
-            throw new VerifierException("assertion must not be null");
-        }
+        Verifier.verify(assertion, "assertion")
+            .not().nulled();
 
         final Collection<E> value = getCollection(verification().getValue());
         final boolean result = matchAny(value, new Function<Boolean, E>() {

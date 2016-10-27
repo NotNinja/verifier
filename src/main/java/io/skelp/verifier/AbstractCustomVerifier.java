@@ -268,9 +268,8 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
 
     @Override
     public V that(final VerifierAssertion<T> assertion, final String message, final Object... args) throws VerifierException {
-        if (assertion == null) {
-            throw new VerifierException("assertion must not be null");
-        }
+        Verifier.verify(assertion, "assertion")
+            .not().nulled();
 
         final boolean result = assertion.verify(verification.getValue());
 

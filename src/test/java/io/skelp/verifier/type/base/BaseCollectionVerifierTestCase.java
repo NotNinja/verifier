@@ -261,7 +261,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
     @Test
     public void testThatAllThrowsWhenAssertionIsNull() {
         thrown.expect(VerifierException.class);
-        thrown.expectMessage("assertion must not be null");
+        thrown.expectMessage("assertion must not be null: null");
 
         getCustomVerifier().thatAll(null);
     }
@@ -310,7 +310,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
     @Test
     public void testThatAllWithMessageThrowsWhenAssertionIsNull() {
         thrown.expect(VerifierException.class);
-        thrown.expectMessage("assertion must not be null");
+        thrown.expectMessage("assertion must not be null: null");
 
         getCustomVerifier().thatAll(null, "foo %s", "bar");
     }
@@ -361,7 +361,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
     @Test
     public void testThatAnyThrowsWhenAssertionIsNull() {
         thrown.expect(VerifierException.class);
-        thrown.expectMessage("assertion must not be null");
+        thrown.expectMessage("assertion must not be null: null");
 
         getCustomVerifier().thatAny(null);
     }
@@ -410,7 +410,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
     @Test
     public void testThatAnyWithMessageThrowsWhenAssertionIsNull() {
         thrown.expect(VerifierException.class);
-        thrown.expectMessage("assertion must not be null");
+        thrown.expectMessage("assertion must not be null: null");
 
         getCustomVerifier().thatAny(null, "foo %s", "bar");
     }
