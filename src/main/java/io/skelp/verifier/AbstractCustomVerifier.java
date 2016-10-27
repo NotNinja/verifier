@@ -28,33 +28,60 @@ import io.skelp.verifier.util.Function;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * An abstract implementation of {@link CustomVerifier} that fulfils the contract while also providing useful helper
+ * methods for its children to meet similar verification methods and other abstract implementations.
+ * </p>
  *
  * @param <T>
+ *         the type of the value being verified
  * @param <V>
+ *         the type of the {@link AbstractCustomVerifier} for chaining purposes
  * @author Alasdair Mercer
  */
 public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier<T, V>> implements CustomVerifier<T, V> {
 
     /**
-     * TODO: Document
+     * <p>
+     * Returns whether the specified {@code matcher} matches <b>all</b> of the {@code inputs} provided.
+     * </p>
+     * <p>
+     * This method will return {@literal true} if {@code inputs} is {@literal null} and will return {@literal false} if
+     * {@code matcher} returns {@literal false} for any {@code input}.
+     * </p>
      *
      * @param inputs
+     *         the input values to be matched
      * @param matcher
+     *         the {@link Function} to be used to match each input value
      * @param <I>
-     * @return
+     *         the type of the input values
+     * @return {@literal true} if {@code inputs} is {@literal null} or {@code matcher} returns {@literal true} for all
+     * input values; otherwise {@literal false}.
+     * @see #matchAll(Collection, Function)
      */
     protected static <I> boolean matchAll(final I[] inputs, final Function<Boolean, I> matcher) {
         return inputs == null || matchAll(Arrays.asList(inputs), matcher);
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Returns whether the specified {@code matcher} matches <b>all</b> of the {@code inputs} provided.
+     * </p>
+     * <p>
+     * This method will return {@literal true} if {@code inputs} is {@literal null} and will return {@literal false} if
+     * {@code matcher} returns {@literal false} for any {@code input}.
+     * </p>
      *
      * @param inputs
+     *         the input values to be matched
      * @param matcher
+     *         the {@link Function} to be used to match each input value
      * @param <I>
-     * @return
+     *         the type of the input values
+     * @return {@literal true} if {@code inputs} is {@literal null} or {@code matcher} returns {@literal true} for all
+     * input values; otherwise {@literal false}.
+     * @see #matchAll(Object[], Function)
      */
     protected static <I> boolean matchAll(final Collection<I> inputs, final Function<Boolean, I> matcher) {
         if (inputs == null) {
@@ -71,24 +98,46 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Returns whether the specified {@code matcher} matches <b>any</b> of the {@code inputs} provided.
+     * </p>
+     * <p>
+     * This method will return {@literal false} if {@code inputs} is {@literal null} and will return {@literal true} if
+     * {@code matcher} returns {@literal true} for any {@code input}.
+     * </p>
      *
      * @param inputs
+     *         the input values to be matched
      * @param matcher
+     *         the {@link Function} to be used to match each input value
      * @param <I>
-     * @return
+     *         the type of the input values
+     * @return {@literal true} if {@code inputs} is not {@literal null} and {@code matcher} returns {@literal true} for
+     * any input value; otherwise {@literal false}.
+     * @see #matchAny(Collection, Function)
      */
     protected static <I> boolean matchAny(final I[] inputs, final Function<Boolean, I> matcher) {
         return inputs != null && matchAny(Arrays.asList(inputs), matcher);
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Returns whether the specified {@code matcher} matches <b>any</b> of the {@code inputs} provided.
+     * </p>
+     * <p>
+     * This method will return {@literal false} if {@code inputs} is {@literal null} and will return {@literal true} if
+     * {@code matcher} returns {@literal true} for any {@code input}.
+     * </p>
      *
      * @param inputs
+     *         the input values to be matched
      * @param matcher
+     *         the {@link Function} to be used to match each input value
      * @param <I>
-     * @return
+     *         the type of the input values
+     * @return {@literal true} if {@code inputs} is not {@literal null} and {@code matcher} returns {@literal true} for
+     * any input value; otherwise {@literal false}.
+     * @see #matchAny(Object[], Function)
      */
     protected static <I> boolean matchAny(final Collection<I> inputs, final Function<Boolean, I> matcher) {
         if (inputs == null) {
@@ -107,18 +156,24 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     private final Verification<T> verification;
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link AbstractCustomVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public AbstractCustomVerifier(final Verification<T> verification) {
         this.verification = verification;
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Returns a reference to this {@link AbstractCustomVerifier} implementation which can be useful for chaining
+     * references while avoiding unchecked casting warnings.
+     * </p>
      *
-     * @return
+     * @return A reference to this {@link AbstractCustomVerifier} implementation.
      */
     protected V chain() {
         @SuppressWarnings("unchecked")
@@ -206,11 +261,19 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Returns whether the specified {@code value} is equal to the {@code other} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
      *
      * @param value
+     *         the value being verified (may be {@literal null})
      * @param other
-     * @return
+     *         the object to compare against {@code value} (may be {@literal null})
+     * @return {@literal true} if {@code value} equals {@code other}; otherwise {@literal false}.
+     * @see Object#equals(Object)
      */
     protected boolean isEqualTo(final T value, final Object other) {
         return other == null ? value == null : other.equals(value);
