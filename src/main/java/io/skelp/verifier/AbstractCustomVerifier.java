@@ -120,9 +120,10 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
      *
      * @return
      */
-    @SuppressWarnings("unchecked")
     protected V chain() {
-        return (V) this;
+        @SuppressWarnings("unchecked")
+        final V chain = (V) this;
+        return chain;
     }
 
     @Override
