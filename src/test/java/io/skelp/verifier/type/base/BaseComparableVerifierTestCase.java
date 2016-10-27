@@ -42,13 +42,16 @@ import io.skelp.verifier.CustomVerifierTestCaseBase;
  */
 public abstract class BaseComparableVerifierTestCase<T extends Comparable<? super T>, V extends BaseComparableVerifier<T, V>> extends CustomVerifierTestCaseBase<T, V> {
 
-    // TODO: Test between & betweenExclusive with start greater than end and vice versa
-
     @Test
     public void hackCoverage() throws Exception {
         // TODO: Determine how to avoid this
         assertEquals(4, BaseComparableVerifier.ComparisonOperator.values().length);
         assertEquals(BaseComparableVerifier.ComparisonOperator.GREATER_THAN, BaseComparableVerifier.ComparisonOperator.valueOf("GREATER_THAN"));
+    }
+
+    @Test
+    public void testBetweenWhenEndIsLessThanStart() {
+        testBetweenHelper(getBaseValue(), getHigherValue(), getLowerValue(), false);
     }
 
     @Test
@@ -102,6 +105,11 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
     }
 
     @Test
+    public void testBetweenWithStartAndEndNamesWhenEndIsLessThanStart() {
+        testBetweenHelper(getBaseValue(), getHigherValue(), getLowerValue(), "start", "end", false);
+    }
+
+    @Test
     public void testBetweenWithStartAndEndNamesBetweenWhenEndIsNull() {
         testBetweenHelper(getBaseValue(), getLowerValue(), null, "start", "end", false);
     }
@@ -152,6 +160,11 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
     }
 
     @Test
+    public void testBetweenExclusiveWhenEndIsLessThanStart() {
+        testBetweenExclusiveHelper(getBaseValue(), getHigherValue(), getLowerValue(), false);
+    }
+
+    @Test
     public void testBetweenExclusiveWhenEndIsNull() {
         testBetweenExclusiveHelper(getBaseValue(), getLowerValue(), null, false);
     }
@@ -199,6 +212,11 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
         verify(getMockVerification()).check(eq(expected), eq("be between '%s' and '%s' (exclusive)"), getArgsCaptor().capture());
 
         assertArrayEquals("Passes start and end for message formatting", new Object[]{start, end}, getArgsCaptor().getAllValues().toArray());
+    }
+
+    @Test
+    public void testBetweenExclusiveWithStartAndEndNamesWhenEndIsLessThanStart() {
+        testBetweenExclusiveHelper(getBaseValue(), getHigherValue(), getLowerValue(), "start", "end", false);
     }
 
     @Test
