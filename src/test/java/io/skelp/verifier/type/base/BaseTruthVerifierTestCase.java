@@ -48,11 +48,7 @@ public abstract class BaseTruthVerifierTestCase<T, V extends BaseTruthVerifier<T
 
     @Test
     public void testFalsyWhenValueIsNull() {
-        @SuppressWarnings("unchecked")
-        T[] values = (T[]) new Object[1];
-        values[0] = null;
-
-        testFalsyHelper(values, isNullFalsy());
+        testFalsyHelper(createArray((T) null), true);
     }
 
     @Test
@@ -77,11 +73,7 @@ public abstract class BaseTruthVerifierTestCase<T, V extends BaseTruthVerifier<T
 
     @Test
     public void testTruthyWhenValueIsNull() {
-        @SuppressWarnings("unchecked")
-        T[] values = (T[]) new Object[1];
-        values[0] = null;
-
-        testTruthyHelper(values, isNullTruthy());
+        testTruthyHelper(createArray((T) null), false);
     }
 
     @Test
@@ -104,8 +96,8 @@ public abstract class BaseTruthVerifierTestCase<T, V extends BaseTruthVerifier<T
      * Returns the values considered to be falsy.
      * </p>
      * <p>
-     * If {@literal null} is considered falsy, {@link #isNullFalsy()} should be overridden to return {@literal true}
-     * instead of including {@literal null} amongst these values.
+     * Since {@literal null} is <b>always</b> considered falsy, it should not be included in amongst these values and is
+     * tested separately.
      * </p>
      *
      * @return The falsy values.
@@ -117,39 +109,11 @@ public abstract class BaseTruthVerifierTestCase<T, V extends BaseTruthVerifier<T
      * Returns the values considered to be truthy.
      * </p>
      * <p>
-     * If {@literal null} is considered truthy, {@link #isNullTruthy()} should be overridden to return {@literal true}
-     * instead of including {@literal null} amongst these values.
+     * Since {@literal null} is <b>never</b> considered truthy, it should not be included in amongst these values and is
+     * tested separately.
      * </p>
      *
      * @return The truthy values.
      */
     protected abstract T[] getTruthyValues();
-
-    /**
-     * <p>
-     * Returns whether {@literal null} is considered falsy.
-     * </p>
-     * <p>
-     * By default this method returns {@literal false}.
-     * </p>
-     *
-     * @return {@literal true} if {@literal null} is expected to be falsy; otherwise {@literal false}.
-     */
-    protected boolean isNullFalsy() {
-        return false;
-    }
-
-    /**
-     * <p>
-     * Returns whether {@literal null} is considered truthy.
-     * </p>
-     * <p>
-     * By default this method returns {@literal false}.
-     * </p>
-     *
-     * @return {@literal true} if {@literal null} is expected to be truthy; otherwise {@literal false}.
-     */
-    protected boolean isNullTruthy() {
-        return false;
-    }
 }

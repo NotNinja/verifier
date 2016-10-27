@@ -55,7 +55,7 @@ public final class DoubleVerifier extends BaseComparableVerifier<Double, DoubleV
     @Override
     public DoubleVerifier falsy() throws VerifierException {
         final Double value = verification().getValue();
-        final boolean result = value != null && value == 0D;
+        final boolean result = value == null || value == 0D;
 
         verification().check(result, "be falsy");
 

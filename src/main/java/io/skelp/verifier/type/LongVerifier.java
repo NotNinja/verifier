@@ -55,7 +55,7 @@ public final class LongVerifier extends BaseComparableVerifier<Long, LongVerifie
     @Override
     public LongVerifier falsy() throws VerifierException {
         final Long value = verification().getValue();
-        final boolean result = value != null && value == 0L;
+        final boolean result = value == null || value == 0L;
 
         verification().check(result, "be falsy");
 

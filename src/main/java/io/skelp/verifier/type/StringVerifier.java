@@ -487,7 +487,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
     @Override
     public StringVerifier falsy() throws VerifierException {
         final String value = verification().getValue();
-        final boolean result = Boolean.FALSE.toString().equalsIgnoreCase(value);
+        final boolean result = value == null || value.isEmpty() || Boolean.FALSE.toString().equalsIgnoreCase(value);
 
         verification().check(result, "be falsy");
 

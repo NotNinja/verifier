@@ -115,7 +115,7 @@ public class StringVerifierTest {
 
         @Override
         protected String[] getFalsyValues() {
-            return new String[]{"false", "FALSE"};
+            return new String[]{"", "false", "FALSE"};
         }
 
         @Override

@@ -55,7 +55,7 @@ public final class FloatVerifier extends BaseComparableVerifier<Float, FloatVeri
     @Override
     public FloatVerifier falsy() throws VerifierException {
         final Float value = verification().getValue();
-        final boolean result = value != null && value == 0F;
+        final boolean result = value == null || value == 0F;
 
         verification().check(result, "be falsy");
 

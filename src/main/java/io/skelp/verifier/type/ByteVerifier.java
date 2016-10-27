@@ -55,7 +55,7 @@ public final class ByteVerifier extends BaseComparableVerifier<Byte, ByteVerifie
     @Override
     public ByteVerifier falsy() throws VerifierException {
         final Byte value = verification().getValue();
-        final boolean result = value != null && value == 0;
+        final boolean result = value == null || value == 0;
 
         verification().check(result, "be falsy");
 

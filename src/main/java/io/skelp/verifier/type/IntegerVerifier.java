@@ -55,7 +55,7 @@ public final class IntegerVerifier extends BaseComparableVerifier<Integer, Integ
     @Override
     public IntegerVerifier falsy() throws VerifierException {
         final Integer value = verification().getValue();
-        final boolean result = value != null && value == 0;
+        final boolean result = value == null || value == 0;
 
         verification().check(result, "be falsy");
 

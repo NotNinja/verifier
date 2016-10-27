@@ -55,7 +55,7 @@ public final class ShortVerifier extends BaseComparableVerifier<Short, ShortVeri
     @Override
     public ShortVerifier falsy() throws VerifierException {
         final Short value = verification().getValue();
-        final boolean result = value != null && value == 0;
+        final boolean result = value == null || value == 0;
 
         verification().check(result, "be falsy");
 

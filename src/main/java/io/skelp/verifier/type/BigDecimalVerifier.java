@@ -57,7 +57,7 @@ public final class BigDecimalVerifier extends BaseComparableVerifier<BigDecimal,
     @Override
     public BigDecimalVerifier falsy() throws VerifierException {
         final BigDecimal value = verification().getValue();
-        final boolean result = value != null && value.compareTo(BigDecimal.ZERO) == 0;
+        final boolean result = value == null || value.compareTo(BigDecimal.ZERO) == 0;
 
         verification().check(result, "be falsy");
 

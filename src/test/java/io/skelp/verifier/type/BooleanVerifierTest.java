@@ -235,10 +235,5 @@ public class BooleanVerifierTest {
         protected Boolean[] getTruthyValues() {
             return new Boolean[]{true};
         }
-
-        @Override
-        protected boolean isNullFalsy() {
-            return true;
-        }
     }
 }

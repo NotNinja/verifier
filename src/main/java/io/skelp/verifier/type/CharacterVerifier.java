@@ -183,7 +183,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
     @Override
     public CharacterVerifier falsy() throws VerifierException {
         final Character value = verification().getValue();
-        final boolean result = value != null && value == '0';
+        final boolean result = value == null || value == '0';
 
         verification().check(result, "be falsy");
 

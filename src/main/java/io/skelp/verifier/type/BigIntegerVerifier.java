@@ -57,7 +57,7 @@ public final class BigIntegerVerifier extends BaseComparableVerifier<BigInteger,
     @Override
     public BigIntegerVerifier falsy() throws VerifierException {
         final BigInteger value = verification().getValue();
-        final boolean result = value != null && value.compareTo(BigInteger.ZERO) == 0;
+        final boolean result = value == null || value.compareTo(BigInteger.ZERO) == 0;
 
         verification().check(result, "be falsy");
 
