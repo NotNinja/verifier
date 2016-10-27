@@ -28,8 +28,10 @@ import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.verification.factory.VerificationFactory;
 
 /**
+ * <p>
  * A configurable implementation of {@link VerifierFactoryProvider} where factory instances can be changed as bean
  * properties.
+ * </p>
  *
  * @author Alasdair Mercer
  */
@@ -45,7 +47,9 @@ public final class ConfigurableVerifierFactoryProvider implements VerifierFactor
     }
 
     /**
+     * <p>
      * Sets the factory instance for creating {@link CustomVerifier CustomVerifiers} to {@code customVerifierFactory}.
+     * </p>
      *
      * @param customVerifierFactory
      *         the instance of {@link CustomVerifierFactory} to be set
@@ -60,8 +64,10 @@ public final class ConfigurableVerifierFactoryProvider implements VerifierFactor
     }
 
     /**
+     * <p>
      * Sets the factory instance for creating {@link MessageFormatter MessageFormatters} to {@code
      * messageFormatterFactory}.
+     * </p>
      *
      * @param messageFormatterFactory
      *         the instance of {@link MessageFormatterFactory} to be set
@@ -76,7 +82,9 @@ public final class ConfigurableVerifierFactoryProvider implements VerifierFactor
     }
 
     /**
+     * <p>
      * Sets the factory instance for creating {@link Verification Verification} to {@code verificationFactory}.
+     * </p>
      *
      * @param verificationFactory
      *         the instance of {@link VerificationFactory} to be set

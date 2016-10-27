@@ -28,28 +28,36 @@ import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.verification.factory.VerificationFactory;
 
 /**
+ * <p>
  * A simple interface that provides factory instances.
+ * </p>
  *
  * @author Alasdair Mercer
  */
 public interface VerifierFactoryProvider {
 
     /**
+     * <p>
      * Returns the factory instance for creating {@link CustomVerifier CustomVerifiers}.
+     * </p>
      *
      * @return An instance of {@link CustomVerifierFactory}.
      */
     CustomVerifierFactory getCustomVerifierFactory();
 
     /**
+     * <p>
      * Returns the factory instance for creating {@link MessageFormatter MessageFormatters}.
+     * </p>
      *
      * @return An instance of {@link MessageFormatterFactory}.
      */
     MessageFormatterFactory getMessageFormatterFactory();
 
     /**
+     * <p>
      * Returns the factory instance for creating {@link Verification Verification}.
+     * </p>
      *
      * @return An instance of {@link VerificationFactory}.
      */

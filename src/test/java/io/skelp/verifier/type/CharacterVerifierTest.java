@@ -38,7 +38,9 @@ import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
 import io.skelp.verifier.util.Function;
 
 /**
+ * <p>
  * Tests for the {@link CharacterVerifier} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

@@ -29,7 +29,9 @@ import org.junit.Test;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
 
 /**
+ * <p>
  * Test case for {@link BaseNumberVerifier} implementation classes.
+ * </p>
  *
  * @param <T>
  *         the {@code Number} value type for the {@link BaseNumberVerifier} being tested
@@ -208,35 +210,45 @@ public abstract class BaseNumberVerifierTestCase<T extends Number, V extends Bas
     }
 
     /**
+     * <p>
      * Returns an even value for testing.
+     * </p>
      *
      * @return An even value.
      */
     protected abstract T getEvenValue();
 
     /**
+     * <p>
      * Returns an even value for testing.
+     * </p>
      *
      * @return An even value.
      */
     protected abstract T getOddValue();
 
     /**
+     * <p>
      * Returns the value of +1 for testing.
+     * </p>
      *
      * @return Positive one.
      */
     protected abstract T getPositiveOneValue();
 
     /**
+     * <p>
      * Returns the value of -1 for testing.
+     * </p>
      *
      * @return Negative one.
      */
     protected abstract T getNegativeOneValue();
 
     /**
+     * <p>
      * Returns the value of zero for testing.
+     * </p>
      *
      * @return Zero.
      */

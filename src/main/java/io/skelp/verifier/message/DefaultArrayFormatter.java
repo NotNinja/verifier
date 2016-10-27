@@ -22,7 +22,9 @@
 package io.skelp.verifier.message;
 
 /**
+ * <p>
  * The default implementation of {@link ArrayFormatter}.
+ * </p>
  *
  * @param <T>
  *         the type of elements within the array
@@ -35,7 +37,9 @@ public final class DefaultArrayFormatter<T> implements ArrayFormatter<T> {
     private final T[] array;
 
     /**
+     * <p>
      * Creates an instance of {@link DefaultArrayFormatter} for the {@code array} provided.
+     * </p>
      *
      * @param array
      *         the array to be formatted

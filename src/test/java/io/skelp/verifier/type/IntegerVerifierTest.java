@@ -30,7 +30,9 @@ import io.skelp.verifier.type.base.BaseNumberVerifierTestCase;
 import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
 
 /**
+ * <p>
  * Tests for the {@link IntegerVerifier} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

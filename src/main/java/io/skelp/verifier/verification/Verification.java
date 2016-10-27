@@ -25,11 +25,14 @@ import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.message.MessageFormatter;
 
 /**
+ * <p>
  * Contains contextual information for a verification and also provides verifiers with a clean and simply way of
  * checking the results of their verifications without having to handle negation, throwing errors, or message
  * formatting.
+ * </p>
  * <p>
  * A {@code Verification} encapsulates a single value which may well be verified multiple times.
+ * </p>
  *
  * @param <T>
  *         the type of the value being verified
@@ -38,15 +41,19 @@ import io.skelp.verifier.message.MessageFormatter;
 public interface Verification<T> {
 
     /**
+     * <p>
      * Checks the specified {@code result} to determine whether it passes verification.
+     * </p>
      * <p>
      * {@code result} will pass it is {@literal true} and this {@link Verification} has not be negated or if it has been
      * negated and {@code result} is {@literal false}. If it does not pass, a {@link VerifierException} will be thrown
      * with a suitable message, which can be enhanced using the optional {@code message} and format {@code args}
      * provided.
+     * </p>
      * <p>
      * This {@link Verification} will no longer be negated as a result of calling this method, regardless of whether
      * {@code result} passes verification.
+     * </p>
      *
      * @param result
      *         the result of the verification
@@ -61,8 +68,10 @@ public interface Verification<T> {
     Verification<T> check(boolean result, String message, Object... args) throws VerifierException;
 
     /**
+     * <p>
      * Returns the message formatter that is being used by this {@link Verification} to format the messages for any
      * {@link VerifierException VerifierExceptions} that are thrown by {@link #check(boolean, String, Object...)}.
+     * </p>
      *
      * @return The {@link MessageFormatter}.
      * @throws VerifierException
@@ -71,23 +80,29 @@ public interface Verification<T> {
     MessageFormatter getMessageFormatter() throws VerifierException;
 
     /**
+     * <p>
      * Returns the optional name used to represent the value for this {@link Verification}.
+     * </p>
      *
      * @return The name representation for the value or {@literal null} if none was provided.
      */
     Object getName();
 
     /**
+     * <p>
      * Returns whether the next result that is passed to {@link #check(boolean, String, Object...)} is negated for this
      * {@link Verification}.
+     * </p>
      *
      * @return {@literal true} if the next result will be negated; otherwise {@literal false}.
      */
     boolean isNegated();
 
     /**
+     * <p>
      * Sets whether the next result that is passed to {@link #check(boolean, String, Object...)} is negated for this
      * {@link Verification} to {@code negated}.
+     * </p>
      *
      * @param negated
      *         {@literal true} to negate the next result; otherwise {@literal false}
@@ -95,7 +110,9 @@ public interface Verification<T> {
     void setNegated(boolean negated);
 
     /**
+     * <p>
      * Returns the value for this {@link Verification}.
+     * </p>
      *
      * @return The value being verified which may be {@literal null}.
      */

@@ -33,7 +33,9 @@ import io.skelp.verifier.message.factory.MessageFormatterFactory;
 import io.skelp.verifier.verification.factory.VerificationFactory;
 
 /**
+ * <p>
  * Tests for the {@link ConfigurableVerifierFactoryProvider} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

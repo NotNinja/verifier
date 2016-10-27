@@ -31,7 +31,9 @@ import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
 import io.skelp.verifier.type.base.BaseTimeVerifierTestCase;
 
 /**
+ * <p>
  * Tests for the {@link CalendarVerifier} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

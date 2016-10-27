@@ -27,7 +27,9 @@ import org.junit.runner.RunWith;
 import io.skelp.verifier.AbstractCustomVerifierTestCase;
 
 /**
+ * <p>
  * Tests for the {@link ObjectVerifier} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

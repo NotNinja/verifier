@@ -33,7 +33,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
+ * <p>
  * Test case for {@link AbstractCustomVerifier} implementation classes.
+ * </p>
  *
  * @param <T>
  *         the value type for the {@link AbstractCustomVerifier} being tested
@@ -619,29 +621,38 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
     }
 
     /**
+     * <p>
      * Creates a value to be used for testing.
+     * </p>
      * <p>
      * This should always be different from {@link #createValueTwo()} to enable proper testing of equality methods.
+     * </p>
      *
      * @return A value.
      */
     protected abstract T createValueOne();
 
     /**
+     * <p>
      * Creates another value to be used for testing.
+     * </p>
      * <p>
      * This should always be different from {@link #createValueOne()} to enable proper testing of equality methods.
+     * </p>
      *
      * @return Another value.
      */
     protected abstract T createValueTwo();
 
     /**
+     * <p>
      * Returns whether any values that are considered equal (i.e. {@link Object#equals(Object)}) will also be the same
      * (i.e. {@code ==}).
+     * </p>
      * <p>
      * By default this method returns {@literal false}, which is appropriate in most cases, however, it can be
      * overridden where required (e.g. classes, enums, primitives).
+     * </p>
      *
      * @return {@literal true} if equal values are expected to be the same; otherwise {@literal false}.
      */
@@ -650,16 +661,21 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
     }
 
     /**
+     * <p>
      * Returns a parent class of the value class for testing inheritance methods.
+     * </p>
      * <p>
      * If the value class does not have a parent class, simply use {@code Object.class}.
+     * </p>
      *
      * @return The parent class.
      */
     protected abstract Class<?> getParentClass();
 
     /**
+     * <p>
      * Returns the class of the value for testing inheritance methods.
+     * </p>
      *
      * @return The value class.
      */

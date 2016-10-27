@@ -32,7 +32,9 @@ import io.skelp.verifier.verification.factory.DefaultVerificationFactory;
 import io.skelp.verifier.verification.factory.VerificationFactory;
 
 /**
+ * <p>
  * Tests for the {@link DefaultVerifierFactoryProvider} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

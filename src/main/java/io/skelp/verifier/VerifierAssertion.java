@@ -21,20 +21,27 @@
  */
 package io.skelp.verifier;
 
+import io.skelp.verifier.type.base.BaseCollectionVerifier;
+
 /**
+ * <p>
  * Asserts that a given value is valid based on custom criteria.
+ * </p>
  *
  * @param <T>
  *         the type of the value being verified
  * @author Alasdair Mercer
  * @see CustomVerifier#that(VerifierAssertion)
- * @see CustomVerifier#that(VerifierAssertion, String, Object...)
+ * @see BaseCollectionVerifier#thatAll(VerifierAssertion)
+ * @see BaseCollectionVerifier#thatAny(VerifierAssertion)
  */
 public interface VerifierAssertion<T> {
 
     /**
+     * <p>
      * Returns whether the specified {@code value} is valid based on the custom criteria of this {@link
      * VerifierAssertion}.
+     * </p>
      *
      * @param value
      *         the value to be verified

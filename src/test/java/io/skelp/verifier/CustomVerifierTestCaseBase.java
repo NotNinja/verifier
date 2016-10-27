@@ -43,7 +43,9 @@ import io.skelp.verifier.message.MessageFormatter;
 import io.skelp.verifier.verification.Verification;
 
 /**
+ * <p>
  * Base for test cases for {@link CustomVerifier} implementation classes.
+ * </p>
  *
  * @param <T>
  *         the value type for the {@link CustomVerifier} being tested
@@ -55,7 +57,9 @@ import io.skelp.verifier.verification.Verification;
 public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, V>> {
 
     /**
+     * <p>
      * Creates a typed array containing the {@code items} provided.
+     * </p>
      *
      * @param items
      *         the items for the array
@@ -68,7 +72,9 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     }
 
     /**
+     * <p>
      * Creates an empty typed array based on the specified class.
+     * </p>
      *
      * @param cls
      *         the class for the array type
@@ -83,7 +89,9 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     }
 
     /**
+     * <p>
      * Creates a map populated with the specified {@code keys} and their corresponding {@code values}.
+     * </p>
      *
      * @param keys
      *         the keys to be mapped to {@code values}
@@ -143,8 +151,10 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     }
 
     /**
+     * <p>
      * Asserts that the an {@link ArrayFormatter} was passed as the specified {@code arg} for the {@code array}
      * provided.
+     * </p>
      *
      * @param arg
      *         the captured argument to be checked
@@ -158,15 +168,19 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     }
 
     /**
+     * <p>
      * Creates an instance of the custom verifier test subject to be tested.
+     * </p>
      *
      * @return The {@link AbstractCustomVerifier} to be tested.
      */
     protected abstract V createCustomVerifier();
 
     /**
+     * <p>
      * Returns an argument captor to be be used to capture any varargs that are passed to {@link
      * Verification#check(boolean, String, Object...)}.
+     * </p>
      *
      * @return An {@code ArgumentCaptor} to be used to capture optional format arguments.
      */
@@ -175,7 +189,9 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     }
 
     /**
+     * <p>
      * Returns the custom verifier test subject that is being tested.
+     * </p>
      *
      * @return The {@link AbstractCustomVerifier} being tested.
      */
@@ -184,7 +200,9 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     }
 
     /**
+     * <p>
      * Returns the mock array formatter being used to test the subject.
+     * </p>
      *
      * @return The mock {@link ArrayFormatter}.
      */
@@ -193,7 +211,9 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     }
 
     /**
+     * <p>
      * Returns the mock message formatter being used to test the subject.
+     * </p>
      *
      * @return The mock {@link MessageFormatter}.
      */
@@ -202,7 +222,9 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     }
 
     /**
+     * <p>
      * Returns the mock verification being used to test the subject.
+     * </p>
      *
      * @return The mock {@link Verification}.
      */
@@ -211,7 +233,9 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     }
 
     /**
+     * <p>
      * Returns the value being used to test the subject.
+     * </p>
      *
      * @return The value.
      */
@@ -220,7 +244,9 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     }
 
     /**
+     * <p>
      * Sets the value being used to test the subject to {@code value}.
+     * </p>
      *
      * @param value
      *         the value to be set

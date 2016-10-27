@@ -36,7 +36,9 @@ import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
 import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
 
 /**
+ * <p>
  * Tests for the {@link StringVerifier} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

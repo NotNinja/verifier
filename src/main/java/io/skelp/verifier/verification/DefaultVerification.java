@@ -26,11 +26,14 @@ import io.skelp.verifier.message.MessageFormatter;
 import io.skelp.verifier.message.factory.MessageFormatterFactory;
 
 /**
+ * <p>
  * The default implementation of {@link Verification}.
+ * </p>
  * <p>
  * Instead depending on a {@link MessageFormatter} instance which may never be used, this implementation depends on a
  * {@link MessageFormatterFactory} instance which will be used to create a {@link MessageFormatter} instance only when
  * required.
+ * </p>
  *
  * @param <T>
  *         the type of the value being verified
@@ -45,10 +48,13 @@ public final class DefaultVerification<T> implements Verification<T> {
     private final T value;
 
     /**
-     * Creates an instance of {@link DefaultVerification} based on the {@code value} and optional {@code name} provided.
      * <p>
-     * {@code messageFormatterFactory} will be used to create a {@link MessageFormatter} instance only when
-     * required via {@link #getMessageFormatter()}.
+     * Creates an instance of {@link DefaultVerification} based on the {@code value} and optional {@code name} provided.
+     * </p>
+     * <p>
+     * {@code messageFormatterFactory} will be used to create a {@link MessageFormatter} instance only when required via
+     * {@link #getMessageFormatter()}.
+     * </p>
      *
      * @param messageFormatterFactory
      *         the {@link MessageFormatterFactory} which will be used to create an {@link MessageFormatter} instance

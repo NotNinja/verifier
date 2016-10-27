@@ -32,7 +32,9 @@ import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
 import io.skelp.verifier.type.base.BaseTimeVerifierTestCase;
 
 /**
+ * <p>
  * Tests for the {@link DateVerifier} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

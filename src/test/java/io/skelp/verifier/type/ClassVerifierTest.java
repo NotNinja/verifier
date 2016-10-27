@@ -41,7 +41,9 @@ import io.skelp.verifier.AbstractCustomVerifierTestCase;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
 
 /**
+ * <p>
  * Tests for the {@link ClassVerifier} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

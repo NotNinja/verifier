@@ -31,7 +31,9 @@ import org.junit.Test;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
 
 /**
+ * <p>
  * Test case for {@link BaseTimeVerifier} implementation classes.
+ * </p>
  *
  * @param <T>
  *         the {@code Comparable} value type for the {@link BaseTimeVerifier} being tested
@@ -42,7 +44,9 @@ import io.skelp.verifier.CustomVerifierTestCaseBase;
 public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, V extends BaseTimeVerifier<T, V>> extends CustomVerifierTestCaseBase<T, V> {
 
     /**
+     * <p>
      * Creates a {@code Calendar} instance based on the information provided.
+     * </p>
      *
      * @param era
      *         the era to be used
@@ -604,10 +608,13 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
     }
 
     /**
+     * <p>
      * Creates an instance of the value being verified that represents the specified {@code calendar}.
-     * <p/>
+     * </p>
+     * <p>
      * {@code calendar} may be {@literal null} in which case an appropriate value should be returned, which may itself
      * be {@literal null}.
+     * </p>
      *
      * @param calendar
      *         the {@code Calendar} for which the value representation is to be returned (may be {@literal null})

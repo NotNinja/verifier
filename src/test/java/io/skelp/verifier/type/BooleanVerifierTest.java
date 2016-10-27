@@ -34,7 +34,9 @@ import io.skelp.verifier.CustomVerifierTestCaseBase;
 import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
 
 /**
+ * <p>
  * Tests for the {@link BooleanVerifier} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

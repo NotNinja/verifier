@@ -28,7 +28,9 @@ import io.skelp.verifier.AbstractCustomVerifierTestCase;
 import io.skelp.verifier.type.base.BaseSortableCollectionVerifierTestCase;
 
 /**
+ * <p>
  * Tests for the {@link ArrayVerifier} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

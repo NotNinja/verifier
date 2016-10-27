@@ -22,10 +22,13 @@
 package io.skelp.verifier.util;
 
 /**
+ * <p>
  * A simple function that takes an input and returns and output of specific types. This is used throughout Verifier,
  * mostly for iterations.
+ * </p>
  * <p>
  * All implementations of {@code Function} should be stateless and predictable based on the input.
+ * </p>
  *
  * @param <R>
  *         the type of the return value
@@ -36,7 +39,9 @@ package io.skelp.verifier.util;
 public interface Function<R, T> {
 
     /**
+     * <p>
      * Applies the specified {@code value} to this {@link Function} and returns the output.
+     * </p>
      *
      * @param input
      *         the value to be applied

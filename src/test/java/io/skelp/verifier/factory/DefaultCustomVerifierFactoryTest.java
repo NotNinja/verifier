@@ -34,7 +34,9 @@ import io.skelp.verifier.CustomVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
+ * <p>
  * Tests for the {@link DefaultCustomVerifierFactory} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

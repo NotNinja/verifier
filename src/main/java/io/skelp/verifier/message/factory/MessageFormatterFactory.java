@@ -25,14 +25,18 @@ import io.skelp.verifier.factory.VerifierFactoryException;
 import io.skelp.verifier.message.MessageFormatter;
 
 /**
+ * <p>
  * A factory for creating instances of {@link MessageFormatter}.
+ * </p>
  *
  * @author Alasdair Mercer
  */
 public interface MessageFormatterFactory {
 
     /**
+     * <p>
      * Creates an instance of a {@link MessageFormatter} to be used to format messages.
+     * </p>
      *
      * @return The newly created {@link MessageFormatter}
      * @throws VerifierFactoryException

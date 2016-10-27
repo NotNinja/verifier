@@ -35,7 +35,9 @@ import io.skelp.verifier.message.factory.MessageFormatterFactory;
 import io.skelp.verifier.verification.DefaultVerification;
 
 /**
+ * <p>
  * Tests for the {@link DefaultVerificationFactory} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

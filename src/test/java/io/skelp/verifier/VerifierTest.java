@@ -73,7 +73,9 @@ import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.verification.factory.VerificationFactory;
 
 /**
+ * <p>
  * Tests for the {@link Verifier} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

@@ -28,7 +28,9 @@ import io.skelp.verifier.AbstractCustomVerifierTestCase;
 import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
 
 /**
+ * <p>
  * Tests for the {@link ComparableVerifier} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

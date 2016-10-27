@@ -27,8 +27,10 @@ import io.skelp.verifier.verification.factory.DefaultVerificationFactory;
 import io.skelp.verifier.verification.factory.VerificationFactory;
 
 /**
+ * <p>
  * The default implementation of {@link VerifierFactoryProvider} which provides the default implementations of each
  * factory instance.
+ * </p>
  *
  * @author Alasdair Mercer
  */

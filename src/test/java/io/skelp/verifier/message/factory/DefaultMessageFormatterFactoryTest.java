@@ -29,7 +29,9 @@ import org.junit.Test;
 import io.skelp.verifier.message.DefaultMessageFormatter;
 
 /**
+ * <p>
  * Tests for the {@link DefaultMessageFormatterFactory} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

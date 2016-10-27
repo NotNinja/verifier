@@ -27,17 +27,22 @@ import io.skelp.verifier.message.factory.MessageFormatterFactory;
 import io.skelp.verifier.verification.Verification;
 
 /**
+ * <p>
  * A factory for creating instances of {@link Verification} based on a given value and optional name.
+ * </p>
  *
  * @author Alasdair Mercer
  */
 public interface VerificationFactory {
 
     /**
+     * <p>
      * Creates an instance of {@link Verification} based on the {@code value} and optional {@code name} provided.
+     * </p>
      * <p>
      * The {@code messageFormatterFactory} is required to create a {@link MessageFormatter} while leaving it up to the
      * implementation when this instance is created as it may not be used.
+     * </p>
      *
      * @param messageFormatterFactory
      *         the {@link MessageFormatterFactory} to be used to create an instance of {@link MessageFormatter}

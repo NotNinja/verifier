@@ -24,22 +24,28 @@ package io.skelp.verifier.factory;
 import io.skelp.verifier.VerifierException;
 
 /**
+ * <p>
  * An implementation of {@link VerifierException} which is to be used specifically for exceptions that occur during
  * factory instance creation.
+ * </p>
  *
  * @author Alasdair Mercer
  */
 public class VerifierFactoryException extends VerifierException {
 
     /**
+     * <p>
      * Creates a new instance of {@link VerifierFactoryException} with no detail message or cause.
+     * </p>
      */
     public VerifierFactoryException() {
         super();
     }
 
     /**
+     * <p>
      * Creates a new instance of {@link VerifierFactoryException} with the detail {@code message} provided but no cause.
+     * </p>
      *
      * @param message
      *         the detail message to be used
@@ -49,8 +55,10 @@ public class VerifierFactoryException extends VerifierException {
     }
 
     /**
+     * <p>
      * Creates a new instance of {@link VerifierFactoryException} with the detail {@code message} and {@code cause}
      * provided.
+     * </p>
      *
      * @param message
      *         the detail message to be used
@@ -62,7 +70,9 @@ public class VerifierFactoryException extends VerifierException {
     }
 
     /**
+     * <p>
      * Creates a new instance of {@link VerifierFactoryException} with the {@code cause} provided but no detail message.
+     * </p>
      *
      * @param cause
      *         the {@code Throwable} cause to be used

@@ -24,7 +24,9 @@ package io.skelp.verifier.message;
 import io.skelp.verifier.verification.Verification;
 
 /**
+ * <p>
  * The default implementation of {@link MessageFormatter}.
+ * </p>
  *
  * @author Alasdair Mercer
  */

@@ -22,22 +22,28 @@
 package io.skelp.verifier;
 
 /**
+ * <p>
  * A runtime exception which is throughout Verifier to avoid consumers having to worry about lots of different types of
  * exceptions.
+ * </p>
  *
  * @author Alasdair Mercer
  */
 public class VerifierException extends RuntimeException {
 
     /**
+     * <p>
      * Creates a new instance of {@link VerifierException} with no detail message or cause.
+     * </p>
      */
     public VerifierException() {
         super();
     }
 
     /**
+     * <p>
      * Creates a new instance of {@link VerifierException} with the detail {@code message} provided but no cause.
+     * </p>
      *
      * @param message
      *         the detail message to be used
@@ -47,7 +53,9 @@ public class VerifierException extends RuntimeException {
     }
 
     /**
+     * <p>
      * Creates a new instance of {@link VerifierException} with the detail {@code message} and {@code cause} provided.
+     * </p>
      *
      * @param message
      *         the detail message to be used
@@ -59,7 +67,9 @@ public class VerifierException extends RuntimeException {
     }
 
     /**
+     * <p>
      * Creates a new instance of {@link VerifierException} with the {@code cause} provided but no detail message.
+     * </p>
      *
      * @param cause
      *         the {@code Throwable} cause to be used

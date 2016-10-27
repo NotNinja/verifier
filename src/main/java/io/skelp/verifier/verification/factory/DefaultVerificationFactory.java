@@ -26,7 +26,9 @@ import io.skelp.verifier.message.factory.MessageFormatterFactory;
 import io.skelp.verifier.verification.DefaultVerification;
 
 /**
+ * <p>
  * The default implementation of {@link VerificationFactory} which creates instances of {@link DefaultVerification}.
+ * </p>
  *
  * @author Alasdair Mercer
  */

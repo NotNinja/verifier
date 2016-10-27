@@ -30,7 +30,9 @@ import org.junit.Test;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
 
 /**
+ * <p>
  * Test case for {@link BaseComparableVerifier} implementation classes.
+ * </p>
  *
  * @param <T>
  *         the {@code Comparable} value type for the {@link BaseComparableVerifier} being tested
@@ -530,45 +532,60 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
     }
 
     /**
+     * <p>
      * Returns the base value for comparisons.
+     * </p>
      * <p>
      * This value provides a baseline and all other values should either be less than or greater than this value.
+     * </p>
      *
      * @return The base value.
      */
     protected abstract T getBaseValue();
 
     /**
+     * <p>
      * Returns the higher value for comparisons.
+     * </p>
      * <p>
      * This value should be higher than {@link #getBaseValue()} but less than {@link #getHighestValue()}.
+     * </p>
      *
      * @return The higher value.
      */
     protected abstract T getHigherValue();
 
     /**
+     * <p>
      * Returns the highest value for comparisons.
+     * </p>
      * <p>
      * This value should be higher than all others.
+     * </p>
      *
      * @return The highest value.
      */
     protected abstract T getHighestValue();
 
     /**
+     * <p>
      * Returns the lower value for comparisons.
+     * </p>
      * <p>
      * This value should be lower than {@link #getBaseValue()} but greater than {@link #getLowestValue()}.
+     * </p>
      *
      * @return The lower value.
      */
     protected abstract T getLowerValue();
 
     /**
+     * <p>
      * Returns the lowest value for comparisons.
+     * </p>
      * <p>
      * This value should be lower than all others.
+     * </p>
      *
      * @return The lowest value.
      */

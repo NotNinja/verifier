@@ -26,7 +26,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
+ * <p>
  * Tests for the {@link DefaultArrayFormatter} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

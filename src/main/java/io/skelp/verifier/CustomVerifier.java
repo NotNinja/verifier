@@ -57,6 +57,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * @return A reference to this {@link CustomVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
+     * @see #equalTo(Object, Object)
      * @see Object#equals(Object)
      */
     V equalTo(Object other) throws VerifierException;
@@ -88,6 +89,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * @return A reference to this {@link CustomVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
+     * @see #equalTo(Object)
      * @see Object#equals(Object)
      */
     V equalTo(Object other, Object name) throws VerifierException;
@@ -273,6 +275,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * @return A reference to this {@link CustomVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
+     * @see #sameAs(Object, Object)
      */
     V sameAs(Object other) throws VerifierException;
 
@@ -303,6 +306,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * @return A reference to this {@link CustomVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
+     * @see #sameAs(Object)
      */
     V sameAs(Object other, Object name) throws VerifierException;
 
@@ -349,6 +353,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * @throws VerifierException
      *         If {@code assertion} is {@literal null} or the verification fails while not negated or passes while
      *         negated.
+     * @see #that(VerifierAssertion, String, Object...)
      */
     V that(VerifierAssertion<T> assertion) throws VerifierException;
 
@@ -390,7 +395,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * Returns the verification information for this {@link CustomVerifier}.
      * </p>
      * <p>
-     * This is not generally useful outside of the library but it is part of the API for extensions and for easier
+     * This is not generally useful outside of the library but it is part of the API for extensions and easier
      * testability.
      * </p>
      *

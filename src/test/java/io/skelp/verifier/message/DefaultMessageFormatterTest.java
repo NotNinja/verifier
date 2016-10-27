@@ -33,7 +33,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import io.skelp.verifier.verification.Verification;
 
 /**
+ * <p>
  * Tests for the {@link DefaultMessageFormatter} class.
+ * </p>
  *
  * @author Alasdair Mercer
  */

@@ -29,7 +29,9 @@ import org.junit.Test;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
 
 /**
+ * <p>
  * Test case for {@link BaseTruthVerifier} implementation classes.
+ * </p>
  *
  * @param <T>
  *         the value type for the {@link BaseTruthVerifier} being tested
@@ -98,29 +100,38 @@ public abstract class BaseTruthVerifierTestCase<T, V extends BaseTruthVerifier<T
     }
 
     /**
+     * <p>
      * Returns the values expected to be treated as falsehoods.
+     * </p>
      * <p>
      * If {@literal null} is treated as a falsehood {@link #isNullFalsehood()} should be overridden to return {@literal
      * true} instead of including {@literal null} amongst these values.
+     * </p>
      *
      * @return The falsehood values.
      */
     protected abstract T[] getFalsehoodValues();
 
     /**
-     * Returns the values expected to be treated as truths.
      * <p>
-     * If {@literal null} is treated as a truth {@link #isNullTruth()} should be overridden to return {@literal
-     * true} instead of including {@literal null} amongst these values.
+     * Returns the values expected to be treated as truths.
+     * </p>
+     * <p>
+     * If {@literal null} is treated as a truth {@link #isNullTruth()} should be overridden to return {@literal true}
+     * instead of including {@literal null} amongst these values.
+     * </p>
      *
      * @return The truth values.
      */
     protected abstract T[] getTruthValues();
 
     /**
+     * <p>
      * Returns whether {@literal null} is treated as a falsehood.
+     * </p>
      * <p>
      * By default this method returns {@literal false}.
+     * </p>
      *
      * @return {@literal true} if {@literal null} is expected to be a falsehood; otherwise {@literal false}.
      */
@@ -129,9 +140,12 @@ public abstract class BaseTruthVerifierTestCase<T, V extends BaseTruthVerifier<T
     }
 
     /**
+     * <p>
      * Returns whether {@literal null} is treated as a truth.
+     * </p>
      * <p>
      * By default this method returns {@literal false}.
+     * </p>
      *
      * @return {@literal true} if {@literal null} is expected to be a truth; otherwise {@literal false}.
      */

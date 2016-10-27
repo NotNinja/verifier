@@ -22,7 +22,9 @@
 package io.skelp.verifier.message;
 
 /**
+ * <p>
  * A formatter which transforms an array of elements into a string.
+ * </p>
  *
  * @param <T>
  *         the type of elements within the array
@@ -31,22 +33,28 @@ package io.skelp.verifier.message;
 public interface ArrayFormatter<T> {
 
     /**
+     * <p>
      * Formats the array into a string.
+     * </p>
      *
      * @return A formatted string based on the array and its elements.
      */
     String format();
 
     /**
+     * <p>
      * Returns the array for this {@link ArrayFormatter}.
+     * </p>
      *
      * @return The array.
      */
     T[] getArray();
 
     /**
+     * <p>
      * Delegates to {@link #format()} to provide a string representation of the array within this {@link
      * ArrayFormatter}.
+     * </p>
      *
      * @return A string representation based on the formatted array.
      */
