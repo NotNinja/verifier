@@ -27,9 +27,13 @@ import static org.mockito.Mockito.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URI;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -52,6 +56,7 @@ import io.skelp.verifier.type.ByteVerifier;
 import io.skelp.verifier.type.CalendarVerifier;
 import io.skelp.verifier.type.CharacterVerifier;
 import io.skelp.verifier.type.ClassVerifier;
+import io.skelp.verifier.type.CollectionVerifier;
 import io.skelp.verifier.type.ComparableVerifier;
 import io.skelp.verifier.type.DateVerifier;
 import io.skelp.verifier.type.DoubleVerifier;
@@ -59,6 +64,7 @@ import io.skelp.verifier.type.FloatVerifier;
 import io.skelp.verifier.type.IntegerVerifier;
 import io.skelp.verifier.type.LocaleVerifier;
 import io.skelp.verifier.type.LongVerifier;
+import io.skelp.verifier.type.MapVerifier;
 import io.skelp.verifier.type.ObjectVerifier;
 import io.skelp.verifier.type.ShortVerifier;
 import io.skelp.verifier.type.StringVerifier;
@@ -257,6 +263,22 @@ public class VerifierTest {
     }
 
     @Test
+    public void testVerifyWithCollection() {
+        Collection<Integer> value = Arrays.asList(123, 456, 789);
+        CollectionVerifier<Integer> result = Verifier.verify(value);
+
+        testVerifyHelper(result, value, null);
+    }
+
+    @Test
+    public void testVerifyWithCollectionAndName() {
+        Collection<Integer> value = Arrays.asList(123, 456, 789);
+        CollectionVerifier<Integer> result = Verifier.verify(value, "foo");
+
+        testVerifyHelper(result, value, "foo");
+    }
+
+    @Test
     public void testVerifyWithDate() {
         Date value = new Date();
         DateVerifier result = Verifier.verify(value);
@@ -348,6 +370,24 @@ public class VerifierTest {
     public void testVerifyWithLongAndName() {
         long value = 123L;
         LongVerifier result = Verifier.verify(value, "foo");
+
+        testVerifyHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testVerifyWithMap() {
+        Map<String, Integer> value = new HashMap<>();
+        value.put("abc", 123);
+        MapVerifier<String, Integer> result = Verifier.verify(value);
+
+        testVerifyHelper(result, value, null);
+    }
+
+    @Test
+    public void testVerifyWithMapAndName() {
+        Map<String, Integer> value = new HashMap<>();
+        value.put("abc", 123);
+        MapVerifier<String, Integer> result = Verifier.verify(value, "foo");
 
         testVerifyHelper(result, value, "foo");
     }

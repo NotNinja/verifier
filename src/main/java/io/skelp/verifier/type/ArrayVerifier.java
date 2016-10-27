@@ -22,79 +22,28 @@
 package io.skelp.verifier.type;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 
-import io.skelp.verifier.AbstractCustomVerifier;
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.type.base.BaseCollectionVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
  * TODO: Document
  *
- * @param <T>
+ * @param <E>
  * @author Alasdair Mercer
  */
-public final class ArrayVerifier<T> extends AbstractCustomVerifier<T[], ArrayVerifier<T>> {
+public final class ArrayVerifier<E> extends BaseCollectionVerifier<E, E[], ArrayVerifier<E>> {
 
     /**
      * TODO: Document
      *
      * @param verification
      */
-    public ArrayVerifier(final Verification<T[]> verification) {
+    public ArrayVerifier(final Verification<E[]> verification) {
         super(verification);
-    }
-
-    /**
-     * TODO: Document
-     *
-     * @param item
-     * @return
-     * @throws VerifierException
-     */
-    public ArrayVerifier<T> contain(final T item) throws VerifierException {
-        final T[] value = verification().getValue();
-        final boolean result = value != null && Arrays.asList(value).contains(item);
-
-        verification().check(result, "contain '%s'", item);
-
-        return this;
-    }
-
-    /**
-     * TODO: Document
-     *
-     * @return
-     * @throws VerifierException
-     */
-    public ArrayVerifier<T> empty() throws VerifierException {
-        final T[] value = verification().getValue();
-        final boolean result = value == null || value.length == 0;
-
-        verification().check(result, "be empty");
-
-        return this;
-    }
-
-    @Override
-    protected boolean isEqualTo(final T[] value, final Object other) {
-        return value == other || Arrays.deepEquals(new Object[]{value}, new Object[]{other});
-    }
-
-    /**
-     * TODO: Document
-     *
-     * @param length
-     * @return
-     * @throws VerifierException
-     */
-    public ArrayVerifier<T> length(final int length) throws VerifierException {
-        final T[] value = verification().getValue();
-        final boolean result = value == null ? length == 0 : value.length == length;
-
-        verification().check(result, "have length of '%d'", length);
-
-        return this;
     }
 
     /**
@@ -104,7 +53,7 @@ public final class ArrayVerifier<T> extends AbstractCustomVerifier<T[], ArrayVer
      * @return
      * @throws VerifierException
      */
-    public ArrayVerifier<T> sorted(final Comparator<T> comparator) throws VerifierException {
+    public ArrayVerifier<E> sorted(final Comparator<E> comparator) throws VerifierException {
         return sorted(comparator, comparator);
     }
 
@@ -116,22 +65,22 @@ public final class ArrayVerifier<T> extends AbstractCustomVerifier<T[], ArrayVer
      * @return
      * @throws VerifierException
      */
-    public ArrayVerifier<T> sorted(final Comparator<T> comparator, final Object name) throws VerifierException {
+    public ArrayVerifier<E> sorted(final Comparator<E> comparator, final Object name) throws VerifierException {
         if (comparator == null) {
             throw new VerifierException("comparator must not be null");
         }
 
-        final T[] value = verification().getValue();
+        final E[] value = verification().getValue();
         boolean result = true;
 
         if (value == null) {
             result = false;
         } else if (value.length >= 2) {
-            T previous = value[0];
+            E previous = value[0];
             final int length = value.length;
 
             for (int i = 1; i < length; i++) {
-                final T current = value[i];
+                final E current = value[i];
                 if (comparator.compare(previous, current) > 0) {
                     result = false;
                     break;
@@ -144,5 +93,25 @@ public final class ArrayVerifier<T> extends AbstractCustomVerifier<T[], ArrayVer
         verification().check(result, "be sorted by '%s'", name);
 
         return this;
+    }
+
+    @Override
+    protected Collection<E> getCollection(final E[] value) {
+        return value != null ? Arrays.asList(value) : null;
+    }
+
+    @Override
+    protected int getSize(final E[] value) {
+        return value.length;
+    }
+
+    @Override
+    protected boolean isEmpty(final E[] value) {
+        return value.length == 0;
+    }
+
+    @Override
+    protected boolean isEqualTo(final E[] value, final Object other) {
+        return value == other || Arrays.deepEquals(new Object[]{value}, new Object[]{other});
     }
 }

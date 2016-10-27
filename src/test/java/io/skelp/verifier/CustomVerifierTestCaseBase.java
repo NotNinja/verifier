@@ -24,6 +24,9 @@ package io.skelp.verifier;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.lang.reflect.Array;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
@@ -50,6 +53,57 @@ import io.skelp.verifier.verification.Verification;
  */
 @RunWith(MockitoJUnitRunner.class)
 public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, V>> {
+
+    /**
+     * Creates a typed array containing the {@code items} provided.
+     *
+     * @param items
+     *         the items for the array
+     * @param <T>
+     *         the type of items to be contained within the array
+     * @return An array containing {@code items}.
+     */
+    protected static <T> T[] createArray(T... items) {
+        return items;
+    }
+
+    /**
+     * Creates an empty typed array based on the specified class.
+     *
+     * @param cls
+     *         the class for the array type
+     * @param <T>
+     *         the type of the array
+     * @return An empty array.
+     */
+    protected static <T> T[] createEmptyArray(Class<T> cls) {
+        @SuppressWarnings("unchecked")
+        T[] array = (T[]) Array.newInstance(cls, 0);
+        return array;
+    }
+
+    /**
+     * Creates a map populated with the specified {@code keys} and their corresponding {@code values}.
+     *
+     * @param keys
+     *         the keys to be mapped to {@code values}
+     * @param values
+     *         the corresponding values to be mapped to {@code keys}
+     * @param <K>
+     *         the type of the keys
+     * @param <V>
+     *         the type of the values
+     * @return A {@code Map} containing all of the key/value pairs.
+     */
+    protected static <K, V> Map<K, V> createMap(K[] keys, V[] values) {
+        Map<K, V> map = new LinkedHashMap<>(keys.length);
+
+        for (int i = 0; i < keys.length; i++) {
+            map.put(keys[i], values[i]);
+        }
+
+        return map;
+    }
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

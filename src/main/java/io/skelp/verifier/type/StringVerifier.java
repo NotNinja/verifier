@@ -259,6 +259,48 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @return
      * @throws VerifierException
      */
+    public StringVerifier containAll(final CharSequence... others) throws VerifierException {
+        final String value = verification().getValue();
+        final boolean result = value != null && matchAll(others, new Function<Boolean, CharSequence>() {
+            @Override
+            public Boolean apply(final CharSequence input) {
+                return input != null && value.contains(input);
+            }
+        });
+
+        verification().check(result, "contain all %s", verification().getMessageFormatter().formatArray(others));
+
+        return this;
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param others
+     * @return
+     * @throws VerifierException
+     */
+    public StringVerifier containAllIgnoreCase(final CharSequence... others) throws VerifierException {
+        final String value = verification().getValue();
+        final boolean result = value != null && matchAll(others, new Function<Boolean, CharSequence>() {
+            @Override
+            public Boolean apply(final CharSequence input) {
+                return containsIgnoreCase(value, input);
+            }
+        });
+
+        verification().check(result, "contain all %s (ignore case)", verification().getMessageFormatter().formatArray(others));
+
+        return this;
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param others
+     * @return
+     * @throws VerifierException
+     */
     public StringVerifier containAny(final CharSequence... others) throws VerifierException {
         final String value = verification().getValue();
         final boolean result = value != null && matchAny(others, new Function<Boolean, CharSequence>() {

@@ -24,8 +24,10 @@ package io.skelp.verifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 import io.skelp.verifier.factory.DefaultVerifierFactoryProvider;
 import io.skelp.verifier.factory.VerifierFactoryException;
@@ -38,6 +40,7 @@ import io.skelp.verifier.type.ByteVerifier;
 import io.skelp.verifier.type.CalendarVerifier;
 import io.skelp.verifier.type.CharacterVerifier;
 import io.skelp.verifier.type.ClassVerifier;
+import io.skelp.verifier.type.CollectionVerifier;
 import io.skelp.verifier.type.ComparableVerifier;
 import io.skelp.verifier.type.DateVerifier;
 import io.skelp.verifier.type.DoubleVerifier;
@@ -45,6 +48,7 @@ import io.skelp.verifier.type.FloatVerifier;
 import io.skelp.verifier.type.IntegerVerifier;
 import io.skelp.verifier.type.LocaleVerifier;
 import io.skelp.verifier.type.LongVerifier;
+import io.skelp.verifier.type.MapVerifier;
 import io.skelp.verifier.type.ObjectVerifier;
 import io.skelp.verifier.type.ShortVerifier;
 import io.skelp.verifier.type.StringVerifier;
@@ -64,11 +68,11 @@ public final class Verifier {
      * TODO: Document
      *
      * @param value
-     * @param <T>
+     * @param <E>
      * @return
      * @throws VerifierFactoryException
      */
-    public static <T> ArrayVerifier<T> verify(final T[] value) throws VerifierFactoryException {
+    public static <E> ArrayVerifier<E> verify(final E[] value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -77,11 +81,11 @@ public final class Verifier {
      *
      * @param value
      * @param name
-     * @param <T>
+     * @param <E>
      * @return
      * @throws VerifierFactoryException
      */
-    public static <T> ArrayVerifier<T> verify(final T[] value, final Object name) throws VerifierFactoryException {
+    public static <E> ArrayVerifier<E> verify(final E[] value, final Object name) throws VerifierFactoryException {
         return new ArrayVerifier<>(createVerification(value, name));
     }
 
@@ -250,6 +254,31 @@ public final class Verifier {
      * TODO: Document
      *
      * @param value
+     * @param <E>
+     * @return
+     * @throws VerifierFactoryException
+     */
+    public static <E> CollectionVerifier<E> verify(final Collection<E> value) throws VerifierFactoryException {
+        return verify(value, null);
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param value
+     * @param name
+     * @param <E>
+     * @return
+     * @throws VerifierFactoryException
+     */
+    public static <E> CollectionVerifier<E> verify(final Collection<E> value, final Object name) throws VerifierFactoryException {
+        return new CollectionVerifier<>(createVerification(value, name));
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param value
      * @return
      * @throws VerifierFactoryException
      */
@@ -382,6 +411,33 @@ public final class Verifier {
      */
     public static LongVerifier verify(final Long value, final Object name) throws VerifierFactoryException {
         return new LongVerifier(createVerification(value, name));
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param value
+     * @param <K>
+     * @param <V>
+     * @return
+     * @throws VerifierFactoryException
+     */
+    public static <K, V> MapVerifier<K, V> verify(final Map<K, V> value) throws VerifierFactoryException {
+        return verify(value, null);
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param value
+     * @param name
+     * @param <K>
+     * @param <V>
+     * @return
+     * @throws VerifierFactoryException
+     */
+    public static <K, V> MapVerifier<K, V> verify(final Map<K, V> value, final Object name) throws VerifierFactoryException {
+        return new MapVerifier<>(createVerification(value, name));
     }
 
     /**

@@ -495,6 +495,211 @@ public class StringVerifierTest {
         }
 
         @Test
+        public void testContainAllWhenNoOthers() {
+            testContainAllHelper(EMPTY, new CharSequence[0], true);
+        }
+
+        @Test
+        public void testContainAllWhenOtherIsEmpty() {
+            testContainAllHelper("foo bar fizz buzz", new CharSequence[]{EMPTY}, true);
+        }
+
+        @Test
+        public void testContainAllWhenOtherIsNull() {
+            testContainAllHelper(EMPTY, new CharSequence[]{EMPTY, null}, false);
+        }
+
+        @Test
+        public void testContainAllWhenOthersIsNull() {
+            testContainAllHelper(EMPTY, null, true);
+        }
+
+        @Test
+        public void testContainAllWhenValueAndOtherAreEmpty() {
+            testContainAllHelper(EMPTY, new CharSequence[]{EMPTY}, true);
+        }
+
+        @Test
+        public void testContainAllWhenValueContainsAllOthers() {
+            testContainAllHelper("foo bar fizz buzz", new CharSequence[]{"foo", "bar", "fizz"}, true);
+        }
+
+        @Test
+        public void testContainAllWhenValueContainsAllOthersCharSequence() {
+            testContainAllHelper("foo bar fizz buzz", new CharSequence[]{new StringWrapper("foo"), new StringWrapper("bar"), new StringWrapper("fizz")}, true);
+        }
+
+        @Test
+        public void testContainAllWhenValueContainsAllOthersCharSequenceWithDifferentCase() {
+            testContainAllHelper("foo bar fizz buzz", new CharSequence[]{new StringWrapper("FOO"), new StringWrapper("BAR"), new StringWrapper("FIZZ")}, false);
+        }
+
+        @Test
+        public void testContainAllWhenValueContainsAllOthersWithDifferentCase() {
+            testContainAllHelper("foo bar fizz buzz", new CharSequence[]{"FOO", "BAR", "FIZZ"}, false);
+        }
+
+        @Test
+        public void testContainAllWhenValueContainsSomeOthers() {
+            testContainAllHelper("foo bar fizz buzz", new CharSequence[]{"foo", "fu", "baz"}, false);
+        }
+
+        @Test
+        public void testContainAllWhenValueContainsSomeOthersCharSequence() {
+            testContainAllHelper("foo bar fizz buzz", new CharSequence[]{new StringWrapper("foo"), new StringWrapper("fu"), new StringWrapper("baz")}, false);
+        }
+
+        @Test
+        public void testContainAllWhenValueContainsSomeOthersCharSequenceWithDifferentCase() {
+            testContainAllHelper("foo bar fizz buzz", new CharSequence[]{new StringWrapper("FOO"), new StringWrapper("FU"), new StringWrapper("BAZ")}, false);
+        }
+
+        @Test
+        public void testContainAllWhenValueContainsSomeOthersWithDifferentCase() {
+            testContainAllHelper("foo bar fizz buzz", new CharSequence[]{"FOO", "FU", "BAZ"}, false);
+        }
+
+        @Test
+        public void testContainAllWhenValueDoesNotContainOther() {
+            testContainAllHelper("foo bar fizz buzz", new CharSequence[]{"fu", "baz"}, false);
+        }
+
+        @Test
+        public void testContainAllWhenValueDoesNotContainOtherCharSequence() {
+            testContainAllHelper("foo bar fizz buzz", new CharSequence[]{new StringWrapper("fu"), new StringWrapper("baz")}, false);
+        }
+
+        @Test
+        public void testContainAllWhenValueIsExactMatch() {
+            testContainAllHelper("foo bar fizz buzz", new CharSequence[]{"foo", "bar", "foo bar fizz buzz"}, true);
+        }
+
+        @Test
+        public void testContainAllWhenValueIsEmpty() {
+            testContainAllHelper(EMPTY, new CharSequence[]{"foo"}, false);
+        }
+
+        @Test
+        public void testContainAllWhenValueIsNull() {
+            testContainAllHelper(null, new CharSequence[]{EMPTY}, false);
+        }
+
+        private void testContainAllHelper(String value, CharSequence[] others, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAll(others));
+
+            verify(getMockVerification()).check(eq(expected), eq("contain all %s"), getArgsCaptor().capture());
+
+            assertArrayFormatter(getArgsCaptor().getValue(), others);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenNoOthers() {
+            testContainAllIgnoreCaseHelper(EMPTY, new CharSequence[0], true);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenOtherIsEmpty() {
+            testContainAllIgnoreCaseHelper("foo bar fizz buzz", new CharSequence[]{EMPTY}, true);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenOtherIsNull() {
+            testContainAllIgnoreCaseHelper(EMPTY, new CharSequence[]{EMPTY, null}, false);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenOthersIsNull() {
+            testContainAllIgnoreCaseHelper(EMPTY, null, true);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenValueAndOtherAreEmpty() {
+            testContainAllIgnoreCaseHelper(EMPTY, new CharSequence[]{EMPTY}, true);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenValueContainsAllOthers() {
+            testContainAllIgnoreCaseHelper("foo bar fizz buzz", new CharSequence[]{"foo", "bar", "fizz"}, true);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenValueContainsAllOthersCharSequence() {
+            testContainAllIgnoreCaseHelper("foo bar fizz buzz", new CharSequence[]{new StringWrapper("foo"), new StringWrapper("bar"), new StringWrapper("fizz")}, true);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenValueContainsAllOthersCharSequenceWithDifferentCase() {
+            testContainAllIgnoreCaseHelper("foo bar fizz buzz", new CharSequence[]{new StringWrapper("FOO"), new StringWrapper("BAR"), new StringWrapper("FIZZ")}, true);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenValueContainsAllOthersWithDifferentCase() {
+            testContainAllIgnoreCaseHelper("foo bar fizz buzz", new CharSequence[]{"FOO", "BAR", "FIZZ"}, true);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenValueContainsSomeOthers() {
+            testContainAllIgnoreCaseHelper("foo bar fizz buzz", new CharSequence[]{"foo", "fu", "baz"}, false);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenValueContainsSomeOthersCharSequence() {
+            testContainAllIgnoreCaseHelper("foo bar fizz buzz", new CharSequence[]{new StringWrapper("foo"), new StringWrapper("fu"), new StringWrapper("baz")}, false);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenValueContainsSomeOthersCharSequenceWithDifferentCase() {
+            testContainAllIgnoreCaseHelper("foo bar fizz buzz", new CharSequence[]{new StringWrapper("FOO"), new StringWrapper("FU"), new StringWrapper("BAZ")}, false);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenValueContainsSomeOthersWithDifferentCase() {
+            testContainAllIgnoreCaseHelper("foo bar fizz buzz", new CharSequence[]{"FOO", "FU", "BAZ"}, false);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenValueDoesNotContainOther() {
+            testContainAllIgnoreCaseHelper("foo bar fizz buzz", new CharSequence[]{"fu", "baz"}, false);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenValueDoesNotContainOtherCharSequence() {
+            testContainAllIgnoreCaseHelper("foo bar fizz buzz", new CharSequence[]{new StringWrapper("fu"), new StringWrapper("baz")}, false);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenValueIsExactMatch() {
+            testContainAllIgnoreCaseHelper("foo bar fizz buzz", new CharSequence[]{"foo", "bar", "foo BAR FIZZ buzz"}, true);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenValueIsEmpty() {
+            testContainAllIgnoreCaseHelper(EMPTY, new CharSequence[]{"foo"}, false);
+        }
+
+        @Test
+        public void testContainAllIgnoreCaseWhenValueIsNull() {
+            testContainAllIgnoreCaseHelper(null, new CharSequence[]{EMPTY}, false);
+        }
+
+        private void testContainAllIgnoreCaseHelper(String value, CharSequence[] others, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAllIgnoreCase(others));
+
+            verify(getMockVerification()).check(eq(expected), eq("contain all %s (ignore case)"), getArgsCaptor().capture());
+
+            assertArrayFormatter(getArgsCaptor().getValue(), others);
+        }
+
+        @Test
+        public void testContainAnyWhenNoOthers() {
+            testContainAnyHelper(EMPTY, new CharSequence[0], false);
+        }
+
+        @Test
         public void testContainAnyWhenOtherIsEmpty() {
             testContainAnyHelper("foo bar fizz buzz", new CharSequence[]{EMPTY}, true);
         }
@@ -567,6 +772,11 @@ public class StringVerifierTest {
             verify(getMockVerification()).check(eq(expected), eq("contain any %s"), getArgsCaptor().capture());
 
             assertArrayFormatter(getArgsCaptor().getValue(), others);
+        }
+
+        @Test
+        public void testContainAnyIgnoreCaseWhenNoOthers() {
+            testContainAnyIgnoreCaseHelper(EMPTY, new CharSequence[0], false);
         }
 
         @Test
@@ -838,6 +1048,11 @@ public class StringVerifierTest {
         }
 
         @Test
+        public void testEndWithAnyWhenNoOthers() {
+            testEndWithAnyHelper(EMPTY, new CharSequence[0], false);
+        }
+
+        @Test
         public void testEndWithAnyWhenOtherIsEmpty() {
             testEndWithAnyHelper("foo bar fizz buzz", new CharSequence[]{EMPTY}, true);
         }
@@ -915,6 +1130,11 @@ public class StringVerifierTest {
             verify(getMockVerification()).check(eq(expected), eq("end with any %s"), getArgsCaptor().capture());
 
             assertArrayFormatter(getArgsCaptor().getValue(), others);
+        }
+
+        @Test
+        public void testEndWithAnyIgnoreCaseWhenNoOthers() {
+            testEndWithAnyIgnoreCaseHelper(EMPTY, new CharSequence[0], false);
         }
 
         @Test
@@ -1070,6 +1290,11 @@ public class StringVerifierTest {
             verify(getMockVerification()).check(eq(expected), eq("end with '%s' (ignore case)"), getArgsCaptor().capture());
 
             assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
+        }
+
+        @Test
+        public void testEqualToAnyIgnoreCaseWhenNoOthers() {
+            testEqualToAnyIgnoreCaseHelper(EMPTY, new CharSequence[0], false);
         }
 
         @Test
@@ -1571,6 +1796,11 @@ public class StringVerifierTest {
         }
 
         @Test
+        public void testStartWithAnyWhenNoOthers() {
+            testStartWithAnyHelper(EMPTY, new CharSequence[0], false);
+        }
+
+        @Test
         public void testStartWithAnyWhenOtherIsEmpty() {
             testStartWithAnyHelper("foo bar fizz buzz", new CharSequence[]{EMPTY}, true);
         }
@@ -1648,6 +1878,11 @@ public class StringVerifierTest {
             verify(getMockVerification()).check(eq(expected), eq("start with any %s"), getArgsCaptor().capture());
 
             assertArrayFormatter(getArgsCaptor().getValue(), others);
+        }
+
+        @Test
+        public void testStartWithAnyIgnoreCaseWhenNoOthers() {
+            testStartWithAnyIgnoreCaseHelper(EMPTY, new CharSequence[0], false);
         }
 
         @Test

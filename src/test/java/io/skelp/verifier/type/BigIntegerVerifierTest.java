@@ -22,7 +22,6 @@
 package io.skelp.verifier.type;
 
 import java.math.BigInteger;
-
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 

@@ -28,6 +28,9 @@ import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * Test case for {@link AbstractCustomVerifier} implementation classes.
@@ -38,7 +41,11 @@ import org.junit.Test;
  *         the type of the {@link AbstractCustomVerifier} being tested
  * @author Alasdair Mercer
  */
+@RunWith(MockitoJUnitRunner.class)
 public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustomVerifier<T, V>> extends CustomVerifierTestCaseBase<T, V> {
+
+    @Mock
+    private VerifierAssertion<T> mockAssertion;
 
     @Test
     public void testEqualToWithDifferentInstance() {
@@ -132,6 +139,11 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
     @Test
     public void testEqualToAnyWithEqualInstance() {
         testEqualToAnyHelper(createValueOne(), new Object[]{createValueTwo(), new Object(), createValueOne()}, true);
+    }
+
+    @Test
+    public void testEqualToAnyWithNoOthers() {
+        testEqualToAnyHelper(createValueOne(), new Object[0], false);
     }
 
     @Test
@@ -246,23 +258,73 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
     }
 
     @Test
-    public void testInstanceAnyOfWithObjectClass() {
+    public void testInstanceOfAllWithObjectClass() {
+        testInstanceOfAllHelper(createValueOne(), new Class<?>[]{Object.class}, true);
+    }
+
+    @Test
+    public void testInstanceOfAllWithNoClasses() {
+        testInstanceOfAllHelper(createValueOne(), new Class<?>[0], true);
+    }
+
+    @Test
+    public void testInstanceOfAllWithNoMatches() {
+        testInstanceOfAllHelper(createValueOne(), new Class<?>[]{UnrelatedClass.class}, false);
+    }
+
+    @Test
+    public void testInstanceOfAllWithNullClass() {
+        testInstanceOfAllHelper(createValueOne(), new Class<?>[]{getValueClass(), null}, false);
+    }
+
+    @Test
+    public void testInstanceOfAllWithNullClasses() {
+        testInstanceOfAllHelper(createValueOne(), null, true);
+    }
+
+    @Test
+    public void testInstanceOfAllWithNullValue() {
+        testInstanceOfAllHelper(null, new Class<?>[0], false);
+    }
+
+    @Test
+    public void testInstanceOfAllWithSameClass() {
+        testInstanceOfAllHelper(createValueOne(), new Class<?>[]{getValueClass(), Object.class}, true);
+    }
+
+    @Test
+    public void testInstanceOfAllWithSomeMatches() {
+        testInstanceOfAllHelper(createValueOne(), new Class<?>[]{getValueClass(), UnrelatedClass.class}, false);
+    }
+
+    @Test
+    public void testInstanceOfAllWithSuperClass() {
+        testInstanceOfAllHelper(createValueOne(), new Class<?>[]{getParentClass(), Object.class}, true);
+    }
+
+    private void testInstanceOfAllHelper(T value, Class<?>[] classes, boolean expected) {
+        setValue(value);
+
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().instanceOfAll(classes));
+
+        verify(getMockVerification()).check(eq(expected), eq("be an instance of all %s"), getArgsCaptor().capture());
+
+        assertArrayFormatter(getArgsCaptor().getValue(), classes);
+    }
+
+    @Test
+    public void testInstanceOfAnyWithObjectClass() {
         testInstanceOfAnyHelper(createValueOne(), new Class<?>[]{UnrelatedClass.class, Object.class}, true);
+    }
+
+    @Test
+    public void testInstanceOfAnyWithNoClasses() {
+        testInstanceOfAnyHelper(createValueOne(), new Class<?>[0], false);
     }
 
     @Test
     public void testInstanceOfAnyWithNoMatches() {
         testInstanceOfAnyHelper(createValueOne(), new Class<?>[]{UnrelatedClass.class}, false);
-    }
-
-    @Test
-    public void testInstanceOfAnyWithSameClass() {
-        testInstanceOfAnyHelper(createValueOne(), new Class<?>[]{UnrelatedClass.class, getValueClass()}, true);
-    }
-
-    @Test
-    public void testInstanceOfAnyWithSuperClass() {
-        testInstanceOfAnyHelper(createValueOne(), new Class<?>[]{UnrelatedClass.class, getParentClass()}, true);
     }
 
     @Test
@@ -283,6 +345,16 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
     @Test
     public void testInstanceOfAnyWithNullValue() {
         testInstanceOfAnyHelper(null, new Class<?>[]{getValueClass(), getParentClass(), Object.class}, false);
+    }
+
+    @Test
+    public void testInstanceOfAnyWithSameClass() {
+        testInstanceOfAnyHelper(createValueOne(), new Class<?>[]{UnrelatedClass.class, getValueClass()}, true);
+    }
+
+    @Test
+    public void testInstanceOfAnyWithSuperClass() {
+        testInstanceOfAnyHelper(createValueOne(), new Class<?>[]{UnrelatedClass.class, getParentClass()}, true);
     }
 
     private void testInstanceOfAnyHelper(T value, Class<?>[] classes, boolean expected) {
@@ -424,6 +496,11 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
     }
 
     @Test
+    public void testSameAsAnyWithNoOthers() {
+        testSameAsAnyHelper(createValueOne(), new Object[0], false);
+    }
+
+    @Test
     public void testSameAsAnyWithNullOther() {
         testSameAsAnyHelper(createValueOne(), new Object[]{null}, false);
     }
@@ -487,8 +564,6 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
         T value = createValueOne();
         setValue(value);
 
-        @SuppressWarnings("unchecked")
-        VerifierAssertion<T> mockAssertion = (VerifierAssertion<T>) mock(VerifierAssertion.class);
         when(mockAssertion.verify(value)).thenReturn(expected);
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().that(mockAssertion));
@@ -519,8 +594,6 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
         T value = createValueOne();
         setValue(value);
 
-        @SuppressWarnings("unchecked")
-        VerifierAssertion<T> mockAssertion = (VerifierAssertion<T>) mock(VerifierAssertion.class);
         when(mockAssertion.verify(value)).thenReturn(expected);
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().that(mockAssertion, message, args));

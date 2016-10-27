@@ -34,6 +34,7 @@ import org.junit.runner.RunWith;
 import io.skelp.verifier.AbstractCustomVerifierTestCase;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.type.base.BaseCollectionVerifierTestCase;
 
 /**
  * Tests for the {@link ArrayVerifier} class.
@@ -71,100 +72,50 @@ public class ArrayVerifierTest {
         }
     }
 
+    public static class ArrayVerifierBaseCollectionVerifierTest extends BaseCollectionVerifierTestCase<Integer, Integer[], ArrayVerifier<Integer>> {
+
+        @Override
+        protected ArrayVerifier<Integer> createCustomVerifier() {
+            return new ArrayVerifier<>(getMockVerification());
+        }
+
+        @Override
+        protected Integer[] createEmptyValue() {
+            return new Integer[0];
+        }
+
+        @Override
+        protected Integer[] createFullValue() {
+            return new Integer[]{123, 456, 789};
+        }
+
+        @Override
+        protected Integer[] createValueWithNull() {
+            return new Integer[]{123, 456, null};
+        }
+
+        @Override
+        protected Integer getExistingItem() {
+            return 789;
+        }
+
+        @Override
+        protected int getFullValueSize() {
+            return 3;
+        }
+
+        @Override
+        protected Class<Integer> getItemClass() {
+            return Integer.class;
+        }
+
+        @Override
+        protected Integer getMissingItem() {
+            return 321;
+        }
+    }
+
     public static class ArrayVerifierMiscTest extends CustomVerifierTestCaseBase<Integer[], ArrayVerifier<Integer>> {
-
-        @Test
-        public void testContainWhenItemIsNotPresentInValue() {
-            testContainHelper(new Integer[]{123, 456, 789}, 321, false);
-        }
-
-        @Test
-        public void testContainWhenItemIsPresentInValue() {
-            testContainHelper(new Integer[]{123, 456, 789}, 789, true);
-        }
-
-        @Test
-        public void testContainWithNullItem() {
-            testContainHelper(new Integer[]{123, 456, null}, null, true);
-        }
-
-        @Test
-        public void testContainWithNullValue() {
-            testContainHelper(null, 123, false);
-        }
-
-        private void testContainHelper(Integer[] value, Integer item, boolean expected) {
-            setValue(value);
-
-            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().contain(item));
-
-            verify(getMockVerification()).check(eq(expected), eq("contain '%s'"), getArgsCaptor().capture());
-
-            assertSame("Passes item for message formatting", item, getArgsCaptor().getValue());
-        }
-
-        @Test
-        public void testEmptyWithEmptyValue() {
-            testEmptyHelper(new Integer[0], true);
-        }
-
-        @Test
-        public void testEmptyWithNonEmptyValue() {
-            testEmptyHelper(new Integer[]{123}, false);
-        }
-
-        @Test
-        public void testEmptyWithNullValue() {
-            testEmptyHelper(null, true);
-        }
-
-        private void testEmptyHelper(Integer[] value, boolean expected) {
-            setValue(value);
-
-            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().empty());
-
-            verify(getMockVerification()).check(expected, "be empty");
-        }
-
-        @Test
-        public void testLengthWithEmptyValue() {
-            testLengthHelper(new Integer[0], 0, true);
-        }
-
-        @Test
-        public void testLengthWithEmptyValueAndIncorrectLength() {
-            testLengthHelper(new Integer[0], 1, false);
-        }
-
-        @Test
-        public void testLengthWithNonEmptyValue() {
-            testLengthHelper(new Integer[]{123, 456, 789}, 3, true);
-        }
-
-        @Test
-        public void testLengthWithNonEmptyValueAndIncorrectLength() {
-            testLengthHelper(new Integer[]{123, 456, 789}, 4, false);
-        }
-
-        @Test
-        public void testLengthWithNullValue() {
-            testLengthHelper(null, 0, true);
-        }
-
-        @Test
-        public void testLengthWithNullValueAndIncorrectLength() {
-            testLengthHelper(null, 1, false);
-        }
-
-        private void testLengthHelper(Integer[] value, int length, boolean expected) {
-            setValue(value);
-
-            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().length(length));
-
-            verify(getMockVerification()).check(eq(expected), eq("have length of '%d'"), getArgsCaptor().capture());
-
-            assertSame("Passes length for message formatting", length, getArgsCaptor().getValue());
-        }
 
         @Test
         public void testSortedWithEmptyValue() {

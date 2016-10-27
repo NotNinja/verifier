@@ -21,6 +21,9 @@
  */
 package io.skelp.verifier;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import io.skelp.verifier.util.Function;
 import io.skelp.verifier.verification.Verification;
 
@@ -41,7 +44,53 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
      * @param <I>
      * @return
      */
+    protected static <I> boolean matchAll(final I[] inputs, final Function<Boolean, I> matcher) {
+        return inputs == null || matchAll(Arrays.asList(inputs), matcher);
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param inputs
+     * @param matcher
+     * @param <I>
+     * @return
+     */
+    protected static <I> boolean matchAll(final Collection<I> inputs, final Function<Boolean, I> matcher) {
+        if (inputs == null) {
+            return true;
+        }
+
+        for (final I input : inputs) {
+            if (!matcher.apply(input)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param inputs
+     * @param matcher
+     * @param <I>
+     * @return
+     */
     protected static <I> boolean matchAny(final I[] inputs, final Function<Boolean, I> matcher) {
+        return inputs != null && matchAny(Arrays.asList(inputs), matcher);
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param inputs
+     * @param matcher
+     * @param <I>
+     * @return
+     */
+    protected static <I> boolean matchAny(final Collection<I> inputs, final Function<Boolean, I> matcher) {
         if (inputs == null) {
             return false;
         }
@@ -126,9 +175,24 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     }
 
     @Override
+    public V instanceOfAll(final Class<?>... classes) throws VerifierException {
+        final T value = verification.getValue();
+        final boolean result = value != null && matchAll(classes, new Function<Boolean, Class<?>>() {
+            @Override
+            public Boolean apply(final Class<?> input) {
+                return input != null && input.isInstance(value);
+            }
+        });
+
+        verification.check(result, "be an instance of all %s", verification.getMessageFormatter().formatArray(classes));
+
+        return chain();
+    }
+
+    @Override
     public V instanceOfAny(final Class<?>... classes) throws VerifierException {
         final T value = verification.getValue();
-        final boolean result = matchAny(classes, new Function<Boolean, Class<?>>() {
+        final boolean result = value != null && matchAny(classes, new Function<Boolean, Class<?>>() {
             @Override
             public Boolean apply(final Class<?> input) {
                 return input != null && input.isInstance(value);

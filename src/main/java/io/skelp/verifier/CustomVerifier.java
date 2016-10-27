@@ -150,9 +150,9 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(null).instanceOf(*)                           => FAIL
      * Verifier.verify(*).instanceOf(null)                           => FAIL
      * Verifier.verify(*).instanceOf(Object.class)                   => PASS
+     * Verifier.verify(null).instanceOf(*)                           => FAIL
      * Verifier.verify(new ArrayList()).instanceOf(Collection.class) => PASS
      * Verifier.verify(new ArrayList()).instanceOf(Map.class)        => FAIL
      * </pre>
@@ -168,16 +168,43 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
 
     /**
      * <p>
-     * Verifies that the value is an instance of any of the {@code classes} provided.
+     * Verifies that the value is an instance of <b>all</b> of the {@code classes} provided.
      * </p>
      * <p>
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(null).instanceOfAny(*)                                                     => FAIL
+     * Verifier.verify(*).instanceOfAll()                                                            => PASS
+     * Verifier.verify(*).instanceOfAll((Object[]) null)                                             => PASS
+     * Verifier.verify(*).instanceOfAll(Object.class)                                                => PASS
+     * Verifier.verify(*).instanceOfAll(*, null)                                                     => FAIL
+     * Verifier.verify(null).instanceOfAll(*)                                                        => FAIL
+     * Verifier.verify(new ArrayList()).instanceOfAll(ArrayList.class, List.class, Collection.class) => PASS
+     * Verifier.verify(new ArrayList()).instanceOfAll(ArrayList.class, Map.class, Collection.class)  => FAIL
+     * </pre>
+     *
+     * @param classes
+     *         the classes to be checked as parents of the value (may be {@literal null} or contain {@literal null}
+     *         references)
+     * @return A reference to this {@link CustomVerifier} for chaining purposes.
+     * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
+     * @see Class#isInstance(Object)
+     */
+    V instanceOfAll(Class<?>... classes) throws VerifierException;
+
+    /**
+     * <p>
+     * Verifies that the value is an instance of <b>any</b> of the {@code classes} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
      * Verifier.verify(*).instanceOfAny()                                                         => FAIL
      * Verifier.verify(*).instanceOfAny((Object[]) null)                                          => FAIL
      * Verifier.verify(*).instanceOfAny(*, Object.class)                                          => PASS
+     * Verifier.verify(null).instanceOfAny(*)                                                     => FAIL
      * Verifier.verify(new ArrayList()).instanceOfAny(Boolean.class, Map.class, Collection.class) => PASS
      * Verifier.verify(new ArrayList()).instanceOfAny(Boolean.class, Map.class, URI.class)        => FAIL
      * </pre>
