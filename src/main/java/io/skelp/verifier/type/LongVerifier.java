@@ -53,11 +53,11 @@ public final class LongVerifier extends BaseComparableVerifier<Long, LongVerifie
     }
 
     @Override
-    public LongVerifier falsehood() throws VerifierException {
+    public LongVerifier falsy() throws VerifierException {
         final Long value = verification().getValue();
         final boolean result = value != null && value == 0L;
 
-        verification().check(result, "be false");
+        verification().check(result, "be falsy");
 
         return this;
     }
@@ -103,11 +103,11 @@ public final class LongVerifier extends BaseComparableVerifier<Long, LongVerifie
     }
 
     @Override
-    public LongVerifier truth() throws VerifierException {
+    public LongVerifier truthy() throws VerifierException {
         final Long value = verification().getValue();
         final boolean result = value != null && value == 1L;
 
-        verification().check(result, "be true");
+        verification().check(result, "be truthy");
 
         return this;
     }

@@ -141,12 +141,12 @@ public class ByteVerifierTest {
         }
 
         @Override
-        protected Byte[] getFalsehoodValues() {
+        protected Byte[] getFalsyValues() {
             return new Byte[]{0};
         }
 
         @Override
-        protected Byte[] getTruthValues() {
+        protected Byte[] getTruthyValues() {
             return new Byte[]{1};
         }
     }

@@ -53,11 +53,11 @@ public final class IntegerVerifier extends BaseComparableVerifier<Integer, Integ
     }
 
     @Override
-    public IntegerVerifier falsehood() throws VerifierException {
+    public IntegerVerifier falsy() throws VerifierException {
         final Integer value = verification().getValue();
         final boolean result = value != null && value == 0;
 
-        verification().check(result, "be false");
+        verification().check(result, "be falsy");
 
         return this;
     }
@@ -103,11 +103,11 @@ public final class IntegerVerifier extends BaseComparableVerifier<Integer, Integ
     }
 
     @Override
-    public IntegerVerifier truth() throws VerifierException {
+    public IntegerVerifier truthy() throws VerifierException {
         final Integer value = verification().getValue();
         final boolean result = value != null && value == 1;
 
-        verification().check(result, "be true");
+        verification().check(result, "be truthy");
 
         return this;
     }

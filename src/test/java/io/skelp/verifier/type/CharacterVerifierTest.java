@@ -116,12 +116,12 @@ public class CharacterVerifierTest {
         }
 
         @Override
-        protected Character[] getFalsehoodValues() {
+        protected Character[] getFalsyValues() {
             return new Character[]{'0'};
         }
 
         @Override
-        protected Character[] getTruthValues() {
+        protected Character[] getTruthyValues() {
             return new Character[]{'1'};
         }
     }

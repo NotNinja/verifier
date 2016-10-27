@@ -39,6 +39,9 @@ import io.skelp.verifier.verification.Verification;
  */
 public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVerifier> {
 
+    // TODO: Add annotated method
+    // TODO: Add annotatedWithAll & annotatedWithAny methods
+
     private static final Set<Class<?>> PRIMITIVE_WRAPPERS;
 
     static {
@@ -62,7 +65,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @return
      * @throws VerifierException
      */
-    public ClassVerifier annotated(final Class<? extends Annotation> type) throws VerifierException {
+    public ClassVerifier annotatedWith(final Class<? extends Annotation> type) throws VerifierException {
         final Class<?> value = verification().getValue();
         final boolean result = value != null && type != null && value.isAnnotationPresent(type);
 

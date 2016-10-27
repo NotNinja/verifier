@@ -50,6 +50,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * @param end
      * @return
      * @throws VerifierException
+     * @see #between(Comparable, Comparable, Object, Object)
      */
     public V between(final T start, final T end) throws VerifierException {
         return between(start, end, start, end);
@@ -64,6 +65,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * @param endName
      * @return
      * @throws VerifierException
+     * @see #between(Comparable, Comparable)
      */
     public V between(final T start, final T end, final Object startName, final Object endName) throws VerifierException {
         return between(start, ComparisonOperator.GREATER_THAN_OR_EQUAL_TO, startName, end, ComparisonOperator.LESS_THAN_OR_EQUAL_TO, endName, "be between '%s' and '%s' (inclusive)");
@@ -76,6 +78,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * @param end
      * @return
      * @throws VerifierException
+     * @see #between(Comparable, Comparable)
      */
     public V betweenExclusive(final T start, final T end) throws VerifierException {
         return betweenExclusive(start, end, start, end);
@@ -90,6 +93,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * @param endName
      * @return
      * @throws VerifierException
+     * @see #between(Comparable, Comparable, Object, Object)
      */
     public V betweenExclusive(final T start, final T end, final Object startName, final Object endName) throws VerifierException {
         return between(start, ComparisonOperator.GREATER_THAN, startName, end, ComparisonOperator.LESS_THAN, endName, "be between '%s' and '%s' (exclusive)");
@@ -101,6 +105,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * @param other
      * @return
      * @throws VerifierException
+     * @see #greaterThan(Comparable, Object)
      */
     public V greaterThan(final T other) throws VerifierException {
         return greaterThan(other, other);
@@ -113,6 +118,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * @param name
      * @return
      * @throws VerifierException
+     * @see #greaterThan(Comparable)
      */
     public V greaterThan(final T other, final Object name) throws VerifierException {
         return comparesTo(ComparisonOperator.GREATER_THAN, other, name, "be greater than '%s'");
@@ -124,6 +130,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * @param other
      * @return
      * @throws VerifierException
+     * @see #greaterThanOrEqualTo(Comparable, Object)
      */
     public V greaterThanOrEqualTo(final T other) throws VerifierException {
         return greaterThanOrEqualTo(other, other);
@@ -136,6 +143,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * @param name
      * @return
      * @throws VerifierException
+     * @see #greaterThanOrEqualTo(Comparable)
      */
     public V greaterThanOrEqualTo(final T other, final Object name) throws VerifierException {
         return comparesTo(ComparisonOperator.GREATER_THAN_OR_EQUAL_TO, other, name, "be greater than or equal to '%s'");
@@ -147,6 +155,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * @param other
      * @return
      * @throws VerifierException
+     * @see #lessThan(Comparable, Object)
      */
     public V lessThan(final T other) throws VerifierException {
         return lessThan(other, other);
@@ -159,6 +168,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * @param name
      * @return
      * @throws VerifierException
+     * @see #lessThan(Comparable)
      */
     public V lessThan(final T other, final Object name) throws VerifierException {
         return comparesTo(ComparisonOperator.LESS_THAN, other, name, "be less than '%s'");
@@ -170,6 +180,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * @param other
      * @return
      * @throws VerifierException
+     * @see #lessThanOrEqualTo(Comparable, Object)
      */
     public V lessThanOrEqualTo(final T other) throws VerifierException {
         return lessThanOrEqualTo(other, other);
@@ -182,6 +193,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * @param name
      * @return
      * @throws VerifierException
+     * @see #lessThanOrEqualTo(Comparable)
      */
     public V lessThanOrEqualTo(final T other, final Object name) throws VerifierException {
         return comparesTo(ComparisonOperator.LESS_THAN_OR_EQUAL_TO, other, name, "be less than or equal to '%s'");

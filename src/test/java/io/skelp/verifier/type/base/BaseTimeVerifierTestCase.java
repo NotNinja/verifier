@@ -104,59 +104,59 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
     }
 
     @Test
-    public void testSameDayWithDifferentDay() {
+    public void testSameDayAsWithDifferentDay() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 2, 0, 0, 0);
 
-        testSameDayHelper(value, other, false);
+        testSameDayAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameDayWithDifferentEra() {
+    public void testSameDayAsWithDifferentEra() {
         Calendar value = createCalendar(GregorianCalendar.BC, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
 
-        testSameDayHelper(value, other, false);
+        testSameDayAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameDayWithDifferentYear() {
+    public void testSameDayAsWithDifferentYear() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2017, 1, 0, 0, 0);
 
-        testSameDayHelper(value, other, false);
+        testSameDayAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameDayWithNullOther() {
-        testSameDayHelper(Calendar.getInstance(), null, false);
+    public void testSameDayAsWithNullOther() {
+        testSameDayAsHelper(Calendar.getInstance(), null, false);
     }
 
     @Test
-    public void testSameDayWithNullValue() {
-        testSameDayHelper(null, Calendar.getInstance(), false);
+    public void testSameDayAsWithNullValue() {
+        testSameDayAsHelper(null, Calendar.getInstance(), false);
     }
 
     @Test
-    public void testSameDayWithNullValueAndNullOther() {
-        testSameDayHelper(null, null, false);
+    public void testSameDayAsWithNullValueAndNullOther() {
+        testSameDayAsHelper(null, null, false);
     }
 
     @Test
-    public void testSameDayWithSameDay() {
+    public void testSameDayAsWithSameDay() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 1, 1, 1, 1);
 
-        testSameDayHelper(value, other, true);
+        testSameDayAsHelper(value, other, true);
     }
 
-    private void testSameDayHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
+    private void testSameDayAsHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
         T value = createValueForCalendar(valueCalendar);
         T other = createValueForCalendar(otherCalendar);
 
         setValue(value);
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameDay(other));
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameDayAs(other));
 
         verify(getMockVerification()).check(eq(expected), eq("be same day as '%s'"), getArgsCaptor().capture());
 
@@ -164,67 +164,67 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
     }
 
     @Test
-    public void testSameHourWithDifferentDay() {
+    public void testSameHourAsWithDifferentDay() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 2, 0, 0, 0);
 
-        testSameHourHelper(value, other, false);
+        testSameHourAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameHourWithDifferentEra() {
+    public void testSameHourAsWithDifferentEra() {
         Calendar value = createCalendar(GregorianCalendar.BC, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
 
-        testSameHourHelper(value, other, false);
+        testSameHourAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameHourWithDifferentHour() {
+    public void testSameHourAsWithDifferentHour() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 1, 1, 0, 0);
 
-        testSameHourHelper(value, other, false);
+        testSameHourAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameHourWithDifferentYear() {
+    public void testSameHourAsWithDifferentYear() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2017, 1, 0, 0, 0);
 
-        testSameHourHelper(value, other, false);
+        testSameHourAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameHourWithNullOther() {
-        testSameHourHelper(Calendar.getInstance(), null, false);
+    public void testSameHourAsWithNullOther() {
+        testSameHourAsHelper(Calendar.getInstance(), null, false);
     }
 
     @Test
-    public void testSameHourWithNullValue() {
-        testSameHourHelper(null, Calendar.getInstance(), false);
+    public void testSameHourAsWithNullValue() {
+        testSameHourAsHelper(null, Calendar.getInstance(), false);
     }
 
     @Test
-    public void testSameHourWithNullValueAndNullOther() {
-        testSameHourHelper(null, null, false);
+    public void testSameHourAsWithNullValueAndNullOther() {
+        testSameHourAsHelper(null, null, false);
     }
 
     @Test
-    public void testSameHourWithSameHour() {
+    public void testSameHourAsWithSameHour() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 1, 1);
 
-        testSameHourHelper(value, other, true);
+        testSameHourAsHelper(value, other, true);
     }
 
-    private void testSameHourHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
+    private void testSameHourAsHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
         T value = createValueForCalendar(valueCalendar);
         T other = createValueForCalendar(otherCalendar);
 
         setValue(value);
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameHour(other));
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameHourAs(other));
 
         verify(getMockVerification()).check(eq(expected), eq("be same hour as '%s'"), getArgsCaptor().capture());
 
@@ -232,75 +232,75 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
     }
 
     @Test
-    public void testSameMinuteWithDifferentDay() {
+    public void testSameMinuteAsWithDifferentDay() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 2, 0, 0, 0);
 
-        testSameMinuteHelper(value, other, false);
+        testSameMinuteAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameMinuteWithDifferentEra() {
+    public void testSameMinuteAsWithDifferentEra() {
         Calendar value = createCalendar(GregorianCalendar.BC, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
 
-        testSameMinuteHelper(value, other, false);
+        testSameMinuteAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameMinuteWithDifferentHour() {
+    public void testSameMinuteAsWithDifferentHour() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 1, 1, 0, 0);
 
-        testSameMinuteHelper(value, other, false);
+        testSameMinuteAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameMinuteWithDifferentMinute() {
+    public void testSameMinuteAsWithDifferentMinute() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 1, 0);
 
-        testSameMinuteHelper(value, other, false);
+        testSameMinuteAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameMinuteWithDifferentYear() {
+    public void testSameMinuteAsWithDifferentYear() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2017, 1, 0, 0, 0);
 
-        testSameMinuteHelper(value, other, false);
+        testSameMinuteAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameMinuteWithNullOther() {
-        testSameMinuteHelper(Calendar.getInstance(), null, false);
+    public void testSameMinuteAsWithNullOther() {
+        testSameMinuteAsHelper(Calendar.getInstance(), null, false);
     }
 
     @Test
-    public void testSameMinuteWithNullValue() {
-        testSameMinuteHelper(null, Calendar.getInstance(), false);
+    public void testSameMinuteAsWithNullValue() {
+        testSameMinuteAsHelper(null, Calendar.getInstance(), false);
     }
 
     @Test
-    public void testSameMinuteWithNullValueAndNullOther() {
-        testSameMinuteHelper(null, null, false);
+    public void testSameMinuteAsWithNullValueAndNullOther() {
+        testSameMinuteAsHelper(null, null, false);
     }
 
     @Test
-    public void testSameMinuteWithSameMinute() {
+    public void testSameMinuteAsWithSameMinute() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 1);
 
-        testSameMinuteHelper(value, other, true);
+        testSameMinuteAsHelper(value, other, true);
     }
 
-    private void testSameMinuteHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
+    private void testSameMinuteAsHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
         T value = createValueForCalendar(valueCalendar);
         T other = createValueForCalendar(otherCalendar);
 
         setValue(value);
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameMinute(other));
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameMinuteAs(other));
 
         verify(getMockVerification()).check(eq(expected), eq("be same minute as '%s'"), getArgsCaptor().capture());
 
@@ -308,59 +308,59 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
     }
 
     @Test
-    public void testSameMonthWithDifferentEra() {
+    public void testSameMonthAsWithDifferentEra() {
         Calendar value = createCalendarForMonth(GregorianCalendar.BC, 2016, 0, 1);
         Calendar other = createCalendarForMonth(GregorianCalendar.AD, 2016, 0, 1);
 
-        testSameMonthHelper(value, other, false);
+        testSameMonthAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameMonthWithDifferentMonth() {
+    public void testSameMonthAsWithDifferentMonth() {
         Calendar value = createCalendarForMonth(GregorianCalendar.AD, 2016, 0, 1);
         Calendar other = createCalendarForMonth(GregorianCalendar.AD, 2016, 1, 1);
 
-        testSameMonthHelper(value, other, false);
+        testSameMonthAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameMonthWithDifferentYear() {
+    public void testSameMonthAsWithDifferentYear() {
         Calendar value = createCalendarForMonth(GregorianCalendar.AD, 2016, 0, 1);
         Calendar other = createCalendarForMonth(GregorianCalendar.AD, 2017, 0, 1);
 
-        testSameMonthHelper(value, other, false);
+        testSameMonthAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameMonthWithNullOther() {
-        testSameMonthHelper(Calendar.getInstance(), null, false);
+    public void testSameMonthAsWithNullOther() {
+        testSameMonthAsHelper(Calendar.getInstance(), null, false);
     }
 
     @Test
-    public void testSameMonthWithNullValue() {
-        testSameMonthHelper(null, Calendar.getInstance(), false);
+    public void testSameMonthAsWithNullValue() {
+        testSameMonthAsHelper(null, Calendar.getInstance(), false);
     }
 
     @Test
-    public void testSameMonthWithNullValueAndNullOther() {
-        testSameMonthHelper(null, null, false);
+    public void testSameMonthAsWithNullValueAndNullOther() {
+        testSameMonthAsHelper(null, null, false);
     }
 
     @Test
-    public void testSameMonthWithSameMonth() {
+    public void testSameMonthAsWithSameMonth() {
         Calendar value = createCalendarForMonth(GregorianCalendar.AD, 2016, 0, 1);
         Calendar other = createCalendarForMonth(GregorianCalendar.AD, 2016, 0, 2);
 
-        testSameMonthHelper(value, other, true);
+        testSameMonthAsHelper(value, other, true);
     }
 
-    private void testSameMonthHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
+    private void testSameMonthAsHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
         T value = createValueForCalendar(valueCalendar);
         T other = createValueForCalendar(otherCalendar);
 
         setValue(value);
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameMonth(other));
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameMonthAs(other));
 
         verify(getMockVerification()).check(eq(expected), eq("be same month as '%s'"), getArgsCaptor().capture());
 
@@ -368,83 +368,83 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
     }
 
     @Test
-    public void testSameSecondWithDifferentDay() {
+    public void testSameSecondAsWithDifferentDay() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 2, 0, 0, 0);
 
-        testSameSecondHelper(value, other, false);
+        testSameSecondAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameSecondWithDifferentEra() {
+    public void testSameSecondAsWithDifferentEra() {
         Calendar value = createCalendar(GregorianCalendar.BC, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
 
-        testSameSecondHelper(value, other, false);
+        testSameSecondAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameSecondWithDifferentHour() {
+    public void testSameSecondAsWithDifferentHour() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 1, 1, 0, 0);
 
-        testSameSecondHelper(value, other, false);
+        testSameSecondAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameSecondWithDifferentMinute() {
+    public void testSameSecondAsWithDifferentMinute() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 1, 0);
 
-        testSameSecondHelper(value, other, false);
+        testSameSecondAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameSecondWithDifferentSecond() {
+    public void testSameSecondAsWithDifferentSecond() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 1);
 
-        testSameSecondHelper(value, other, false);
+        testSameSecondAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameSecondWithDifferentYear() {
+    public void testSameSecondAsWithDifferentYear() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2017, 1, 0, 0, 0);
 
-        testSameSecondHelper(value, other, false);
+        testSameSecondAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameSecondWithNullOther() {
-        testSameSecondHelper(Calendar.getInstance(), null, false);
+    public void testSameSecondAsWithNullOther() {
+        testSameSecondAsHelper(Calendar.getInstance(), null, false);
     }
 
     @Test
-    public void testSameSecondWithNullValue() {
-        testSameSecondHelper(null, Calendar.getInstance(), false);
+    public void testSameSecondAsWithNullValue() {
+        testSameSecondAsHelper(null, Calendar.getInstance(), false);
     }
 
     @Test
-    public void testSameSecondWithNullValueAndNullOther() {
-        testSameSecondHelper(null, null, false);
+    public void testSameSecondAsWithNullValueAndNullOther() {
+        testSameSecondAsHelper(null, null, false);
     }
 
     @Test
-    public void testSameSecondWithSameSecond() {
+    public void testSameSecondAsWithSameSecond() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
 
-        testSameSecondHelper(value, other, true);
+        testSameSecondAsHelper(value, other, true);
     }
 
-    private void testSameSecondHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
+    private void testSameSecondAsHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
         T value = createValueForCalendar(valueCalendar);
         T other = createValueForCalendar(otherCalendar);
 
         setValue(value);
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameSecond(other));
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameSecondAs(other));
 
         verify(getMockVerification()).check(eq(expected), eq("be same second as '%s'"), getArgsCaptor().capture());
 
@@ -452,43 +452,43 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
     }
 
     @Test
-    public void testSameTimeWithDifferentTime() {
+    public void testSameTimeAsWithDifferentTime() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 1);
 
-        testSameTimeHelper(value, other, false);
+        testSameTimeAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameTimeWithNullOther() {
-        testSameTimeHelper(Calendar.getInstance(), null, false);
+    public void testSameTimeAsWithNullOther() {
+        testSameTimeAsHelper(Calendar.getInstance(), null, false);
     }
 
     @Test
-    public void testSameTimeWithNullValue() {
-        testSameTimeHelper(null, Calendar.getInstance(), false);
+    public void testSameTimeAsWithNullValue() {
+        testSameTimeAsHelper(null, Calendar.getInstance(), false);
     }
 
     @Test
-    public void testSameTimeWithNullValueAndNullOther() {
-        testSameTimeHelper(null, null, false);
+    public void testSameTimeAsWithNullValueAndNullOther() {
+        testSameTimeAsHelper(null, null, false);
     }
 
     @Test
-    public void testSameTimeWithSameTime() {
+    public void testSameTimeAsWithSameTime() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
 
-        testSameTimeHelper(value, other, true);
+        testSameTimeAsHelper(value, other, true);
     }
 
-    private void testSameTimeHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
+    private void testSameTimeAsHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
         T value = createValueForCalendar(valueCalendar);
         T other = createValueForCalendar(otherCalendar);
 
         setValue(value);
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameTime(other));
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameTimeAs(other));
 
         verify(getMockVerification()).check(eq(expected), eq("be same time as '%s'"), getArgsCaptor().capture());
 
@@ -496,59 +496,59 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
     }
 
     @Test
-    public void testSameWeekWithDifferentEra() {
+    public void testSameWeekAsWithDifferentEra() {
         Calendar value = createCalendarForWeek(GregorianCalendar.BC, 2016, 1, Calendar.SATURDAY);
         Calendar other = createCalendarForWeek(GregorianCalendar.AD, 2016, 1, Calendar.SATURDAY);
 
-        testSameWeekHelper(value, other, false);
+        testSameWeekAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameWeekWithDifferentWeek() {
+    public void testSameWeekAsWithDifferentWeek() {
         Calendar value = createCalendarForWeek(GregorianCalendar.AD, 2016, 1, Calendar.SATURDAY);
         Calendar other = createCalendarForWeek(GregorianCalendar.AD, 2016, 2, Calendar.SATURDAY);
 
-        testSameWeekHelper(value, other, false);
+        testSameWeekAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameWeekWithDifferentYear() {
+    public void testSameWeekAsWithDifferentYear() {
         Calendar value = createCalendarForWeek(GregorianCalendar.AD, 2016, 1, Calendar.SATURDAY);
         Calendar other = createCalendarForWeek(GregorianCalendar.AD, 2017, 1, Calendar.SATURDAY);
 
-        testSameWeekHelper(value, other, false);
+        testSameWeekAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameWeekWithNullOther() {
-        testSameWeekHelper(Calendar.getInstance(), null, false);
+    public void testSameWeekAsWithNullOther() {
+        testSameWeekAsHelper(Calendar.getInstance(), null, false);
     }
 
     @Test
-    public void testSameWeekWithNullValue() {
-        testSameWeekHelper(null, Calendar.getInstance(), false);
+    public void testSameWeekAsWithNullValue() {
+        testSameWeekAsHelper(null, Calendar.getInstance(), false);
     }
 
     @Test
-    public void testSameWeekWithNullValueAndNullOther() {
-        testSameWeekHelper(null, null, false);
+    public void testSameWeekAsWithNullValueAndNullOther() {
+        testSameWeekAsHelper(null, null, false);
     }
 
     @Test
-    public void testSameWeekWithSameWeek() {
+    public void testSameWeekAsWithSameWeek() {
         Calendar value = createCalendarForWeek(GregorianCalendar.AD, 2016, 1, Calendar.SATURDAY);
         Calendar other = createCalendarForWeek(GregorianCalendar.AD, 2016, 1, Calendar.SUNDAY);
 
-        testSameWeekHelper(value, other, true);
+        testSameWeekAsHelper(value, other, true);
     }
 
-    private void testSameWeekHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
+    private void testSameWeekAsHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
         T value = createValueForCalendar(valueCalendar);
         T other = createValueForCalendar(otherCalendar);
 
         setValue(value);
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameWeek(other));
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameWeekAs(other));
 
         verify(getMockVerification()).check(eq(expected), eq("be same week as '%s'"), getArgsCaptor().capture());
 
@@ -556,51 +556,51 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
     }
 
     @Test
-    public void testSameYearWithDifferentEra() {
+    public void testSameYearAsWithDifferentEra() {
         Calendar value = createCalendarForMonth(GregorianCalendar.BC, 2016, 0, 1);
         Calendar other = createCalendarForMonth(GregorianCalendar.AD, 2016, 0, 1);
 
-        testSameYearHelper(value, other, false);
+        testSameYearAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameYearWithDifferentYear() {
+    public void testSameYearAsWithDifferentYear() {
         Calendar value = createCalendarForMonth(GregorianCalendar.AD, 2016, 0, 1);
         Calendar other = createCalendarForMonth(GregorianCalendar.AD, 2017, 0, 1);
 
-        testSameYearHelper(value, other, false);
+        testSameYearAsHelper(value, other, false);
     }
 
     @Test
-    public void testSameYearWithNullOther() {
-        testSameYearHelper(Calendar.getInstance(), null, false);
+    public void testSameYearAsWithNullOther() {
+        testSameYearAsHelper(Calendar.getInstance(), null, false);
     }
 
     @Test
-    public void testSameYearWithNullValue() {
-        testSameYearHelper(null, Calendar.getInstance(), false);
+    public void testSameYearAsWithNullValue() {
+        testSameYearAsHelper(null, Calendar.getInstance(), false);
     }
 
     @Test
-    public void testSameYearWithNullValueAndNullOther() {
-        testSameYearHelper(null, null, false);
+    public void testSameYearAsWithNullValueAndNullOther() {
+        testSameYearAsHelper(null, null, false);
     }
 
     @Test
-    public void testSameYearWithSameYear() {
+    public void testSameYearAsWithSameYear() {
         Calendar value = createCalendarForMonth(GregorianCalendar.AD, 2016, 0, 1);
         Calendar other = createCalendarForMonth(GregorianCalendar.AD, 2016, 1, 2);
 
-        testSameYearHelper(value, other, true);
+        testSameYearAsHelper(value, other, true);
     }
 
-    private void testSameYearHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
+    private void testSameYearAsHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
         T value = createValueForCalendar(valueCalendar);
         T other = createValueForCalendar(otherCalendar);
 
         setValue(value);
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameYear(other));
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameYearAs(other));
 
         verify(getMockVerification()).check(eq(expected), eq("be same year as '%s'"), getArgsCaptor().capture());
 

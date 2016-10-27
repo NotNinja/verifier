@@ -35,6 +35,8 @@ import io.skelp.verifier.verification.Verification;
  */
 public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extends BaseTimeVerifier<T, V>> extends BaseComparableVerifier<T, V> {
 
+    // TODO: Add sameEraAs method
+
     /**
      * TODO: Document
      *
@@ -51,7 +53,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @return
      * @throws VerifierException
      */
-    public V sameDay(final T other) throws VerifierException {
+    public V sameDayAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
@@ -71,7 +73,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @return
      * @throws VerifierException
      */
-    public V sameHour(final T other) throws VerifierException {
+    public V sameHourAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
@@ -92,7 +94,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @return
      * @throws VerifierException
      */
-    public V sameMinute(final T other) throws VerifierException {
+    public V sameMinuteAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
@@ -114,7 +116,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @return
      * @throws VerifierException
      */
-    public V sameMonth(final T other) throws VerifierException {
+    public V sameMonthAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
@@ -134,7 +136,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @return
      * @throws VerifierException
      */
-    public V sameSecond(final T other) throws VerifierException {
+    public V sameSecondAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
@@ -157,7 +159,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @return
      * @throws VerifierException
      */
-    public V sameTime(final T other) throws VerifierException {
+    public V sameTimeAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
@@ -175,7 +177,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @return
      * @throws VerifierException
      */
-    public V sameWeek(final T other) throws VerifierException {
+    public V sameWeekAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
@@ -195,7 +197,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @return
      * @throws VerifierException
      */
-    public V sameYear(final T other) throws VerifierException {
+    public V sameYearAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&

@@ -47,44 +47,44 @@ import io.skelp.verifier.VerifierException;
 public abstract class BaseSortableCollectionVerifierTestCase<E extends Comparable<? super E>, T, V extends BaseSortableCollectionVerifier<E, T, V>> extends BaseCollectionVerifierTestCase<E, T, V> {
 
     @Test
-    public void testSortedWithEmptyValue() {
-        testSortedHelper(createEmptyValue(), new NaturalComparator<E>(), false, true);
+    public void testSortedByWithEmptyValue() {
+        testSortedByHelper(createEmptyValue(), new NaturalComparator<E>(), false, true);
     }
 
     @Test
-    public void testSortedWithNullValue() {
-        testSortedHelper(null, new NaturalComparator<E>(), false, false);
+    public void testSortedByWithNullValue() {
+        testSortedByHelper(null, new NaturalComparator<E>(), false, false);
     }
 
     @Test
-    public void testSortedWithSingleElementValue() {
-        testSortedHelper(createSingleValue(), new NaturalComparator<E>(), false, true);
+    public void testSortedByWithSingleElementValue() {
+        testSortedByHelper(createSingleValue(), new NaturalComparator<E>(), false, true);
     }
 
     @Test
-    public void testSortedWithSortedValue() {
-        testSortedHelper(createSortedValue(), new NaturalComparator<E>(), true, true);
+    public void testSortedByWithSortedValue() {
+        testSortedByHelper(createSortedValue(), new NaturalComparator<E>(), true, true);
     }
 
     @Test
-    public void testSortedWithUnsortedValue() {
-        testSortedHelper(createUnsortedValue(), new NaturalComparator<E>(), true, false);
+    public void testSortedByWithUnsortedValue() {
+        testSortedByHelper(createUnsortedValue(), new NaturalComparator<E>(), true, false);
     }
 
     @Test
-    public void testSortedThrowsIfComparatorIsNull() {
+    public void testSortedByThrowsIfComparatorIsNull() {
         thrown.expect(VerifierException.class);
         thrown.expectMessage("comparator must not be null: null");
 
-        getCustomVerifier().sorted(null);
+        getCustomVerifier().sortedBy(null);
     }
 
-    private void testSortedHelper(T value, Comparator<E> comparator, boolean comparatorUseExpected, boolean expected) {
+    private void testSortedByHelper(T value, Comparator<E> comparator, boolean comparatorUseExpected, boolean expected) {
         comparator = spy(comparator);
 
         setValue(value);
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sorted(comparator));
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sortedBy(comparator));
 
         verify(comparator, comparatorUseExpected ? atLeastOnce() : never()).compare(any(getItemClass()), any(getItemClass()));
 
@@ -94,44 +94,44 @@ public abstract class BaseSortableCollectionVerifierTestCase<E extends Comparabl
     }
 
     @Test
-    public void testSortedWithNameAndEmptyValue() {
-        testSortedHelper(createEmptyValue(), new NaturalComparator<E>(), "comparator", false, true);
+    public void testSortedByWithNameAndEmptyValue() {
+        testSortedByHelper(createEmptyValue(), new NaturalComparator<E>(), "comparator", false, true);
     }
 
     @Test
-    public void testSortedWithNameAndNullValue() {
-        testSortedHelper(null, new NaturalComparator<E>(), "comparator", false, false);
+    public void testSortedByWithNameAndNullValue() {
+        testSortedByHelper(null, new NaturalComparator<E>(), "comparator", false, false);
     }
 
     @Test
-    public void testSortedWithNameAndSingleElementValue() {
-        testSortedHelper(createSingleValue(), new NaturalComparator<E>(), "comparator", false, true);
+    public void testSortedByWithNameAndSingleElementValue() {
+        testSortedByHelper(createSingleValue(), new NaturalComparator<E>(), "comparator", false, true);
     }
 
     @Test
-    public void testSortedWithNameAndSortedValue() {
-        testSortedHelper(createSortedValue(), new NaturalComparator<E>(), "comparator", true, true);
+    public void testSortedByWithNameAndSortedValue() {
+        testSortedByHelper(createSortedValue(), new NaturalComparator<E>(), "comparator", true, true);
     }
 
     @Test
-    public void testSortedWithNameAndUnsortedValue() {
-        testSortedHelper(createUnsortedValue(), new NaturalComparator<E>(), "comparator", true, false);
+    public void testSortedByWithNameAndUnsortedValue() {
+        testSortedByHelper(createUnsortedValue(), new NaturalComparator<E>(), "comparator", true, false);
     }
 
     @Test
-    public void testSortedWithNameThrowsIfComparatorIsNull() {
+    public void testSortedByWithNameThrowsIfComparatorIsNull() {
         thrown.expect(VerifierException.class);
         thrown.expectMessage("comparator must not be null: null");
 
-        getCustomVerifier().sorted(null, "comparator");
+        getCustomVerifier().sortedBy(null, "comparator");
     }
 
-    private void testSortedHelper(T value, Comparator<E> comparator, Object name, boolean comparatorUseExpected, boolean expected) {
+    private void testSortedByHelper(T value, Comparator<E> comparator, Object name, boolean comparatorUseExpected, boolean expected) {
         comparator = spy(comparator);
 
         setValue(value);
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sorted(comparator, name));
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sortedBy(comparator, name));
 
         verify(comparator, comparatorUseExpected ? atLeastOnce() : never()).compare(any(getItemClass()), any(getItemClass()));
 

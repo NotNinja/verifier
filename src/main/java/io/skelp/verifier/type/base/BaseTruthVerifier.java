@@ -38,14 +38,16 @@ public interface BaseTruthVerifier<T, V extends BaseTruthVerifier<T, V>> extends
      *
      * @return
      * @throws VerifierException
+     * @see #truthy()
      */
-    V falsehood() throws VerifierException;
+    V falsy() throws VerifierException;
 
     /**
      * TODO: Document
      *
      * @return
      * @throws VerifierException
+     * @see #falsy()
      */
-    V truth() throws VerifierException;
+    V truthy() throws VerifierException;
 }

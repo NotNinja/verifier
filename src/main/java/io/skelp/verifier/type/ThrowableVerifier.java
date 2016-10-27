@@ -59,6 +59,7 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      *
      * @return
      * @throws VerifierException
+     * @see #unchecked()
      */
     public ThrowableVerifier checked() throws VerifierException {
         final Throwable value = verification().getValue();
@@ -75,8 +76,10 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * @param type
      * @return
      * @throws VerifierException
+     * @see #causedBy(Throwable)
+     * @see #causedBy(Throwable, Object)
      */
-    public ThrowableVerifier cause(final Class<?> type) throws VerifierException {
+    public ThrowableVerifier causedBy(final Class<?> type) throws VerifierException {
         final Throwable value = verification().getValue();
         boolean result = false;
         for (final Throwable throwable : getThrowables(value)) {
@@ -97,9 +100,11 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * @param cause
      * @return
      * @throws VerifierException
+     * @see #causedBy(Throwable)
+     * @see #causedBy(Throwable, Object)
      */
-    public ThrowableVerifier cause(final Throwable cause) throws VerifierException {
-        return cause(cause, cause);
+    public ThrowableVerifier causedBy(final Throwable cause) throws VerifierException {
+        return causedBy(cause, cause);
     }
 
     /**
@@ -109,8 +114,10 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * @param name
      * @return
      * @throws VerifierException
+     * @see #causedBy(Class)
+     * @see #causedBy(Throwable)
      */
-    public ThrowableVerifier cause(final Throwable cause, final Object name) throws VerifierException {
+    public ThrowableVerifier causedBy(final Throwable cause, final Object name) throws VerifierException {
         final Throwable value = verification().getValue();
         final boolean result = getThrowables(value).contains(cause);
 
@@ -140,6 +147,7 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      *
      * @return
      * @throws VerifierException
+     * @see #checked()
      */
     public ThrowableVerifier unchecked() throws VerifierException {
         final Throwable value = verification().getValue();

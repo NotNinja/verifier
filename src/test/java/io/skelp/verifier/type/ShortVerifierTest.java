@@ -141,12 +141,12 @@ public class ShortVerifierTest {
         }
 
         @Override
-        protected Short[] getFalsehoodValues() {
+        protected Short[] getFalsyValues() {
             return new Short[]{0};
         }
 
         @Override
-        protected Short[] getTruthValues() {
+        protected Short[] getTruthyValues() {
             return new Short[]{1};
         }
     }

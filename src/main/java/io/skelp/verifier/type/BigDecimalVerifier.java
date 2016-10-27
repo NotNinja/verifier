@@ -55,11 +55,11 @@ public final class BigDecimalVerifier extends BaseComparableVerifier<BigDecimal,
     }
 
     @Override
-    public BigDecimalVerifier falsehood() throws VerifierException {
+    public BigDecimalVerifier falsy() throws VerifierException {
         final BigDecimal value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigDecimal.ZERO) == 0;
 
-        verification().check(result, "be false");
+        verification().check(result, "be falsy");
 
         return this;
     }
@@ -105,11 +105,11 @@ public final class BigDecimalVerifier extends BaseComparableVerifier<BigDecimal,
     }
 
     @Override
-    public BigDecimalVerifier truth() throws VerifierException {
+    public BigDecimalVerifier truthy() throws VerifierException {
         final BigDecimal value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigDecimal.ONE) == 0;
 
-        verification().check(result, "be true");
+        verification().check(result, "be truthy");
 
         return this;
     }

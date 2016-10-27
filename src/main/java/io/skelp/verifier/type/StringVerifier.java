@@ -126,6 +126,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *
      * @return
      * @throws VerifierException
+     * @see #alphaSpace()
      */
     public StringVerifier alpha() throws VerifierException {
         final String value = verification().getValue();
@@ -146,6 +147,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *
      * @return
      * @throws VerifierException
+     * @see #alpha()
      */
     public StringVerifier alphaSpace() throws VerifierException {
         final String value = verification().getValue();
@@ -166,6 +168,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *
      * @return
      * @throws VerifierException
+     * @see #alphanumericSpace()
      */
     public StringVerifier alphanumeric() throws VerifierException {
         final String value = verification().getValue();
@@ -186,6 +189,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *
      * @return
      * @throws VerifierException
+     * @see #alphanumeric()
      */
     public StringVerifier alphanumericSpace() throws VerifierException {
         final String value = verification().getValue();
@@ -226,6 +230,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *
      * @return
      * @throws VerifierException
+     * @see #empty()
      */
     public StringVerifier blank() throws VerifierException {
         final String value = verification().getValue();
@@ -357,6 +362,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *
      * @return
      * @throws VerifierException
+     * @see #blank()
      */
     public StringVerifier empty() throws VerifierException {
         final String value = verification().getValue();
@@ -479,27 +485,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
     }
 
     @Override
-    public StringVerifier falsehood() throws VerifierException {
+    public StringVerifier falsy() throws VerifierException {
         final String value = verification().getValue();
         final boolean result = Boolean.FALSE.toString().equalsIgnoreCase(value);
 
-        verification().check(result, "be false");
-
-        return this;
-    }
-
-    /**
-     * TODO: Document
-     *
-     * @param length
-     * @return
-     * @throws VerifierException
-     */
-    public StringVerifier length(final int length) throws VerifierException {
-        final String value = verification().getValue();
-        final boolean result = value == null ? length == 0 : value.length() == length;
-
-        verification().check(result, "have a length of '%d'", length);
+        verification().check(result, "be falsy");
 
         return this;
     }
@@ -509,6 +499,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *
      * @return
      * @throws VerifierException
+     * @see #upperCase()
      */
     public StringVerifier lowerCase() throws VerifierException {
         final String value = verification().getValue();
@@ -530,6 +521,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @param regex
      * @return
      * @throws VerifierException
+     * @see #match(Pattern)
      */
     public StringVerifier match(final CharSequence regex) throws VerifierException {
         final String value = verification().getValue();
@@ -546,6 +538,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @param pattern
      * @return
      * @throws VerifierException
+     * @see #match(CharSequence)
      */
     public StringVerifier match(final Pattern pattern) throws VerifierException {
         final String value = verification().getValue();
@@ -561,6 +554,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *
      * @return
      * @throws VerifierException
+     * @see #numericSpace()
      */
     public StringVerifier numeric() throws VerifierException {
         final String value = verification().getValue();
@@ -581,6 +575,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *
      * @return
      * @throws VerifierException
+     * @see #numeric()
      */
     public StringVerifier numericSpace() throws VerifierException {
         final String value = verification().getValue();
@@ -592,6 +587,22 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         });
 
         verification().check(result, "contain only digits or space");
+
+        return this;
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param size
+     * @return
+     * @throws VerifierException
+     */
+    public StringVerifier sizeOf(final int size) throws VerifierException {
+        final String value = verification().getValue();
+        final boolean result = value == null ? size == 0 : value.length() == size;
+
+        verification().check(result, "have a size of '%d'", size);
 
         return this;
     }
@@ -671,11 +682,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
     }
 
     @Override
-    public StringVerifier truth() throws VerifierException {
+    public StringVerifier truthy() throws VerifierException {
         final String value = verification().getValue();
         final boolean result = Boolean.TRUE.toString().equalsIgnoreCase(value);
 
-        verification().check(result, "be true");
+        verification().check(result, "be truthy");
 
         return this;
     }
@@ -685,6 +696,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *
      * @return
      * @throws VerifierException
+     * @see #lowerCase()
      */
     public StringVerifier upperCase() throws VerifierException {
         final String value = verification().getValue();

@@ -53,11 +53,11 @@ public final class ByteVerifier extends BaseComparableVerifier<Byte, ByteVerifie
     }
 
     @Override
-    public ByteVerifier falsehood() throws VerifierException {
+    public ByteVerifier falsy() throws VerifierException {
         final Byte value = verification().getValue();
         final boolean result = value != null && value == 0;
 
-        verification().check(result, "be false");
+        verification().check(result, "be falsy");
 
         return this;
     }
@@ -103,11 +103,11 @@ public final class ByteVerifier extends BaseComparableVerifier<Byte, ByteVerifie
     }
 
     @Override
-    public ByteVerifier truth() throws VerifierException {
+    public ByteVerifier truthy() throws VerifierException {
         final Byte value = verification().getValue();
         final boolean result = value != null && value == 1;
 
-        verification().check(result, "be true");
+        verification().check(result, "be truthy");
 
         return this;
     }

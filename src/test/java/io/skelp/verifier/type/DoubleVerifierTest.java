@@ -141,12 +141,12 @@ public class DoubleVerifierTest {
         }
 
         @Override
-        protected Double[] getFalsehoodValues() {
+        protected Double[] getFalsyValues() {
             return new Double[]{0D};
         }
 
         @Override
-        protected Double[] getTruthValues() {
+        protected Double[] getTruthyValues() {
             return new Double[]{1D};
         }
     }

@@ -141,12 +141,12 @@ public class FloatVerifierTest {
         }
 
         @Override
-        protected Float[] getFalsehoodValues() {
+        protected Float[] getFalsyValues() {
             return new Float[]{0F};
         }
 
         @Override
-        protected Float[] getTruthValues() {
+        protected Float[] getTruthyValues() {
             return new Float[]{1F};
         }
     }

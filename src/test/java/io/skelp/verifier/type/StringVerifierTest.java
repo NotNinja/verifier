@@ -114,12 +114,12 @@ public class StringVerifierTest {
         }
 
         @Override
-        protected String[] getFalsehoodValues() {
+        protected String[] getFalsyValues() {
             return new String[]{"false", "FALSE"};
         }
 
         @Override
-        protected String[] getTruthValues() {
+        protected String[] getTruthyValues() {
             return new String[]{"true", "TRUE"};
         }
     }
@@ -1449,46 +1449,6 @@ public class StringVerifierTest {
         }
 
         @Test
-        public void testLengthWhenValueIsEmptyAndLengthIsDifferent() {
-            testLengthHelper(EMPTY, 1, false);
-        }
-
-        @Test
-        public void testLengthWhenValueIsEmptyAndLengthIsSame() {
-            testLengthHelper(EMPTY, 0, true);
-        }
-
-        @Test
-        public void testLengthWhenValueIsNotEmptyAndLengthIsDifferent() {
-            testLengthHelper("foo", 4, false);
-        }
-
-        @Test
-        public void testLengthWhenValueIsNotEmptyAndLengthIsSame() {
-            testLengthHelper("foo", 3, true);
-        }
-
-        @Test
-        public void testLengthWhenValueIsNullAndLengthIsNotZero() {
-            testLengthHelper(null, 1, false);
-        }
-
-        @Test
-        public void testLengthWhenValueIsNullAndLengthIsZero() {
-            testLengthHelper(null, 0, true);
-        }
-
-        private void testLengthHelper(String value, int length, boolean expected) {
-            setValue(value);
-
-            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().length(length));
-
-            verify(getMockVerification()).check(eq(expected), eq("have a length of '%d'"), getArgsCaptor().capture());
-
-            assertSame("Passes length for message formatting", length, getArgsCaptor().getValue());
-        }
-
-        @Test
         public void testLowerCaseWhenValueIsEmpty() {
             testLowerCaseHelper(EMPTY, true);
         }
@@ -1720,6 +1680,46 @@ public class StringVerifierTest {
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().numericSpace());
 
             verify(getMockVerification()).check(expected, "contain only digits or space");
+        }
+
+        @Test
+        public void testSizeOfWhenValueIsEmptyAndLengthIsDifferent() {
+            testSizeOfHelper(EMPTY, 1, false);
+        }
+
+        @Test
+        public void testSizeOfWhenValueIsEmptyAndLengthIsSame() {
+            testSizeOfHelper(EMPTY, 0, true);
+        }
+
+        @Test
+        public void testSizeOfWhenValueIsNotEmptyAndLengthIsDifferent() {
+            testSizeOfHelper("foo", 4, false);
+        }
+
+        @Test
+        public void testSizeOfWhenValueIsNotEmptyAndLengthIsSame() {
+            testSizeOfHelper("foo", 3, true);
+        }
+
+        @Test
+        public void testSizeOfWhenValueIsNullAndLengthIsNotZero() {
+            testSizeOfHelper(null, 1, false);
+        }
+
+        @Test
+        public void testSizeOfWhenValueIsNullAndLengthIsZero() {
+            testSizeOfHelper(null, 0, true);
+        }
+
+        private void testSizeOfHelper(String value, int size, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sizeOf(size));
+
+            verify(getMockVerification()).check(eq(expected), eq("have a size of '%d'"), getArgsCaptor().capture());
+
+            assertSame("Passes size for message formatting", size, getArgsCaptor().getValue());
         }
 
         @Test

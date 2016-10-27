@@ -54,9 +54,10 @@ public abstract class BaseSortableCollectionVerifier<E, T, V extends BaseSortabl
      * @param comparator
      * @return
      * @throws VerifierException
+     * @see #sortedBy(Comparator, Object)
      */
-    public V sorted(final Comparator<E> comparator) throws VerifierException {
-        return sorted(comparator, comparator);
+    public V sortedBy(final Comparator<E> comparator) throws VerifierException {
+        return sortedBy(comparator, comparator);
     }
 
     /**
@@ -66,8 +67,9 @@ public abstract class BaseSortableCollectionVerifier<E, T, V extends BaseSortabl
      * @param name
      * @return
      * @throws VerifierException
+     * @see #sortedBy(Comparator)
      */
-    public V sorted(final Comparator<E> comparator, final Object name) throws VerifierException {
+    public V sortedBy(final Comparator<E> comparator, final Object name) throws VerifierException {
         Verifier.verify(comparator, "comparator")
             .not().nulled();
 

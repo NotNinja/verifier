@@ -94,39 +94,39 @@ public class ClassVerifierTest {
         }
 
         @Test
-        public void testAnnotatedWhenTypeIsNull() {
-            testAnnotatedHelper(TypeWithAnnotationOne.class, null, false);
+        public void testAnnotatedWithWhenTypeIsNull() {
+            testAnnotatedWithHelper(TypeWithAnnotationOne.class, null, false);
         }
 
         @Test
-        public void testAnnotatedWhenValueIsAnnotatedWithDifferentAnnotation() {
-            testAnnotatedHelper(TypeWithAnnotationOne.class, AnnotationTwo.class, false);
+        public void testAnnotatedWithWhenValueIsAnnotatedWithDifferentAnnotation() {
+            testAnnotatedWithHelper(TypeWithAnnotationOne.class, AnnotationTwo.class, false);
         }
 
         @Test
-        public void testAnnotatedWhenValueIsAnnotatedWithMultipleAnnotations() {
-            testAnnotatedHelper(TypeWithAnnotationOneAndTwo.class, AnnotationTwo.class, true);
+        public void testAnnotatedWithWhenValueIsAnnotatedWithMultipleAnnotations() {
+            testAnnotatedWithHelper(TypeWithAnnotationOneAndTwo.class, AnnotationTwo.class, true);
         }
 
         @Test
-        public void testAnnotatedWhenValueIsAnnotatedWithNoAnnotations() {
-            testAnnotatedHelper(TypeWithNoAnnotations.class, AnnotationOne.class, false);
+        public void testAnnotatedWithWhenValueIsAnnotatedWithNoAnnotations() {
+            testAnnotatedWithHelper(TypeWithNoAnnotations.class, AnnotationOne.class, false);
         }
 
         @Test
-        public void testAnnotatedWhenValueIsAnnotatedWithSameAnnotation() {
-            testAnnotatedHelper(TypeWithAnnotationOne.class, AnnotationOne.class, true);
+        public void testAnnotatedWithWhenValueIsAnnotatedWithSameAnnotation() {
+            testAnnotatedWithHelper(TypeWithAnnotationOne.class, AnnotationOne.class, true);
         }
 
         @Test
-        public void testAnnotatedWhenValueIsNull() {
-            testAnnotatedHelper(null, AnnotationOne.class, false);
+        public void testAnnotatedWithWhenValueIsNull() {
+            testAnnotatedWithHelper(null, AnnotationOne.class, false);
         }
 
-        private void testAnnotatedHelper(Class<?> value, Class<? extends Annotation> type, boolean expected) {
+        private void testAnnotatedWithHelper(Class<?> value, Class<? extends Annotation> type, boolean expected) {
             setValue(value);
 
-            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotated(type));
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotatedWith(type));
 
             verify(getMockVerification()).check(eq(expected), eq("be annotated with '%s'"), getArgsCaptor().capture());
 

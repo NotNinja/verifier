@@ -227,17 +227,17 @@ public class BooleanVerifierTest {
         }
 
         @Override
-        protected Boolean[] getFalsehoodValues() {
+        protected Boolean[] getFalsyValues() {
             return new Boolean[]{false};
         }
 
         @Override
-        protected Boolean[] getTruthValues() {
+        protected Boolean[] getTruthyValues() {
             return new Boolean[]{true};
         }
 
         @Override
-        protected boolean isNullFalsehood() {
+        protected boolean isNullFalsy() {
             return true;
         }
     }

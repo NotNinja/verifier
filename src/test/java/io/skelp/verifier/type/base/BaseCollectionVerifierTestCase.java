@@ -219,41 +219,41 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
     }
 
     @Test
-    public void testSizeWithEmptyValue() {
-        testSizeHelper(createEmptyValue(), 0, true);
+    public void testSizeOfWithEmptyValue() {
+        testSizeOfHelper(createEmptyValue(), 0, true);
     }
 
     @Test
-    public void testSizeWithEmptyValueAndIncorrectSize() {
-        testSizeHelper(createEmptyValue(), 1, false);
+    public void testSizeOfWithEmptyValueAndIncorrectSize() {
+        testSizeOfHelper(createEmptyValue(), 1, false);
     }
 
     @Test
-    public void testSizeWithNonEmptyValue() {
-        testSizeHelper(createFullValue(), getFullValueSize(), true);
+    public void testSizeOfWithNonEmptyValue() {
+        testSizeOfHelper(createFullValue(), getFullValueSize(), true);
     }
 
     @Test
-    public void testSizeWithNonEmptyValueAndIncorrectSize() {
-        testSizeHelper(createFullValue(), getFullValueSize() + 1, false);
+    public void testSizeOfWithNonEmptyValueAndIncorrectSize() {
+        testSizeOfHelper(createFullValue(), getFullValueSize() + 1, false);
     }
 
     @Test
-    public void testSizeWithNullValue() {
-        testSizeHelper(null, 0, true);
+    public void testSizeOfWithNullValue() {
+        testSizeOfHelper(null, 0, true);
     }
 
     @Test
-    public void testSizeWithNullValueAndIncorrectSize() {
-        testSizeHelper(null, 1, false);
+    public void testSizeOfWithNullValueAndIncorrectSize() {
+        testSizeOfHelper(null, 1, false);
     }
 
-    private void testSizeHelper(T value, int size, boolean expected) {
+    private void testSizeOfHelper(T value, int size, boolean expected) {
         setValue(value);
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().size(size));
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sizeOf(size));
 
-        verify(getMockVerification()).check(eq(expected), eq("have size of '%d'"), getArgsCaptor().capture());
+        verify(getMockVerification()).check(eq(expected), eq("have a size of '%d'"), getArgsCaptor().capture());
 
         assertSame("Passes size for message formatting", size, getArgsCaptor().getValue());
     }

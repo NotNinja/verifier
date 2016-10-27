@@ -42,114 +42,114 @@ import io.skelp.verifier.CustomVerifierTestCaseBase;
 public abstract class BaseTruthVerifierTestCase<T, V extends BaseTruthVerifier<T, V>> extends CustomVerifierTestCaseBase<T, V> {
 
     @Test
-    public void testFalsehoodWhenValueIsFalsehood() {
-        testFalsehoodHelper(getFalsehoodValues(), true);
+    public void testFalsyWhenValueIsFalsy() {
+        testFalsyHelper(getFalsyValues(), true);
     }
 
     @Test
-    public void testFalsehoodWhenValueIsNull() {
+    public void testFalsyWhenValueIsNull() {
         @SuppressWarnings("unchecked")
         T[] values = (T[]) new Object[1];
         values[0] = null;
 
-        testFalsehoodHelper(values, isNullFalsehood());
+        testFalsyHelper(values, isNullFalsy());
     }
 
     @Test
-    public void testFalsehoodWhenValueIsTruth() {
-        testFalsehoodHelper(getTruthValues(), false);
+    public void testFalsyWhenValueIsTruthy() {
+        testFalsyHelper(getTruthyValues(), false);
     }
 
-    private void testFalsehoodHelper(T[] values, boolean expected) {
+    private void testFalsyHelper(T[] values, boolean expected) {
         for (T value : values) {
             setValue(value);
 
-            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().falsehood());
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().falsy());
         }
 
-        verify(getMockVerification(), times(values.length)).check(expected, "be false");
+        verify(getMockVerification(), times(values.length)).check(expected, "be falsy");
     }
 
     @Test
-    public void testTruthWhenValueIsFalsehood() {
-        testTruthHelper(getFalsehoodValues(), false);
+    public void testTruthyWhenValueIsFalsy() {
+        testTruthyHelper(getFalsyValues(), false);
     }
 
     @Test
-    public void testTruthWhenValueIsNull() {
+    public void testTruthyWhenValueIsNull() {
         @SuppressWarnings("unchecked")
         T[] values = (T[]) new Object[1];
         values[0] = null;
 
-        testTruthHelper(values, isNullTruth());
+        testTruthyHelper(values, isNullTruthy());
     }
 
     @Test
-    public void testTruthWhenValueIsTruth() {
-        testTruthHelper(getTruthValues(), true);
+    public void testTruthyWhenValueIsTruthy() {
+        testTruthyHelper(getTruthyValues(), true);
     }
 
-    private void testTruthHelper(T[] values, boolean expected) {
+    private void testTruthyHelper(T[] values, boolean expected) {
         for (T value : values) {
             setValue(value);
 
-            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().truth());
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().truthy());
         }
 
-        verify(getMockVerification(), times(values.length)).check(expected, "be true");
+        verify(getMockVerification(), times(values.length)).check(expected, "be truthy");
     }
 
     /**
      * <p>
-     * Returns the values expected to be treated as falsehoods.
+     * Returns the values considered to be falsy.
      * </p>
      * <p>
-     * If {@literal null} is treated as a falsehood {@link #isNullFalsehood()} should be overridden to return {@literal
-     * true} instead of including {@literal null} amongst these values.
-     * </p>
-     *
-     * @return The falsehood values.
-     */
-    protected abstract T[] getFalsehoodValues();
-
-    /**
-     * <p>
-     * Returns the values expected to be treated as truths.
-     * </p>
-     * <p>
-     * If {@literal null} is treated as a truth {@link #isNullTruth()} should be overridden to return {@literal true}
+     * If {@literal null} is considered falsy, {@link #isNullFalsy()} should be overridden to return {@literal true}
      * instead of including {@literal null} amongst these values.
      * </p>
      *
-     * @return The truth values.
+     * @return The falsy values.
      */
-    protected abstract T[] getTruthValues();
+    protected abstract T[] getFalsyValues();
 
     /**
      * <p>
-     * Returns whether {@literal null} is treated as a falsehood.
+     * Returns the values considered to be truthy.
+     * </p>
+     * <p>
+     * If {@literal null} is considered truthy, {@link #isNullTruthy()} should be overridden to return {@literal true}
+     * instead of including {@literal null} amongst these values.
+     * </p>
+     *
+     * @return The truthy values.
+     */
+    protected abstract T[] getTruthyValues();
+
+    /**
+     * <p>
+     * Returns whether {@literal null} is considered falsy.
      * </p>
      * <p>
      * By default this method returns {@literal false}.
      * </p>
      *
-     * @return {@literal true} if {@literal null} is expected to be a falsehood; otherwise {@literal false}.
+     * @return {@literal true} if {@literal null} is expected to be falsy; otherwise {@literal false}.
      */
-    protected boolean isNullFalsehood() {
+    protected boolean isNullFalsy() {
         return false;
     }
 
     /**
      * <p>
-     * Returns whether {@literal null} is treated as a truth.
+     * Returns whether {@literal null} is considered truthy.
      * </p>
      * <p>
      * By default this method returns {@literal false}.
      * </p>
      *
-     * @return {@literal true} if {@literal null} is expected to be a truth; otherwise {@literal false}.
+     * @return {@literal true} if {@literal null} is expected to be truthy; otherwise {@literal false}.
      */
-    protected boolean isNullTruth() {
+    protected boolean isNullTruthy() {
         return false;
     }
 }

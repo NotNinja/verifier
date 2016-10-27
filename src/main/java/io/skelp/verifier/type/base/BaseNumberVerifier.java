@@ -37,6 +37,7 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      *
      * @return
      * @throws VerifierException
+     * @see #odd()
      */
     V even() throws VerifierException;
 
@@ -45,6 +46,7 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      *
      * @return
      * @throws VerifierException
+     * @see #positive()
      */
     V negative() throws VerifierException;
 
@@ -53,6 +55,7 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      *
      * @return
      * @throws VerifierException
+     * @see #even()
      */
     V odd() throws VerifierException;
 
@@ -61,6 +64,7 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      *
      * @return
      * @throws VerifierException
+     * @see #zero()
      */
     V one() throws VerifierException;
 
@@ -69,6 +73,7 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      *
      * @return
      * @throws VerifierException
+     * @see #negative()
      */
     V positive() throws VerifierException;
 
@@ -77,6 +82,7 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      *
      * @return
      * @throws VerifierException
+     * @see #one()
      */
     V zero() throws VerifierException;
 }

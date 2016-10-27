@@ -142,12 +142,12 @@ public class BigIntegerVerifierTest {
         }
 
         @Override
-        protected BigInteger[] getFalsehoodValues() {
+        protected BigInteger[] getFalsyValues() {
             return new BigInteger[]{BigInteger.ZERO};
         }
 
         @Override
-        protected BigInteger[] getTruthValues() {
+        protected BigInteger[] getTruthyValues() {
             return new BigInteger[]{BigInteger.ONE};
         }
     }

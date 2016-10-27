@@ -55,11 +55,11 @@ public final class BigIntegerVerifier extends BaseComparableVerifier<BigInteger,
     }
 
     @Override
-    public BigIntegerVerifier falsehood() throws VerifierException {
+    public BigIntegerVerifier falsy() throws VerifierException {
         final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ZERO) == 0;
 
-        verification().check(result, "be false");
+        verification().check(result, "be falsy");
 
         return this;
     }
@@ -105,11 +105,11 @@ public final class BigIntegerVerifier extends BaseComparableVerifier<BigInteger,
     }
 
     @Override
-    public BigIntegerVerifier truth() throws VerifierException {
+    public BigIntegerVerifier truthy() throws VerifierException {
         final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ONE) == 0;
 
-        verification().check(result, "be true");
+        verification().check(result, "be truthy");
 
         return this;
     }

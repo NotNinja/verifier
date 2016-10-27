@@ -128,11 +128,11 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @return
      * @throws VerifierException
      */
-    public V size(final int size) throws VerifierException {
+    public V sizeOf(final int size) throws VerifierException {
         final T value = verification().getValue();
         final boolean result = value == null ? size == 0 : getSize(value) == size;
 
-        verification().check(result, "have size of '%d'", size);
+        verification().check(result, "have a size of '%d'", size);
 
         return chain();
     }
@@ -143,6 +143,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @param assertion
      * @return
      * @throws VerifierException
+     * @see #thatAll(VerifierAssertion, String, Object...)
      */
     public V thatAll(final VerifierAssertion<E> assertion) throws VerifierException {
         return thatAll(assertion, null);
@@ -156,6 +157,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @param args
      * @return
      * @throws VerifierException
+     * @see #thatAll(VerifierAssertion)
      */
     public V thatAll(final VerifierAssertion<E> assertion, final String message, final Object... args) throws VerifierException {
         Verifier.verify(assertion, "assertion")
@@ -180,6 +182,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @param assertion
      * @return
      * @throws VerifierException
+     * @see #thatAny(VerifierAssertion, String, Object...)
      */
     public V thatAny(final VerifierAssertion<E> assertion) throws VerifierException {
         return thatAny(assertion, null);
@@ -193,6 +196,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @param args
      * @return
      * @throws VerifierException
+     * @see #thatAny(VerifierAssertion)
      */
     public V thatAny(final VerifierAssertion<E> assertion, final String message, final Object... args) throws VerifierException {
         Verifier.verify(assertion, "assertion")

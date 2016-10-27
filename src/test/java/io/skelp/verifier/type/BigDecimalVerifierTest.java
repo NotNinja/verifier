@@ -142,12 +142,12 @@ public class BigDecimalVerifierTest {
         }
 
         @Override
-        protected BigDecimal[] getFalsehoodValues() {
+        protected BigDecimal[] getFalsyValues() {
             return new BigDecimal[]{BigDecimal.ZERO};
         }
 
         @Override
-        protected BigDecimal[] getTruthValues() {
+        protected BigDecimal[] getTruthyValues() {
             return new BigDecimal[]{BigDecimal.ONE};
         }
     }

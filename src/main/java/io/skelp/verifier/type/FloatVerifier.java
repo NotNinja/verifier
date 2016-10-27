@@ -53,11 +53,11 @@ public final class FloatVerifier extends BaseComparableVerifier<Float, FloatVeri
     }
 
     @Override
-    public FloatVerifier falsehood() throws VerifierException {
+    public FloatVerifier falsy() throws VerifierException {
         final Float value = verification().getValue();
         final boolean result = value != null && value == 0F;
 
-        verification().check(result, "be false");
+        verification().check(result, "be falsy");
 
         return this;
     }
@@ -103,11 +103,11 @@ public final class FloatVerifier extends BaseComparableVerifier<Float, FloatVeri
     }
 
     @Override
-    public FloatVerifier truth() throws VerifierException {
+    public FloatVerifier truthy() throws VerifierException {
         final Float value = verification().getValue();
         final boolean result = value != null && value == 1F;
 
-        verification().check(result, "be true");
+        verification().check(result, "be truthy");
 
         return this;
     }

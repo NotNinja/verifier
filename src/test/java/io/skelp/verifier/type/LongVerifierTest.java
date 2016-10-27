@@ -141,12 +141,12 @@ public class LongVerifierTest {
         }
 
         @Override
-        protected Long[] getFalsehoodValues() {
+        protected Long[] getFalsyValues() {
             return new Long[]{0L};
         }
 
         @Override
-        protected Long[] getTruthValues() {
+        protected Long[] getTruthyValues() {
             return new Long[]{1L};
         }
     }

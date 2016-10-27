@@ -93,6 +93,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      *
      * @return
      * @throws VerifierException
+     * @see #asciiAlphaUpperCase()
      */
     public CharacterVerifier asciiAlphaLowerCase() throws VerifierException {
         final Character value = verification().getValue();
@@ -108,6 +109,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      *
      * @return
      * @throws VerifierException
+     * @see #asciiAlphaLowerCase()
      */
     public CharacterVerifier asciiAlphaUpperCase() throws VerifierException {
         final Character value = verification().getValue();
@@ -179,21 +181,21 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
     }
 
     @Override
-    public CharacterVerifier falsehood() throws VerifierException {
+    public CharacterVerifier falsy() throws VerifierException {
         final Character value = verification().getValue();
         final boolean result = value != null && value == '0';
 
-        verification().check(result, "be false");
+        verification().check(result, "be falsy");
 
         return this;
     }
 
     @Override
-    public CharacterVerifier truth() throws VerifierException {
+    public CharacterVerifier truthy() throws VerifierException {
         final Character value = verification().getValue();
         final boolean result = value != null && value == '1';
 
-        verification().check(result, "be true");
+        verification().check(result, "be truthy");
 
         return this;
     }

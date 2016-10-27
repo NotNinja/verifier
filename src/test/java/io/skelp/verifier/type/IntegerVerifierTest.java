@@ -141,12 +141,12 @@ public class IntegerVerifierTest {
         }
 
         @Override
-        protected Integer[] getFalsehoodValues() {
+        protected Integer[] getFalsyValues() {
             return new Integer[]{0};
         }
 
         @Override
-        protected Integer[] getTruthValues() {
+        protected Integer[] getTruthyValues() {
             return new Integer[]{1};
         }
     }

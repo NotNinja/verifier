@@ -53,11 +53,11 @@ public final class ShortVerifier extends BaseComparableVerifier<Short, ShortVeri
     }
 
     @Override
-    public ShortVerifier falsehood() throws VerifierException {
+    public ShortVerifier falsy() throws VerifierException {
         final Short value = verification().getValue();
         final boolean result = value != null && value == 0;
 
-        verification().check(result, "be false");
+        verification().check(result, "be falsy");
 
         return this;
     }
@@ -103,11 +103,11 @@ public final class ShortVerifier extends BaseComparableVerifier<Short, ShortVeri
     }
 
     @Override
-    public ShortVerifier truth() throws VerifierException {
+    public ShortVerifier truthy() throws VerifierException {
         final Short value = verification().getValue();
         final boolean result = value != null && value == 1;
 
-        verification().check(result, "be true");
+        verification().check(result, "be truthy");
 
         return this;
     }

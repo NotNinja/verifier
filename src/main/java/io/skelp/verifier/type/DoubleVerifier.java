@@ -53,11 +53,11 @@ public final class DoubleVerifier extends BaseComparableVerifier<Double, DoubleV
     }
 
     @Override
-    public DoubleVerifier falsehood() throws VerifierException {
+    public DoubleVerifier falsy() throws VerifierException {
         final Double value = verification().getValue();
         final boolean result = value != null && value == 0D;
 
-        verification().check(result, "be false");
+        verification().check(result, "be falsy");
 
         return this;
     }
@@ -103,11 +103,11 @@ public final class DoubleVerifier extends BaseComparableVerifier<Double, DoubleV
     }
 
     @Override
-    public DoubleVerifier truth() throws VerifierException {
+    public DoubleVerifier truthy() throws VerifierException {
         final Double value = verification().getValue();
         final boolean result = value != null && value == 1D;
 
-        verification().check(result, "be true");
+        verification().check(result, "be truthy");
 
         return this;
     }
