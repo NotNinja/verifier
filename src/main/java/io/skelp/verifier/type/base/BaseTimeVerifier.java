@@ -35,8 +35,6 @@ import io.skelp.verifier.verification.Verification;
  */
 public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extends BaseTimeVerifier<T, V>> extends BaseComparableVerifier<T, V> {
 
-    // TODO: Add sameEraAs method
-
     /**
      * TODO: Document
      *
@@ -62,6 +60,24 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
                 calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR));
 
         verification().check(result, "be same day as '%s'", other);
+
+        return chain();
+    }
+
+    /**
+     * TODO: Document
+     *
+     * @param other
+     * @return
+     * @throws VerifierException
+     */
+    public V sameEraAs(final T other) throws VerifierException {
+        final Calendar calendar1 = getCalendar(verification().getValue());
+        final Calendar calendar2 = getCalendar(other);
+        final boolean result = calendar1 != null && calendar2 != null &&
+            calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA);
+
+        verification().check(result, "be same era as '%s'", other);
 
         return chain();
     }

@@ -164,6 +164,51 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
     }
 
     @Test
+    public void testSameEraAsWithDifferentEra() {
+        Calendar value = createCalendarForMonth(GregorianCalendar.BC, 2016, 0, 1);
+        Calendar other = createCalendarForMonth(GregorianCalendar.AD, 2016, 0, 1);
+
+        testSameEraAsHelper(value, other, false);
+    }
+
+    @Test
+    public void testSameEraAsWithNullOther() {
+        testSameEraAsHelper(Calendar.getInstance(), null, false);
+    }
+
+    @Test
+    public void testSameEraAsWithNullValue() {
+        testSameEraAsHelper(null, Calendar.getInstance(), false);
+    }
+
+    @Test
+    public void testSameEraAsWithNullValueAndNullOther() {
+        testSameEraAsHelper(null, null, false);
+    }
+
+    @Test
+    public void testSameEraAsWithSameEra() {
+        Calendar value = createCalendarForMonth(GregorianCalendar.AD, 2016, 0, 1);
+        Calendar other = createCalendarForMonth(GregorianCalendar.AD, 2017, 1, 2);
+
+        testSameEraAsHelper(value, other, true);
+    }
+
+    private void testSameEraAsHelper(Calendar valueCalendar, Calendar otherCalendar, boolean expected) {
+        T value = createValueForCalendar(valueCalendar);
+        T other = createValueForCalendar(otherCalendar);
+
+        setValue(value);
+
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameEraAs(other));
+
+        verify(getMockVerification()).check(eq(expected), eq("be same era as '%s'"), getArgsCaptor().capture());
+
+        assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
+    }
+
+
+    @Test
     public void testSameHourAsWithDifferentDay() {
         Calendar value = createCalendar(GregorianCalendar.AD, 2016, 1, 0, 0, 0);
         Calendar other = createCalendar(GregorianCalendar.AD, 2016, 2, 0, 0, 0);
