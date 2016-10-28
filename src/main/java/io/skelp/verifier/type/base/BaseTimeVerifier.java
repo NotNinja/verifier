@@ -27,29 +27,52 @@ import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * An abstract extension of {@link BaseComparableVerifier} which includes methods for verifying date/time parts of a
+ * value. Implementations of {@code BaseTimeVerifier} must be able to provide a {@code Calendar} representation of the
+ * value which should also be {@code Comparable}.
+ * </p>
  *
  * @param <T>
+ *         the type of the value being verified
  * @param <V>
+ *         the type of the {@link BaseTimeVerifier} for chaining purposes
  * @author Alasdair Mercer
  */
 public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extends BaseTimeVerifier<T, V>> extends BaseComparableVerifier<T, V> {
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link BaseTimeVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public BaseTimeVerifier(final Verification<T> verification) {
         super(verification);
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value represents the same day as that of the {@code other} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).sameDayAs(null)                                                      => FAIL
+     * Verifier.verify(null).sameDayAs(*)                                                      => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameDayAs(parse("31 Aug 2016 13:45:30")) => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameDayAs(parse("15 Oct 2016 13:45:30")) => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameDayAs(parse("31 Oct 2016 00:07:02")) => PASS
+     * </pre>
      *
      * @param other
-     * @return
+     *         the object to compare against the day of this value (may be {@literal null})
+     * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public V sameDayAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
@@ -65,11 +88,24 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value represents the same era as that of the {@code other} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).sameEraAs(null)                                                            => FAIL
+     * Verifier.verify(null).sameEraAs(*)                                                            => FAIL
+     * Verifier.verify(parse("31 Oct 2016 AD 13:45:30")).sameEraAs(parse("31 Oct 2016 BC 13:45:30")) => FAIL
+     * Verifier.verify(parse("31 Oct 2016 AD 13:45:30")).sameEraAs(parse("15 Aug 2017 AD 00:07:02")) => PASS
+     * </pre>
      *
      * @param other
-     * @return
+     *         the object to compare against the era of this value (may be {@literal null})
+     * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public V sameEraAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
@@ -83,11 +119,25 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value represents the same hour of the same day as that of the {@code other} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).sameHourAs(null)                                                      => FAIL
+     * Verifier.verify(null).sameHourAs(*)                                                      => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameHourAs(parse("15 Oct 2016 13:45:30")) => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameHourAs(parse("31 Oct 2016 00:45:30")) => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameHourAs(parse("31 Oct 2016 13:15:02")) => PASS
+     * </pre>
      *
      * @param other
-     * @return
+     *         the object to compare against the hour of this value (may be {@literal null})
+     * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public V sameHourAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
@@ -104,11 +154,25 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value represents the same minute of the same day as that of the {@code other} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).sameMinuteAs(null)                                                      => FAIL
+     * Verifier.verify(null).sameMinuteAs(*)                                                      => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMinuteAs(parse("31 Oct 2016 00:45:30")) => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMinuteAs(parse("31 Oct 2016 13:15:30")) => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMinuteAs(parse("31 Oct 2016 13:45:02")) => PASS
+     * </pre>
      *
      * @param other
-     * @return
+     *         the object to compare against the minute of this value (may be {@literal null})
+     * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public V sameMinuteAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
@@ -126,11 +190,25 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value represents the same month as that of the {@code other} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).sameMonthAs(null)                                                      => FAIL
+     * Verifier.verify(null).sameMonthAs(*)                                                      => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMonthAs(parse("31 Oct 2017 13:45:30")) => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMonthAs(parse("31 Aug 2016 13:45:30")) => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMonthAs(parse("15 Oct 2016 00:07:02")) => PASS
+     * </pre>
      *
      * @param other
-     * @return
+     *         the object to compare against the month of this value (may be {@literal null})
+     * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public V sameMonthAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
@@ -146,11 +224,25 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value represents the same second of the same day as that of the {@code other} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).sameSecondAs(null)                                                      => FAIL
+     * Verifier.verify(null).sameSecondAs(*)                                                      => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameSecondAs(parse("31 Oct 2016 13:15:30")) => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameSecondAs(parse("31 Oct 2016 13:45:02")) => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameSecondAs(parse("31 Oct 2016 13:45:30")) => PASS
+     * </pre>
      *
      * @param other
-     * @return
+     *         the object to compare against the second of this value (may be {@literal null})
+     * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public V sameSecondAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
@@ -169,11 +261,25 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value represents the exact same time as that of the {@code other} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).sameTimeAs(null)                                                              => FAIL
+     * Verifier.verify(null).sameTimeAs(*)                                                              => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30.123")).sameTimeAs(parse("31 Oct 2016 13:45:15.123")) => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30.123")).sameTimeAs(parse("31 Oct 2016 13:45:30.789")) => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30.123")).sameTimeAs(parse("31 Oct 2016 13:45:30.123")) => PASS
+     * </pre>
      *
      * @param other
-     * @return
+     *         the object to compare against the time of this value (may be {@literal null})
+     * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public V sameTimeAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
@@ -187,11 +293,25 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value represents the same week as that of the {@code other} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).sameWeekAs(null)                                                      => FAIL
+     * Verifier.verify(null).sameWeekAs(*)                                                      => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameWeekAs(parse("31 Oct 2017 13:45:30")) => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameWeekAs(parse("15 Oct 2016 13:45:30")) => FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameWeekAs(parse("1 Nov 2016 00:07:02"))  => PASS
+     * </pre>
      *
      * @param other
-     * @return
+     *         the object to compare against the week of this value (may be {@literal null})
+     * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public V sameWeekAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
@@ -207,11 +327,25 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value represents the same year as that of the {@code other} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).sameYearAs(null)                                                            => FAIL
+     * Verifier.verify(null).sameYearAs(*)                                                            => FAIL
+     * Verifier.verify(parse("31 Oct 2016 AD 13:45:30")).sameYearAs(parse("31 Oct 2016 BC 13:45:30")) => FAIL
+     * Verifier.verify(parse("31 Oct 2016 AD 13:45:30")).sameYearAs(parse("31 Oct 2017 AD 13:45:30")) => FAIL
+     * Verifier.verify(parse("31 Oct 2016 AD 13:45:30")).sameYearAs(parse("15 Aug 2016 AD 00:07:02")) => PASS
+     * </pre>
      *
      * @param other
-     * @return
+     *         the object to compare against the year of this value (may be {@literal null})
+     * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public V sameYearAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
@@ -226,10 +360,17 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Returns a calendar representation of the specified {@code value}.
+     * </p>
+     * <p>
+     * Implementations should ensure that this method returns {@literal null} when {@code value} is {@literal null}.
+     * </p>
      *
      * @param value
-     * @return
+     *         the value to be transformed into a {@code Calendar}
+     * @return A {@code Calendar} instance to represent {@code value} or {@literal null} if {@code value} is {@literal
+     * null}.
      */
     protected abstract Calendar getCalendar(T value);
 }
