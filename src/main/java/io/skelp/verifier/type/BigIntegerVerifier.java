@@ -71,7 +71,7 @@ public final class BigIntegerVerifier extends BaseComparableVerifier<BigInteger,
         final BigInteger value = verification().getValue();
         final boolean result = value == null || value.compareTo(BigInteger.ZERO) == 0;
 
-        verification().check(result, "be falsy");
+        verification().check(result, FALSY_MESSAGE);
 
         return this;
     }
@@ -121,7 +121,7 @@ public final class BigIntegerVerifier extends BaseComparableVerifier<BigInteger,
         final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ONE) == 0;
 
-        verification().check(result, "be truthy");
+        verification().check(result, TRUTHY_MESSAGE);
 
         return this;
     }

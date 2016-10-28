@@ -69,7 +69,7 @@ public final class DoubleVerifier extends BaseComparableVerifier<Double, DoubleV
         final Double value = verification().getValue();
         final boolean result = value == null || value == 0D;
 
-        verification().check(result, "be falsy");
+        verification().check(result, FALSY_MESSAGE);
 
         return this;
     }
@@ -119,7 +119,7 @@ public final class DoubleVerifier extends BaseComparableVerifier<Double, DoubleV
         final Double value = verification().getValue();
         final boolean result = value != null && value == 1D;
 
-        verification().check(result, "be truthy");
+        verification().check(result, TRUTHY_MESSAGE);
 
         return this;
     }

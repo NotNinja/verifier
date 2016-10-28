@@ -69,7 +69,7 @@ public final class ByteVerifier extends BaseComparableVerifier<Byte, ByteVerifie
         final Byte value = verification().getValue();
         final boolean result = value == null || value == 0;
 
-        verification().check(result, "be falsy");
+        verification().check(result, FALSY_MESSAGE);
 
         return this;
     }
@@ -119,7 +119,7 @@ public final class ByteVerifier extends BaseComparableVerifier<Byte, ByteVerifie
         final Byte value = verification().getValue();
         final boolean result = value != null && value == 1;
 
-        verification().check(result, "be truthy");
+        verification().check(result, TRUTHY_MESSAGE);
 
         return this;
     }

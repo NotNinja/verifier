@@ -71,7 +71,7 @@ public final class BigDecimalVerifier extends BaseComparableVerifier<BigDecimal,
         final BigDecimal value = verification().getValue();
         final boolean result = value == null || value.compareTo(BigDecimal.ZERO) == 0;
 
-        verification().check(result, "be falsy");
+        verification().check(result, FALSY_MESSAGE);
 
         return this;
     }
@@ -121,7 +121,7 @@ public final class BigDecimalVerifier extends BaseComparableVerifier<BigDecimal,
         final BigDecimal value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigDecimal.ONE) == 0;
 
-        verification().check(result, "be truthy");
+        verification().check(result, TRUTHY_MESSAGE);
 
         return this;
     }

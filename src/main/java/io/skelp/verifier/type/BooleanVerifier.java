@@ -27,16 +27,26 @@ import io.skelp.verifier.type.base.BaseTruthVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * An implementation of {@link BaseComparableVerifier} and {@link BaseTruthVerifier} which can be used to verify a
+ * {@code Boolean} value.
+ * </p>
+ * <p>
+ * All of the {@link BaseTruthVerifier} methods are implemented so that {@literal null} and {@literal false} are
+ * <b>always</b> considered to be falsy and {@literal true} is <b>always</b> considered to be truthy.
+ * </p>
  *
  * @author Alasdair Mercer
  */
 public final class BooleanVerifier extends BaseComparableVerifier<Boolean, BooleanVerifier> implements BaseTruthVerifier<Boolean, BooleanVerifier> {
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link BooleanVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public BooleanVerifier(final Verification<Boolean> verification) {
         super(verification);
@@ -46,7 +56,7 @@ public final class BooleanVerifier extends BaseComparableVerifier<Boolean, Boole
     public BooleanVerifier falsy() throws VerifierException {
         final boolean result = !Boolean.TRUE.equals(verification().getValue());
 
-        verification().check(result, "be falsy");
+        verification().check(result, FALSY_MESSAGE);
 
         return this;
     }
@@ -55,7 +65,7 @@ public final class BooleanVerifier extends BaseComparableVerifier<Boolean, Boole
     public BooleanVerifier truthy() throws VerifierException {
         final boolean result = Boolean.TRUE.equals(verification().getValue());
 
-        verification().check(result, "be truthy");
+        verification().check(result, TRUTHY_MESSAGE);
 
         return this;
     }

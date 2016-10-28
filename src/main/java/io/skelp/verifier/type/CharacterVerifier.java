@@ -185,7 +185,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value == null || value == '0';
 
-        verification().check(result, "be falsy");
+        verification().check(result, FALSY_MESSAGE);
 
         return this;
     }
@@ -195,7 +195,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value != null && value == '1';
 
-        verification().check(result, "be truthy");
+        verification().check(result, TRUTHY_MESSAGE);
 
         return this;
     }

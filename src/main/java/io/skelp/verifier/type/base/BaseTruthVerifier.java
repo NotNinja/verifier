@@ -46,6 +46,26 @@ public interface BaseTruthVerifier<T, V extends BaseTruthVerifier<T, V>> extends
 
     /**
      * <p>
+     * The message used to enhance that of the {@link VerifierException} thrown by {@link #falsy()} when the
+     * verification fails.
+     * </p>
+     *
+     * @see #falsy()
+     */
+    String FALSY_MESSAGE = "be falsy";
+
+    /**
+     * <p>
+     * The message used to enhance that of the {@link VerifierException} thrown by {@link #truthy()} when the
+     * verification fails.
+     * </p>
+     *
+     * @see #truthy()
+     */
+    String TRUTHY_MESSAGE = "be truthy";
+
+    /**
+     * <p>
      * Verifies that the value is falsy.
      * </p>
      * <p>

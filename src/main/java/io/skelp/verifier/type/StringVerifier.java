@@ -489,7 +489,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = value == null || value.isEmpty() || Boolean.FALSE.toString().equalsIgnoreCase(value);
 
-        verification().check(result, "be falsy");
+        verification().check(result, FALSY_MESSAGE);
 
         return this;
     }
@@ -686,7 +686,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = Boolean.TRUE.toString().equalsIgnoreCase(value);
 
-        verification().check(result, "be truthy");
+        verification().check(result, TRUTHY_MESSAGE);
 
         return this;
     }
