@@ -27,16 +27,21 @@ import io.skelp.verifier.type.base.BaseTimeVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * An implementation of {@link BaseTimeVerifier} which can be used to verify a {@code Calendar} value.
+ * </p>
  *
  * @author Alasdair Mercer
  */
 public final class CalendarVerifier extends BaseTimeVerifier<Calendar, CalendarVerifier> {
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link CalendarVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public CalendarVerifier(final Verification<Calendar> verification) {
         super(verification);

@@ -22,11 +22,17 @@
 package io.skelp.verifier.type;
 
 import io.skelp.verifier.AbstractCustomVerifier;
+import io.skelp.verifier.CustomVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
  * <p>
  * The most basic implementation of {@link AbstractCustomVerifier} which can be used to verify an {@code Object} value.
+ * </p>
+ * <p>
+ * For a lot of built-in data types another, more specific, {@link CustomVerifier} implementation may also exist which
+ * perhaps comes with other useful verification methods. However, {@code ObjectVerifier} is useful for cases when one
+ * doesn't exist and for custom objects, possibly domain-specific.
  * </p>
  *
  * @author Alasdair Mercer

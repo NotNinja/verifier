@@ -28,8 +28,8 @@ import io.skelp.verifier.verification.Verification;
 
 /**
  * <p>
- * The most basic implementation of {@link BaseSortableCollectionVerifier} which can be used to verify a
- * {@code Collection} value and its elements.
+ * An implementation of {@link BaseSortableCollectionVerifier} which can be used to verify a {@code Collection} value
+ * and its elements.
  * </p>
  *
  * @param <E>
