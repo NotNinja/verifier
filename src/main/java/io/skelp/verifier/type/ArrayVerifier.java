@@ -28,17 +28,30 @@ import io.skelp.verifier.type.base.BaseSortableCollectionVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * An implementation of {@link BaseSortableCollectionVerifier} which can be used to verify a array value and its
+ * elements.
+ * </p>
+ * <p>
+ * {@code ArrayVerifier} also changes how {@link #equalTo(Object)} and the other related methods work so that they check
+ * that the value is <i>deeply equal</i> to the other object. This provides a more natural and expected behavior for
+ * these methods when dealing with arrays.
+ * </p>
  *
  * @param <E>
+ *         the type of the elements contained within the value being verified
  * @author Alasdair Mercer
+ * @see Arrays#deepEquals(Object[], Object[])
  */
 public final class ArrayVerifier<E> extends BaseSortableCollectionVerifier<E, E[], ArrayVerifier<E>> {
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link ArrayVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public ArrayVerifier(final Verification<E[]> verification) {
         super(verification);

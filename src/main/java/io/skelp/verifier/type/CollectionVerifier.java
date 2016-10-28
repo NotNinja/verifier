@@ -27,17 +27,24 @@ import io.skelp.verifier.type.base.BaseSortableCollectionVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * The most basic implementation of {@link BaseSortableCollectionVerifier} which can be used to verify a
+ * {@code Collection} value and its elements.
+ * </p>
  *
  * @param <E>
+ *         the type of the elements contained within the value being verified
  * @author Alasdair Mercer
  */
 public final class CollectionVerifier<E> extends BaseSortableCollectionVerifier<E, Collection<E>, CollectionVerifier<E>> {
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link CollectionVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public CollectionVerifier(final Verification<Collection<E>> verification) {
         super(verification);

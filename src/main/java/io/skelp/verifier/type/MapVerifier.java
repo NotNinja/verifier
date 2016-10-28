@@ -30,29 +30,54 @@ import io.skelp.verifier.util.Function;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * An implementation of {@link BaseCollectionVerifier} which can be used to verify a {@code Map} value and its own keys
+ * and values.
+ * </p>
  *
  * @param <K>
+ *         the type of the keys contained within the value being verified
  * @param <V>
+ *         the type of the values contained within the value being verified
  * @author Alasdair Mercer
  */
 public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>, MapVerifier<K, V>> {
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link MapVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public MapVerifier(final Verification<Map<K, V>> verification) {
         super(verification);
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value contains <b>all</b> of the {@code keys} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(null).containAllKeys(*)                                                             => FAIL
+     * Verifier.verify(new Object[0][]).containAllKeys(*)                                                  => FAIL
+     * Verifier.verify(map(new Object[][]{*})).containAllKeys((Object[]) null)                             => PASS
+     * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {"c", 789}})).containAllKeys("d", "e")   => FAIL
+     * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {"c", 789}})).containAllKeys("a", "d")   => FAIL
+     * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {"c", 789}})).containAllKeys("c", "b")   => PASS
+     * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {"c", 789}})).containAllKeys("c", null)  => FAIL
+     * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {null, 789}})).containAllKeys("a", null) => PASS
+     * </pre>
      *
      * @param keys
-     * @return
+     *         the keys to check for within the value (may be {@literal null})
+     * @return A reference to this {@link BaseCollectionVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public MapVerifier<K, V> containAllKeys(final K... keys) throws VerifierException {
         final Map<K, V> value = verification().getValue();
@@ -69,11 +94,28 @@ public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value contains <b>any</b> of the {@code keys} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(null).containAnyKey(*)                                                             => FAIL
+     * Verifier.verify(new Object[0][]).containAnyKey(*)                                                  => FAIL
+     * Verifier.verify(map(new Object[][]{*})).containAnyKey((Object[]) null)                             => FAIL
+     * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {"c", 789}})).containAnyKey("d", "e")   => FAIL
+     * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {"c", 789}})).containAnyKey("a", "d")   => PASS
+     * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {"c", 789}})).containAnyKey("c", "b")   => PASS
+     * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {"c", 789}})).containAnyKey("c", null)  => PASS
+     * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {null, 789}})).containAnyKey("d", null) => PASS
+     * </pre>
      *
      * @param keys
-     * @return
+     *         the keys to check for within the value (may be {@literal null})
+     * @return A reference to this {@link BaseCollectionVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public MapVerifier<K, V> containAnyKey(final K... keys) throws VerifierException {
         final Map<K, V> value = verification().getValue();
@@ -90,11 +132,26 @@ public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value contains the {@code key} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(null).containKey(*)                                                        => FAIL
+     * Verifier.verify(map(new Object[0][])).containKey(*)                                        => FAIL
+     * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {"c", 789}})).containKey("c")   => PASS
+     * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {"c", 789}})).containKey("d")   => FAIL
+     * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {"c", 789}})).containKey(null)  => FAIL
+     * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {null, 789}})).containKey(null) => PASS
+     * </pre>
      *
      * @param key
-     * @return
+     *         the key to check for within the value (may be {@literal null})
+     * @return A reference to this {@link MapVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public MapVerifier<K, V> containKey(final K key) throws VerifierException {
         final Map<K, V> value = verification().getValue();
