@@ -30,30 +30,56 @@ import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * An abstract extension of {@link BaseSortableCollectionVerifier} which includes methods for verifying how the
+ * collection of elements within the value are sorted.
+ * </p>
  *
  * @param <E>
+ *         the type of the elements contained within the value being verified
  * @param <T>
+ *         the type of the value being verified
  * @param <V>
+ *         the type of the {@link BaseSortableCollectionVerifier} for chaining purposes
  * @author Alasdair Mercer
  */
 public abstract class BaseSortableCollectionVerifier<E, T, V extends BaseSortableCollectionVerifier<E, T, V>> extends BaseCollectionVerifier<E, T, V> {
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link BaseSortableCollectionVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public BaseSortableCollectionVerifier(final Verification<T> verification) {
         super(verification);
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the elements contained within the value are sorted by the {@code comparator} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).sortedBy(null)                                                   => FAIL
+     * Verifier.verify(*).not().sortedBy(null)                                             => FAIL
+     * Verifier.verify(null).sortedBy(*)                                                   => FAIL
+     * Verifier.verify(new Object[0]).sortedBy(*)                                          => PASS
+     * Verifier.verify(new Object[]{123}).sortedBy(*)                                      => PASS
+     * Verifier.verify(new Object[]{987, 654, 321}).sortedBy((o1, o2) -> o1.compareTo(o2)) => FAIL
+     * Verifier.verify(new Object[]{123, 456, 789}).sortedBy((o1, o2) -> o1.compareTo(o2)) => PASS
+     * </pre>
      *
      * @param comparator
-     * @return
+     *         the {@code Comparator} to be used to verify the sort order of the elements within the value
+     * @return A reference to this {@link BaseSortableCollectionVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If {@code comparator} is {@literal null} or the verification fails while not negated or passes while
+     *         negated.
      * @see #sortedBy(Comparator, Object)
      */
     public V sortedBy(final Comparator<E> comparator) throws VerifierException {
@@ -61,12 +87,36 @@ public abstract class BaseSortableCollectionVerifier<E, T, V extends BaseSortabl
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the elements contained within the value are sorted by the {@code comparator} provided while
+     * allowing {@code comparator} to be given an optional friendlier {@code name} for the {@link VerifierException}
+     * message in the event that one is thrown.
+     * </p>
+     * <p>
+     * While {@code name} can be {@literal null} it is recommended instead to either use {@link #sortedBy(Comparator)}
+     * or pass {@code comparator} as {@code name} instead to get a better verification error message.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).sortedBy(null, *)                                                   => FAIL
+     * Verifier.verify(*).not().sortedBy(null, *)                                             => FAIL
+     * Verifier.verify(null).sortedBy(*, *)                                                   => FAIL
+     * Verifier.verify(new Object[0]).sortedBy(*, *)                                          => PASS
+     * Verifier.verify(new Object[]{123}).sortedBy(*, *)                                      => PASS
+     * Verifier.verify(new Object[]{987, 654, 321}).sortedBy((o1, o2) -> o1.compareTo(o2), *) => FAIL
+     * Verifier.verify(new Object[]{123, 456, 789}).sortedBy((o1, o2) -> o1.compareTo(o2), *) => PASS
+     * </pre>
      *
      * @param comparator
+     *         the {@code Comparator} to be used to verify the sort order of the elements within the value
      * @param name
-     * @return
+     *         the optional name used to represent {@code comparator} (may be {@literal null})
+     * @return A reference to this {@link BaseSortableCollectionVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If {@code comparator} is {@literal null} or the verification fails while not negated or passes while
+     *         negated.
      * @see #sortedBy(Comparator)
      */
     public V sortedBy(final Comparator<E> comparator, final Object name) throws VerifierException {
