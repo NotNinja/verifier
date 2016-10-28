@@ -67,7 +67,7 @@ public abstract class BaseSortableCollectionVerifier<E, T, V extends BaseSortabl
      * <pre>
      * Verifier.verify(*).sortedBy(null)                                                   => FAIL
      * Verifier.verify(*).not().sortedBy(null)                                             => FAIL
-     * Verifier.verify(null).sortedBy(*)                                                   => FAIL
+     * Verifier.verify((Object[]) null).sortedBy(*)                                        => FAIL
      * Verifier.verify(new Object[0]).sortedBy(*)                                          => PASS
      * Verifier.verify(new Object[]{123}).sortedBy(*)                                      => PASS
      * Verifier.verify(new Object[]{987, 654, 321}).sortedBy((o1, o2) -> o1.compareTo(o2)) => FAIL
@@ -102,7 +102,7 @@ public abstract class BaseSortableCollectionVerifier<E, T, V extends BaseSortabl
      * <pre>
      * Verifier.verify(*).sortedBy(null, *)                                                   => FAIL
      * Verifier.verify(*).not().sortedBy(null, *)                                             => FAIL
-     * Verifier.verify(null).sortedBy(*, *)                                                   => FAIL
+     * Verifier.verify((Object[]) null).sortedBy(*, *)                                        => FAIL
      * Verifier.verify(new Object[0]).sortedBy(*, *)                                          => PASS
      * Verifier.verify(new Object[]{123}).sortedBy(*, *)                                      => PASS
      * Verifier.verify(new Object[]{987, 654, 321}).sortedBy((o1, o2) -> o1.compareTo(o2), *) => FAIL

@@ -63,8 +63,8 @@ public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(null).containAllKeys(*)                                                             => FAIL
-     * Verifier.verify(new Object[0][]).containAllKeys(*)                                                  => FAIL
+     * Verifier.verify((Map) null).containAllKeys(*)                                                       => FAIL
+     * Verifier.verify(map(new Object[0][])).containAllKeys(*)                                             => FAIL
      * Verifier.verify(map(new Object[][]{*})).containAllKeys((Object[]) null)                             => PASS
      * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {"c", 789}})).containAllKeys("d", "e")   => FAIL
      * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {"c", 789}})).containAllKeys("a", "d")   => FAIL
@@ -101,8 +101,8 @@ public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(null).containAnyKey(*)                                                             => FAIL
-     * Verifier.verify(new Object[0][]).containAnyKey(*)                                                  => FAIL
+     * Verifier.verify((Map) null).containAnyKey(*)                                                       => FAIL
+     * Verifier.verify(map(new Object[0][])).containAnyKey(*)                                             => FAIL
      * Verifier.verify(map(new Object[][]{*})).containAnyKey((Object[]) null)                             => FAIL
      * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {"c", 789}})).containAnyKey("d", "e")   => FAIL
      * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {"c", 789}})).containAnyKey("a", "d")   => PASS
@@ -139,7 +139,7 @@ public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(null).containKey(*)                                                        => FAIL
+     * Verifier.verify((Map) null).containKey(*)                                                  => FAIL
      * Verifier.verify(map(new Object[0][])).containKey(*)                                        => FAIL
      * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {"c", 789}})).containKey("c")   => PASS
      * Verifier.verify(map(new Object[][]{{"a", 123}, {"b", 456}, {"c", 789}})).containKey("d")   => FAIL
