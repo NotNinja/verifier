@@ -25,17 +25,30 @@ import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * The most basic implementation of {@link BaseComparableVerifier} which can be used to verify any {@code Comparable}
+ * value.
+ * </p>
+ * <p>
+ * For a lot of built-in {@code Comparable} data types another, more specific, {@link BaseComparableVerifier}
+ * implementation may also exist which perhaps comes with other useful verification methods. However,
+ * {@code ComparableVerifier} is useful for cases when one doesn't exist and for custom {@code Comparable} objects,
+ * possibly domain-specific.
+ * </p>
  *
  * @param <T>
+ *         the {@code Comparable} type of the value being verified
  * @author Alasdair Mercer
  */
 public final class ComparableVerifier<T extends Comparable<? super T>> extends BaseComparableVerifier<T, ComparableVerifier<T>> {
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link ComparableVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public ComparableVerifier(final Verification<T> verification) {
         super(verification);
