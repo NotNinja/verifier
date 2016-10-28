@@ -29,7 +29,9 @@ import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * An implementation of {@link AbstractCustomVerifier} which can be used to verify a {@code Throwable} value.
+ * </p>
  *
  * @author Alasdair Mercer
  */
@@ -46,19 +48,32 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link ThrowableVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public ThrowableVerifier(final Verification<Throwable> verification) {
         super(verification);
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is a checked exception.
+     * </p>
+     * <pre>
+     * Verifier.verify((Throwable) null).checked()           => FAIL
+     * Verifier.verify(new Exception()).checked()            => PASS
+     * Verifier.verify(new IOException()).checked()          => PASS
+     * Verifier.verify(new RuntimeException()).checked()     => FAIL
+     * Verifier.verify(new NullPointerException()).checked() => FAIL
+     * </pre>
      *
-     * @return
+     * @return A reference to this {@link ThrowableVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #unchecked()
      */
     public ThrowableVerifier checked() throws VerifierException {
@@ -71,11 +86,28 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is or has been caused by the class provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify((Throwable) null).causedBy(*)                                                         => FAIL
+     * Verifier.verify(*).causedBy((Class) null)                                                             => FAIL
+     * Verifier.verify(new IOException()).causedBy(NullPointerException.class)                               => FAIL
+     * Verifier.verify(new IOException()).causedBy(IOException.class)                                        => PASS
+     * Verifier.verify(new NullPointerException(new IOException())).causedBy(IllegalArgumentException.class) => FAIL
+     * Verifier.verify(new NullPointerException(new IOException())).causedBy(RuntimeException.class)         => PASS
+     * Verifier.verify(new NullPointerException(new IOException())).causedBy(IOException.class)              => PASS
+     * Verifier.verify(*).causedBy(Throwable.class)                                                          => PASS
+     * </pre>
      *
      * @param type
-     * @return
+     *         the class to which the value or one of its cause must be assignable (may be {@literal null})
+     * @return A reference to this {@link ThrowableVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #causedBy(Throwable)
      * @see #causedBy(Throwable, Object)
      */
@@ -95,11 +127,25 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is or has been caused by the {@code cause} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify((Throwable) null).causedBy(*)                                  => FAIL
+     * Verifier.verify(*).causedBy((Throwable) null)                                  => FAIL
+     * Verifier.verify(ex = new IOException()).causedBy(new IOException())            => FAIL
+     * Verifier.verify(ex = new IOException()).causedBy(ex)                           => PASS
+     * Verifier.verify(new NullPointerException(ex = new IOException())).causedBy(ex) => PASS
+     * </pre>
      *
      * @param cause
-     * @return
+     *         the {@code Throwable} to compare against the value or its causes (may be {@literal null})
+     * @return A reference to this {@link ThrowableVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #causedBy(Throwable)
      * @see #causedBy(Throwable, Object)
      */
@@ -108,12 +154,33 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is or has been caused by the {@code cause} provided while allowing {@code cause} to be
+     * given an optional friendlier {@code name} for the {@link VerifierException} message in the event that one is
+     * thrown.
+     * </p>
+     * <p>
+     * While {@code name} can be {@literal null} it is recommended instead to either use {@link #causedBy(Throwable)} or
+     * pass {@code cause} as {@code name} instead to get a better verification error message.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify((Throwable) null).causedBy(*, *)                                  => FAIL
+     * Verifier.verify(*).causedBy(null, *)                                              => FAIL
+     * Verifier.verify(ex = new IOException()).causedBy(new IOException(), *)            => FAIL
+     * Verifier.verify(ex = new IOException()).causedBy(ex, *)                           => PASS
+     * Verifier.verify(new NullPointerException(ex = new IOException())).causedBy(ex, *) => PASS
+     * </pre>
      *
      * @param cause
+     *         the {@code Throwable} to compare against the value or its causes (may be {@literal null})
      * @param name
-     * @return
+     *         the optional name used to represent {@code cause} (may be {@literal null})
+     * @return A reference to this {@link ThrowableVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #causedBy(Class)
      * @see #causedBy(Throwable)
      */
@@ -127,11 +194,27 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value has the {@code message} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify((Throwable) null).message(*)                                  => FAIL
+     * Verifier.verify(new Exception()).message(null)                                => PASS
+     * Verifier.verify(new Exception()).message("abc")                               => FAIL
+     * Verifier.verify(new Exception("abc")).message(null)                           => FAIL
+     * Verifier.verify(new Exception("abc")).message("def")                          => FAIL
+     * Verifier.verify(new Exception("abc")).message("abc")                          => PASS
+     * Verifier.verify(new Exception("abc")).message("ABC")                          => FAIL
+     * </pre>
      *
      * @param message
-     * @return
+     *         the message to compare against that of the value (may be {@literal null})
+     * @return A reference to this {@link ThrowableVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public ThrowableVerifier message(final String message) throws VerifierException {
         final Throwable value = verification().getValue();
@@ -143,10 +226,20 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is a unchecked exception.
+     * </p>
+     * <pre>
+     * Verifier.verify((Throwable) null).unchecked()           => FAIL
+     * Verifier.verify(new Exception()).unchecked()            => FAIL
+     * Verifier.verify(new IOException()).unchecked()          => FAIL
+     * Verifier.verify(new RuntimeException()).unchecked()     => PASS
+     * Verifier.verify(new NullPointerException()).unchecked() => PASS
+     * </pre>
      *
-     * @return
+     * @return A reference to this {@link ThrowableVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #checked()
      */
     public ThrowableVerifier unchecked() throws VerifierException {
