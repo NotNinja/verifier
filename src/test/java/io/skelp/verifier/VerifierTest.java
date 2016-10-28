@@ -122,8 +122,8 @@ public class VerifierTest {
     }
 
     @Test
-    public void hackCoverage() {
-        // TODO: Determine how to avoid this
+    public void testConstructor() {
+        // Ensure that Verifier can be instantiated, if required
         new Verifier();
     }
 

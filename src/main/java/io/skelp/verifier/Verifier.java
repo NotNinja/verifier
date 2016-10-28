@@ -60,7 +60,7 @@ import io.skelp.verifier.verification.Verification;
  *
  * @author Alasdair Mercer
  */
-public final class Verifier {
+public class Verifier {
 
     private static VerifierFactoryProvider factoryProvider = new DefaultVerifierFactoryProvider();
 
@@ -72,7 +72,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static <E> ArrayVerifier<E> verify(final E[] value) throws VerifierFactoryException {
+    public static final <E> ArrayVerifier<E> verify(final E[] value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -85,7 +85,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static <E> ArrayVerifier<E> verify(final E[] value, final Object name) throws VerifierFactoryException {
+    public static final <E> ArrayVerifier<E> verify(final E[] value, final Object name) throws VerifierFactoryException {
         return new ArrayVerifier<>(createVerification(value, name));
     }
 
@@ -96,7 +96,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static BigDecimalVerifier verify(final BigDecimal value) throws VerifierFactoryException {
+    public static final BigDecimalVerifier verify(final BigDecimal value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -108,7 +108,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static BigDecimalVerifier verify(final BigDecimal value, final Object name) throws VerifierFactoryException {
+    public static final BigDecimalVerifier verify(final BigDecimal value, final Object name) throws VerifierFactoryException {
         return new BigDecimalVerifier(createVerification(value, name));
     }
 
@@ -119,7 +119,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static BigIntegerVerifier verify(final BigInteger value) throws VerifierFactoryException {
+    public static final BigIntegerVerifier verify(final BigInteger value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -131,7 +131,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static BigIntegerVerifier verify(final BigInteger value, final Object name) throws VerifierFactoryException {
+    public static final BigIntegerVerifier verify(final BigInteger value, final Object name) throws VerifierFactoryException {
         return new BigIntegerVerifier(createVerification(value, name));
     }
 
@@ -142,7 +142,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static BooleanVerifier verify(final Boolean value) throws VerifierFactoryException {
+    public static final BooleanVerifier verify(final Boolean value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -154,7 +154,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static BooleanVerifier verify(final Boolean value, final Object name) throws VerifierFactoryException {
+    public static final BooleanVerifier verify(final Boolean value, final Object name) throws VerifierFactoryException {
         return new BooleanVerifier(createVerification(value, name));
     }
 
@@ -165,7 +165,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static ByteVerifier verify(final Byte value) throws VerifierFactoryException {
+    public static final ByteVerifier verify(final Byte value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -177,7 +177,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static ByteVerifier verify(final Byte value, final Object name) throws VerifierFactoryException {
+    public static final ByteVerifier verify(final Byte value, final Object name) throws VerifierFactoryException {
         return new ByteVerifier(createVerification(value, name));
     }
 
@@ -188,7 +188,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static CalendarVerifier verify(final Calendar value) throws VerifierFactoryException {
+    public static final CalendarVerifier verify(final Calendar value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -200,7 +200,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static CalendarVerifier verify(final Calendar value, final Object name) throws VerifierFactoryException {
+    public static final CalendarVerifier verify(final Calendar value, final Object name) throws VerifierFactoryException {
         return new CalendarVerifier(createVerification(value, name));
     }
 
@@ -211,7 +211,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static CharacterVerifier verify(final Character value) throws VerifierFactoryException {
+    public static final CharacterVerifier verify(final Character value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -223,7 +223,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static CharacterVerifier verify(final Character value, final Object name) throws VerifierFactoryException {
+    public static final CharacterVerifier verify(final Character value, final Object name) throws VerifierFactoryException {
         return new CharacterVerifier(createVerification(value, name));
     }
 
@@ -234,7 +234,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static ClassVerifier verify(final Class value) throws VerifierFactoryException {
+    public static final ClassVerifier verify(final Class value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -246,7 +246,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static ClassVerifier verify(final Class value, final Object name) throws VerifierFactoryException {
+    public static final ClassVerifier verify(final Class value, final Object name) throws VerifierFactoryException {
         return new ClassVerifier(createVerification(value, name));
     }
 
@@ -258,7 +258,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static <E> CollectionVerifier<E> verify(final Collection<E> value) throws VerifierFactoryException {
+    public static final <E> CollectionVerifier<E> verify(final Collection<E> value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -271,7 +271,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static <E> CollectionVerifier<E> verify(final Collection<E> value, final Object name) throws VerifierFactoryException {
+    public static final <E> CollectionVerifier<E> verify(final Collection<E> value, final Object name) throws VerifierFactoryException {
         return new CollectionVerifier<>(createVerification(value, name));
     }
 
@@ -282,7 +282,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static DateVerifier verify(final Date value) throws VerifierFactoryException {
+    public static final DateVerifier verify(final Date value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -294,7 +294,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static DateVerifier verify(final Date value, final Object name) throws VerifierFactoryException {
+    public static final DateVerifier verify(final Date value, final Object name) throws VerifierFactoryException {
         return new DateVerifier(createVerification(value, name));
     }
 
@@ -305,7 +305,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static DoubleVerifier verify(final Double value) throws VerifierFactoryException {
+    public static final DoubleVerifier verify(final Double value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -317,7 +317,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static DoubleVerifier verify(final Double value, final Object name) throws VerifierFactoryException {
+    public static final DoubleVerifier verify(final Double value, final Object name) throws VerifierFactoryException {
         return new DoubleVerifier(createVerification(value, name));
     }
 
@@ -328,7 +328,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static FloatVerifier verify(final Float value) throws VerifierFactoryException {
+    public static final FloatVerifier verify(final Float value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -340,7 +340,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static FloatVerifier verify(final Float value, final Object name) throws VerifierFactoryException {
+    public static final FloatVerifier verify(final Float value, final Object name) throws VerifierFactoryException {
         return new FloatVerifier(createVerification(value, name));
     }
 
@@ -351,7 +351,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static IntegerVerifier verify(final Integer value) throws VerifierFactoryException {
+    public static final IntegerVerifier verify(final Integer value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -363,7 +363,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static IntegerVerifier verify(final Integer value, final Object name) throws VerifierFactoryException {
+    public static final IntegerVerifier verify(final Integer value, final Object name) throws VerifierFactoryException {
         return new IntegerVerifier(createVerification(value, name));
     }
 
@@ -374,7 +374,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static LocaleVerifier verify(final Locale value) throws VerifierFactoryException {
+    public static final LocaleVerifier verify(final Locale value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -386,7 +386,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static LocaleVerifier verify(final Locale value, final Object name) throws VerifierFactoryException {
+    public static final LocaleVerifier verify(final Locale value, final Object name) throws VerifierFactoryException {
         return new LocaleVerifier(createVerification(value, name));
     }
 
@@ -397,7 +397,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static LongVerifier verify(final Long value) throws VerifierFactoryException {
+    public static final LongVerifier verify(final Long value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -409,7 +409,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static LongVerifier verify(final Long value, final Object name) throws VerifierFactoryException {
+    public static final LongVerifier verify(final Long value, final Object name) throws VerifierFactoryException {
         return new LongVerifier(createVerification(value, name));
     }
 
@@ -422,7 +422,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static <K, V> MapVerifier<K, V> verify(final Map<K, V> value) throws VerifierFactoryException {
+    public static final <K, V> MapVerifier<K, V> verify(final Map<K, V> value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -436,7 +436,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static <K, V> MapVerifier<K, V> verify(final Map<K, V> value, final Object name) throws VerifierFactoryException {
+    public static final <K, V> MapVerifier<K, V> verify(final Map<K, V> value, final Object name) throws VerifierFactoryException {
         return new MapVerifier<>(createVerification(value, name));
     }
 
@@ -447,7 +447,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static ObjectVerifier verify(final Object value) throws VerifierFactoryException {
+    public static final ObjectVerifier verify(final Object value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -459,7 +459,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static ObjectVerifier verify(final Object value, final Object name) throws VerifierFactoryException {
+    public static final ObjectVerifier verify(final Object value, final Object name) throws VerifierFactoryException {
         return new ObjectVerifier(createVerification(value, name));
     }
 
@@ -470,7 +470,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static ShortVerifier verify(final Short value) throws VerifierFactoryException {
+    public static final ShortVerifier verify(final Short value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -482,7 +482,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static ShortVerifier verify(final Short value, final Object name) throws VerifierFactoryException {
+    public static final ShortVerifier verify(final Short value, final Object name) throws VerifierFactoryException {
         return new ShortVerifier(createVerification(value, name));
     }
 
@@ -493,7 +493,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static StringVerifier verify(final String value) throws VerifierFactoryException {
+    public static final StringVerifier verify(final String value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -505,7 +505,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static StringVerifier verify(final String value, final Object name) throws VerifierFactoryException {
+    public static final StringVerifier verify(final String value, final Object name) throws VerifierFactoryException {
         return new StringVerifier(createVerification(value, name));
     }
 
@@ -516,7 +516,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static ThrowableVerifier verify(final Throwable value) throws VerifierFactoryException {
+    public static final ThrowableVerifier verify(final Throwable value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -528,7 +528,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static ThrowableVerifier verify(final Throwable value, final Object name) throws VerifierFactoryException {
+    public static final ThrowableVerifier verify(final Throwable value, final Object name) throws VerifierFactoryException {
         return new ThrowableVerifier(createVerification(value, name));
     }
 
@@ -543,7 +543,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static <T, V extends CustomVerifier<T, V>> V verify(final T value, final Object name, final Class<V> cls) throws VerifierFactoryException {
+    public static final <T, V extends CustomVerifier<T, V>> V verify(final T value, final Object name, final Class<V> cls) throws VerifierFactoryException {
         return getFactoryProvider().getCustomVerifierFactory().create(cls, createVerification(value, name));
     }
 
@@ -555,7 +555,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static <T extends Comparable<? super T>> ComparableVerifier<T> verifyComparable(final T value) throws VerifierFactoryException {
+    public static final <T extends Comparable<? super T>> ComparableVerifier<T> verifyComparable(final T value) throws VerifierFactoryException {
         return verifyComparable(value, null);
     }
 
@@ -568,7 +568,7 @@ public final class Verifier {
      * @return
      * @throws VerifierFactoryException
      */
-    public static <T extends Comparable<? super T>> ComparableVerifier<T> verifyComparable(final T value, final Object name) throws VerifierFactoryException {
+    public static final <T extends Comparable<? super T>> ComparableVerifier<T> verifyComparable(final T value, final Object name) throws VerifierFactoryException {
         return new ComparableVerifier<>(createVerification(value, name));
     }
 
@@ -581,7 +581,7 @@ public final class Verifier {
      *
      * @return
      */
-    public static VerifierFactoryProvider getFactoryProvider() {
+    public static final VerifierFactoryProvider getFactoryProvider() {
         return factoryProvider;
     }
 
@@ -590,10 +590,13 @@ public final class Verifier {
      *
      * @param factoryProvider
      */
-    public static void setFactoryProvider(final VerifierFactoryProvider factoryProvider) {
+    public static final void setFactoryProvider(final VerifierFactoryProvider factoryProvider) {
         Verifier.factoryProvider = factoryProvider != null ? factoryProvider : new DefaultVerifierFactoryProvider();
     }
 
-    Verifier() {
+    /**
+     * TODO: Document
+     */
+    public Verifier() {
     }
 }
