@@ -66,7 +66,7 @@ public abstract class BaseNumberVerifierTestCase<T extends Number, V extends Bas
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().even());
 
-        verify(getMockVerification()).check(expected, "be even");
+        verify(getMockVerification()).check(expected, BaseNumberVerifier.EVEN_MESSAGE);
     }
 
     @Test
@@ -94,7 +94,7 @@ public abstract class BaseNumberVerifierTestCase<T extends Number, V extends Bas
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().negative());
 
-        verify(getMockVerification()).check(expected, "be negative");
+        verify(getMockVerification()).check(expected, BaseNumberVerifier.NEGATIVE_MESSAGE);
     }
 
     @Test
@@ -122,7 +122,7 @@ public abstract class BaseNumberVerifierTestCase<T extends Number, V extends Bas
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().odd());
 
-        verify(getMockVerification()).check(expected, "be odd");
+        verify(getMockVerification()).check(expected, BaseNumberVerifier.ODD_MESSAGE);
     }
 
     @Test
@@ -150,7 +150,7 @@ public abstract class BaseNumberVerifierTestCase<T extends Number, V extends Bas
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().one());
 
-        verify(getMockVerification()).check(expected, "be one");
+        verify(getMockVerification()).check(expected, BaseNumberVerifier.ONE_MESSAGE);
     }
 
     @Test
@@ -178,7 +178,7 @@ public abstract class BaseNumberVerifierTestCase<T extends Number, V extends Bas
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().positive());
 
-        verify(getMockVerification()).check(expected, "be positive");
+        verify(getMockVerification()).check(expected, BaseNumberVerifier.POSITIVE_MESSAGE);
     }
 
     @Test
@@ -206,7 +206,7 @@ public abstract class BaseNumberVerifierTestCase<T extends Number, V extends Bas
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().zero());
 
-        verify(getMockVerification()).check(expected, "be zero");
+        verify(getMockVerification()).check(expected, BaseNumberVerifier.ZERO_MESSAGE);
     }
 
     /**

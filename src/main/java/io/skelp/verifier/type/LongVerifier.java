@@ -59,7 +59,7 @@ public final class LongVerifier extends BaseComparableVerifier<Long, LongVerifie
         final Long value = verification().getValue();
         final boolean result = value != null && value % 2L == 0;
 
-        verification().check(result, "be even");
+        verification().check(result, EVEN_MESSAGE);
 
         return this;
     }
@@ -79,7 +79,7 @@ public final class LongVerifier extends BaseComparableVerifier<Long, LongVerifie
         final Long value = verification().getValue();
         final boolean result = value != null && value < 0L;
 
-        verification().check(result, "be negative");
+        verification().check(result, NEGATIVE_MESSAGE);
 
         return this;
     }
@@ -89,7 +89,7 @@ public final class LongVerifier extends BaseComparableVerifier<Long, LongVerifie
         final Long value = verification().getValue();
         final boolean result = value != null && value % 2 != 0L;
 
-        verification().check(result, "be odd");
+        verification().check(result, ODD_MESSAGE);
 
         return this;
     }
@@ -99,7 +99,7 @@ public final class LongVerifier extends BaseComparableVerifier<Long, LongVerifie
         final Long value = verification().getValue();
         final boolean result = value != null && value == 1L;
 
-        verification().check(result, "be one");
+        verification().check(result, ONE_MESSAGE);
 
         return this;
     }
@@ -109,7 +109,7 @@ public final class LongVerifier extends BaseComparableVerifier<Long, LongVerifie
         final Long value = verification().getValue();
         final boolean result = value != null && value >= 0L;
 
-        verification().check(result, "be positive");
+        verification().check(result, POSITIVE_MESSAGE);
 
         return this;
     }
@@ -129,7 +129,7 @@ public final class LongVerifier extends BaseComparableVerifier<Long, LongVerifie
         final Long value = verification().getValue();
         final boolean result = value != null && value == 0L;
 
-        verification().check(result, "be zero");
+        verification().check(result, ZERO_MESSAGE);
 
         return this;
     }

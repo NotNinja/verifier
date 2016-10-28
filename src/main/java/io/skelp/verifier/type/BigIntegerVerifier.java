@@ -61,7 +61,7 @@ public final class BigIntegerVerifier extends BaseComparableVerifier<BigInteger,
         final BigInteger value = verification().getValue();
         final boolean result = value != null && !value.testBit(0);
 
-        verification().check(result, "be even");
+        verification().check(result, EVEN_MESSAGE);
 
         return this;
     }
@@ -81,7 +81,7 @@ public final class BigIntegerVerifier extends BaseComparableVerifier<BigInteger,
         final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ZERO) < 0;
 
-        verification().check(result, "be negative");
+        verification().check(result, NEGATIVE_MESSAGE);
 
         return this;
     }
@@ -91,7 +91,7 @@ public final class BigIntegerVerifier extends BaseComparableVerifier<BigInteger,
         final BigInteger value = verification().getValue();
         final boolean result = value != null && value.testBit(0);
 
-        verification().check(result, "be odd");
+        verification().check(result, ODD_MESSAGE);
 
         return this;
     }
@@ -101,7 +101,7 @@ public final class BigIntegerVerifier extends BaseComparableVerifier<BigInteger,
         final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ONE) == 0;
 
-        verification().check(result, "be one");
+        verification().check(result, ONE_MESSAGE);
 
         return this;
     }
@@ -111,7 +111,7 @@ public final class BigIntegerVerifier extends BaseComparableVerifier<BigInteger,
         final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ZERO) >= 0;
 
-        verification().check(result, "be positive");
+        verification().check(result, POSITIVE_MESSAGE);
 
         return this;
     }
@@ -131,7 +131,7 @@ public final class BigIntegerVerifier extends BaseComparableVerifier<BigInteger,
         final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ZERO) == 0;
 
-        verification().check(result, "be zero");
+        verification().check(result, ZERO_MESSAGE);
 
         return this;
     }
