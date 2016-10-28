@@ -58,17 +58,17 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
 
     /**
      * <p>
-     * Creates a typed array containing the {@code items} provided.
+     * Creates a typed array containing the {@code elements} provided.
      * </p>
      *
-     * @param items
-     *         the items for the array
+     * @param elements
+     *         the elements for the array
      * @param <T>
-     *         the type of items to be contained within the array
-     * @return An array containing {@code items}.
+     *         the type of elements to be contained within the array
+     * @return An array containing {@code elements}.
      */
-    protected static <T> T[] createArray(T... items) {
-        return items;
+    protected static <T> T[] createArray(T... elements) {
+        return elements;
     }
 
     /**

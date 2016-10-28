@@ -69,7 +69,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * </pre>
      *
      * @param other
-     *         the object to compare against the day of this value (may be {@literal null})
+     *         the object to compare against the day of the value (may be {@literal null})
      * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
@@ -102,7 +102,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * </pre>
      *
      * @param other
-     *         the object to compare against the era of this value (may be {@literal null})
+     *         the object to compare against the era of the value (may be {@literal null})
      * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
@@ -134,7 +134,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * </pre>
      *
      * @param other
-     *         the object to compare against the hour of this value (may be {@literal null})
+     *         the object to compare against the hour of the value (may be {@literal null})
      * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
@@ -169,7 +169,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * </pre>
      *
      * @param other
-     *         the object to compare against the minute of this value (may be {@literal null})
+     *         the object to compare against the minute of the value (may be {@literal null})
      * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
@@ -205,7 +205,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * </pre>
      *
      * @param other
-     *         the object to compare against the month of this value (may be {@literal null})
+     *         the object to compare against the month of the value (may be {@literal null})
      * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
@@ -239,7 +239,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * </pre>
      *
      * @param other
-     *         the object to compare against the second of this value (may be {@literal null})
+     *         the object to compare against the second of the value (may be {@literal null})
      * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
@@ -276,7 +276,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * </pre>
      *
      * @param other
-     *         the object to compare against the time of this value (may be {@literal null})
+     *         the object to compare against the time of the value (may be {@literal null})
      * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
@@ -308,7 +308,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * </pre>
      *
      * @param other
-     *         the object to compare against the week of this value (may be {@literal null})
+     *         the object to compare against the week of the value (may be {@literal null})
      * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
@@ -342,7 +342,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * </pre>
      *
      * @param other
-     *         the object to compare against the year of this value (may be {@literal null})
+     *         the object to compare against the year of the value (may be {@literal null})
      * @return A reference to this {@link BaseTimeVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
@@ -368,7 +368,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * </p>
      *
      * @param value
-     *         the value to be transformed into a {@code Calendar}
+     *         the value to be transformed into a {@code Calendar} (may be {@literal null})
      * @return A {@code Calendar} instance to represent {@code value} or {@literal null} if {@code value} is {@literal
      * null}.
      */

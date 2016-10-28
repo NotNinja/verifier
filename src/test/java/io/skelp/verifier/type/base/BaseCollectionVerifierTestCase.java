@@ -56,143 +56,143 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
     private VerifierAssertion<E> mockAssertion;
 
     @Test
-    public void testContainWhenItemIsNotPresentInValue() {
-        testContainHelper(createFullValue(), getMissingItem(), false);
+    public void testContainWhenElementIsNotPresentInValue() {
+        testContainHelper(createFullValue(), getMissingElement(), false);
     }
 
     @Test
-    public void testContainWhenItemIsPresentInValue() {
-        testContainHelper(createFullValue(), getExistingItem(), true);
+    public void testContainWhenElementIsPresentInValue() {
+        testContainHelper(createFullValue(), getExistingElement(), true);
     }
 
     @Test
-    public void testContainWithNullItem() {
+    public void testContainWithNullElement() {
         testContainHelper(createValueWithNull(), null, true);
     }
 
     @Test
     public void testContainWithNullValue() {
-        testContainHelper(null, getExistingItem(), false);
+        testContainHelper(null, getExistingElement(), false);
     }
 
-    private void testContainHelper(T value, E item, boolean expected) {
+    private void testContainHelper(T value, E element, boolean expected) {
         setValue(value);
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().contain(item));
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().contain(element));
 
         verify(getMockVerification()).check(eq(expected), eq("contain '%s'"), getArgsCaptor().capture());
 
-        assertSame("Passes item for message formatting", item, getArgsCaptor().getValue());
+        assertSame("Passes element for message formatting", element, getArgsCaptor().getValue());
     }
 
     @Test
-    public void testContainAllWhenNoItems() {
-        testContainAllHelper(createFullValue(), createEmptyArray(getItemClass()), true);
+    public void testContainAllWhenNoElements() {
+        testContainAllHelper(createFullValue(), createEmptyArray(getElementClass()), true);
     }
 
     @Test
-    public void testContainAllWhenNoItemsAndValueIsEmpty() {
-        testContainAllHelper(createEmptyValue(), createEmptyArray(getItemClass()), true);
+    public void testContainAllWhenNoElementsAndValueIsEmpty() {
+        testContainAllHelper(createEmptyValue(), createEmptyArray(getElementClass()), true);
     }
 
     @Test
-    public void testContainAllWhenItemIsNull() {
+    public void testContainAllWhenElementIsNull() {
         testContainAllHelper(createFullValue(), createArray((E) null), false);
     }
 
     @Test
-    public void testContainAllWhenItemsIsNull() {
+    public void testContainAllWhenElementsIsNull() {
         testContainAllHelper(createFullValue(), null, true);
     }
 
     @Test
-    public void testContainAllWhenValueContainsAllItems() {
-        testContainAllHelper(createFullValue(), createArray(getExistingItem(), getExistingItem(), getExistingItem()), true);
+    public void testContainAllWhenValueContainsAllElements() {
+        testContainAllHelper(createFullValue(), createArray(getExistingElement(), getExistingElement(), getExistingElement()), true);
     }
 
     @Test
-    public void testContainAllWhenValueContainsSomeItems() {
-        testContainAllHelper(createFullValue(), createArray(getExistingItem(), getMissingItem(), getMissingItem()), false);
+    public void testContainAllWhenValueContainsSomeElements() {
+        testContainAllHelper(createFullValue(), createArray(getExistingElement(), getMissingElement(), getMissingElement()), false);
     }
 
     @Test
-    public void testContainAllWhenValueDoesNotContainItem() {
-        testContainAllHelper(createFullValue(), createArray(getMissingItem(), getMissingItem(), getMissingItem()), false);
+    public void testContainAllWhenValueDoesNotContainElement() {
+        testContainAllHelper(createFullValue(), createArray(getMissingElement(), getMissingElement(), getMissingElement()), false);
     }
 
     @Test
     public void testContainAllWhenValueIsEmpty() {
-        testContainAllHelper(createEmptyValue(), createArray(getExistingItem()), false);
+        testContainAllHelper(createEmptyValue(), createArray(getExistingElement()), false);
     }
 
     @Test
     public void testContainAllWhenValueIsNull() {
-        testContainAllHelper(null, createEmptyArray(getItemClass()), false);
+        testContainAllHelper(null, createEmptyArray(getElementClass()), false);
     }
 
-    private void testContainAllHelper(T value, E[] items, boolean expected) {
+    private void testContainAllHelper(T value, E[] elements, boolean expected) {
         setValue(value);
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAll(items));
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAll(elements));
 
         verify(getMockVerification()).check(eq(expected), eq("contain all %s"), getArgsCaptor().capture());
 
-        assertArrayFormatter(getArgsCaptor().getValue(), items);
+        assertArrayFormatter(getArgsCaptor().getValue(), elements);
     }
 
     @Test
-    public void testContainAnyWhenNoItems() {
-        testContainAnyHelper(createFullValue(), createEmptyArray(getItemClass()), false);
+    public void testContainAnyWhenNoElements() {
+        testContainAnyHelper(createFullValue(), createEmptyArray(getElementClass()), false);
     }
 
     @Test
-    public void testContainAnyWhenNoItemsAndValueIsEmpty() {
-        testContainAnyHelper(createEmptyValue(), createEmptyArray(getItemClass()), false);
+    public void testContainAnyWhenNoElementsAndValueIsEmpty() {
+        testContainAnyHelper(createEmptyValue(), createEmptyArray(getElementClass()), false);
     }
 
     @Test
-    public void testContainAnyWhenItemIsNull() {
+    public void testContainAnyWhenElementIsNull() {
         testContainAnyHelper(createFullValue(), createArray((E) null), false);
     }
 
     @Test
-    public void testContainAnyWhenItemsIsNull() {
+    public void testContainAnyWhenElementsIsNull() {
         testContainAnyHelper(createFullValue(), null, false);
     }
 
     @Test
-    public void testContainAnyWhenValueContainsAllItems() {
-        testContainAnyHelper(createFullValue(), createArray(getExistingItem(), getExistingItem(), getExistingItem()), true);
+    public void testContainAnyWhenValueContainsAllElements() {
+        testContainAnyHelper(createFullValue(), createArray(getExistingElement(), getExistingElement(), getExistingElement()), true);
     }
 
     @Test
-    public void testContainAnyWhenValueContainsSomeItems() {
-        testContainAnyHelper(createFullValue(), createArray(getMissingItem(), getMissingItem(), getExistingItem()), true);
+    public void testContainAnyWhenValueContainsSomeElements() {
+        testContainAnyHelper(createFullValue(), createArray(getMissingElement(), getMissingElement(), getExistingElement()), true);
     }
 
     @Test
-    public void testContainAnyWhenValueDoesNotContainItem() {
-        testContainAnyHelper(createFullValue(), createArray(getMissingItem(), getMissingItem(), getMissingItem()), false);
+    public void testContainAnyWhenValueDoesNotContainElement() {
+        testContainAnyHelper(createFullValue(), createArray(getMissingElement(), getMissingElement(), getMissingElement()), false);
     }
 
     @Test
     public void testContainAnyWhenValueIsEmpty() {
-        testContainAnyHelper(createEmptyValue(), createArray(getExistingItem()), false);
+        testContainAnyHelper(createEmptyValue(), createArray(getExistingElement()), false);
     }
 
     @Test
     public void testContainAnyWhenValueIsNull() {
-        testContainAnyHelper(null, createEmptyArray(getItemClass()), false);
+        testContainAnyHelper(null, createEmptyArray(getElementClass()), false);
     }
 
-    private void testContainAnyHelper(T value, E[] items, boolean expected) {
+    private void testContainAnyHelper(T value, E[] elements, boolean expected) {
         setValue(value);
 
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAny(items));
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAny(elements));
 
         verify(getMockVerification()).check(eq(expected), eq("contain any %s"), getArgsCaptor().capture());
 
-        assertArrayFormatter(getArgsCaptor().getValue(), items);
+        assertArrayFormatter(getArgsCaptor().getValue(), elements);
     }
 
     @Test
@@ -267,23 +267,23 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
     }
 
     @Test
-    public void testThatAllWhenAssertionFailsForAllItems() {
-        when(mockAssertion.verify(any(getItemClass()))).thenReturn(false);
+    public void testThatAllWhenAssertionFailsForAllElements() {
+        when(mockAssertion.verify(any(getElementClass()))).thenReturn(false);
 
         testThatAllHelper(createFullValue(), 1, false);
     }
 
     @Test
-    public void testThatAllWhenAssertionFailsForSomeItems() {
-        when(mockAssertion.verify(any(getItemClass()))).thenReturn(true);
-        when(mockAssertion.verify(getExistingItem())).thenReturn(false);
+    public void testThatAllWhenAssertionFailsForSomeElements() {
+        when(mockAssertion.verify(any(getElementClass()))).thenReturn(true);
+        when(mockAssertion.verify(getExistingElement())).thenReturn(false);
 
         testThatAllHelper(createFullValue(), getFullValueSize(), false);
     }
 
     @Test
-    public void testThatAllWhenAssertionPassesForAllItems() {
-        when(mockAssertion.verify(any(getItemClass()))).thenReturn(true);
+    public void testThatAllWhenAssertionPassesForAllElements() {
+        when(mockAssertion.verify(any(getElementClass()))).thenReturn(true);
 
         testThatAllHelper(createFullValue(), getFullValueSize(), true);
     }
@@ -304,7 +304,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().thatAll(mockAssertion));
 
         verify(getMockVerification()).check(expected, null);
-        verify(mockAssertion, times(assertionCalls)).verify(any(getItemClass()));
+        verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
     }
 
     @Test
@@ -316,23 +316,23 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
     }
 
     @Test
-    public void testThatAllWithMessageWhenAssertionFailsForAllItems() {
-        when(mockAssertion.verify(any(getItemClass()))).thenReturn(false);
+    public void testThatAllWithMessageWhenAssertionFailsForAllElements() {
+        when(mockAssertion.verify(any(getElementClass()))).thenReturn(false);
 
         testThatAllHelper(createFullValue(), 1, false, "foo %s", new Object[]{"bar"});
     }
 
     @Test
-    public void testThatAllWithMessageWhenAssertionFailsForSomeItems() {
-        when(mockAssertion.verify(any(getItemClass()))).thenReturn(true);
-        when(mockAssertion.verify(getExistingItem())).thenReturn(false);
+    public void testThatAllWithMessageWhenAssertionFailsForSomeElements() {
+        when(mockAssertion.verify(any(getElementClass()))).thenReturn(true);
+        when(mockAssertion.verify(getExistingElement())).thenReturn(false);
 
         testThatAllHelper(createFullValue(), getFullValueSize(), false, "foo %s", new Object[]{"bar"});
     }
 
     @Test
-    public void testThatAllWithMessageWhenAssertionPassesForAllItems() {
-        when(mockAssertion.verify(any(getItemClass()))).thenReturn(true);
+    public void testThatAllWithMessageWhenAssertionPassesForAllElements() {
+        when(mockAssertion.verify(any(getElementClass()))).thenReturn(true);
 
         testThatAllHelper(createFullValue(), getFullValueSize(), true, "foo %s", new Object[]{"bar"});
     }
@@ -353,7 +353,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().thatAll(mockAssertion, message, args));
 
         verify(getMockVerification()).check(eq(expected), eq(message), getArgsCaptor().capture());
-        verify(mockAssertion, times(assertionCalls)).verify(any(getItemClass()));
+        verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
 
         assertEquals("Passes args for message formatting", Arrays.asList(args), getArgsCaptor().getAllValues());
     }
@@ -367,23 +367,23 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
     }
 
     @Test
-    public void testThatAnyWhenAssertionFailsForAllItems() {
-        when(mockAssertion.verify(any(getItemClass()))).thenReturn(false);
+    public void testThatAnyWhenAssertionFailsForAllElements() {
+        when(mockAssertion.verify(any(getElementClass()))).thenReturn(false);
 
         testThatAnyHelper(createFullValue(), getFullValueSize(), false);
     }
 
     @Test
-    public void testThatAnyWhenAssertionFailsForSomeItems() {
-        when(mockAssertion.verify(any(getItemClass()))).thenReturn(false);
-        when(mockAssertion.verify(getExistingItem())).thenReturn(true);
+    public void testThatAnyWhenAssertionFailsForSomeElements() {
+        when(mockAssertion.verify(any(getElementClass()))).thenReturn(false);
+        when(mockAssertion.verify(getExistingElement())).thenReturn(true);
 
         testThatAnyHelper(createFullValue(), getFullValueSize(), true);
     }
 
     @Test
-    public void testThatAnyWhenAssertionPassesForAllItems() {
-        when(mockAssertion.verify(any(getItemClass()))).thenReturn(true);
+    public void testThatAnyWhenAssertionPassesForAllElements() {
+        when(mockAssertion.verify(any(getElementClass()))).thenReturn(true);
 
         testThatAnyHelper(createFullValue(), 1, true);
     }
@@ -404,7 +404,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().thatAny(mockAssertion));
 
         verify(getMockVerification()).check(expected, null);
-        verify(mockAssertion, times(assertionCalls)).verify(any(getItemClass()));
+        verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
     }
 
     @Test
@@ -416,23 +416,23 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
     }
 
     @Test
-    public void testThatAnyWithMessageWhenAssertionFailsForAllItems() {
-        when(mockAssertion.verify(any(getItemClass()))).thenReturn(false);
+    public void testThatAnyWithMessageWhenAssertionFailsForAllElements() {
+        when(mockAssertion.verify(any(getElementClass()))).thenReturn(false);
 
         testThatAnyHelper(createFullValue(), getFullValueSize(), false, "foo %s", new Object[]{"bar"});
     }
 
     @Test
-    public void testThatAnyWithMessageWhenAssertionFailsForSomeItems() {
-        when(mockAssertion.verify(any(getItemClass()))).thenReturn(false);
-        when(mockAssertion.verify(getExistingItem())).thenReturn(true);
+    public void testThatAnyWithMessageWhenAssertionFailsForSomeElements() {
+        when(mockAssertion.verify(any(getElementClass()))).thenReturn(false);
+        when(mockAssertion.verify(getExistingElement())).thenReturn(true);
 
         testThatAnyHelper(createFullValue(), getFullValueSize(), true, "foo %s", new Object[]{"bar"});
     }
 
     @Test
-    public void testThatAnyWithMessageWhenAssertionPassesForAllItems() {
-        when(mockAssertion.verify(any(getItemClass()))).thenReturn(true);
+    public void testThatAnyWithMessageWhenAssertionPassesForAllElements() {
+        when(mockAssertion.verify(any(getElementClass()))).thenReturn(true);
 
         testThatAnyHelper(createFullValue(), 1, true, "foo %s", new Object[]{"bar"});
     }
@@ -453,14 +453,14 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().thatAny(mockAssertion, message, args));
 
         verify(getMockVerification()).check(eq(expected), eq(message), getArgsCaptor().capture());
-        verify(mockAssertion, times(assertionCalls)).verify(any(getItemClass()));
+        verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
 
         assertEquals("Passes args for message formatting", Arrays.asList(args), getArgsCaptor().getAllValues());
     }
 
     /**
      * <p>
-     * Creates a value containing no items.
+     * Creates a value containing no elements.
      * </p>
      *
      * @return An empty value.
@@ -469,10 +469,10 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
     /**
      * <p>
-     * Creates a value containing multiple items.
+     * Creates a value containing multiple elements.
      * </p>
      * <p>
-     * It is recommended that this value contains at least 3 items for thorough testing and the number of items
+     * It is recommended that this value contains at least 3 elements for thorough testing and the number of elements
      * <b>must</b> exactly match that which is returned by {@link #getFullValueSize()}.
      * </p>
      *
@@ -482,32 +482,41 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
     /**
      * <p>
-     * Creates a value containing at least one {@literal null} item.
+     * Creates a value containing at least one {@literal null} element.
      * </p>
      * <p>
-     * It is recommended that this value contains at least 3 items for thorough testing.
+     * It is recommended that this value contains at least 3 elements for thorough testing.
      * </p>
      *
-     * @return A value containing a {@literal null} item.
+     * @return A value containing a {@literal null} element.
      */
     protected abstract T createValueWithNull();
 
     /**
      * <p>
-     * Returns an item that exists within the value that is returned by {@link #createFullValue()}.
-     * </p>
-     * <p>
-     * Where possible, it is recommended that this value be the last item within the value for the most thorough
-     * testing.
+     * Returns the class for the type of elements contained within the values.
      * </p>
      *
-     * @return An item that exists within the full value.
+     * @return The {@code Class} for the elements.
      */
-    protected abstract E getExistingItem();
+    protected abstract Class<E> getElementClass();
 
     /**
      * <p>
-     * Returns the number of items within the value that is returned by {@link #createFullValue()}.
+     * Returns an element that exists within the value that is returned by {@link #createFullValue()}.
+     * </p>
+     * <p>
+     * Where possible, it is recommended that this value be the last element within the value for the most thorough
+     * testing.
+     * </p>
+     *
+     * @return An element that exists within the full value.
+     */
+    protected abstract E getExistingElement();
+
+    /**
+     * <p>
+     * Returns the number of elements within the value that is returned by {@link #createFullValue()}.
      * </p>
      *
      * @return The size of the full value.
@@ -516,19 +525,10 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
     /**
      * <p>
-     * Returns the class for the type of items contained within the values.
+     * Returns an element that <b>does not</b> exist within the value that is returned by {@link #createFullValue()}.
      * </p>
      *
-     * @return The {@code Class} for the items.
+     * @return An element that is missing from the full value.
      */
-    protected abstract Class<E> getItemClass();
-
-    /**
-     * <p>
-     * Returns an item that <b>does not</b> exist within the value that is returned by {@link #createFullValue()}.
-     * </p>
-     *
-     * @return An item that is missing from the full value.
-     */
-    protected abstract E getMissingItem();
+    protected abstract E getMissingElement();
 }

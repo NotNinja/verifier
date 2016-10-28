@@ -55,11 +55,6 @@ public final class ArrayVerifier<E> extends BaseSortableCollectionVerifier<E, E[
     }
 
     @Override
-    protected boolean isEmpty(final E[] value) {
-        return value.length == 0;
-    }
-
-    @Override
     protected boolean isEqualTo(final E[] value, final Object other) {
         return value == other || Arrays.deepEquals(new Object[]{value}, new Object[]{other});
     }

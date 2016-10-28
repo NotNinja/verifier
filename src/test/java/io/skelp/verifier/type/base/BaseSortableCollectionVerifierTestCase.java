@@ -86,7 +86,7 @@ public abstract class BaseSortableCollectionVerifierTestCase<E extends Comparabl
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sortedBy(comparator));
 
-        verify(comparator, comparatorUseExpected ? atLeastOnce() : never()).compare(any(getItemClass()), any(getItemClass()));
+        verify(comparator, comparatorUseExpected ? atLeastOnce() : never()).compare(any(getElementClass()), any(getElementClass()));
 
         verify(getMockVerification()).check(eq(expected), eq("be sorted by '%s'"), getArgsCaptor().capture());
 
@@ -133,7 +133,7 @@ public abstract class BaseSortableCollectionVerifierTestCase<E extends Comparabl
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sortedBy(comparator, name));
 
-        verify(comparator, comparatorUseExpected ? atLeastOnce() : never()).compare(any(getItemClass()), any(getItemClass()));
+        verify(comparator, comparatorUseExpected ? atLeastOnce() : never()).compare(any(getElementClass()), any(getElementClass()));
 
         verify(getMockVerification()).check(eq(expected), eq("be sorted by '%s'"), getArgsCaptor().capture());
 
@@ -142,16 +142,16 @@ public abstract class BaseSortableCollectionVerifierTestCase<E extends Comparabl
 
     /**
      * <p>
-     * Creates a value containing only a single item.
+     * Creates a value containing only a single element.
      * </p>
      *
-     * @return A value within one item.
+     * @return A value within one element.
      */
     protected abstract T createSingleValue();
 
     /**
      * <p>
-     * Creates a value whose items are already in a natural sorted order.
+     * Creates a value whose elements are already in a natural sorted order.
      * </p>
      *
      * @return A sorted value.
@@ -160,7 +160,7 @@ public abstract class BaseSortableCollectionVerifierTestCase<E extends Comparabl
 
     /**
      * <p>
-     * Creates a value whose items are <b>not</b> in a sorted order.
+     * Creates a value whose elements are <b>not</b> in a sorted order.
      * </p>
      *
      * @return An unsorted value.

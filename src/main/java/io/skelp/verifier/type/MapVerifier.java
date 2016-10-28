@@ -114,9 +114,4 @@ public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>
     protected int getSize(final Map<K, V> value) {
         return value.size();
     }
-
-    @Override
-    protected boolean isEmpty(final Map<K, V> value) {
-        return value.isEmpty();
-    }
 }

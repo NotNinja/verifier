@@ -359,8 +359,9 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
 
     /**
      * <p>
-     * Verifies that the value passes the {@code assertion} provided while allowing optional {@code message} and format
-     * {@code args} to be specified to enhance the {@link VerifierException} message in the event that one is thrown.
+     * Verifies that the value passes the {@code assertion} provided while allowing an optional {@code message} and
+     * format {@code args} to be specified to enhance the {@link VerifierException} message in the event that one is
+     * thrown.
      * </p>
      *
      * @param assertion

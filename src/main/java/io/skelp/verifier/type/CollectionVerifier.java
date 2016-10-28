@@ -52,9 +52,4 @@ public final class CollectionVerifier<E> extends BaseSortableCollectionVerifier<
     protected int getSize(final Collection<E> value) {
         return value.size();
     }
-
-    @Override
-    protected boolean isEmpty(final Collection<E> value) {
-        return value.isEmpty();
-    }
 }

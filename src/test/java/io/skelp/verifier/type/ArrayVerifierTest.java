@@ -103,7 +103,12 @@ public class ArrayVerifierTest {
         }
 
         @Override
-        protected Integer getExistingItem() {
+        protected Class<Integer> getElementClass() {
+            return Integer.class;
+        }
+
+        @Override
+        protected Integer getExistingElement() {
             return 789;
         }
 
@@ -113,12 +118,7 @@ public class ArrayVerifierTest {
         }
 
         @Override
-        protected Class<Integer> getItemClass() {
-            return Integer.class;
-        }
-
-        @Override
-        protected Integer getMissingItem() {
+        protected Integer getMissingElement() {
             return 321;
         }
     }
