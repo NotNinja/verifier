@@ -75,7 +75,7 @@ public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>
      *
      * @param keys
      *         the keys to check for within the value (may be {@literal null})
-     * @return A reference to this {@link BaseCollectionVerifier} for chaining purposes.
+     * @return A reference to this {@link MapVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
@@ -113,7 +113,7 @@ public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>
      *
      * @param keys
      *         the keys to check for within the value (may be {@literal null})
-     * @return A reference to this {@link BaseCollectionVerifier} for chaining purposes.
+     * @return A reference to this {@link MapVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
