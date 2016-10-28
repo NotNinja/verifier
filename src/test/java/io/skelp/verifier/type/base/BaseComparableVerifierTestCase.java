@@ -270,6 +270,16 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
     }
 
     @Test
+    public void testGreaterThanWhenOtherIsNull() {
+        testGreaterThanHelper(getBaseValue(), null, false);
+    }
+
+    @Test
+    public void testGreaterThanWhenValueAndOtherAreNull() {
+        testGreaterThanHelper(null, null, false);
+    }
+
+    @Test
     public void testGreaterThanWhenValueIsEqualToOther() {
         testGreaterThanHelper(getBaseValue(), getBaseValue(), false);
     }
@@ -289,11 +299,6 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
         testGreaterThanHelper(null, getBaseValue(), false);
     }
 
-    @Test
-    public void testGreaterThanWhenOtherIsNull() {
-        testGreaterThanHelper(getBaseValue(), null, false);
-    }
-
     private void testGreaterThanHelper(T value, T other, boolean expected) {
         setValue(value);
 
@@ -302,6 +307,16 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
         verify(getMockVerification()).check(eq(expected), eq("be greater than '%s'"), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
+    }
+
+    @Test
+    public void testGreaterThanWithOtherNameWhenOtherIsNull() {
+        testGreaterThanHelper(getBaseValue(), null, "other", false);
+    }
+
+    @Test
+    public void testGreaterThanWithOtherNameWhenValueAndOtherAreNull() {
+        testGreaterThanHelper(null, null, "other", false);
     }
 
     @Test
@@ -324,11 +339,6 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
         testGreaterThanHelper(null, getBaseValue(), "other", false);
     }
 
-    @Test
-    public void testGreaterThanWithOtherNameWhenOtherIsNull() {
-        testGreaterThanHelper(getBaseValue(), null, "other", false);
-    }
-
     private void testGreaterThanHelper(T value, T other, Object otherName, boolean expected) {
         setValue(value);
 
@@ -337,6 +347,16 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
         verify(getMockVerification()).check(eq(expected), eq("be greater than '%s'"), getArgsCaptor().capture());
 
         assertSame("Passes other name for message formatting", otherName, getArgsCaptor().getValue());
+    }
+
+    @Test
+    public void testGreaterThanOrEqualToWhenOtherIsNull() {
+        testGreaterThanHelper(getBaseValue(), null, false);
+    }
+
+    @Test
+    public void testGreaterThanOrEqualToWhenValueAndOtherAreNull() {
+        testGreaterThanOrEqualToHelper(null, null, true);
     }
 
     @Test
@@ -359,11 +379,6 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
         testGreaterThanOrEqualToHelper(null, getBaseValue(), false);
     }
 
-    @Test
-    public void testGreaterThanOrEqualToWhenOtherIsNull() {
-        testGreaterThanHelper(getBaseValue(), null, false);
-    }
-
     private void testGreaterThanOrEqualToHelper(T value, T other, boolean expected) {
         setValue(value);
 
@@ -372,6 +387,16 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
         verify(getMockVerification()).check(eq(expected), eq("be greater than or equal to '%s'"), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
+    }
+
+    @Test
+    public void testGreaterThanOrEqualToWithOtherNameWhenOtherIsNull() {
+        testGreaterThanOrEqualToHelper(getBaseValue(), null, "other", false);
+    }
+
+    @Test
+    public void testGreaterThanOrEqualToWithOtherNameWhenValueAndOtherAreNull() {
+        testGreaterThanOrEqualToHelper(null, null, "other", true);
     }
 
     @Test
@@ -394,11 +419,6 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
         testGreaterThanOrEqualToHelper(null, getBaseValue(), "other", false);
     }
 
-    @Test
-    public void testGreaterThanOrEqualToWithOtherNameWhenOtherIsNull() {
-        testGreaterThanOrEqualToHelper(getBaseValue(), null, "other", false);
-    }
-
     private void testGreaterThanOrEqualToHelper(T value, T other, Object otherName, boolean expected) {
         setValue(value);
 
@@ -407,6 +427,16 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
         verify(getMockVerification()).check(eq(expected), eq("be greater than or equal to '%s'"), getArgsCaptor().capture());
 
         assertSame("Passes other name for message formatting", otherName, getArgsCaptor().getValue());
+    }
+
+    @Test
+    public void testLessThanWhenOtherIsNull() {
+        testLessThanHelper(getBaseValue(), null, false);
+    }
+
+    @Test
+    public void testLessThanWhenValueAndOtherAreNull() {
+        testLessThanHelper(null, null, false);
     }
 
     @Test
@@ -429,11 +459,6 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
         testLessThanHelper(null, getBaseValue(), false);
     }
 
-    @Test
-    public void testLessThanWhenOtherIsNull() {
-        testLessThanHelper(getBaseValue(), null, false);
-    }
-
     private void testLessThanHelper(T value, T other, boolean expected) {
         setValue(value);
 
@@ -442,6 +467,16 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
         verify(getMockVerification()).check(eq(expected), eq("be less than '%s'"), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
+    }
+
+    @Test
+    public void testLessThanWithOtherNameWhenOtherIsNull() {
+        testLessThanHelper(getBaseValue(), null, "other", false);
+    }
+
+    @Test
+    public void testLessThanWithOtherNameWhenValueAndOtherAreNull() {
+        testLessThanHelper(null, null, "other", false);
     }
 
     @Test
@@ -464,11 +499,6 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
         testLessThanHelper(null, getBaseValue(), "other", false);
     }
 
-    @Test
-    public void testLessThanWithOtherNameWhenOtherIsNull() {
-        testLessThanHelper(getBaseValue(), null, "other", false);
-    }
-
     private void testLessThanHelper(T value, T other, Object otherName, boolean expected) {
         setValue(value);
 
@@ -477,6 +507,16 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
         verify(getMockVerification()).check(eq(expected), eq("be less than '%s'"), getArgsCaptor().capture());
 
         assertSame("Passes other name for message formatting", otherName, getArgsCaptor().getValue());
+    }
+
+    @Test
+    public void testLessThanOrEqualToWhenOtherIsNull() {
+        testGreaterThanHelper(getBaseValue(), null, false);
+    }
+
+    @Test
+    public void testLessThanOrEqualToWhenValueAndOtherAreNull() {
+        testLessThanOrEqualToHelper(null, null, true);
     }
 
     @Test
@@ -499,11 +539,6 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
         testLessThanOrEqualToHelper(null, getBaseValue(), false);
     }
 
-    @Test
-    public void testLessThanOrEqualToWhenOtherIsNull() {
-        testGreaterThanHelper(getBaseValue(), null, false);
-    }
-
     private void testLessThanOrEqualToHelper(T value, T other, boolean expected) {
         setValue(value);
 
@@ -512,6 +547,16 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
         verify(getMockVerification()).check(eq(expected), eq("be less than or equal to '%s'"), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
+    }
+
+    @Test
+    public void testLessThanOrEqualToWithOtherNameWhenOtherIsNull() {
+        testLessThanOrEqualToHelper(getBaseValue(), null, "other", false);
+    }
+
+    @Test
+    public void testLessThanOrEqualToWithOtherNameWhenValueAndOtherAreNull() {
+        testLessThanOrEqualToHelper(null, null, "other", true);
     }
 
     @Test
@@ -532,11 +577,6 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
     @Test
     public void testLessThanOrEqualToWithOtherNameWhenValueIsNull() {
         testLessThanOrEqualToHelper(null, getBaseValue(), "other", false);
-    }
-
-    @Test
-    public void testLessThanOrEqualToWithOtherNameWhenOtherIsNull() {
-        testLessThanOrEqualToHelper(getBaseValue(), null, "other", false);
     }
 
     private void testLessThanOrEqualToHelper(T value, T other, Object otherName, boolean expected) {

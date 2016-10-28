@@ -26,30 +26,57 @@ import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * An abstract extension of {@link AbstractCustomVerifier} which includes methods for verifying a {@code Comparable}
+ * value in relation to others. Nothing is required of implementations to support these methods, so long as they verify
+ * a {@code Comparable} value.
+ * </p>
  *
  * @param <T>
+ *         the {@code Comparable} type of the value being verified
  * @param <V>
+ *         the type of the {@link BaseComparableVerifier} for chaining purposes
  * @author Alasdair Mercer
  */
 public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V extends BaseComparableVerifier<T, V>> extends AbstractCustomVerifier<T, V> {
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link BaseComparableVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public BaseComparableVerifier(final Verification<T> verification) {
         super(verification);
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is between the specified {@code start} and {@code end} range (both inclusive).
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).between(*, null)  => FAIL
+     * Verifier.verify(*).between(null, *)  => FAIL
+     * Verifier.verify(null).between(*, *)  => FAIL
+     * Verifier.verify(50).between(0, 25)   => FAIL
+     * Verifier.verify(50).between(75, 100) => FAIL
+     * Verifier.verify(50).between(0, 100)  => PASS
+     * Verifier.verify(50).between(0, 50)   => PASS
+     * Verifier.verify(50).between(50, 100) => PASS
+     * </pre>
      *
      * @param start
+     *         the start of the range, inclusive (may be {@literal null})
      * @param end
-     * @return
+     *         the end of the range, inclusive (may be {@literal null})
+     * @return A reference to this {@link BaseComparableVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #between(Comparable, Comparable, Object, Object)
      */
     public V between(final T start, final T end) throws VerifierException {
@@ -57,14 +84,41 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is between the specified {@code start} and {@code end} range (both inclusive) while
+     * allowing {@code start} and {@code end} to be given an optional friendlier names for the {@link VerifierException}
+     * message in the event that one is thrown.
+     * </p>
+     * <p>
+     * While the names can be {@literal null} it is recommended instead to either use {@link
+     * #between(Comparable, Comparable)} or pass {@code start} and {@code end} as the names instead to get a better
+     * verification error message.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).between(*, null, *, *)  => FAIL
+     * Verifier.verify(*).between(null, *, *, *)  => FAIL
+     * Verifier.verify(null).between(*, *, *, *)  => FAIL
+     * Verifier.verify(50).between(0, 25, *, *)   => FAIL
+     * Verifier.verify(50).between(75, 100, *, *) => FAIL
+     * Verifier.verify(50).between(0, 100, *, *)  => PASS
+     * Verifier.verify(50).between(0, 50, *, *)   => PASS
+     * Verifier.verify(50).between(50, 100, *, *) => PASS
+     * </pre>
      *
      * @param start
+     *         the start of the range, inclusive (may be {@literal null})
      * @param end
+     *         the end of the range, inclusive (may be {@literal null})
      * @param startName
+     *         the optional name used to represent {@code start} (may be {@literal null})
      * @param endName
-     * @return
+     *         the optional name used to represent {@code end} (may be {@literal null})
+     * @return A reference to this {@link BaseComparableVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #between(Comparable, Comparable)
      */
     public V between(final T start, final T end, final Object startName, final Object endName) throws VerifierException {
@@ -72,39 +126,99 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is between the specified {@code start} and {@code end} range (both exclusive).
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).betweenExclusive(*, null)  => FAIL
+     * Verifier.verify(*).betweenExclusive(null, *)  => FAIL
+     * Verifier.verify(null).betweenExclusive(*, *)  => FAIL
+     * Verifier.verify(50).betweenExclusive(0, 25)   => FAIL
+     * Verifier.verify(50).betweenExclusive(75, 100) => FAIL
+     * Verifier.verify(50).betweenExclusive(0, 100)  => PASS
+     * Verifier.verify(50).betweenExclusive(0, 50)   => FAIL
+     * Verifier.verify(50).betweenExclusive(50, 100) => FAIL
+     * </pre>
      *
      * @param start
+     *         the start of the range, exclusive (may be {@literal null})
      * @param end
-     * @return
+     *         the end of the range, exclusive (may be {@literal null})
+     * @return A reference to this {@link BaseComparableVerifier} for chaining purposes.
      * @throws VerifierException
-     * @see #between(Comparable, Comparable)
+     *         If the verification fails while not negated or passes while negated.
+     * @see #betweenExclusive(Comparable, Comparable, Object, Object)
      */
     public V betweenExclusive(final T start, final T end) throws VerifierException {
         return betweenExclusive(start, end, start, end);
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is between the specified {@code start} and {@code end} range (both exclusive) while
+     * allowing {@code start} and {@code end} to be given an optional friendlier names for the {@link VerifierException}
+     * message in the event that one is thrown.
+     * </p>
+     * <p>
+     * While the names can be {@literal null} it is recommended instead to either use {@link
+     * #betweenExclusive(Comparable, Comparable)} or pass {@code start} and {@code end} as the names instead to get a
+     * better verification error message.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).betweenExclusive(*, null, *, *)  => FAIL
+     * Verifier.verify(*).betweenExclusive(null, *, *, *)  => FAIL
+     * Verifier.verify(null).betweenExclusive(*, *, *, *)  => FAIL
+     * Verifier.verify(50).betweenExclusive(0, 25, *, *)   => FAIL
+     * Verifier.verify(50).betweenExclusive(75, 100, *, *) => FAIL
+     * Verifier.verify(50).betweenExclusive(0, 100, *, *)  => PASS
+     * Verifier.verify(50).betweenExclusive(0, 50, *, *)   => FAIL
+     * Verifier.verify(50).betweenExclusive(50, 100, *, *) => FAIL
+     * </pre>
      *
      * @param start
+     *         the start of the range, exclusive (may be {@literal null})
      * @param end
+     *         the end of the range, exclusive (may be {@literal null})
      * @param startName
+     *         the optional name used to represent {@code start} (may be {@literal null})
      * @param endName
-     * @return
+     *         the optional name used to represent {@code end} (may be {@literal null})
+     * @return A reference to this {@link BaseComparableVerifier} for chaining purposes.
      * @throws VerifierException
-     * @see #between(Comparable, Comparable, Object, Object)
+     *         If the verification fails while not negated or passes while negated.
+     * @see #betweenExclusive(Comparable, Comparable)
      */
     public V betweenExclusive(final T start, final T end, final Object startName, final Object endName) throws VerifierException {
         return between(start, ComparisonOperator.GREATER_THAN, startName, end, ComparisonOperator.LESS_THAN, endName, "be between '%s' and '%s' (exclusive)");
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is greater than ({@code >}) the {@code other} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).greaterThan(null)    => FAIL
+     * Verifier.verify(null).greaterThan(*)    => FAIL
+     * Verifier.verify(null).greaterThan(null) => FAIL
+     * Verifier.verify(123).greaterThan(123)   => FAIL
+     * Verifier.verify(123).greaterThan(987)   => FAIL
+     * Verifier.verify(123).greaterThan(62)    => PASS
+     * </pre>
      *
      * @param other
-     * @return
+     *         the object to compare against the value (may be {@literal null})
+     * @return A reference to this {@link BaseComparableVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #greaterThan(Comparable, Object)
      */
     public V greaterThan(final T other) throws VerifierException {
@@ -112,12 +226,35 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is greater than ({@code >}) the {@code other} provided while allowing {@code other} to be
+     * given an optional friendlier {@code name} for the {@link VerifierException} message in the event that one is
+     * thrown.
+     * </p>
+     * <p>
+     * While {@code name} can be {@literal null} it is recommended instead to either use {@link
+     * #greaterThan(Comparable)} or pass {@code other} as {@code name} instead to get a better verification error
+     * message.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).greaterThan(null, *)    => FAIL
+     * Verifier.verify(null).greaterThan(*, *)    => FAIL
+     * Verifier.verify(null).greaterThan(null, *) => FAIL
+     * Verifier.verify(123).greaterThan(123, *)   => FAIL
+     * Verifier.verify(123).greaterThan(987, *)   => FAIL
+     * Verifier.verify(123).greaterThan(62, *)    => PASS
+     * </pre>
      *
      * @param other
+     *         the object to compare against the value (may be {@literal null})
      * @param name
-     * @return
+     *         the optional name used to represent {@code other} (may be {@literal null})
+     * @return A reference to this {@link BaseComparableVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #greaterThan(Comparable)
      */
     public V greaterThan(final T other, final Object name) throws VerifierException {
@@ -125,11 +262,26 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is greater than or equal to ({@code >=}) the {@code other} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).greaterThanOrEqualTo(null)    => FAIL
+     * Verifier.verify(null).greaterThanOrEqualTo(*)    => FAIL
+     * Verifier.verify(null).greaterThanOrEqualTo(null) => PASS
+     * Verifier.verify(123).greaterThanOrEqualTo(123)   => PASS
+     * Verifier.verify(123).greaterThanOrEqualTo(987)   => FAIL
+     * Verifier.verify(123).greaterThanOrEqualTo(62)    => PASS
+     * </pre>
      *
      * @param other
-     * @return
+     *         the object to compare against the value (may be {@literal null})
+     * @return A reference to this {@link BaseComparableVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #greaterThanOrEqualTo(Comparable, Object)
      */
     public V greaterThanOrEqualTo(final T other) throws VerifierException {
@@ -137,12 +289,35 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is greater than or equal to ({@code >=}) the {@code other} provided while allowing
+     * {@code other} to be given an optional friendlier {@code name} for the {@link VerifierException} message in the
+     * event that one is thrown.
+     * </p>
+     * <p>
+     * While {@code name} can be {@literal null} it is recommended instead to either use {@link
+     * #greaterThanOrEqualTo(Comparable)} or pass {@code other} as {@code name} instead to get a better verification
+     * error message.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).greaterThanOrEqualTo(null, *)    => FAIL
+     * Verifier.verify(null).greaterThanOrEqualTo(*, *)    => FAIL
+     * Verifier.verify(null).greaterThanOrEqualTo(null, *) => PASS
+     * Verifier.verify(123).greaterThanOrEqualTo(123, *)   => PASS
+     * Verifier.verify(123).greaterThanOrEqualTo(987, *)   => FAIL
+     * Verifier.verify(123).greaterThanOrEqualTo(62, *)    => PASS
+     * </pre>
      *
      * @param other
+     *         the object to compare against the value (may be {@literal null})
      * @param name
-     * @return
+     *         the optional name used to represent {@code other} (may be {@literal null})
+     * @return A reference to this {@link BaseComparableVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #greaterThanOrEqualTo(Comparable)
      */
     public V greaterThanOrEqualTo(final T other, final Object name) throws VerifierException {
@@ -150,11 +325,26 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is less than ({@code <}) the {@code other} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).lessThan(null)    => FAIL
+     * Verifier.verify(null).lessThan(*)    => FAIL
+     * Verifier.verify(null).lessThan(null) => FAIL
+     * Verifier.verify(123).lessThan(123)   => FAIL
+     * Verifier.verify(123).lessThan(987)   => PASS
+     * Verifier.verify(123).lessThan(62)    => FAIL
+     * </pre>
      *
      * @param other
-     * @return
+     *         the object to compare against the value (may be {@literal null})
+     * @return A reference to this {@link BaseComparableVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #lessThan(Comparable, Object)
      */
     public V lessThan(final T other) throws VerifierException {
@@ -162,12 +352,34 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is less than ({@code <}) the {@code other} provided while allowing {@code other} to be
+     * given an optional friendlier {@code name} for the {@link VerifierException} message in the event that one is
+     * thrown.
+     * </p>
+     * <p>
+     * While {@code name} can be {@literal null} it is recommended instead to either use {@link #lessThan(Comparable)}
+     * or pass {@code other} as {@code name} instead to get a better verification error message.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).lessThan(null, *)    => FAIL
+     * Verifier.verify(null).lessThan(*, *)    => FAIL
+     * Verifier.verify(null).lessThan(null, *) => FAIL
+     * Verifier.verify(123).lessThan(123, *)   => FAIL
+     * Verifier.verify(123).lessThan(987, *)   => PASS
+     * Verifier.verify(123).lessThan(62, *)    => FAIL
+     * </pre>
      *
      * @param other
+     *         the object to compare against the value (may be {@literal null})
      * @param name
-     * @return
+     *         the optional name used to represent {@code other} (may be {@literal null})
+     * @return A reference to this {@link BaseComparableVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #lessThan(Comparable)
      */
     public V lessThan(final T other, final Object name) throws VerifierException {
@@ -175,11 +387,26 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is less than or equal to ({@code <=}) the {@code other} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).lessThanOrEqualTo(null)    => FAIL
+     * Verifier.verify(null).lessThanOrEqualTo(*)    => FAIL
+     * Verifier.verify(null).lessThanOrEqualTo(null) => PASS
+     * Verifier.verify(123).lessThanOrEqualTo(123)   => PASS
+     * Verifier.verify(123).lessThanOrEqualTo(987)   => PASS
+     * Verifier.verify(123).lessThanOrEqualTo(62)    => FAIL
+     * </pre>
      *
      * @param other
-     * @return
+     *         the object to compare against the value (may be {@literal null})
+     * @return A reference to this {@link BaseComparableVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #lessThanOrEqualTo(Comparable, Object)
      */
     public V lessThanOrEqualTo(final T other) throws VerifierException {
@@ -187,12 +414,35 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is less than or equal to ({@code <=}) the {@code other} provided while allowing
+     * {@code other} to be given an optional friendlier {@code name} for the {@link VerifierException} message in the
+     * event that one is thrown.
+     * </p>
+     * <p>
+     * While {@code name} can be {@literal null} it is recommended instead to either use {@link
+     * #lessThanOrEqualTo(Comparable)} or pass {@code other} as {@code name} instead to get a better verification error
+     * message.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).lessThanOrEqualTo(null, *)    => FAIL
+     * Verifier.verify(null).lessThanOrEqualTo(*, *)    => FAIL
+     * Verifier.verify(null).lessThanOrEqualTo(null, *) => PASS
+     * Verifier.verify(123).lessThanOrEqualTo(123, *)   => PASS
+     * Verifier.verify(123).lessThanOrEqualTo(987, *)   => PASS
+     * Verifier.verify(123).lessThanOrEqualTo(62, *)    => FAIL
+     * </pre>
      *
      * @param other
+     *         the object to compare against the value (may be {@literal null})
      * @param name
-     * @return
+     *         the optional name used to represent {@code other} (may be {@literal null})
+     * @return A reference to this {@link BaseComparableVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #lessThanOrEqualTo(Comparable)
      */
     public V lessThanOrEqualTo(final T other, final Object name) throws VerifierException {
@@ -211,43 +461,56 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
 
     private V comparesTo(final Comparison comparison, final T other, final Object name, final String message) throws VerifierException {
         final T value = verification().getValue();
-        final boolean result = value != null && other != null && comparison.compare(value.compareTo(other));
+        final boolean result = (value == null || other == null) ? comparison.areNullsEqual() && value == other : comparison.compare(value.compareTo(other));
 
         verification().check(result, message, name);
 
         return chain();
     }
 
-    interface Comparison {
+    private interface Comparison {
+
+        boolean areNullsEqual();
 
         boolean compare(int result);
     }
 
     enum ComparisonOperator implements Comparison {
 
-        GREATER_THAN() {
+        GREATER_THAN(false) {
             @Override
             public boolean compare(final int result) {
                 return result > 0;
             }
         },
-        GREATER_THAN_OR_EQUAL_TO() {
+        GREATER_THAN_OR_EQUAL_TO(true) {
             @Override
             public boolean compare(final int result) {
                 return result >= 0;
             }
         },
-        LESS_THAN() {
+        LESS_THAN(false) {
             @Override
             public boolean compare(final int result) {
                 return result < 0;
             }
         },
-        LESS_THAN_OR_EQUAL_TO() {
+        LESS_THAN_OR_EQUAL_TO(true) {
             @Override
             public boolean compare(final int result) {
                 return result <= 0;
             }
+        };
+
+        private final boolean nullsEqual;
+
+        ComparisonOperator(final boolean nullsEqual) {
+            this.nullsEqual = nullsEqual;
+        }
+
+        @Override
+        public boolean areNullsEqual() {
+            return nullsEqual;
         }
     }
 }
