@@ -25,16 +25,21 @@ import io.skelp.verifier.AbstractCustomVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * The most basic implementation of {@link AbstractCustomVerifier} which can be used to verify an {@code Object} value.
+ * </p>
  *
  * @author Alasdair Mercer
  */
 public final class ObjectVerifier extends AbstractCustomVerifier<Object, ObjectVerifier> {
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link ObjectVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public ObjectVerifier(final Verification<Object> verification) {
         super(verification);
