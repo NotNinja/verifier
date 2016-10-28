@@ -24,19 +24,31 @@ package io.skelp.verifier.type;
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseNumberVerifier;
+import io.skelp.verifier.type.base.BaseTruthVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * An implementation of {@link BaseComparableVerifier} and {@link BaseNumberVerifier} which can be used to verify a
+ * {@code Long} value.
+ * </p>
+ * <p>
+ * In accordance with {@link BaseNumberVerifier}, all of the {@link BaseTruthVerifier} methods are implemented so that
+ * {@literal null} and {@code 0L} are <b>always</b> considered to be falsy and {@code 1L} is <b>always</b> considered to
+ * be truthy.
+ * </p>
  *
  * @author Alasdair Mercer
  */
 public final class LongVerifier extends BaseComparableVerifier<Long, LongVerifier> implements BaseNumberVerifier<Long, LongVerifier> {
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link LongVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public LongVerifier(final Verification<Long> verification) {
         super(verification);

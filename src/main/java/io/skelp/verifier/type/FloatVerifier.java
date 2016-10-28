@@ -24,19 +24,31 @@ package io.skelp.verifier.type;
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseNumberVerifier;
+import io.skelp.verifier.type.base.BaseTruthVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * An implementation of {@link BaseComparableVerifier} and {@link BaseNumberVerifier} which can be used to verify a
+ * {@code Float} value.
+ * </p>
+ * <p>
+ * In accordance with {@link BaseNumberVerifier}, all of the {@link BaseTruthVerifier} methods are implemented so that
+ * {@literal null} and {@code 0F} are <b>always</b> considered to be falsy and {@code 1F} is <b>always</b> considered to
+ * be truthy.
+ * </p>
  *
  * @author Alasdair Mercer
  */
 public final class FloatVerifier extends BaseComparableVerifier<Float, FloatVerifier> implements BaseNumberVerifier<Float, FloatVerifier> {
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link FloatVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public FloatVerifier(final Verification<Float> verification) {
         super(verification);

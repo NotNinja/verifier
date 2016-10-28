@@ -24,19 +24,31 @@ package io.skelp.verifier.type;
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseNumberVerifier;
+import io.skelp.verifier.type.base.BaseTruthVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * An implementation of {@link BaseComparableVerifier} and {@link BaseNumberVerifier} which can be used to verify a
+ * {@code Byte} value.
+ * </p>
+ * <p>
+ * In accordance with {@link BaseNumberVerifier}, all of the {@link BaseTruthVerifier} methods are implemented so that
+ * {@literal null} and {@code 0} are <b>always</b> considered to be falsy and {@code 1} is <b>always</b> considered to
+ * be truthy.
+ * </p>
  *
  * @author Alasdair Mercer
  */
 public final class ByteVerifier extends BaseComparableVerifier<Byte, ByteVerifier> implements BaseNumberVerifier<Byte, ByteVerifier> {
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link ByteVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public ByteVerifier(final Verification<Byte> verification) {
         super(verification);

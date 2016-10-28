@@ -26,19 +26,31 @@ import java.math.BigInteger;
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseNumberVerifier;
+import io.skelp.verifier.type.base.BaseTruthVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * An implementation of {@link BaseComparableVerifier} and {@link BaseNumberVerifier} which can be used to verify a
+ * {@code BigInteger} value.
+ * </p>
+ * <p>
+ * In accordance with {@link BaseNumberVerifier}, all of the {@link BaseTruthVerifier} methods are implemented so that
+ * {@literal null} and {@code BigInteger.ZERO} are <b>always</b> considered to be falsy and {@code BigInteger.ONE} is
+ * <b>always</b> considered to be truthy.
+ * </p>
  *
  * @author Alasdair Mercer
  */
 public final class BigIntegerVerifier extends BaseComparableVerifier<BigInteger, BigIntegerVerifier> implements BaseNumberVerifier<BigInteger, BigIntegerVerifier> {
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link BigIntegerVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public BigIntegerVerifier(final Verification<BigInteger> verification) {
         super(verification);
