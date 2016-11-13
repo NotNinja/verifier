@@ -27,7 +27,14 @@ import io.skelp.verifier.type.base.BaseTruthVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * An implementation of {@link BaseComparableVerifier} and {@link BaseTruthVerifier} which can be used to verify a
+ * {@code Character} value.
+ * </p>
+ * <p>
+ * All of the {@link BaseTruthVerifier} methods are implemented so that {@literal null} and {@literal '0'} are
+ * <b>always</b> considered to be falsy and {@literal '1'} is <b>always</b> considered to be truthy.
+ * </p>
  *
  * @author Alasdair Mercer
  */
@@ -50,19 +57,32 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link CharacterVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public CharacterVerifier(final Verification<Character> verification) {
         super(verification);
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is ASCII.
+     * </p>
+     * <pre>
+     * Verifier.verify((Character) null).ascii() => FAIL
+     * Verifier.verify('æ').ascii()              => FAIL
+     * Verifier.verify('\0').ascii()             => PASS
+     * Verifier.verify('0').ascii()              => PASS
+     * Verifier.verify('Z').ascii()              => PASS
+     * </pre>
      *
-     * @return
+     * @return A reference to this {@link CharacterVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public CharacterVerifier ascii() throws VerifierException {
         final Character value = verification().getValue();
@@ -74,10 +94,20 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is an ASCII letter.
+     * </p>
+     * <pre>
+     * Verifier.verify((Character) null).asciiAlpha() => FAIL
+     * Verifier.verify('æ').asciiAlpha()              => FAIL
+     * Verifier.verify('\0').asciiAlpha()             => FAIL
+     * Verifier.verify('0').asciiAlpha()              => FAIL
+     * Verifier.verify('Z').asciiAlpha()              => PASS
+     * </pre>
      *
-     * @return
+     * @return A reference to this {@link CharacterVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public CharacterVerifier asciiAlpha() throws VerifierException {
         final Character value = verification().getValue();
@@ -89,10 +119,21 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is an ASCII lower case letter.
+     * </p>
+     * <pre>
+     * Verifier.verify((Character) null).asciiAlphaLowerCase() => FAIL
+     * Verifier.verify('æ').asciiAlphaLowerCase()              => FAIL
+     * Verifier.verify('\0').asciiAlphaLowerCase()             => FAIL
+     * Verifier.verify('0').asciiAlphaLowerCase()              => FAIL
+     * Verifier.verify('a').asciiAlphaLowerCase()              => PASS
+     * Verifier.verify('Z').asciiAlphaLowerCase()              => FAIL
+     * </pre>
      *
-     * @return
+     * @return A reference to this {@link CharacterVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #asciiAlphaUpperCase()
      */
     public CharacterVerifier asciiAlphaLowerCase() throws VerifierException {
@@ -105,10 +146,21 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is an ASCII upper case letter.
+     * </p>
+     * <pre>
+     * Verifier.verify((Character) null).asciiAlphaUpperCase() => FAIL
+     * Verifier.verify('æ').asciiAlphaUpperCase()              => FAIL
+     * Verifier.verify('\0').asciiAlphaUpperCase()             => FAIL
+     * Verifier.verify('0').asciiAlphaUpperCase()              => FAIL
+     * Verifier.verify('a').asciiAlphaUpperCase()              => FAIL
+     * Verifier.verify('Z').asciiAlphaUpperCase()              => PASS
+     * </pre>
      *
-     * @return
+     * @return A reference to this {@link CharacterVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #asciiAlphaLowerCase()
      */
     public CharacterVerifier asciiAlphaUpperCase() throws VerifierException {
@@ -121,10 +173,20 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is an ASCII letter or digit.
+     * </p>
+     * <pre>
+     * Verifier.verify((Character) null).asciiAlphanumeric() => FAIL
+     * Verifier.verify('æ').asciiAlphanumeric()              => FAIL
+     * Verifier.verify('\0').asciiAlphanumeric()             => FAIL
+     * Verifier.verify('0').asciiAlphanumeric()              => PASS
+     * Verifier.verify('Z').asciiAlphanumeric()              => PASS
+     * </pre>
      *
-     * @return
+     * @return A reference to this {@link CharacterVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public CharacterVerifier asciiAlphanumeric() throws VerifierException {
         final Character value = verification().getValue();
@@ -136,10 +198,20 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is an ASCII control.
+     * </p>
+     * <pre>
+     * Verifier.verify((Character) null).asciiControl() => FAIL
+     * Verifier.verify('æ').asciiControl()              => FAIL
+     * Verifier.verify('\0').asciiControl()             => PASS
+     * Verifier.verify('0').asciiControl()              => FAIL
+     * Verifier.verify('Z').asciiControl()              => FAIL
+     * </pre>
      *
-     * @return
+     * @return A reference to this {@link CharacterVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public CharacterVerifier asciiControl() throws VerifierException {
         final Character value = verification().getValue();
@@ -151,10 +223,20 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is an ASCII digit.
+     * </p>
+     * <pre>
+     * Verifier.verify((Character) null).asciiNumeric() => FAIL
+     * Verifier.verify('æ').asciiNumeric()              => FAIL
+     * Verifier.verify('\0').asciiNumeric()             => FAIL
+     * Verifier.verify('0').asciiNumeric()              => PASS
+     * Verifier.verify('Z').asciiNumeric()              => FAIL
+     * </pre>
      *
-     * @return
+     * @return A reference to this {@link CharacterVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public CharacterVerifier asciiNumeric() throws VerifierException {
         final Character value = verification().getValue();
@@ -166,10 +248,22 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is ASCII printable.
+     * </p>
+     * <pre>
+     * Verifier.verify((Character) null).asciiPrintable() => FAIL
+     * Verifier.verify('æ').asciiPrintable()              => FAIL
+     * Verifier.verify('\0').asciiPrintable()             => FAIL
+     * Verifier.verify('0').asciiPrintable()              => PASS
+     * Verifier.verify('Z').asciiPrintable()              => PASS
+     * Verifier.verify(' ').asciiPrintable()              => PASS
+     * Verifier.verify('~').asciiPrintable()              => PASS
+     * </pre>
      *
-     * @return
+     * @return A reference to this {@link CharacterVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public CharacterVerifier asciiPrintable() throws VerifierException {
         final Character value = verification().getValue();
