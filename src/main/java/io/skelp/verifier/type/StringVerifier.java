@@ -30,7 +30,15 @@ import io.skelp.verifier.util.Function;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * An implementation of {@link BaseComparableVerifier} and {@link BaseTruthVerifier} which can be used to verify a
+ * {@code String} value.
+ * </p>
+ * <p>
+ * All of the {@link BaseTruthVerifier} methods are implemented so that {@literal null} and {@literal "false"} (ignoring
+ * case) are <b>always</b> considered to be falsy and {@literal "true"} (ignoring case) is <b>always</b> considered to
+ * be truthy.
+ * </p>
  *
  * @author Alasdair Mercer
  */
@@ -113,9 +121,12 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link StringVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public StringVerifier(final Verification<String> verification) {
         super(verification);
