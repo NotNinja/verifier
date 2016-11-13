@@ -87,7 +87,7 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
 
     /**
      * <p>
-     * Verifies that the value is or has been caused by the class provided.
+     * Verifies that the value is or has been caused by the {@code Class} provided.
      * </p>
      * <p>
      * {@literal null} references are handled gracefully without exceptions.
@@ -104,7 +104,7 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * </pre>
      *
      * @param type
-     *         the class to which the value or one of its cause must be assignable (may be {@literal null})
+     *         the {@code Class} to which the value or one of its cause must be assignable (may be {@literal null})
      * @return A reference to this {@link ThrowableVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
