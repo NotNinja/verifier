@@ -133,7 +133,10 @@ public class CharacterVerifierTest {
         private static Character[] asciiNumbers;
         private static Character[] asciiOtherPrintables;
         private static Character[] asciiUpperCaseLetters;
-        private static Character[] extendedAsciiCharacters;
+        private static Character[] nonAsciiLowerCaseLetters = {'é', 'û', 'ÿ'};
+        private static Character[] nonAsciiNumbers = {'१', '३', '۳'};
+        private static Character[] nonAsciiUpperCaseLetters = {'É', 'Û', 'Ÿ'};
+        private static Character[] whitespace = {' ', '\r', '\n', '\t'};
 
         @BeforeClass
         public static void setUpClass() {
@@ -167,7 +170,6 @@ public class CharacterVerifierTest {
                     return input > 64 && input < 91;
                 }
             });
-            extendedAsciiCharacters = getExtendedAsciiCharacters();
         }
 
         private static Character[] getAsciiCharacters(Function<Boolean, Integer> matcher) {
@@ -181,13 +183,104 @@ public class CharacterVerifierTest {
             return characters.toArray(new Character[0]);
         }
 
-        private static Character[] getExtendedAsciiCharacters() {
-            List<Character> characters = new ArrayList<>();
-            for (char ch = 128; ch < 256; ch++) {
-                characters.add(ch);
+        @Test
+        public void testAlphaWhenValueIsAsciiControl() {
+            testAlphaHelper(asciiControls, false);
+        }
+
+        @Test
+        public void testAlphaWhenValueIsAsciiLowerCaseLetter() {
+            testAlphaHelper(asciiLowerCaseLetters, true);
+        }
+
+        @Test
+        public void testAlphaWhenValueIsAsciiNumber() {
+            testAlphaHelper(asciiNumbers, false);
+        }
+
+        @Test
+        public void testAlphaWhenValueIsAsciiUpperCaseLetter() {
+            testAlphaHelper(asciiUpperCaseLetters, true);
+        }
+
+        @Test
+        public void testAlphaWhenValueIsNonAsciiLetter() {
+            testAlphaHelper(new Character[]{'é', 'û', 'ÿ'}, true);
+        }
+
+        @Test
+        public void testAlphaWhenValueIsNonAsciiNumber() {
+            testAlphaHelper(new Character[]{'१', '३', '۳'}, false);
+        }
+
+        @Test
+        public void testAlphaWhenValueIsNull() {
+            testAlphaHelper(new Character[]{null}, false);
+        }
+
+        @Test
+        public void testAlphaWhenValueIsWhitespace() {
+            testAlphaHelper(whitespace, false);
+        }
+
+        private void testAlphaHelper(Character[] values, boolean expected) {
+            for (Character value : values) {
+                setValue(value);
+
+                assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().alpha());
             }
 
-            return characters.toArray(new Character[0]);
+            verify(getMockVerification(), times(values.length)).check(expected, "be a letter");
+        }
+
+        @Test
+        public void testAlphanumericWhenValueIsAsciiControl() {
+            testAlphanumericHelper(asciiControls, false);
+        }
+
+        @Test
+        public void testAlphanumericWhenValueIsAsciiLowerCaseLetter() {
+            testAlphanumericHelper(asciiLowerCaseLetters, true);
+        }
+
+        @Test
+        public void testAlphanumericWhenValueIsAsciiNumber() {
+            testAlphanumericHelper(asciiNumbers, true);
+        }
+
+        @Test
+        public void testAlphanumericWhenValueIsAsciiUpperCaseLetter() {
+            testAlphanumericHelper(asciiUpperCaseLetters, true);
+        }
+
+        @Test
+        public void testAlphanumericWhenValueIsNonAsciiLetter() {
+            testAlphanumericHelper(new Character[]{'é', 'û', 'ÿ'}, true);
+        }
+
+        @Test
+        public void testAlphanumericWhenValueIsNonAsciiNumber() {
+            testAlphanumericHelper(new Character[]{'१', '३', '۳'}, true);
+        }
+
+        @Test
+        public void testAlphanumericWhenValueIsNull() {
+            testAlphanumericHelper(new Character[]{null}, false);
+        }
+
+        @Test
+        public void testAlphanumericWhenValueIsWhitespace() {
+            testAlphanumericHelper(whitespace, false);
+        }
+
+        private void testAlphanumericHelper(Character[] values, boolean expected) {
+            for (Character value : values) {
+                setValue(value);
+
+                assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().alphanumeric());
+            }
+
+            verify(getMockVerification(), times(values.length)).check(expected, "be a letter or digit");
         }
 
         @Test
@@ -211,8 +304,18 @@ public class CharacterVerifierTest {
         }
 
         @Test
-        public void testAsciiWhenValueIsNotAscii() {
-            testAsciiHelper(extendedAsciiCharacters, false);
+        public void testAsciiWhenValueIsNonAsciiLowerCaseLetter() {
+            testAsciiHelper(nonAsciiLowerCaseLetters, false);
+        }
+
+        @Test
+        public void testAsciiWhenValueIsNonAsciiNumber() {
+            testAsciiHelper(nonAsciiNumbers, false);
+        }
+
+        @Test
+        public void testAsciiWhenValueIsNonAsciiUpperCaseLetter() {
+            testAsciiHelper(nonAsciiUpperCaseLetters, false);
         }
 
         @Test
@@ -251,8 +354,18 @@ public class CharacterVerifierTest {
         }
 
         @Test
-        public void testAsciiAlphaWhenValueIsNotAscii() {
-            testAsciiAlphaHelper(extendedAsciiCharacters, false);
+        public void testAsciiAlphaWhenValueIsNonAsciiLowerCaseLetter() {
+            testAsciiAlphaHelper(nonAsciiLowerCaseLetters, false);
+        }
+
+        @Test
+        public void testAsciiAlphaWhenValueIsNonAsciiNumber() {
+            testAsciiAlphaHelper(nonAsciiNumbers, false);
+        }
+
+        @Test
+        public void testAsciiAlphaWhenValueIsNonAsciiUpperCaseLetter() {
+            testAsciiAlphaHelper(nonAsciiUpperCaseLetters, false);
         }
 
         @Test
@@ -291,8 +404,18 @@ public class CharacterVerifierTest {
         }
 
         @Test
-        public void testAsciiAlphaLowerCaseWhenValueIsNotAscii() {
-            testAsciiAlphaLowerCaseHelper(extendedAsciiCharacters, false);
+        public void testAsciiAlphaLowerCaseWhenValueIsNonAsciiLowerCaseLetter() {
+            testAsciiAlphaLowerCaseHelper(nonAsciiLowerCaseLetters, false);
+        }
+
+        @Test
+        public void testAsciiAlphaLowerCaseWhenValueIsNonAsciiNumber() {
+            testAsciiAlphaLowerCaseHelper(nonAsciiNumbers, false);
+        }
+
+        @Test
+        public void testAsciiAlphaLowerCaseWhenValueIsNonAsciiUpperCaseLetter() {
+            testAsciiAlphaLowerCaseHelper(nonAsciiUpperCaseLetters, false);
         }
 
         @Test
@@ -331,8 +454,18 @@ public class CharacterVerifierTest {
         }
 
         @Test
-        public void testAsciiAlphaUpperCaseWhenValueIsNotAscii() {
-            testAsciiAlphaUpperCaseHelper(extendedAsciiCharacters, false);
+        public void testAsciiAlphaUpperCaseWhenValueIsNonAsciiLowerCaseLetter() {
+            testAsciiAlphaUpperCaseHelper(nonAsciiLowerCaseLetters, false);
+        }
+
+        @Test
+        public void testAsciiAlphaUpperCaseWhenValueIsNonAsciiNumber() {
+            testAsciiAlphaUpperCaseHelper(nonAsciiNumbers, false);
+        }
+
+        @Test
+        public void testAsciiAlphaUpperCaseWhenValueIsNonAsciiUpperCaseLetter() {
+            testAsciiAlphaUpperCaseHelper(nonAsciiUpperCaseLetters, false);
         }
 
         @Test
@@ -371,8 +504,18 @@ public class CharacterVerifierTest {
         }
 
         @Test
-        public void testAsciiAlphanumericWhenValueIsNotAscii() {
-            testAsciiAlphanumericHelper(extendedAsciiCharacters, false);
+        public void testAsciiAlphanumericWhenValueIsNonAsciiLowerCaseLetter() {
+            testAsciiAlphanumericHelper(nonAsciiLowerCaseLetters, false);
+        }
+
+        @Test
+        public void testAsciiAlphanumericWhenValueIsNonAsciiNumber() {
+            testAsciiAlphanumericHelper(nonAsciiNumbers, false);
+        }
+
+        @Test
+        public void testAsciiAlphanumericWhenValueIsNonAsciiUpperCaseLetter() {
+            testAsciiAlphanumericHelper(nonAsciiUpperCaseLetters, false);
         }
 
         @Test
@@ -411,8 +554,18 @@ public class CharacterVerifierTest {
         }
 
         @Test
-        public void testAsciiControlWhenValueIsNotAscii() {
-            testAsciiControlHelper(extendedAsciiCharacters, false);
+        public void testAsciiControlWhenValueIsNonAsciiLowerCaseLetter() {
+            testAsciiControlHelper(nonAsciiLowerCaseLetters, false);
+        }
+
+        @Test
+        public void testAsciiControlWhenValueIsNonAsciiNumber() {
+            testAsciiControlHelper(nonAsciiNumbers, false);
+        }
+
+        @Test
+        public void testAsciiControlWhenValueIsNonAsciiUpperCaseLetter() {
+            testAsciiControlHelper(nonAsciiUpperCaseLetters, false);
         }
 
         @Test
@@ -451,8 +604,18 @@ public class CharacterVerifierTest {
         }
 
         @Test
-        public void testAsciiNumericWhenValueIsNotAscii() {
-            testAsciiNumericHelper(extendedAsciiCharacters, false);
+        public void testAsciiNumericWhenValueIsNonAsciiLowerCaseLetter() {
+            testAsciiNumericHelper(nonAsciiLowerCaseLetters, false);
+        }
+
+        @Test
+        public void testAsciiNumericWhenValueIsNonAsciiNumber() {
+            testAsciiNumericHelper(nonAsciiNumbers, false);
+        }
+
+        @Test
+        public void testAsciiNumericWhenValueIsNonAsciiUpperCaseLetter() {
+            testAsciiNumericHelper(nonAsciiUpperCaseLetters, false);
         }
 
         @Test
@@ -496,8 +659,18 @@ public class CharacterVerifierTest {
         }
 
         @Test
-        public void testAsciiPrintableWhenValueIsNotAscii() {
-            testAsciiPrintableHelper(extendedAsciiCharacters, false);
+        public void testAsciiPrintableWhenValueIsNonAsciiLowerCaseLetter() {
+            testAsciiPrintableHelper(nonAsciiLowerCaseLetters, false);
+        }
+
+        @Test
+        public void testAsciiPrintableWhenValueIsNonAsciiNumber() {
+            testAsciiPrintableHelper(nonAsciiNumbers, false);
+        }
+
+        @Test
+        public void testAsciiPrintableWhenValueIsNonAsciiUpperCaseLetter() {
+            testAsciiPrintableHelper(nonAsciiUpperCaseLetters, false);
         }
 
         @Test
@@ -513,6 +686,221 @@ public class CharacterVerifierTest {
             }
 
             verify(getMockVerification(), times(values.length)).check(expected, "be ASCII printable");
+        }
+
+        @Test
+        public void testLowerCaseWhenValueIsAsciiControl() {
+            testLowerCaseHelper(asciiControls, false);
+        }
+
+        @Test
+        public void testLowerCaseWhenValueIsAsciiLowerCaseLetter() {
+            testLowerCaseHelper(asciiLowerCaseLetters, true);
+        }
+
+        @Test
+        public void testLowerCaseWhenValueIsAsciiNumber() {
+            testLowerCaseHelper(asciiNumbers, false);
+        }
+
+        @Test
+        public void testLowerCaseWhenValueIsAsciiUpperCaseLetter() {
+            testLowerCaseHelper(asciiUpperCaseLetters, false);
+        }
+
+        @Test
+        public void testLowerCaseWhenValueIsNonAsciiLowerCaseLetter() {
+            testLowerCaseHelper(nonAsciiLowerCaseLetters, true);
+        }
+
+        @Test
+        public void testLowerCaseWhenValueIsNonAsciiNumber() {
+            testLowerCaseHelper(nonAsciiNumbers, false);
+        }
+
+        @Test
+        public void testLowerCaseWhenValueIsNonAsciiUpperCaseLetter() {
+            testLowerCaseHelper(nonAsciiUpperCaseLetters, false);
+        }
+
+        @Test
+        public void testLowerCaseWhenValueIsNull() {
+            testLowerCaseHelper(new Character[]{null}, false);
+        }
+
+        @Test
+        public void testLowerCaseWhenValueIsWhitespace() {
+            testLowerCaseHelper(whitespace, false);
+        }
+
+        private void testLowerCaseHelper(Character[] values, boolean expected) {
+            for (Character value : values) {
+                setValue(value);
+
+                assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().lowerCase());
+            }
+
+            verify(getMockVerification(), times(values.length)).check(expected, "be lower case");
+        }
+
+        @Test
+        public void testNumericWhenValueIsAsciiControl() {
+            testNumericHelper(asciiControls, false);
+        }
+
+        @Test
+        public void testNumericWhenValueIsAsciiLowerCaseLetter() {
+            testNumericHelper(asciiLowerCaseLetters, false);
+        }
+
+        @Test
+        public void testNumericWhenValueIsAsciiNumber() {
+            testNumericHelper(asciiNumbers, true);
+        }
+
+        @Test
+        public void testNumericWhenValueIsAsciiUpperCaseLetter() {
+            testNumericHelper(asciiUpperCaseLetters, false);
+        }
+
+        @Test
+        public void testNumericWhenValueIsNonAsciiLowerCaseLetter() {
+            testNumericHelper(nonAsciiLowerCaseLetters, false);
+        }
+
+        @Test
+        public void testNumericWhenValueIsNonAsciiNumber() {
+            testNumericHelper(nonAsciiNumbers, true);
+        }
+
+        @Test
+        public void testNumericWhenValueIsNonAsciiUpperCaseLetter() {
+            testNumericHelper(nonAsciiUpperCaseLetters, false);
+        }
+
+        @Test
+        public void testNumericWhenValueIsNull() {
+            testNumericHelper(new Character[]{null}, false);
+        }
+
+        @Test
+        public void testNumericWhenValueIsWhitespace() {
+            testNumericHelper(whitespace, false);
+        }
+
+        private void testNumericHelper(Character[] values, boolean expected) {
+            for (Character value : values) {
+                setValue(value);
+
+                assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().numeric());
+            }
+
+            verify(getMockVerification(), times(values.length)).check(expected, "be a digit");
+        }
+
+        @Test
+        public void testUpperCaseWhenValueIsAsciiControl() {
+            testUpperCaseHelper(asciiControls, false);
+        }
+
+        @Test
+        public void testUpperCaseWhenValueIsAsciiLowerCaseLetter() {
+            testUpperCaseHelper(asciiLowerCaseLetters, false);
+        }
+
+        @Test
+        public void testUpperCaseWhenValueIsAsciiNumber() {
+            testUpperCaseHelper(asciiNumbers, false);
+        }
+
+        @Test
+        public void testUpperCaseWhenValueIsAsciiUpperCaseLetter() {
+            testUpperCaseHelper(asciiUpperCaseLetters, true);
+        }
+
+        @Test
+        public void testUpperCaseWhenValueIsNonAsciiLowerCaseLetter() {
+            testUpperCaseHelper(nonAsciiLowerCaseLetters, false);
+        }
+
+        @Test
+        public void testUpperCaseWhenValueIsNonAsciiNumber() {
+            testUpperCaseHelper(nonAsciiNumbers, false);
+        }
+
+        @Test
+        public void testUpperCaseWhenValueIsNonAsciiUpperCaseLetter() {
+            testUpperCaseHelper(nonAsciiUpperCaseLetters, true);
+        }
+
+        @Test
+        public void testUpperCaseWhenValueIsNull() {
+            testUpperCaseHelper(new Character[]{null}, false);
+        }
+
+        @Test
+        public void testUpperCaseWhenValueIsWhitespace() {
+            testUpperCaseHelper(whitespace, false);
+        }
+
+        private void testUpperCaseHelper(Character[] values, boolean expected) {
+            for (Character value : values) {
+                setValue(value);
+
+                assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().upperCase());
+            }
+
+            verify(getMockVerification(), times(values.length)).check(expected, "be upper case");
+        }
+
+        @Test
+        public void testWhitespaceWhenValueIsAsciiLowerCaseLetter() {
+            testWhitespaceHelper(asciiLowerCaseLetters, false);
+        }
+
+        @Test
+        public void testWhitespaceWhenValueIsAsciiNumber() {
+            testWhitespaceHelper(asciiNumbers, false);
+        }
+
+        @Test
+        public void testWhitespaceWhenValueIsAsciiUpperCaseLetter() {
+            testWhitespaceHelper(asciiUpperCaseLetters, false);
+        }
+
+        @Test
+        public void testWhitespaceWhenValueIsNonAsciiLowerCaseLetter() {
+            testWhitespaceHelper(nonAsciiLowerCaseLetters, false);
+        }
+
+        @Test
+        public void testWhitespaceWhenValueIsNonAsciiNumber() {
+            testWhitespaceHelper(nonAsciiNumbers, false);
+        }
+
+        @Test
+        public void testWhitespaceWhenValueIsNonAsciiUpperCaseLetter() {
+            testWhitespaceHelper(nonAsciiUpperCaseLetters, false);
+        }
+
+        @Test
+        public void testWhitespaceWhenValueIsNull() {
+            testWhitespaceHelper(new Character[]{null}, false);
+        }
+
+        @Test
+        public void testWhitespaceWhenValueIsWhitespace() {
+            testWhitespaceHelper(whitespace, true);
+        }
+
+        private void testWhitespaceHelper(Character[] values, boolean expected) {
+            for (Character value : values) {
+                setValue(value);
+
+                assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().whitespace());
+            }
+
+            verify(getMockVerification(), times(values.length)).check(expected, "be whitespace");
         }
 
         @Override
