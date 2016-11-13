@@ -33,26 +33,39 @@ import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.verification.Verification;
 
 /**
- * TODO: Document
+ * <p>
+ * An implementation of {@link AbstractCustomVerifier} which can be used to verify a {@code Locale} value.
+ * </p>
  *
  * @author Alasdair Mercer
  */
 public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleVerifier> {
 
     /**
-     * TODO: Document
+     * <p>
+     * Creates an instance of {@link LocaleVerifier} based on the {@code verification} provided.
+     * </p>
      *
      * @param verification
+     *         the {@link Verification} to be used
      */
     public LocaleVerifier(final Verification<Locale> verification) {
         super(verification);
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is an available {@code Locale}.
+     * </p>
+     * <pre>
+     * Verifier.verify((Locale) null).available()            => FAIL
+     * Verifier.verify(Locale.US).available()                => PASS
+     * Verifier.verify(new Locale("foo", "BAR")).available() => FAIL
+     * </pre>
      *
-     * @return
+     * @return A reference to this {@link LocaleVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public LocaleVerifier available() throws VerifierException {
         final Locale value = verification().getValue();
@@ -64,11 +77,25 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value has the {@code country} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).country(null)                      => FAIL
+     * Verifier.verify((Locale) null).country(*)             => FAIL
+     * Verifier.verify(new Locale("en", "")).country("")     => PASS
+     * Verifier.verify(new Locale("en", "US")).country("GB") => FAIL
+     * Verifier.verify(new Locale("en", "US")).country("US") => PASS
+     * </pre>
      *
      * @param country
-     * @return
+     *         the country to compare against that of the value (may be {@literal null})
+     * @return A reference to this {@link LocaleVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public LocaleVerifier country(final String country) throws VerifierException {
         final Locale value = verification().getValue();
@@ -80,10 +107,18 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value is the default {@code Locale}.
+     * </p>
+     * <pre>
+     * Verifier.verify((Locale) null).defaulting()            => FAIL
+     * Verifier.verify(Locale.getDefault()).defaulting()      => PASS
+     * Verifier.verify(new Locale("foo", "BAR")).defaulting() => FAIL
+     * </pre>
      *
-     * @return
+     * @return A reference to this {@link LocaleVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public LocaleVerifier defaulting() throws VerifierException {
         final Locale value = verification().getValue();
@@ -95,11 +130,24 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value has the {@code language} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).language(null)                      => FAIL
+     * Verifier.verify((Locale) null).language(*)             => FAIL
+     * Verifier.verify(new Locale("en", "US")).language("fr") => FAIL
+     * Verifier.verify(new Locale("en", "US")).language("en") => PASS
+     * </pre>
      *
      * @param language
-     * @return
+     *         the language to compare against that of the value (may be {@literal null})
+     * @return A reference to this {@link LocaleVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public LocaleVerifier language(final String language) throws VerifierException {
         final Locale value = verification().getValue();
@@ -111,11 +159,25 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value has the {@code script} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).script(null)                    => FAIL
+     * Verifier.verify((Locale) null).script(*)           => FAIL
+     * Verifier.verify(new Locale("en", "US")).script("") => PASS
+     * Verifier.verify(latinLocale).script("Arab")        => FAIL
+     * Verifier.verify(latinLocale).script("Latn")        => PASS
+     * </pre>
      *
      * @param script
-     * @return
+     *         the script to compare against that of the value (may be {@literal null})
+     * @return A reference to this {@link LocaleVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public LocaleVerifier script(final String script) throws VerifierException {
         final Locale value = verification().getValue();
@@ -127,11 +189,25 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value has the {@code variant} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).variant(null)                                        => FAIL
+     * Verifier.verify((Locale) null).variant(*)                               => FAIL
+     * Verifier.verify(new Locale("en", "GB")).variant("")                     => PASS
+     * Verifier.verify(new Locale("en", "GB", "scotland")).variant("scouse")   => FAIL
+     * Verifier.verify(new Locale("en", "GB", "scotland")).variant("scotland") => PASS
+     * </pre>
      *
      * @param variant
-     * @return
+     *         the variant to compare against that of the value (may be {@literal null})
+     * @return A reference to this {@link LocaleVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      */
     public LocaleVerifier variant(final String variant) throws VerifierException {
         final Locale value = verification().getValue();
