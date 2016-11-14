@@ -65,13 +65,13 @@ public abstract class BaseSortableCollectionVerifier<E, T, V extends BaseSortabl
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).sortedBy(null)                                                   => FAIL
-     * Verifier.verify(*).not().sortedBy(null)                                             => FAIL
-     * Verifier.verify((Object[]) null).sortedBy(*)                                        => FAIL
-     * Verifier.verify(new Object[0]).sortedBy(*)                                          => PASS
-     * Verifier.verify(new Object[]{123}).sortedBy(*)                                      => PASS
-     * Verifier.verify(new Object[]{987, 654, 321}).sortedBy((o1, o2) -> o1.compareTo(o2)) => FAIL
-     * Verifier.verify(new Object[]{123, 456, 789}).sortedBy((o1, o2) -> o1.compareTo(o2)) => PASS
+     * Verifier.verify(*).sortedBy(null)                                                      =&gt; FAIL
+     * Verifier.verify(*).not().sortedBy(null)                                                =&gt; FAIL
+     * Verifier.verify((Object[]) null).sortedBy(*)                                           =&gt; FAIL
+     * Verifier.verify(new Object[0]).sortedBy(*)                                             =&gt; PASS
+     * Verifier.verify(new Object[]{123}).sortedBy(*)                                         =&gt; PASS
+     * Verifier.verify(new Object[]{987, 654, 321}).sortedBy((o1, o2) -&gt; o1.compareTo(o2)) =&gt; FAIL
+     * Verifier.verify(new Object[]{123, 456, 789}).sortedBy((o1, o2) -&gt; o1.compareTo(o2)) =&gt; PASS
      * </pre>
      *
      * @param comparator
@@ -100,13 +100,13 @@ public abstract class BaseSortableCollectionVerifier<E, T, V extends BaseSortabl
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).sortedBy(null, *)                                                   => FAIL
-     * Verifier.verify(*).not().sortedBy(null, *)                                             => FAIL
-     * Verifier.verify((Object[]) null).sortedBy(*, *)                                        => FAIL
-     * Verifier.verify(new Object[0]).sortedBy(*, *)                                          => PASS
-     * Verifier.verify(new Object[]{123}).sortedBy(*, *)                                      => PASS
-     * Verifier.verify(new Object[]{987, 654, 321}).sortedBy((o1, o2) -> o1.compareTo(o2), *) => FAIL
-     * Verifier.verify(new Object[]{123, 456, 789}).sortedBy((o1, o2) -> o1.compareTo(o2), *) => PASS
+     * Verifier.verify(*).sortedBy(null, *)                                                      =&gt; FAIL
+     * Verifier.verify(*).not().sortedBy(null, *)                                                =&gt; FAIL
+     * Verifier.verify((Object[]) null).sortedBy(*, *)                                           =&gt; FAIL
+     * Verifier.verify(new Object[0]).sortedBy(*, *)                                             =&gt; PASS
+     * Verifier.verify(new Object[]{123}).sortedBy(*, *)                                         =&gt; PASS
+     * Verifier.verify(new Object[]{987, 654, 321}).sortedBy((o1, o2) -&gt; o1.compareTo(o2), *) =&gt; FAIL
+     * Verifier.verify(new Object[]{123, 456, 789}).sortedBy((o1, o2) -&gt; o1.compareTo(o2), *) =&gt; PASS
      * </pre>
      *
      * @param comparator

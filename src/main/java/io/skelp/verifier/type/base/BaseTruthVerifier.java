@@ -74,9 +74,9 @@ public interface BaseTruthVerifier<T, V extends BaseTruthVerifier<T, V>> extends
      * {@literal null} value is <b>always</b> considered to be falsy.
      * </p>
      * <pre>
-     * Verifier.verify((Boolean) null).falsy() => PASS
-     * Verifier.verify(false).falsy()          => PASS
-     * Verifier.verify(true).falsy()           => FAIL
+     * Verifier.verify((Boolean) null).falsy() =&gt; PASS
+     * Verifier.verify(false).falsy()          =&gt; PASS
+     * Verifier.verify(true).falsy()           =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link BaseTruthVerifier} for chaining purposes.
@@ -96,9 +96,9 @@ public interface BaseTruthVerifier<T, V extends BaseTruthVerifier<T, V>> extends
      * {@literal null} value is <b>never</b> considered to be truthy.
      * </p>
      * <pre>
-     * Verifier.verify((Boolean) null).truthy() => FAIL
-     * Verifier.verify(false).truthy()          => FAIL
-     * Verifier.verify(true).truthy()           => PASS
+     * Verifier.verify((Boolean) null).truthy() =&gt; FAIL
+     * Verifier.verify(false).truthy()          =&gt; FAIL
+     * Verifier.verify(true).truthy()           =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link BaseTruthVerifier} for chaining purposes.

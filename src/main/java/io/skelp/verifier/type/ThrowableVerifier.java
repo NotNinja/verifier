@@ -64,11 +64,11 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * Verifies that the value is a checked exception.
      * </p>
      * <pre>
-     * Verifier.verify((Throwable) null).checked()           => FAIL
-     * Verifier.verify(new Exception()).checked()            => PASS
-     * Verifier.verify(new IOException()).checked()          => PASS
-     * Verifier.verify(new RuntimeException()).checked()     => FAIL
-     * Verifier.verify(new NullPointerException()).checked() => FAIL
+     * Verifier.verify((Throwable) null).checked()           =&gt; FAIL
+     * Verifier.verify(new Exception()).checked()            =&gt; PASS
+     * Verifier.verify(new IOException()).checked()          =&gt; PASS
+     * Verifier.verify(new RuntimeException()).checked()     =&gt; FAIL
+     * Verifier.verify(new NullPointerException()).checked() =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link ThrowableVerifier} for chaining purposes.
@@ -93,14 +93,14 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((Throwable) null).causedBy(*)                                                         => FAIL
-     * Verifier.verify(*).causedBy((Class) null)                                                             => FAIL
-     * Verifier.verify(new IOException()).causedBy(NullPointerException.class)                               => FAIL
-     * Verifier.verify(new IOException()).causedBy(IOException.class)                                        => PASS
-     * Verifier.verify(new NullPointerException(new IOException())).causedBy(IllegalArgumentException.class) => FAIL
-     * Verifier.verify(new NullPointerException(new IOException())).causedBy(RuntimeException.class)         => PASS
-     * Verifier.verify(new NullPointerException(new IOException())).causedBy(IOException.class)              => PASS
-     * Verifier.verify(*).causedBy(Throwable.class)                                                          => PASS
+     * Verifier.verify((Throwable) null).causedBy(*)                                                         =&gt; FAIL
+     * Verifier.verify(*).causedBy((Class) null)                                                             =&gt; FAIL
+     * Verifier.verify(new IOException()).causedBy(NullPointerException.class)                               =&gt; FAIL
+     * Verifier.verify(new IOException()).causedBy(IOException.class)                                        =&gt; PASS
+     * Verifier.verify(new NullPointerException(new IOException())).causedBy(IllegalArgumentException.class) =&gt; FAIL
+     * Verifier.verify(new NullPointerException(new IOException())).causedBy(RuntimeException.class)         =&gt; PASS
+     * Verifier.verify(new NullPointerException(new IOException())).causedBy(IOException.class)              =&gt; PASS
+     * Verifier.verify(*).causedBy(Throwable.class)                                                          =&gt; PASS
      * </pre>
      *
      * @param type
@@ -134,11 +134,11 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((Throwable) null).causedBy(*)                                  => FAIL
-     * Verifier.verify(*).causedBy((Throwable) null)                                  => FAIL
-     * Verifier.verify(ex = new IOException()).causedBy(new IOException())            => FAIL
-     * Verifier.verify(ex = new IOException()).causedBy(ex)                           => PASS
-     * Verifier.verify(new NullPointerException(ex = new IOException())).causedBy(ex) => PASS
+     * Verifier.verify((Throwable) null).causedBy(*)                                  =&gt; FAIL
+     * Verifier.verify(*).causedBy((Throwable) null)                                  =&gt; FAIL
+     * Verifier.verify(ex = new IOException()).causedBy(new IOException())            =&gt; FAIL
+     * Verifier.verify(ex = new IOException()).causedBy(ex)                           =&gt; PASS
+     * Verifier.verify(new NullPointerException(ex = new IOException())).causedBy(ex) =&gt; PASS
      * </pre>
      *
      * @param cause
@@ -167,11 +167,11 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((Throwable) null).causedBy(*, *)                                  => FAIL
-     * Verifier.verify(*).causedBy(null, *)                                              => FAIL
-     * Verifier.verify(ex = new IOException()).causedBy(new IOException(), *)            => FAIL
-     * Verifier.verify(ex = new IOException()).causedBy(ex, *)                           => PASS
-     * Verifier.verify(new NullPointerException(ex = new IOException())).causedBy(ex, *) => PASS
+     * Verifier.verify((Throwable) null).causedBy(*, *)                                  =&gt; FAIL
+     * Verifier.verify(*).causedBy(null, *)                                              =&gt; FAIL
+     * Verifier.verify(ex = new IOException()).causedBy(new IOException(), *)            =&gt; FAIL
+     * Verifier.verify(ex = new IOException()).causedBy(ex, *)                           =&gt; PASS
+     * Verifier.verify(new NullPointerException(ex = new IOException())).causedBy(ex, *) =&gt; PASS
      * </pre>
      *
      * @param cause
@@ -201,13 +201,13 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((Throwable) null).message(*)                                  => FAIL
-     * Verifier.verify(new Exception()).message(null)                                => PASS
-     * Verifier.verify(new Exception()).message("abc")                               => FAIL
-     * Verifier.verify(new Exception("abc")).message(null)                           => FAIL
-     * Verifier.verify(new Exception("abc")).message("def")                          => FAIL
-     * Verifier.verify(new Exception("abc")).message("abc")                          => PASS
-     * Verifier.verify(new Exception("abc")).message("ABC")                          => FAIL
+     * Verifier.verify((Throwable) null).message(*)                                  =&gt; FAIL
+     * Verifier.verify(new Exception()).message(null)                                =&gt; PASS
+     * Verifier.verify(new Exception()).message("abc")                               =&gt; FAIL
+     * Verifier.verify(new Exception("abc")).message(null)                           =&gt; FAIL
+     * Verifier.verify(new Exception("abc")).message("def")                          =&gt; FAIL
+     * Verifier.verify(new Exception("abc")).message("abc")                          =&gt; PASS
+     * Verifier.verify(new Exception("abc")).message("ABC")                          =&gt; FAIL
      * </pre>
      *
      * @param message
@@ -230,11 +230,11 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * Verifies that the value is a unchecked exception.
      * </p>
      * <pre>
-     * Verifier.verify((Throwable) null).unchecked()           => FAIL
-     * Verifier.verify(new Exception()).unchecked()            => FAIL
-     * Verifier.verify(new IOException()).unchecked()          => FAIL
-     * Verifier.verify(new RuntimeException()).unchecked()     => PASS
-     * Verifier.verify(new NullPointerException()).unchecked() => PASS
+     * Verifier.verify((Throwable) null).unchecked()           =&gt; FAIL
+     * Verifier.verify(new Exception()).unchecked()            =&gt; FAIL
+     * Verifier.verify(new IOException()).unchecked()          =&gt; FAIL
+     * Verifier.verify(new RuntimeException()).unchecked()     =&gt; PASS
+     * Verifier.verify(new NullPointerException()).unchecked() =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link ThrowableVerifier} for chaining purposes.

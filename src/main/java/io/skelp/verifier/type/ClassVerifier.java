@@ -66,9 +66,9 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * Verifies that the value has at least one annotation of any type.
      * </p>
      * <pre>
-     * Verifier.verify((Class) null).annotated()               => FAIL
-     * Verifier.verify(MyAnnotatedObject.class).annotated()    => PASS
-     * Verifier.verify(MyNonAnnotatedObject.class).annotated() => FAIL
+     * Verifier.verify((Class) null).annotated()               =&gt; FAIL
+     * Verifier.verify(MyAnnotatedObject.class).annotated()    =&gt; PASS
+     * Verifier.verify(MyNonAnnotatedObject.class).annotated() =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link ClassVerifier} for chaining purposes.
@@ -92,11 +92,11 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).annotatedWith(null)                          => FAIL
-     * Verifier.verify((Class) null).annotatedWith(*)                  => FAIL
-     * Verifier.verify(Object.class).annotatedWith(*)                  => FAIL
-     * Verifier.verify(Override.class).annotatedWith(Documented.class) => FAIL
-     * Verifier.verify(Override.class).annotatedWith(Retention.class)  => PASS
+     * Verifier.verify(*).annotatedWith(null)                          =&gt; FAIL
+     * Verifier.verify((Class) null).annotatedWith(*)                  =&gt; FAIL
+     * Verifier.verify(Object.class).annotatedWith(*)                  =&gt; FAIL
+     * Verifier.verify(Override.class).annotatedWith(Documented.class) =&gt; FAIL
+     * Verifier.verify(Override.class).annotatedWith(Retention.class)  =&gt; PASS
      * </pre>
      *
      * @param type
@@ -122,13 +122,13 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).annotatedWithAll()                                               => PASS
-     * Verifier.verify(*).annotatedWithAll((Class[]) null)                                 => FAIL
-     * Verifier.verify(*).annotatedWithAll(*, null)                                        => FAIL
-     * Verifier.verify((Class) null).annotatedWithAll(*)                                   => FAIL
-     * Verifier.verify(Object.class).annotatedWithAll(*)                                   => FAIL
-     * Verifier.verify(Override.class).annotatedWithAll(Retention.class, Documented.class) => FAIL
-     * Verifier.verify(Override.class).annotatedWithAll(Retention.class, Target.class)     => PASS
+     * Verifier.verify(*).annotatedWithAll()                                               =&gt; PASS
+     * Verifier.verify(*).annotatedWithAll((Class[]) null)                                 =&gt; FAIL
+     * Verifier.verify(*).annotatedWithAll(*, null)                                        =&gt; FAIL
+     * Verifier.verify((Class) null).annotatedWithAll(*)                                   =&gt; FAIL
+     * Verifier.verify(Object.class).annotatedWithAll(*)                                   =&gt; FAIL
+     * Verifier.verify(Override.class).annotatedWithAll(Retention.class, Documented.class) =&gt; FAIL
+     * Verifier.verify(Override.class).annotatedWithAll(Retention.class, Target.class)     =&gt; PASS
      * </pre>
      *
      * @param types
@@ -159,12 +159,12 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).annotatedWithAny()                                               => FAIL
-     * Verifier.verify(*).annotatedWithAny((Class[]) null)                                 => FAIL
-     * Verifier.verify((Class) null).annotatedWithAny(*)                                   => FAIL
-     * Verifier.verify(Object.class).annotatedWithAny(*)                                   => FAIL
-     * Verifier.verify(Override.class).annotatedWithAny(Retention.class, Documented.class) => PASS
-     * Verifier.verify(Override.class).annotatedWithAny(Retention.class, Target.class)     => PASS
+     * Verifier.verify(*).annotatedWithAny()                                               =&gt; FAIL
+     * Verifier.verify(*).annotatedWithAny((Class[]) null)                                 =&gt; FAIL
+     * Verifier.verify((Class) null).annotatedWithAny(*)                                   =&gt; FAIL
+     * Verifier.verify(Object.class).annotatedWithAny(*)                                   =&gt; FAIL
+     * Verifier.verify(Override.class).annotatedWithAny(Retention.class, Documented.class) =&gt; PASS
+     * Verifier.verify(Override.class).annotatedWithAny(Retention.class, Target.class)     =&gt; PASS
      * </pre>
      *
      * @param types
@@ -192,9 +192,9 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * Verifies that the value is an annotation.
      * </p>
      * <pre>
-     * Verifier.verify((Class) null).annotation()   => FAIL
-     * Verifier.verify(Override.class).annotation() => PASS
-     * Verifier.verify(Verifier.class).annotation() => FAIL
+     * Verifier.verify((Class) null).annotation()   =&gt; FAIL
+     * Verifier.verify(Override.class).annotation() =&gt; PASS
+     * Verifier.verify(Verifier.class).annotation() =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link ClassVerifier} for chaining purposes.
@@ -215,9 +215,9 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * Verifies that the value is an anonymous type.
      * </p>
      * <pre>
-     * Verifier.verify((Class) null).anonymous()                    => FAIL
-     * Verifier.verify(Object.class).anonymous()                    => FAIL
-     * Verifier.verify(new Serializable(){}.getClass()).anonymous() => PASS
+     * Verifier.verify((Class) null).anonymous()                    =&gt; FAIL
+     * Verifier.verify(Object.class).anonymous()                    =&gt; FAIL
+     * Verifier.verify(new Serializable(){}.getClass()).anonymous() =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link ClassVerifier} for chaining purposes.
@@ -238,9 +238,9 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * Verifies that the value is an array.
      * </p>
      * <pre>
-     * Verifier.verify((Class) null).array()   => FAIL
-     * Verifier.verify(Object.class).array()   => FAIL
-     * Verifier.verify(Object[].class).array() => PASS
+     * Verifier.verify((Class) null).array()   =&gt; FAIL
+     * Verifier.verify(Object.class).array()   =&gt; FAIL
+     * Verifier.verify(Object[].class).array() =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link ClassVerifier} for chaining purposes.
@@ -265,10 +265,10 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).assignableFrom(null)                      => FAIL
-     * Verifier.verify((Class) null).assignableFrom(*)              => FAIL
-     * Verifier.verify(Object.class).assignableFrom(Verifier.class) => PASS
-     * Verifier.verify(Verifier.class).assignableFrom(Object.class) => FAIL
+     * Verifier.verify(*).assignableFrom(null)                      =&gt; FAIL
+     * Verifier.verify((Class) null).assignableFrom(*)              =&gt; FAIL
+     * Verifier.verify(Object.class).assignableFrom(Verifier.class) =&gt; PASS
+     * Verifier.verify(Verifier.class).assignableFrom(Object.class) =&gt; FAIL
      * </pre>
      *
      * @param type
@@ -291,9 +291,9 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * Verifies that the value is an enum.
      * </p>
      * <pre>
-     * Verifier.verify((Class) null).enumeration()    => FAIL
-     * Verifier.verify(Object.class).enumeration()    => FAIL
-     * Verifier.verify(DayOfWeek.class).enumeration() => PASS
+     * Verifier.verify((Class) null).enumeration()    =&gt; FAIL
+     * Verifier.verify(Object.class).enumeration()    =&gt; FAIL
+     * Verifier.verify(DayOfWeek.class).enumeration() =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link ClassVerifier} for chaining purposes.
@@ -314,9 +314,9 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * Verifies that the value is an interface.
      * </p>
      * <pre>
-     * Verifier.verify((Class) null).interfacing()       => FAIL
-     * Verifier.verify(Object.class).interfacing()       => FAIL
-     * Verifier.verify(Serializable.class).interfacing() => PASS
+     * Verifier.verify((Class) null).interfacing()       =&gt; FAIL
+     * Verifier.verify(Object.class).interfacing()       =&gt; FAIL
+     * Verifier.verify(Serializable.class).interfacing() =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link ClassVerifier} for chaining purposes.
@@ -337,9 +337,9 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * Verifies that the value is nested.
      * </p>
      * <pre>
-     * Verifier.verify((Class) null).nested()           => FAIL
-     * Verifier.verify(Calendar.class).nested()         => FAIL
-     * Verifier.verify(Calendar.Builder.class).nested() => PASS
+     * Verifier.verify((Class) null).nested()           =&gt; FAIL
+     * Verifier.verify(Calendar.class).nested()         =&gt; FAIL
+     * Verifier.verify(Calendar.Builder.class).nested() =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link ClassVerifier} for chaining purposes.
@@ -360,10 +360,10 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * Verifies that the value is a primitive.
      * </p>
      * <pre>
-     * Verifier.verify((Class) null).primitive()  => FAIL
-     * Verifier.verify(Object.class).primitive()  => FAIL
-     * Verifier.verify(Boolean.class).primitive() => FAIL
-     * Verifier.verify(Boolean.TYPE).primitive()  => PASS
+     * Verifier.verify((Class) null).primitive()  =&gt; FAIL
+     * Verifier.verify(Object.class).primitive()  =&gt; FAIL
+     * Verifier.verify(Boolean.class).primitive() =&gt; FAIL
+     * Verifier.verify(Boolean.TYPE).primitive()  =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link ClassVerifier} for chaining purposes.
@@ -384,10 +384,10 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * Verifies that the value is a primitive or primitive wrapper.
      * </p>
      * <pre>
-     * Verifier.verify((Class) null).primitiveOrWrapper()  => FAIL
-     * Verifier.verify(Object.class).primitiveOrWrapper()  => FAIL
-     * Verifier.verify(Boolean.class).primitiveOrWrapper() => PASS
-     * Verifier.verify(Boolean.TYPE).primitiveOrWrapper()  => PASS
+     * Verifier.verify((Class) null).primitiveOrWrapper()  =&gt; FAIL
+     * Verifier.verify(Object.class).primitiveOrWrapper()  =&gt; FAIL
+     * Verifier.verify(Boolean.class).primitiveOrWrapper() =&gt; PASS
+     * Verifier.verify(Boolean.TYPE).primitiveOrWrapper()  =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link ClassVerifier} for chaining purposes.
@@ -408,10 +408,10 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * Verifies that the value is a primitive wrapper.
      * </p>
      * <pre>
-     * Verifier.verify((Class) null).primitiveWrapper()  => FAIL
-     * Verifier.verify(Object.class).primitiveWrapper()  => FAIL
-     * Verifier.verify(Boolean.class).primitiveWrapper() => PASS
-     * Verifier.verify(Boolean.TYPE).primitiveWrapper()  => FAIL
+     * Verifier.verify((Class) null).primitiveWrapper()  =&gt; FAIL
+     * Verifier.verify(Object.class).primitiveWrapper()  =&gt; FAIL
+     * Verifier.verify(Boolean.class).primitiveWrapper() =&gt; PASS
+     * Verifier.verify(Boolean.TYPE).primitiveWrapper()  =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link ClassVerifier} for chaining purposes.

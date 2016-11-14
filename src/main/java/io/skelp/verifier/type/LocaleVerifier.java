@@ -58,9 +58,9 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * Verifies that the value is an available {@code Locale}.
      * </p>
      * <pre>
-     * Verifier.verify((Locale) null).available()            => FAIL
-     * Verifier.verify(Locale.US).available()                => PASS
-     * Verifier.verify(new Locale("foo", "BAR")).available() => FAIL
+     * Verifier.verify((Locale) null).available()            =&gt; FAIL
+     * Verifier.verify(Locale.US).available()                =&gt; PASS
+     * Verifier.verify(new Locale("foo", "BAR")).available() =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link LocaleVerifier} for chaining purposes.
@@ -84,11 +84,11 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).country(null)                      => FAIL
-     * Verifier.verify((Locale) null).country(*)             => FAIL
-     * Verifier.verify(new Locale("en", "")).country("")     => PASS
-     * Verifier.verify(new Locale("en", "US")).country("GB") => FAIL
-     * Verifier.verify(new Locale("en", "US")).country("US") => PASS
+     * Verifier.verify(*).country(null)                      =&gt; FAIL
+     * Verifier.verify((Locale) null).country(*)             =&gt; FAIL
+     * Verifier.verify(new Locale("en", "")).country("")     =&gt; PASS
+     * Verifier.verify(new Locale("en", "US")).country("GB") =&gt; FAIL
+     * Verifier.verify(new Locale("en", "US")).country("US") =&gt; PASS
      * </pre>
      *
      * @param country
@@ -111,9 +111,9 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * Verifies that the value is the default {@code Locale}.
      * </p>
      * <pre>
-     * Verifier.verify((Locale) null).defaulting()            => FAIL
-     * Verifier.verify(Locale.getDefault()).defaulting()      => PASS
-     * Verifier.verify(new Locale("foo", "BAR")).defaulting() => FAIL
+     * Verifier.verify((Locale) null).defaulting()            =&gt; FAIL
+     * Verifier.verify(Locale.getDefault()).defaulting()      =&gt; PASS
+     * Verifier.verify(new Locale("foo", "BAR")).defaulting() =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link LocaleVerifier} for chaining purposes.
@@ -137,10 +137,10 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).language(null)                      => FAIL
-     * Verifier.verify((Locale) null).language(*)             => FAIL
-     * Verifier.verify(new Locale("en", "US")).language("fr") => FAIL
-     * Verifier.verify(new Locale("en", "US")).language("en") => PASS
+     * Verifier.verify(*).language(null)                      =&gt; FAIL
+     * Verifier.verify((Locale) null).language(*)             =&gt; FAIL
+     * Verifier.verify(new Locale("en", "US")).language("fr") =&gt; FAIL
+     * Verifier.verify(new Locale("en", "US")).language("en") =&gt; PASS
      * </pre>
      *
      * @param language
@@ -166,11 +166,11 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).script(null)                    => FAIL
-     * Verifier.verify((Locale) null).script(*)           => FAIL
-     * Verifier.verify(new Locale("en", "US")).script("") => PASS
-     * Verifier.verify(latinLocale).script("Arab")        => FAIL
-     * Verifier.verify(latinLocale).script("Latn")        => PASS
+     * Verifier.verify(*).script(null)                    =&gt; FAIL
+     * Verifier.verify((Locale) null).script(*)           =&gt; FAIL
+     * Verifier.verify(new Locale("en", "US")).script("") =&gt; PASS
+     * Verifier.verify(latinLocale).script("Arab")        =&gt; FAIL
+     * Verifier.verify(latinLocale).script("Latn")        =&gt; PASS
      * </pre>
      *
      * @param script
@@ -196,11 +196,11 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).variant(null)                                        => FAIL
-     * Verifier.verify((Locale) null).variant(*)                               => FAIL
-     * Verifier.verify(new Locale("en", "GB")).variant("")                     => PASS
-     * Verifier.verify(new Locale("en", "GB", "scotland")).variant("scouse")   => FAIL
-     * Verifier.verify(new Locale("en", "GB", "scotland")).variant("scotland") => PASS
+     * Verifier.verify(*).variant(null)                                        =&gt; FAIL
+     * Verifier.verify((Locale) null).variant(*)                               =&gt; FAIL
+     * Verifier.verify(new Locale("en", "GB")).variant("")                     =&gt; PASS
+     * Verifier.verify(new Locale("en", "GB", "scotland")).variant("scouse")   =&gt; FAIL
+     * Verifier.verify(new Locale("en", "GB", "scotland")).variant("scotland") =&gt; PASS
      * </pre>
      *
      * @param variant

@@ -137,12 +137,12 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * Verifies that the value contains only letters.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).alpha() => FAIL
-     * Verifier.verify("\0\r\n").alpha()      => FAIL
-     * Verifier.verify("123").alpha()         => FAIL
-     * Verifier.verify("abc").alpha()         => PASS
-     * Verifier.verify("abc123").alpha()      => FAIL
-     * Verifier.verify("a b c").alpha()       => FAIL
+     * Verifier.verify((String) null).alpha() =&gt; FAIL
+     * Verifier.verify("\0\r\n").alpha()      =&gt; FAIL
+     * Verifier.verify("123").alpha()         =&gt; FAIL
+     * Verifier.verify("abc").alpha()         =&gt; PASS
+     * Verifier.verify("abc123").alpha()      =&gt; FAIL
+     * Verifier.verify("a b c").alpha()       =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link StringVerifier} for chaining purposes.
@@ -169,11 +169,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * Verifies that the value contains only letters or space.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).alphaSpace() => FAIL
-     * Verifier.verify("\0 \r \n").alphaSpace()    => FAIL
-     * Verifier.verify("1 2 3").alphaSpace()       => FAIL
-     * Verifier.verify("a b c").alphaSpace()       => PASS
-     * Verifier.verify("a b c 1 2 3").alphaSpace() => FAIL
+     * Verifier.verify((String) null).alphaSpace() =&gt; FAIL
+     * Verifier.verify("\0 \r \n").alphaSpace()    =&gt; FAIL
+     * Verifier.verify("1 2 3").alphaSpace()       =&gt; FAIL
+     * Verifier.verify("a b c").alphaSpace()       =&gt; PASS
+     * Verifier.verify("a b c 1 2 3").alphaSpace() =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link StringVerifier} for chaining purposes.
@@ -200,12 +200,12 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * Verifies that the value contains only letters or digits.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).alphanumeric() => FAIL
-     * Verifier.verify("\0\r\n").alphanumeric()      => FAIL
-     * Verifier.verify("123").alphanumeric()         => PASS
-     * Verifier.verify("abc").alphanumeric()         => PASS
-     * Verifier.verify("abc123").alphanumeric()      => PASS
-     * Verifier.verify("a b c 1 2 3").alphanumeric() => FAIL
+     * Verifier.verify((String) null).alphanumeric() =&gt; FAIL
+     * Verifier.verify("\0\r\n").alphanumeric()      =&gt; FAIL
+     * Verifier.verify("123").alphanumeric()         =&gt; PASS
+     * Verifier.verify("abc").alphanumeric()         =&gt; PASS
+     * Verifier.verify("abc123").alphanumeric()      =&gt; PASS
+     * Verifier.verify("a b c 1 2 3").alphanumeric() =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link StringVerifier} for chaining purposes.
@@ -232,11 +232,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * Verifies that the value contains only letters or digits or space.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).alphanumericSpace() => FAIL
-     * Verifier.verify("\0 \r \n").alphanumericSpace()    => FAIL
-     * Verifier.verify("1 2 3").alphanumericSpace()       => PASS
-     * Verifier.verify("a b c").alphanumericSpace()       => PASS
-     * Verifier.verify("a b c 1 2 3").alphanumericSpace() => PASS
+     * Verifier.verify((String) null).alphanumericSpace() =&gt; FAIL
+     * Verifier.verify("\0 \r \n").alphanumericSpace()    =&gt; FAIL
+     * Verifier.verify("1 2 3").alphanumericSpace()       =&gt; PASS
+     * Verifier.verify("a b c").alphanumericSpace()       =&gt; PASS
+     * Verifier.verify("a b c 1 2 3").alphanumericSpace() =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link StringVerifier} for chaining purposes.
@@ -263,10 +263,10 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * Verifies that the value only contains ASCII printable characters.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).asciiPrintable() => FAIL
-     * Verifier.verify("\0 abc").asciiPrintable()      => FAIL
-     * Verifier.verify("abc ~ 123").asciiPrintable()   => PASS
-     * Verifier.verify("É १").asciiPrintable()         => FAIL
+     * Verifier.verify((String) null).asciiPrintable() =&gt; FAIL
+     * Verifier.verify("\0 abc").asciiPrintable()      =&gt; FAIL
+     * Verifier.verify("abc ~ 123").asciiPrintable()   =&gt; PASS
+     * Verifier.verify("É १").asciiPrintable()         =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link StringVerifier} for chaining purposes.
@@ -295,13 +295,13 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).blank() => PASS
-     * Verifier.verify("abc 123").blank()     => FAIL
-     * Verifier.verify("  abc 123  ").blank() => FAIL
-     * Verifier.verify("  \r\nabc").blank()   => FAIL
-     * Verifier.verify("").blank()            => PASS
-     * Verifier.verify("  ").blank()          => PASS
-     * Verifier.verify("\r\n\t").blank()      => PASS
+     * Verifier.verify((String) null).blank() =&gt; PASS
+     * Verifier.verify("abc 123").blank()     =&gt; FAIL
+     * Verifier.verify("  abc 123  ").blank() =&gt; FAIL
+     * Verifier.verify("  \r\nabc").blank()   =&gt; FAIL
+     * Verifier.verify("").blank()            =&gt; PASS
+     * Verifier.verify("  ").blank()          =&gt; PASS
+     * Verifier.verify("\r\n\t").blank()      =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link StringVerifier} for chaining purposes.
@@ -326,13 +326,13 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).contain(*)             => FAIL
-     * Verifier.verify(*).contain(null)                      => FAIL
-     * Verifier.verify(*).contain("")                        => PASS
-     * Verifier.verify("abc def 123").contain("ghi")         => FAIL
-     * Verifier.verify("abc def 123").contain("def")         => PASS
-     * Verifier.verify("abc def 123").contain("abc def 123") => PASS
-     * Verifier.verify("abc def 123").contain("DEF")         => FAIL
+     * Verifier.verify((String) null).contain(*)             =&gt; FAIL
+     * Verifier.verify(*).contain(null)                      =&gt; FAIL
+     * Verifier.verify(*).contain("")                        =&gt; PASS
+     * Verifier.verify("abc def 123").contain("ghi")         =&gt; FAIL
+     * Verifier.verify("abc def 123").contain("def")         =&gt; PASS
+     * Verifier.verify("abc def 123").contain("abc def 123") =&gt; PASS
+     * Verifier.verify("abc def 123").contain("DEF")         =&gt; FAIL
      * </pre>
      *
      * @param other
@@ -359,12 +359,12 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).containAll(*)            => FAIL
-     * Verifier.verify(*).containAll((CharSequence[]) null)    => PASS
-     * Verifier.verify("abc def 123").containAll("ghi", "456") => FAIL
-     * Verifier.verify("abc def 123").containAll("def", "456") => FAIL
-     * Verifier.verify("abc def 123").containAll("123", "def") => PASS
-     * Verifier.verify("abc def 123").containAll("123", "ABC") => FAIL
+     * Verifier.verify((String) null).containAll(*)            =&gt; FAIL
+     * Verifier.verify(*).containAll((CharSequence[]) null)    =&gt; PASS
+     * Verifier.verify("abc def 123").containAll("ghi", "456") =&gt; FAIL
+     * Verifier.verify("abc def 123").containAll("def", "456") =&gt; FAIL
+     * Verifier.verify("abc def 123").containAll("123", "def") =&gt; PASS
+     * Verifier.verify("abc def 123").containAll("123", "ABC") =&gt; FAIL
      * </pre>
      *
      * @param others
@@ -396,12 +396,12 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).containAllIgnoreCase(*)            => FAIL
-     * Verifier.verify(*).containAllIgnoreCase((CharSequence[]) null)    => PASS
-     * Verifier.verify("abc def 123").containAllIgnoreCase("ghi", "456") => FAIL
-     * Verifier.verify("abc def 123").containAllIgnoreCase("def", "456") => FAIL
-     * Verifier.verify("abc def 123").containAllIgnoreCase("123", "def") => PASS
-     * Verifier.verify("abc def 123").containAllIgnoreCase("123", "DEF") => PASS
+     * Verifier.verify((String) null).containAllIgnoreCase(*)            =&gt; FAIL
+     * Verifier.verify(*).containAllIgnoreCase((CharSequence[]) null)    =&gt; PASS
+     * Verifier.verify("abc def 123").containAllIgnoreCase("ghi", "456") =&gt; FAIL
+     * Verifier.verify("abc def 123").containAllIgnoreCase("def", "456") =&gt; FAIL
+     * Verifier.verify("abc def 123").containAllIgnoreCase("123", "def") =&gt; PASS
+     * Verifier.verify("abc def 123").containAllIgnoreCase("123", "DEF") =&gt; PASS
      * </pre>
      *
      * @param others
@@ -433,13 +433,13 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).containAny(*)            => FAIL
-     * Verifier.verify(*).containAny((CharSequence[]) null)    => FAIL
-     * Verifier.verify(*).containAny("", *)                    => PASS
-     * Verifier.verify("abc def 123").containAny("ghi", "456") => FAIL
-     * Verifier.verify("abc def 123").containAny("def", "456") => PASS
-     * Verifier.verify("abc def 123").containAny("123", "def") => PASS
-     * Verifier.verify("abc def 123").containAny("DEF", "456") => FAIL
+     * Verifier.verify((String) null).containAny(*)            =&gt; FAIL
+     * Verifier.verify(*).containAny((CharSequence[]) null)    =&gt; FAIL
+     * Verifier.verify(*).containAny("", *)                    =&gt; PASS
+     * Verifier.verify("abc def 123").containAny("ghi", "456") =&gt; FAIL
+     * Verifier.verify("abc def 123").containAny("def", "456") =&gt; PASS
+     * Verifier.verify("abc def 123").containAny("123", "def") =&gt; PASS
+     * Verifier.verify("abc def 123").containAny("DEF", "456") =&gt; FAIL
      * </pre>
      *
      * @param others
@@ -471,13 +471,13 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).containAnyIgnoreCase(*)            => FAIL
-     * Verifier.verify(*).containAnyIgnoreCase((CharSequence[]) null)    => FAIL
-     * Verifier.verify(*).containAnyIgnoreCase("", *)                    => PASS
-     * Verifier.verify("abc def 123").containAnyIgnoreCase("ghi", "456") => FAIL
-     * Verifier.verify("abc def 123").containAnyIgnoreCase("def", "456") => PASS
-     * Verifier.verify("abc def 123").containAnyIgnoreCase("123", "def") => PASS
-     * Verifier.verify("abc def 123").containAnyIgnoreCase("DEF", "456") => PASS
+     * Verifier.verify((String) null).containAnyIgnoreCase(*)            =&gt; FAIL
+     * Verifier.verify(*).containAnyIgnoreCase((CharSequence[]) null)    =&gt; FAIL
+     * Verifier.verify(*).containAnyIgnoreCase("", *)                    =&gt; PASS
+     * Verifier.verify("abc def 123").containAnyIgnoreCase("ghi", "456") =&gt; FAIL
+     * Verifier.verify("abc def 123").containAnyIgnoreCase("def", "456") =&gt; PASS
+     * Verifier.verify("abc def 123").containAnyIgnoreCase("123", "def") =&gt; PASS
+     * Verifier.verify("abc def 123").containAnyIgnoreCase("DEF", "456") =&gt; PASS
      * </pre>
      *
      * @param others
@@ -509,13 +509,13 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).containIgnoreCase(*)             => FAIL
-     * Verifier.verify(*).containIgnoreCase(null)                      => FAIL
-     * Verifier.verify(*).containIgnoreCase("")                        => PASS
-     * Verifier.verify("abc def 123").containIgnoreCase("ghi")         => FAIL
-     * Verifier.verify("abc def 123").containIgnoreCase("def")         => PASS
-     * Verifier.verify("abc def 123").containIgnoreCase("abc def 123") => PASS
-     * Verifier.verify("abc def 123").containIgnoreCase("DEF")         => PASS
+     * Verifier.verify((String) null).containIgnoreCase(*)             =&gt; FAIL
+     * Verifier.verify(*).containIgnoreCase(null)                      =&gt; FAIL
+     * Verifier.verify(*).containIgnoreCase("")                        =&gt; PASS
+     * Verifier.verify("abc def 123").containIgnoreCase("ghi")         =&gt; FAIL
+     * Verifier.verify("abc def 123").containIgnoreCase("def")         =&gt; PASS
+     * Verifier.verify("abc def 123").containIgnoreCase("abc def 123") =&gt; PASS
+     * Verifier.verify("abc def 123").containIgnoreCase("DEF")         =&gt; PASS
      * </pre>
      *
      * @param other
@@ -542,11 +542,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).empty() => PASS
-     * Verifier.verify("abc 123").empty()     => FAIL
-     * Verifier.verify("").empty()            => PASS
-     * Verifier.verify("  ").empty()          => FAIL
-     * Verifier.verify("\r\n\t").empty()      => FAIL
+     * Verifier.verify((String) null).empty() =&gt; PASS
+     * Verifier.verify("abc 123").empty()     =&gt; FAIL
+     * Verifier.verify("").empty()            =&gt; PASS
+     * Verifier.verify("  ").empty()          =&gt; FAIL
+     * Verifier.verify("\r\n\t").empty()      =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link StringVerifier} for chaining purposes.
@@ -571,13 +571,13 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).endWith(*)     => FAIL
-     * Verifier.verify(*).endWith(null)              => FAIL
-     * Verifier.verify(*).endWith("")                => PASS
-     * Verifier.verify("abc def").endWith("abc")     => FAIL
-     * Verifier.verify("abc def").endWith("def")     => PASS
-     * Verifier.verify("abc def").endWith("abc def") => PASS
-     * Verifier.verify("abc def").endWith("DEF")     => FAIL
+     * Verifier.verify((String) null).endWith(*)     =&gt; FAIL
+     * Verifier.verify(*).endWith(null)              =&gt; FAIL
+     * Verifier.verify(*).endWith("")                =&gt; PASS
+     * Verifier.verify("abc def").endWith("abc")     =&gt; FAIL
+     * Verifier.verify("abc def").endWith("def")     =&gt; PASS
+     * Verifier.verify("abc def").endWith("abc def") =&gt; PASS
+     * Verifier.verify("abc def").endWith("DEF")     =&gt; FAIL
      * </pre>
      *
      * @param other
@@ -604,12 +604,12 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).endWithAny(*)         => FAIL
-     * Verifier.verify(*).endWithAny((CharSequence[]) null) => FAIL
-     * Verifier.verify(*).endWithAny("", *)                 => PASS
-     * Verifier.verify("abc def").endWithAny("ghi", "123")  => FAIL
-     * Verifier.verify("abc def").endWithAny("def", "123")  => PASS
-     * Verifier.verify("abc def").endWithAny("DEF", "123")  => FAIL
+     * Verifier.verify((String) null).endWithAny(*)         =&gt; FAIL
+     * Verifier.verify(*).endWithAny((CharSequence[]) null) =&gt; FAIL
+     * Verifier.verify(*).endWithAny("", *)                 =&gt; PASS
+     * Verifier.verify("abc def").endWithAny("ghi", "123")  =&gt; FAIL
+     * Verifier.verify("abc def").endWithAny("def", "123")  =&gt; PASS
+     * Verifier.verify("abc def").endWithAny("DEF", "123")  =&gt; FAIL
      * </pre>
      *
      * @param others
@@ -641,12 +641,12 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).endWithAnyIgnoreCase(*)         => FAIL
-     * Verifier.verify(*).endWithAnyIgnoreCase((CharSequence[]) null) => FAIL
-     * Verifier.verify(*).endWithAnyIgnoreCase("", *)                 => PASS
-     * Verifier.verify("abc def").endWithAnyIgnoreCase("ghi", "123")  => FAIL
-     * Verifier.verify("abc def").endWithAnyIgnoreCase("def", "123")  => PASS
-     * Verifier.verify("abc def").endWithAnyIgnoreCase("DEF", "123")  => PASS
+     * Verifier.verify((String) null).endWithAnyIgnoreCase(*)         =&gt; FAIL
+     * Verifier.verify(*).endWithAnyIgnoreCase((CharSequence[]) null) =&gt; FAIL
+     * Verifier.verify(*).endWithAnyIgnoreCase("", *)                 =&gt; PASS
+     * Verifier.verify("abc def").endWithAnyIgnoreCase("ghi", "123")  =&gt; FAIL
+     * Verifier.verify("abc def").endWithAnyIgnoreCase("def", "123")  =&gt; PASS
+     * Verifier.verify("abc def").endWithAnyIgnoreCase("DEF", "123")  =&gt; PASS
      * </pre>
      *
      * @param others
@@ -678,13 +678,13 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).endWithIgnoreCase(*)     => FAIL
-     * Verifier.verify(*).endWithIgnoreCase(null)              => FAIL
-     * Verifier.verify(*).endWithIgnoreCase("")                => PASS
-     * Verifier.verify("abc def").endWithIgnoreCase("abc")     => FAIL
-     * Verifier.verify("abc def").endWithIgnoreCase("def")     => PASS
-     * Verifier.verify("abc def").endWithIgnoreCase("abc def") => PASS
-     * Verifier.verify("abc def").endWithIgnoreCase("DEF")     => PASS
+     * Verifier.verify((String) null).endWithIgnoreCase(*)     =&gt; FAIL
+     * Verifier.verify(*).endWithIgnoreCase(null)              =&gt; FAIL
+     * Verifier.verify(*).endWithIgnoreCase("")                =&gt; PASS
+     * Verifier.verify("abc def").endWithIgnoreCase("abc")     =&gt; FAIL
+     * Verifier.verify("abc def").endWithIgnoreCase("def")     =&gt; PASS
+     * Verifier.verify("abc def").endWithIgnoreCase("abc def") =&gt; PASS
+     * Verifier.verify("abc def").endWithIgnoreCase("DEF")     =&gt; PASS
      * </pre>
      *
      * @param other
@@ -711,13 +711,13 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).equalToAnyIgnoreCase()                                => FAIL
-     * Verifier.verify(*).equalToAnyIgnoreCase((CharSequence[]) null)           => FAIL
-     * Verifier.verify((String) null).equalToAnyIgnoreCase("ghi", "def", null)  => PASS
-     * Verifier.verify((String) null).equalToAnyIgnoreCase("ghi", "def", "abc") => FAIL
-     * Verifier.verify("abc").equalToAnyIgnoreCase("ghi", "def", null)          => FAIL
-     * Verifier.verify("abc").equalToAnyIgnoreCase("ghi", "def", "abc")         => PASS
-     * Verifier.verify("abc").equalToAnyIgnoreCase("GHI", "DEF", "ABC")         => PASS
+     * Verifier.verify(*).equalToAnyIgnoreCase()                                =&gt; FAIL
+     * Verifier.verify(*).equalToAnyIgnoreCase((CharSequence[]) null)           =&gt; FAIL
+     * Verifier.verify((String) null).equalToAnyIgnoreCase("ghi", "def", null)  =&gt; PASS
+     * Verifier.verify((String) null).equalToAnyIgnoreCase("ghi", "def", "abc") =&gt; FAIL
+     * Verifier.verify("abc").equalToAnyIgnoreCase("ghi", "def", null)          =&gt; FAIL
+     * Verifier.verify("abc").equalToAnyIgnoreCase("ghi", "def", "abc")         =&gt; PASS
+     * Verifier.verify("abc").equalToAnyIgnoreCase("GHI", "DEF", "ABC")         =&gt; PASS
      * </pre>
      *
      * @param others
@@ -750,12 +750,12 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).equalToIgnoreCase(null)  => PASS
-     * Verifier.verify((String) null).equalToIgnoreCase("abc") => FAIL
-     * Verifier.verify("abc").equalToIgnoreCase(null)          => FAIL
-     * Verifier.verify("abc").equalToIgnoreCase("abc")         => PASS
-     * Verifier.verify("abc").equalToIgnoreCase("ABC")         => PASS
-     * Verifier.verify("abc").equalToIgnoreCase("def")         => FAIL
+     * Verifier.verify((String) null).equalToIgnoreCase(null)  =&gt; PASS
+     * Verifier.verify((String) null).equalToIgnoreCase("abc") =&gt; FAIL
+     * Verifier.verify("abc").equalToIgnoreCase(null)          =&gt; FAIL
+     * Verifier.verify("abc").equalToIgnoreCase("abc")         =&gt; PASS
+     * Verifier.verify("abc").equalToIgnoreCase("ABC")         =&gt; PASS
+     * Verifier.verify("abc").equalToIgnoreCase("def")         =&gt; FAIL
      * </pre>
      *
      * @param other
@@ -789,12 +789,12 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * Verifies that the value contains only lower case letters.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).lowerCase() => FAIL
-     * Verifier.verify("ABC").lowerCase()         => FAIL
-     * Verifier.verify("abcDEF").lowerCase()      => FAIL
-     * Verifier.verify("abc123").lowerCase()      => FAIL
-     * Verifier.verify("abc").lowerCase()         => PASS
-     * Verifier.verify("a b c").lowerCase()       => FAIL
+     * Verifier.verify((String) null).lowerCase() =&gt; FAIL
+     * Verifier.verify("ABC").lowerCase()         =&gt; FAIL
+     * Verifier.verify("abcDEF").lowerCase()      =&gt; FAIL
+     * Verifier.verify("abc123").lowerCase()      =&gt; FAIL
+     * Verifier.verify("abc").lowerCase()         =&gt; PASS
+     * Verifier.verify("a b c").lowerCase()       =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link StringVerifier} for chaining purposes.
@@ -824,11 +824,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).match(*)       => FAIL
-     * Verifier.verify(*).match((CharSequence) null) => FAIL
-     * Verifier.verify(*).match(".*")                => PASS
-     * Verifier.verify("foo").match("fo{2}")         => PASS
-     * Verifier.verify("food").match("fo{2}")        => FAIL
+     * Verifier.verify((String) null).match(*)       =&gt; FAIL
+     * Verifier.verify(*).match((CharSequence) null) =&gt; FAIL
+     * Verifier.verify(*).match(".*")                =&gt; PASS
+     * Verifier.verify("foo").match("fo{2}")         =&gt; PASS
+     * Verifier.verify("food").match("fo{2}")        =&gt; FAIL
      * </pre>
      *
      * @param regex
@@ -855,11 +855,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).match(*)                 => FAIL
-     * Verifier.verify(*).match((Pattern) null)                => FAIL
-     * Verifier.verify(*).match(Pattern.compile(".*"))         => PASS
-     * Verifier.verify("foo").match(Pattern.compile("fo{2}"))  => PASS
-     * Verifier.verify("food").match(Pattern.compile("fo{2}")) => FAIL
+     * Verifier.verify((String) null).match(*)                 =&gt; FAIL
+     * Verifier.verify(*).match((Pattern) null)                =&gt; FAIL
+     * Verifier.verify(*).match(Pattern.compile(".*"))         =&gt; PASS
+     * Verifier.verify("foo").match(Pattern.compile("fo{2}"))  =&gt; PASS
+     * Verifier.verify("food").match(Pattern.compile("fo{2}")) =&gt; FAIL
      * </pre>
      *
      * @param pattern
@@ -883,12 +883,12 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * Verifies that the value contains only digits.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).numeric() => FAIL
-     * Verifier.verify("\0\r\n").numeric()      => FAIL
-     * Verifier.verify("123").numeric()         => PASS
-     * Verifier.verify("abc").numeric()         => FAIL
-     * Verifier.verify("abc123").numeric()      => FAIL
-     * Verifier.verify("1 2 3").numeric()       => FAIL
+     * Verifier.verify((String) null).numeric() =&gt; FAIL
+     * Verifier.verify("\0\r\n").numeric()      =&gt; FAIL
+     * Verifier.verify("123").numeric()         =&gt; PASS
+     * Verifier.verify("abc").numeric()         =&gt; FAIL
+     * Verifier.verify("abc123").numeric()      =&gt; FAIL
+     * Verifier.verify("1 2 3").numeric()       =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link StringVerifier} for chaining purposes.
@@ -915,11 +915,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * Verifies that the value contains only digits or space.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).numericSpace() => FAIL
-     * Verifier.verify("\0 \r \n").numericSpace()    => FAIL
-     * Verifier.verify("1 2 3").numericSpace()       => PASS
-     * Verifier.verify("a b c").numericSpace()       => FAIL
-     * Verifier.verify("a b c 1 2 3").numericSpace() => FAIL
+     * Verifier.verify((String) null).numericSpace() =&gt; FAIL
+     * Verifier.verify("\0 \r \n").numericSpace()    =&gt; FAIL
+     * Verifier.verify("1 2 3").numericSpace()       =&gt; PASS
+     * Verifier.verify("a b c").numericSpace()       =&gt; FAIL
+     * Verifier.verify("a b c 1 2 3").numericSpace() =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link StringVerifier} for chaining purposes.
@@ -949,13 +949,13 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).sizeOf(1) => FAIL
-     * Verifier.verify((String) null).sizeOf(0) => PASS
-     * Verifier.verify("").sizeOf(1)            => FAIL
-     * Verifier.verify("").sizeOf(0)            => PASS
-     * Verifier.verify(" ").sizeOf(1)           => PASS
-     * Verifier.verify("abc 123").sizeOf(0)     => FAIL
-     * Verifier.verify("abc 123").sizeOf(7)     => PASS
+     * Verifier.verify((String) null).sizeOf(1) =&gt; FAIL
+     * Verifier.verify((String) null).sizeOf(0) =&gt; PASS
+     * Verifier.verify("").sizeOf(1)            =&gt; FAIL
+     * Verifier.verify("").sizeOf(0)            =&gt; PASS
+     * Verifier.verify(" ").sizeOf(1)           =&gt; PASS
+     * Verifier.verify("abc 123").sizeOf(0)     =&gt; FAIL
+     * Verifier.verify("abc 123").sizeOf(7)     =&gt; PASS
      * </pre>
      *
      * @param size
@@ -981,13 +981,13 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).startWith(*)     => FAIL
-     * Verifier.verify(*).startWith(null)              => FAIL
-     * Verifier.verify(*).startWith("")                => PASS
-     * Verifier.verify("abc def").startWith("abc")     => PASS
-     * Verifier.verify("abc def").startWith("def")     => FAIL
-     * Verifier.verify("abc def").startWith("abc def") => PASS
-     * Verifier.verify("abc def").startWith("ABC")     => FAIL
+     * Verifier.verify((String) null).startWith(*)     =&gt; FAIL
+     * Verifier.verify(*).startWith(null)              =&gt; FAIL
+     * Verifier.verify(*).startWith("")                =&gt; PASS
+     * Verifier.verify("abc def").startWith("abc")     =&gt; PASS
+     * Verifier.verify("abc def").startWith("def")     =&gt; FAIL
+     * Verifier.verify("abc def").startWith("abc def") =&gt; PASS
+     * Verifier.verify("abc def").startWith("ABC")     =&gt; FAIL
      * </pre>
      *
      * @param other
@@ -1014,12 +1014,12 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).startWithAny(*)         => FAIL
-     * Verifier.verify(*).startWithAny((CharSequence[]) null) => FAIL
-     * Verifier.verify(*).startWithAny("", *)                 => PASS
-     * Verifier.verify("abc def").startWithAny("ghi", "123")  => FAIL
-     * Verifier.verify("abc def").startWithAny("abc", "123")  => PASS
-     * Verifier.verify("abc def").startWithAny("ABC", "123")  => FAIL
+     * Verifier.verify((String) null).startWithAny(*)         =&gt; FAIL
+     * Verifier.verify(*).startWithAny((CharSequence[]) null) =&gt; FAIL
+     * Verifier.verify(*).startWithAny("", *)                 =&gt; PASS
+     * Verifier.verify("abc def").startWithAny("ghi", "123")  =&gt; FAIL
+     * Verifier.verify("abc def").startWithAny("abc", "123")  =&gt; PASS
+     * Verifier.verify("abc def").startWithAny("ABC", "123")  =&gt; FAIL
      * </pre>
      *
      * @param others
@@ -1051,12 +1051,12 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).startWithAnyIgnoreCase(*)         => FAIL
-     * Verifier.verify(*).startWithAnyIgnoreCase((CharSequence[]) null) => FAIL
-     * Verifier.verify(*).startWithAnyIgnoreCase("", *)                 => PASS
-     * Verifier.verify("abc def").startWithAnyIgnoreCase("ghi", "123")  => FAIL
-     * Verifier.verify("abc def").startWithAnyIgnoreCase("abc", "123")  => PASS
-     * Verifier.verify("abc def").startWithAnyIgnoreCase("ABC", "123")  => PASS
+     * Verifier.verify((String) null).startWithAnyIgnoreCase(*)         =&gt; FAIL
+     * Verifier.verify(*).startWithAnyIgnoreCase((CharSequence[]) null) =&gt; FAIL
+     * Verifier.verify(*).startWithAnyIgnoreCase("", *)                 =&gt; PASS
+     * Verifier.verify("abc def").startWithAnyIgnoreCase("ghi", "123")  =&gt; FAIL
+     * Verifier.verify("abc def").startWithAnyIgnoreCase("abc", "123")  =&gt; PASS
+     * Verifier.verify("abc def").startWithAnyIgnoreCase("ABC", "123")  =&gt; PASS
      * </pre>
      *
      * @param others
@@ -1088,13 +1088,13 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).startWithIgnoreCase(*)     => FAIL
-     * Verifier.verify(*).startWithIgnoreCase(null)              => FAIL
-     * Verifier.verify(*).startWithIgnoreCase("")                => PASS
-     * Verifier.verify("abc def").startWithIgnoreCase("abc")     => PASS
-     * Verifier.verify("abc def").startWithIgnoreCase("def")     => FAIL
-     * Verifier.verify("abc def").startWithIgnoreCase("abc def") => PASS
-     * Verifier.verify("abc def").startWithIgnoreCase("ABC")     => PASS
+     * Verifier.verify((String) null).startWithIgnoreCase(*)     =&gt; FAIL
+     * Verifier.verify(*).startWithIgnoreCase(null)              =&gt; FAIL
+     * Verifier.verify(*).startWithIgnoreCase("")                =&gt; PASS
+     * Verifier.verify("abc def").startWithIgnoreCase("abc")     =&gt; PASS
+     * Verifier.verify("abc def").startWithIgnoreCase("def")     =&gt; FAIL
+     * Verifier.verify("abc def").startWithIgnoreCase("abc def") =&gt; PASS
+     * Verifier.verify("abc def").startWithIgnoreCase("ABC")     =&gt; PASS
      * </pre>
      *
      * @param other
@@ -1128,12 +1128,12 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * Verifies that the value contains only upper case letters.
      * </p>
      * <pre>
-     * Verifier.verify((String) null).upperCase() => FAIL
-     * Verifier.verify("abc").upperCase()         => FAIL
-     * Verifier.verify("abcDEF").upperCase()      => FAIL
-     * Verifier.verify("ABC123").upperCase()      => FAIL
-     * Verifier.verify("ABC").upperCase()         => PASS
-     * Verifier.verify("A B C").upperCase()       => FAIL
+     * Verifier.verify((String) null).upperCase() =&gt; FAIL
+     * Verifier.verify("abc").upperCase()         =&gt; FAIL
+     * Verifier.verify("abcDEF").upperCase()      =&gt; FAIL
+     * Verifier.verify("ABC123").upperCase()      =&gt; FAIL
+     * Verifier.verify("ABC").upperCase()         =&gt; PASS
+     * Verifier.verify("A B C").upperCase()       =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link StringVerifier} for chaining purposes.

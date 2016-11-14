@@ -45,12 +45,12 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(null).equalTo(null)   => PASS
-     * Verifier.verify(null).equalTo("abc")  => FAIL
-     * Verifier.verify("abc").equalTo(null)  => FAIL
-     * Verifier.verify("abc").equalTo("abc") => PASS
-     * Verifier.verify("abc").equalTo("ABC") => FAIL
-     * Verifier.verify("abc").equalTo("def") => FAIL
+     * Verifier.verify(null).equalTo(null)   =&gt; PASS
+     * Verifier.verify(null).equalTo("abc")  =&gt; FAIL
+     * Verifier.verify("abc").equalTo(null)  =&gt; FAIL
+     * Verifier.verify("abc").equalTo("abc") =&gt; PASS
+     * Verifier.verify("abc").equalTo("ABC") =&gt; FAIL
+     * Verifier.verify("abc").equalTo("def") =&gt; FAIL
      * </pre>
      *
      * @param other
@@ -76,12 +76,12 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(null, *).equalTo(null)   => PASS
-     * Verifier.verify(null, *).equalTo("abc")  => FAIL
-     * Verifier.verify("abc", *).equalTo(null)  => FAIL
-     * Verifier.verify("abc", *).equalTo("abc") => PASS
-     * Verifier.verify("abc", *).equalTo("ABC") => FAIL
-     * Verifier.verify("abc", *).equalTo("def") => FAIL
+     * Verifier.verify(null, *).equalTo(null)   =&gt; PASS
+     * Verifier.verify(null, *).equalTo("abc")  =&gt; FAIL
+     * Verifier.verify("abc", *).equalTo(null)  =&gt; FAIL
+     * Verifier.verify("abc", *).equalTo("abc") =&gt; PASS
+     * Verifier.verify("abc", *).equalTo("ABC") =&gt; FAIL
+     * Verifier.verify("abc", *).equalTo("def") =&gt; FAIL
      * </pre>
      *
      * @param other
@@ -104,13 +104,13 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).equalToAny()                         => FAIL
-     * Verifier.verify(*).equalToAny((Object[]) null)          => FAIL
-     * Verifier.verify(null).equalToAny("ghi", "def", null)    => PASS
-     * Verifier.verify(null).equalToAny("ghi", "def", "abc")   => FAIL
-     * Verifier.verify("abc").equalToAny("ghi", "def", null)   => FAIL
-     * Verifier.verify("abc").equalToAny("ghi", "def", "abc")  => PASS
-     * Verifier.verify("abc").equalToAny("GHI", "DEF", "ABC")  => FAIL
+     * Verifier.verify(*).equalToAny()                         =&gt; FAIL
+     * Verifier.verify(*).equalToAny((Object[]) null)          =&gt; FAIL
+     * Verifier.verify(null).equalToAny("ghi", "def", null)    =&gt; PASS
+     * Verifier.verify(null).equalToAny("ghi", "def", "abc")   =&gt; FAIL
+     * Verifier.verify("abc").equalToAny("ghi", "def", null)   =&gt; FAIL
+     * Verifier.verify("abc").equalToAny("ghi", "def", "abc")  =&gt; PASS
+     * Verifier.verify("abc").equalToAny("GHI", "DEF", "ABC")  =&gt; FAIL
      * </pre>
      *
      * @param others
@@ -130,11 +130,11 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(null).hashedAs(*)   => FAIL
-     * Verifier.verify(123).hashedAs(0)    => FAIL
-     * Verifier.verify(123).hashedAs(321)  => FAIL
-     * Verifier.verify(123).hashedAs(123)  => PASS
-     * Verifier.verify(123).hashedAs(-123) => FAIL
+     * Verifier.verify(null).hashedAs(*)   =&gt; FAIL
+     * Verifier.verify(123).hashedAs(0)    =&gt; FAIL
+     * Verifier.verify(123).hashedAs(321)  =&gt; FAIL
+     * Verifier.verify(123).hashedAs(123)  =&gt; PASS
+     * Verifier.verify(123).hashedAs(-123) =&gt; FAIL
      * </pre>
      *
      * @param hashCode
@@ -154,11 +154,11 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).instanceOf(null)                           => FAIL
-     * Verifier.verify(*).instanceOf(Object.class)                   => PASS
-     * Verifier.verify(null).instanceOf(*)                           => FAIL
-     * Verifier.verify(new ArrayList()).instanceOf(Collection.class) => PASS
-     * Verifier.verify(new ArrayList()).instanceOf(Map.class)        => FAIL
+     * Verifier.verify(*).instanceOf(null)                           =&gt; FAIL
+     * Verifier.verify(*).instanceOf(Object.class)                   =&gt; PASS
+     * Verifier.verify(null).instanceOf(*)                           =&gt; FAIL
+     * Verifier.verify(new ArrayList()).instanceOf(Collection.class) =&gt; PASS
+     * Verifier.verify(new ArrayList()).instanceOf(Map.class)        =&gt; FAIL
      * </pre>
      *
      * @param cls
@@ -178,13 +178,13 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).instanceOfAll()                                                            => PASS
-     * Verifier.verify(*).instanceOfAll((Object[]) null)                                             => PASS
-     * Verifier.verify(*).instanceOfAll(Object.class)                                                => PASS
-     * Verifier.verify(*).instanceOfAll(*, null)                                                     => FAIL
-     * Verifier.verify(null).instanceOfAll(*)                                                        => FAIL
-     * Verifier.verify(new ArrayList()).instanceOfAll(ArrayList.class, List.class, Collection.class) => PASS
-     * Verifier.verify(new ArrayList()).instanceOfAll(ArrayList.class, Map.class, Collection.class)  => FAIL
+     * Verifier.verify(*).instanceOfAll()                                                            =&gt; PASS
+     * Verifier.verify(*).instanceOfAll((Object[]) null)                                             =&gt; PASS
+     * Verifier.verify(*).instanceOfAll(Object.class)                                                =&gt; PASS
+     * Verifier.verify(*).instanceOfAll(*, null)                                                     =&gt; FAIL
+     * Verifier.verify(null).instanceOfAll(*)                                                        =&gt; FAIL
+     * Verifier.verify(new ArrayList()).instanceOfAll(ArrayList.class, List.class, Collection.class) =&gt; PASS
+     * Verifier.verify(new ArrayList()).instanceOfAll(ArrayList.class, Map.class, Collection.class)  =&gt; FAIL
      * </pre>
      *
      * @param classes
@@ -205,12 +205,12 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).instanceOfAny()                                                         => FAIL
-     * Verifier.verify(*).instanceOfAny((Object[]) null)                                          => FAIL
-     * Verifier.verify(*).instanceOfAny(*, Object.class)                                          => PASS
-     * Verifier.verify(null).instanceOfAny(*)                                                     => FAIL
-     * Verifier.verify(new ArrayList()).instanceOfAny(Boolean.class, Map.class, Collection.class) => PASS
-     * Verifier.verify(new ArrayList()).instanceOfAny(Boolean.class, Map.class, URI.class)        => FAIL
+     * Verifier.verify(*).instanceOfAny()                                                         =&gt; FAIL
+     * Verifier.verify(*).instanceOfAny((Object[]) null)                                          =&gt; FAIL
+     * Verifier.verify(*).instanceOfAny(*, Object.class)                                          =&gt; PASS
+     * Verifier.verify(null).instanceOfAny(*)                                                     =&gt; FAIL
+     * Verifier.verify(new ArrayList()).instanceOfAny(Boolean.class, Map.class, Collection.class) =&gt; PASS
+     * Verifier.verify(new ArrayList()).instanceOfAny(Boolean.class, Map.class, URI.class)        =&gt; FAIL
      * </pre>
      *
      * @param classes
@@ -232,10 +232,10 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * itself.
      * </p>
      * <pre>
-     * Verifier.verify(null).not().nulled()               => FAIL
-     * Verifier.verify(new Object()).not().nulled()       => PASS
-     * Verifier.verify(null).not().not().nulled()         => PASS
-     * Verifier.verify(new Object()).not().not().nulled() => FAIL
+     * Verifier.verify(null).not().nulled()               =&gt; FAIL
+     * Verifier.verify(new Object()).not().nulled()       =&gt; PASS
+     * Verifier.verify(null).not().not().nulled()         =&gt; PASS
+     * Verifier.verify(new Object()).not().not().nulled() =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link CustomVerifier} for chaining purposes.
@@ -247,8 +247,8 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * Verifies that the value {@literal null}.
      * </p>
      * <pre>
-     * Verifier.verify(null).nulled()         => PASS
-     * Verifier.verify(new Object()).nulled() => FAIL
+     * Verifier.verify(null).nulled()         =&gt; PASS
+     * Verifier.verify(new Object()).nulled() =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link CustomVerifier} for chaining purposes.
@@ -265,11 +265,11 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(null).sameAs(null)            => PASS
-     * Verifier.verify(null).sameAs(123)             => FAIL
-     * Verifier.verify(123).sameAs(null)             => FAIL
-     * Verifier.verify(123).sameAs(123)              => PASS
-     * Verifier.verify(213).sameAs(new Integer(123)) => FAIL
+     * Verifier.verify(null).sameAs(null)            =&gt; PASS
+     * Verifier.verify(null).sameAs(123)             =&gt; FAIL
+     * Verifier.verify(123).sameAs(null)             =&gt; FAIL
+     * Verifier.verify(123).sameAs(123)              =&gt; PASS
+     * Verifier.verify(213).sameAs(new Integer(123)) =&gt; FAIL
      * </pre>
      *
      * @param other
@@ -294,11 +294,11 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(null, *).sameAs(null)            => PASS
-     * Verifier.verify(null, *).sameAs(123)             => FAIL
-     * Verifier.verify(123, *).sameAs(null)             => FAIL
-     * Verifier.verify(123, *).sameAs(123)              => PASS
-     * Verifier.verify(213, *).sameAs(new Integer(123)) => FAIL
+     * Verifier.verify(null, *).sameAs(null)            =&gt; PASS
+     * Verifier.verify(null, *).sameAs(123)             =&gt; FAIL
+     * Verifier.verify(123, *).sameAs(null)             =&gt; FAIL
+     * Verifier.verify(123, *).sameAs(123)              =&gt; PASS
+     * Verifier.verify(213, *).sameAs(new Integer(123)) =&gt; FAIL
      * </pre>
      *
      * @param other
@@ -320,13 +320,13 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).sameAsAny()                                                       => FAIL
-     * Verifier.verify(*).sameAsAny((Object[]) null)                                        => FAIL
-     * Verifier.verify(null).sameAsAny(789, 456, null)                                      => PASS
-     * Verifier.verify(null).sameAsAny(789, 456, 123)                                       => FAIL
-     * Verifier.verify(123).sameAsAny(789, 456, null)                                       => FAIL
-     * Verifier.verify(123).sameAsAny(789, 456, 123)                                        => PASS
-     * Verifier.verify(123).sameAsAny(new Integer(789), new Integer(456), new Integer(123)) => FAIL
+     * Verifier.verify(*).sameAsAny()                                                       =&gt; FAIL
+     * Verifier.verify(*).sameAsAny((Object[]) null)                                        =&gt; FAIL
+     * Verifier.verify(null).sameAsAny(789, 456, null)                                      =&gt; PASS
+     * Verifier.verify(null).sameAsAny(789, 456, 123)                                       =&gt; FAIL
+     * Verifier.verify(123).sameAsAny(789, 456, null)                                       =&gt; FAIL
+     * Verifier.verify(123).sameAsAny(789, 456, 123)                                        =&gt; PASS
+     * Verifier.verify(123).sameAsAny(new Integer(789), new Integer(456), new Integer(123)) =&gt; FAIL
      * </pre>
      *
      * @param others
@@ -342,11 +342,11 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * Verifies that the value passes the {@code assertion} provided.
      * </p>
      * <pre>
-     * Verifier.verify(*).that(null)                                                  => FAIL
-     * Verifier.verify(*).not().that(null)                                            => FAIL
-     * Verifier.verify(null).that(value -> "Mork".equals(value))                      => FAIL
-     * Verifier.verify(new User("Mork")).that(user -> "Mork".equals(user.getName()))  => PASS
-     * Verifier.verify(new User("Mindy")).that(user -> "Mork".equals(user.getName())) => FAIL
+     * Verifier.verify(*).that(null)                                                     =&gt; FAIL
+     * Verifier.verify(*).not().that(null)                                               =&gt; FAIL
+     * Verifier.verify(null).that(value -&gt; "Mork".equals(value))                      =&gt; FAIL
+     * Verifier.verify(new User("Mork")).that(user -&gt; "Mork".equals(user.getName()))  =&gt; PASS
+     * Verifier.verify(new User("Mindy")).that(user -&gt; "Mork".equals(user.getName())) =&gt; FAIL
      * </pre>
      *
      * @param assertion
