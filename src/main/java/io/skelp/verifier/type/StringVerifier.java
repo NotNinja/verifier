@@ -133,10 +133,20 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value contains only letters.
+     * </p>
+     * <pre>
+     * Verifier.verify((String) null).alpha() => FAIL
+     * Verifier.verify("\0\r\n").alpha()      => FAIL
+     * Verifier.verify("123").alpha()         => FAIL
+     * Verifier.verify("abc").alpha()         => PASS
+     * Verifier.verify("abc123").alpha()      => FAIL
+     * </pre>
      *
-     * @return
+     * @return A reference to this {@link StringVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #alphaSpace()
      */
     public StringVerifier alpha() throws VerifierException {
@@ -154,10 +164,20 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value contains only letters or space.
+     * </p>
+     * <pre>
+     * Verifier.verify((String) null).alphaSpace() => FAIL
+     * Verifier.verify("\0 \r \n").alphaSpace()    => FAIL
+     * Verifier.verify("1 2 3").alphaSpace()       => FAIL
+     * Verifier.verify("a b c").alphaSpace()       => PASS
+     * Verifier.verify("a b c 1 2 3").alphaSpace() => FAIL
+     * </pre>
      *
-     * @return
+     * @return A reference to this {@link StringVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #alpha()
      */
     public StringVerifier alphaSpace() throws VerifierException {
@@ -175,10 +195,20 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value contains only letters or digits.
+     * </p>
+     * <pre>
+     * Verifier.verify((String) null).alphanumeric() => FAIL
+     * Verifier.verify("\0\r\n").alphanumeric()      => FAIL
+     * Verifier.verify("123").alphanumeric()         => PASS
+     * Verifier.verify("abc").alphanumeric()         => PASS
+     * Verifier.verify("abc123").alphanumeric()      => PASS
+     * </pre>
      *
-     * @return
+     * @return A reference to this {@link StringVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #alphanumericSpace()
      */
     public StringVerifier alphanumeric() throws VerifierException {
@@ -196,10 +226,20 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
     }
 
     /**
-     * TODO: Document
+     * <p>
+     * Verifies that the value contains only letters or digits or space.
+     * </p>
+     * <pre>
+     * Verifier.verify((String) null).alphanumericSpace() => FAIL
+     * Verifier.verify("\0 \r \n").alphanumericSpace()    => FAIL
+     * Verifier.verify("1 2 3").alphanumericSpace()       => PASS
+     * Verifier.verify("a b c").alphanumericSpace()       => PASS
+     * Verifier.verify("a b c 1 2 3").alphanumericSpace() => PASS
+     * </pre>
      *
-     * @return
+     * @return A reference to this {@link StringVerifier} for chaining purposes.
      * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
      * @see #alphanumeric()
      */
     public StringVerifier alphanumericSpace() throws VerifierException {
