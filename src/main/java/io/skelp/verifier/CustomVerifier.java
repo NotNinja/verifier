@@ -50,6 +50,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * Verifier.verify("abc").equalTo(null)  => FAIL
      * Verifier.verify("abc").equalTo("abc") => PASS
      * Verifier.verify("abc").equalTo("ABC") => FAIL
+     * Verifier.verify("abc").equalTo("def") => FAIL
      * </pre>
      *
      * @param other
@@ -80,6 +81,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * Verifier.verify("abc", *).equalTo(null)  => FAIL
      * Verifier.verify("abc", *).equalTo("abc") => PASS
      * Verifier.verify("abc", *).equalTo("ABC") => FAIL
+     * Verifier.verify("abc", *).equalTo("def") => FAIL
      * </pre>
      *
      * @param other
