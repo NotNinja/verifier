@@ -2090,69 +2090,6 @@ public class StringVerifierTest {
             verify(getMockVerification()).check(expected, "be all upper case");
         }
 
-        @Test
-        public void testWhitespaceWhenValueIsEmpty() {
-            testWhitespaceHelper(EMPTY, true);
-        }
-
-        @Test
-        public void testWhitespaceWhenValueIsNull() {
-            testWhitespaceHelper(null, false);
-        }
-
-        @Test
-        public void testWhitespaceWhenValueIsOnlyLettersAndNumbers() {
-            testWhitespaceHelper(ALPHANUMERIC, false);
-        }
-
-        @Test
-        public void testWhitespaceWhenValueIsOnlyLettersAndNumbersAndWhitespace() {
-            testWhitespaceHelper(ALPHANUMERIC + WHITESPACE, false);
-        }
-
-        @Test
-        public void testWhitespaceWhenValueIsOnlyLowerCaseLetters() {
-            testWhitespaceHelper(ALPHA_LOWER_CASE, false);
-        }
-
-        @Test
-        public void testWhitespaceWhenValueIsOnlyLowerCaseLettersAndWhitespace() {
-            testWhitespaceHelper(ALPHA_LOWER_CASE + WHITESPACE, false);
-        }
-
-        @Test
-        public void testWhitespaceWhenValueIsOnlyNumbers() {
-            testWhitespaceHelper(NUMERIC, false);
-        }
-
-        @Test
-        public void testWhitespaceWhenValueIsOnlyNumbersAndWhitespace() {
-            testWhitespaceHelper(NUMERIC + WHITESPACE, false);
-        }
-
-        @Test
-        public void testWhitespaceWhenValueIsOnlyUpperCaseLetters() {
-            testWhitespaceHelper(ALPHA_UPPER_CASE, false);
-        }
-
-        @Test
-        public void testWhitespaceWhenValueIsOnlyUpperCaseLettersAndWhitespace() {
-            testWhitespaceHelper(ALPHA_UPPER_CASE + WHITESPACE, false);
-        }
-
-        @Test
-        public void testWhitespaceWhenValueIsOnlyWhitespace() {
-            testWhitespaceHelper(WHITESPACE, true);
-        }
-
-        private void testWhitespaceHelper(String value, boolean expected) {
-            setValue(value);
-
-            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().whitespace());
-
-            verify(getMockVerification()).check(expected, "contain only whitespace");
-        }
-
         @Override
         protected StringVerifier createCustomVerifier() {
             return new StringVerifier(getMockVerification());

@@ -762,24 +762,4 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
 
         return this;
     }
-
-    /**
-     * TODO: Document
-     *
-     * @return
-     * @throws VerifierException
-     */
-    public StringVerifier whitespace() throws VerifierException {
-        final String value = verification().getValue();
-        final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
-            @Override
-            public Boolean apply(final Character character) {
-                return Character.isWhitespace(character);
-            }
-        });
-
-        verification().check(result, "contain only whitespace");
-
-        return this;
-    }
 }
