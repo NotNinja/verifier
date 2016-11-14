@@ -1,20 +1,120 @@
 # Verifier
 
-[Verifier](https://github.com/Skelp/verifier) is a Java library for validation.
+[Verifier](https://github.com/Skelp/verifier) is a Java library for validation which concentrates on providing a simple
+API with useful (and readable!) error messages, all while being highly configurable so that it's useful in your
+application code.
 
 [![Build Status](https://img.shields.io/travis/Skelp/verifier/develop.svg?style=flat-square)](https://travis-ci.org/Skelp/verifier)
 [![License](https://img.shields.io/github/license/Skelp/verifier.svg?style=flat-square)](https://github.com/Skelp/verifier/blob/master/LICENSE.md)
 [![Release](https://img.shields.io/maven-central/v/io.skelp/verifier.svg?style=flat-square)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22io.skelp%22%20AND%20a%3A%22verifier%22)
 
-> This project is currently very much a work in progress and is not yet functional
+* [Install](#install)
+* [API](#api)
+* [Bugs](#bugs)
+* [Contributors](#contributors)
+* [License](#license)
 
 ## Install
 
-TODO: Document
+To install Verifier, simply add it as a dependency to your project:
+
+``` xml
+<dependency>
+    <groupId>io.skelp</groupId>
+    <artifactId>verifier</artifactId>
+    <version>0.1.0</version>
+</dependency>
+```
+
+That's it!
 
 ## API
 
-TODO: Document
+Verifier offers validation methods for a lot of standard Java data types:
+
+``` java
+package com.example.form;
+
+import io.skelp.verifier.Verifier;
+
+public class LoginForm implements Form {
+
+    UserService userService;
+
+    @Override
+    public void handle(Map<String, String> data) {
+        Verifier.verify(data)
+            .containAllKeys("username", "password");
+        Verifier.verify(data.get("username"), "username")
+            .not().blank();
+        Verifier.verify(data.get("password"), "password")
+            .not().empty()
+            .alphanumeric();
+
+        userService.login(data);
+    }
+}
+```
+
+However, you can also provide implementations of `CustomVerifier` to support more specific use cases instead of just
+data types.
+
+``` java
+package com.example.form;
+
+import com.example.verifier.PasswordVerifier;
+
+import io.skelp.verifier.Verifier;
+
+public class RegistrationForm implements Form {
+
+    UserService userService;
+
+    @Override
+    public void handle(Map<String, String> data) {
+        Verifier.verify(data)
+            .containAllKeys("username", "password");
+        Verifier.verify(data.get("username"), "username")
+            .not().blank()
+            .that((value) -> userService.isAvailable(value));
+        Verifier.verify(data.get("password"), "password", PasswordVerifier.class)
+            .not().nulled()
+            .strong();
+
+        userService.register(data);
+    }
+}
+```
+
+The best way to learn about the API is to simply use it and explore. It's designed to be very natural and simple. Each
+verification method is documented with examples to help explain exactly what's being verified.
+
+Here's a list of the data types supported by Verifier already:
+
+* Array
+* BigDecimal
+* BigInteger
+* Boolean
+* Byte
+* Calendar
+* Character
+* Class
+* Collection
+* Comparable
+* Date
+* Double
+* Float
+* Integer
+* Locale
+* Long
+* Map
+* Object
+* Short
+* String
+* Throwable
+
+If a data type is missing that you'd like to see supported by Verifier, please take a look at the
+[Contributors](#contributors) section below.
 
 ## Bugs
 
