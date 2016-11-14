@@ -107,11 +107,11 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      * Verifies that the value is even (i.e. divisible by two without a remainder).
      * </p>
      * <pre>
-     * Verifier.verify((Integer) null).even() => FAIL
-     * Verifier.verify(0).even()              => PASS
-     * Verifier.verify(1).even()              => FAIL
-     * Verifier.verify(2).even()              => PASS
-     * Verifier.verify(12).even()             => PASS
+     * Verifier.verify((Integer) null).even() =&gt; FAIL
+     * Verifier.verify(0).even()              =&gt; PASS
+     * Verifier.verify(1).even()              =&gt; FAIL
+     * Verifier.verify(2).even()              =&gt; PASS
+     * Verifier.verify(12).even()             =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link BaseNumberVerifier} for chaining purposes.
@@ -126,10 +126,10 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      * Verifies that the value is negative (i.e. less that zero).
      * </p>
      * <pre>
-     * Verifier.verify((Integer) null).negative() => FAIL
-     * Verifier.verify(0).negative()              => FAIL
-     * Verifier.verify(1).negative()              => FAIL
-     * Verifier.verify(-1).negative()             => PASS
+     * Verifier.verify((Integer) null).negative() =&gt; FAIL
+     * Verifier.verify(0).negative()              =&gt; FAIL
+     * Verifier.verify(1).negative()              =&gt; FAIL
+     * Verifier.verify(-1).negative()             =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link BaseNumberVerifier} for chaining purposes.
@@ -144,11 +144,11 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      * Verifies that the value is odd (i.e. has one left over as a remainder when divided by two).
      * </p>
      * <pre>
-     * Verifier.verify((Integer) null).odd() => FAIL
-     * Verifier.verify(0).odd()              => FAIL
-     * Verifier.verify(1).odd()              => PASS
-     * Verifier.verify(2).odd()              => FAIL
-     * Verifier.verify(13).odd()             => PASS
+     * Verifier.verify((Integer) null).odd() =&gt; FAIL
+     * Verifier.verify(0).odd()              =&gt; FAIL
+     * Verifier.verify(1).odd()              =&gt; PASS
+     * Verifier.verify(2).odd()              =&gt; FAIL
+     * Verifier.verify(13).odd()             =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link BaseNumberVerifier} for chaining purposes.
@@ -163,11 +163,11 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      * Verifies that the value is one.
      * </p>
      * <pre>
-     * Verifier.verify((Integer) null).one() => FAIL
-     * Verifier.verify(0).one()              => FAIL
-     * Verifier.verify(1).one()              => PASS
-     * Verifier.verify(-1).one()             => FAIL
-     * Verifier.verify(2).one()              => FAIL
+     * Verifier.verify((Integer) null).one() =&gt; FAIL
+     * Verifier.verify(0).one()              =&gt; FAIL
+     * Verifier.verify(1).one()              =&gt; PASS
+     * Verifier.verify(-1).one()             =&gt; FAIL
+     * Verifier.verify(2).one()              =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link BaseNumberVerifier} for chaining purposes.
@@ -182,10 +182,10 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      * Verifies that the value is positive (i.e. greater than or equal to zero).
      * </p>
      * <pre>
-     * Verifier.verify((Integer) null).positive() => FAIL
-     * Verifier.verify(0).positive()              => PASS
-     * Verifier.verify(1).positive()              => PASS
-     * Verifier.verify(-1).positive()             => FAIL
+     * Verifier.verify((Integer) null).positive() =&gt; FAIL
+     * Verifier.verify(0).positive()              =&gt; PASS
+     * Verifier.verify(1).positive()              =&gt; PASS
+     * Verifier.verify(-1).positive()             =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link BaseNumberVerifier} for chaining purposes.
@@ -200,10 +200,10 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      * Verifies that the value is zero.
      * </p>
      * <pre>
-     * Verifier.verify((Integer) null).zero() => FAIL
-     * Verifier.verify(0).zero()              => PASS
-     * Verifier.verify(1).zero()              => FAIL
-     * Verifier.verify(-1).zero()             => FAIL
+     * Verifier.verify((Integer) null).zero() =&gt; FAIL
+     * Verifier.verify(0).zero()              =&gt; PASS
+     * Verifier.verify(1).zero()              =&gt; FAIL
+     * Verifier.verify(-1).zero()             =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link BaseNumberVerifier} for chaining purposes.

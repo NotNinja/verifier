@@ -67,12 +67,12 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((Object[]) null).contain(*)                 => FAIL
-     * Verifier.verify(new Object[0]).contain(*)                   => FAIL
-     * Verifier.verify(new Object[]{123, 456, 789}).contain(147)   => FAIL
-     * Verifier.verify(new Object[]{123, 456, 789}).contain(789)   => PASS
-     * Verifier.verify(new Object[]{123, 456, 789}).contain(null)  => FAIL
-     * Verifier.verify(new Object[]{123, 456, null}).contain(null) => PASS
+     * Verifier.verify((Object[]) null).contain(*)                 =&gt; FAIL
+     * Verifier.verify(new Object[0]).contain(*)                   =&gt; FAIL
+     * Verifier.verify(new Object[]{123, 456, 789}).contain(147)   =&gt; FAIL
+     * Verifier.verify(new Object[]{123, 456, 789}).contain(789)   =&gt; PASS
+     * Verifier.verify(new Object[]{123, 456, 789}).contain(null)  =&gt; FAIL
+     * Verifier.verify(new Object[]{123, 456, null}).contain(null) =&gt; PASS
      * </pre>
      *
      * @param element
@@ -98,14 +98,14 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((Object[]) null).containAll(*)                      => FAIL
-     * Verifier.verify(new Object[0]).containAll(*)                        => FAIL
-     * Verifier.verify(new Object[]{*}).containAll((Object[]) null)        => PASS
-     * Verifier.verify(new Object[]{123, 456, 789}).containAll(147, 258)   => FAIL
-     * Verifier.verify(new Object[]{123, 456, 789}).containAll(123, 147)   => FAIL
-     * Verifier.verify(new Object[]{123, 456, 789}).containAll(789, 456)   => PASS
-     * Verifier.verify(new Object[]{123, 456, 789}).containAll(789, null)  => FAIL
-     * Verifier.verify(new Object[]{123, 456, null}).containAll(123, null) => PASS
+     * Verifier.verify((Object[]) null).containAll(*)                      =&gt; FAIL
+     * Verifier.verify(new Object[0]).containAll(*)                        =&gt; FAIL
+     * Verifier.verify(new Object[]{*}).containAll((Object[]) null)        =&gt; PASS
+     * Verifier.verify(new Object[]{123, 456, 789}).containAll(147, 258)   =&gt; FAIL
+     * Verifier.verify(new Object[]{123, 456, 789}).containAll(123, 147)   =&gt; FAIL
+     * Verifier.verify(new Object[]{123, 456, 789}).containAll(789, 456)   =&gt; PASS
+     * Verifier.verify(new Object[]{123, 456, 789}).containAll(789, null)  =&gt; FAIL
+     * Verifier.verify(new Object[]{123, 456, null}).containAll(123, null) =&gt; PASS
      * </pre>
      *
      * @param elements
@@ -136,14 +136,14 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((Object[]) null).containAny(*)                      => FAIL
-     * Verifier.verify(new Object[0]).containAny(*)                        => FAIL
-     * Verifier.verify(new Object[]{*}).containAny((Object[]) null)        => FAIL
-     * Verifier.verify(new Object[]{123, 456, 789}).containAny(147, 258)   => FAIL
-     * Verifier.verify(new Object[]{123, 456, 789}).containAny(123, 147)   => PASS
-     * Verifier.verify(new Object[]{123, 456, 789}).containAny(789, 456)   => PASS
-     * Verifier.verify(new Object[]{123, 456, 789}).containAny(789, null)  => PASS
-     * Verifier.verify(new Object[]{123, 456, null}).containAny(147, null) => PASS
+     * Verifier.verify((Object[]) null).containAny(*)                      =&gt; FAIL
+     * Verifier.verify(new Object[0]).containAny(*)                        =&gt; FAIL
+     * Verifier.verify(new Object[]{*}).containAny((Object[]) null)        =&gt; FAIL
+     * Verifier.verify(new Object[]{123, 456, 789}).containAny(147, 258)   =&gt; FAIL
+     * Verifier.verify(new Object[]{123, 456, 789}).containAny(123, 147)   =&gt; PASS
+     * Verifier.verify(new Object[]{123, 456, 789}).containAny(789, 456)   =&gt; PASS
+     * Verifier.verify(new Object[]{123, 456, 789}).containAny(789, null)  =&gt; PASS
+     * Verifier.verify(new Object[]{123, 456, null}).containAny(147, null) =&gt; PASS
      * </pre>
      *
      * @param elements
@@ -174,9 +174,9 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((Object[]) null).empty()             => PASS
-     * Verifier.verify(new Object[0]).empty()               => PASS
-     * Verifier.verify(new Object[]{123, 456, 789}).empty() => FAIL
+     * Verifier.verify((Object[]) null).empty()             =&gt; PASS
+     * Verifier.verify(new Object[0]).empty()               =&gt; PASS
+     * Verifier.verify(new Object[]{123, 456, 789}).empty() =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link BaseCollectionVerifier} for chaining purposes.
@@ -200,12 +200,12 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify((Object[]) null).sizeOf(1)             => FAIL
-     * Verifier.verify((Object[]) null).sizeOf(0)             => PASS
-     * Verifier.verify(new Object[0]).sizeOf(1)               => FAIL
-     * Verifier.verify(new Object[0]).sizeOf(0)               => PASS
-     * Verifier.verify(new Object[]{123, 456, 789}).sizeOf(0) => FAIL
-     * Verifier.verify(new Object[]{123, 456, 789}).sizeOf(3) => PASS
+     * Verifier.verify((Object[]) null).sizeOf(1)             =&gt; FAIL
+     * Verifier.verify((Object[]) null).sizeOf(0)             =&gt; PASS
+     * Verifier.verify(new Object[0]).sizeOf(1)               =&gt; FAIL
+     * Verifier.verify(new Object[0]).sizeOf(0)               =&gt; PASS
+     * Verifier.verify(new Object[]{123, 456, 789}).sizeOf(0) =&gt; FAIL
+     * Verifier.verify(new Object[]{123, 456, 789}).sizeOf(3) =&gt; PASS
      * </pre>
      *
      * @param size
@@ -232,13 +232,13 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * {@code assertion} instead of the value itself.
      * </p>
      * <pre>
-     * Verifier.verify(*).thatAll(null)                                           => FAIL
-     * Verifier.verify(*).not().thatAll(null)                                     => FAIL
-     * Verifier.verify((Object[]) null).thatAll(value -> true)                    => FAIL
-     * Verifier.verify(new Object[0]).thatAll(value -> false)                     => PASS
-     * Verifier.verify(new Object[]{123, 456, 789}).thatAll(value -> value < 0)   => FAIL
-     * Verifier.verify(new Object[]{123, 456, 789}).thatAll(value -> value > 200) => FAIL
-     * Verifier.verify(new Object[]{123, 456, 789}).thatAll(value -> value > 100) => PASS
+     * Verifier.verify(*).thatAll(null)                                                 =&gt; FAIL
+     * Verifier.verify(*).not().thatAll(null)                                           =&gt; FAIL
+     * Verifier.verify((Object[]) null).thatAll(value -&gt; true)                       =&gt; FAIL
+     * Verifier.verify(new Object[0]).thatAll(value -&gt; false)                        =&gt; PASS
+     * Verifier.verify(new Object[]{123, 456, 789}).thatAll(value -&gt; value &lt; 0)   =&gt; FAIL
+     * Verifier.verify(new Object[]{123, 456, 789}).thatAll(value -&gt; value &gt; 200) =&gt; FAIL
+     * Verifier.verify(new Object[]{123, 456, 789}).thatAll(value -&gt; value &gt; 100) =&gt; PASS
      * </pre>
      *
      * @param assertion
@@ -302,13 +302,13 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * {@code assertion} instead of the value itself.
      * </p>
      * <pre>
-     * Verifier.verify(*).thatAny(null)                                           => FAIL
-     * Verifier.verify(*).not().thatAny(null)                                     => FAIL
-     * Verifier.verify((Object[]) null).thatAny(value -> true)                    => FAIL
-     * Verifier.verify(new Object[0]).thatAny(value -> true)                      => FAIL
-     * Verifier.verify(new Object[]{123, 456, 789}).thatAny(value -> value < 0)   => FAIL
-     * Verifier.verify(new Object[]{123, 456, 789}).thatAny(value -> value > 200) => PASS
-     * Verifier.verify(new Object[]{123, 456, 789}).thatAny(value -> value > 100) => PASS
+     * Verifier.verify(*).thatAny(null)                                                 =&gt; FAIL
+     * Verifier.verify(*).not().thatAny(null)                                           =&gt; FAIL
+     * Verifier.verify((Object[]) null).thatAny(value -&gt; true)                       =&gt; FAIL
+     * Verifier.verify(new Object[0]).thatAny(value -&gt; true)                         =&gt; FAIL
+     * Verifier.verify(new Object[]{123, 456, 789}).thatAny(value -&gt; value &lt; 0)   =&gt; FAIL
+     * Verifier.verify(new Object[]{123, 456, 789}).thatAny(value -&gt; value &gt; 200) =&gt; PASS
+     * Verifier.verify(new Object[]{123, 456, 789}).thatAny(value -&gt; value &gt; 100) =&gt; PASS
      * </pre>
      *
      * @param assertion

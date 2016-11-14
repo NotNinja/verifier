@@ -60,14 +60,14 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).between(*, null)            => FAIL
-     * Verifier.verify(*).between(null, *)            => FAIL
-     * Verifier.verify((Integer) null).between(*, *)  => FAIL
-     * Verifier.verify(50).between(0, 25)             => FAIL
-     * Verifier.verify(50).between(75, 100)           => FAIL
-     * Verifier.verify(50).between(0, 100)            => PASS
-     * Verifier.verify(50).between(0, 50)             => PASS
-     * Verifier.verify(50).between(50, 100)           => PASS
+     * Verifier.verify(*).between(*, null)            =&gt; FAIL
+     * Verifier.verify(*).between(null, *)            =&gt; FAIL
+     * Verifier.verify((Integer) null).between(*, *)  =&gt; FAIL
+     * Verifier.verify(50).between(0, 25)             =&gt; FAIL
+     * Verifier.verify(50).between(75, 100)           =&gt; FAIL
+     * Verifier.verify(50).between(0, 100)            =&gt; PASS
+     * Verifier.verify(50).between(0, 50)             =&gt; PASS
+     * Verifier.verify(50).between(50, 100)           =&gt; PASS
      * </pre>
      *
      * @param start
@@ -98,14 +98,14 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).between(*, null, *, *)            => FAIL
-     * Verifier.verify(*).between(null, *, *, *)            => FAIL
-     * Verifier.verify((Integer) null).between(*, *, *, *)  => FAIL
-     * Verifier.verify(50).between(0, 25, *, *)             => FAIL
-     * Verifier.verify(50).between(75, 100, *, *)           => FAIL
-     * Verifier.verify(50).between(0, 100, *, *)            => PASS
-     * Verifier.verify(50).between(0, 50, *, *)             => PASS
-     * Verifier.verify(50).between(50, 100, *, *)           => PASS
+     * Verifier.verify(*).between(*, null, *, *)            =&gt; FAIL
+     * Verifier.verify(*).between(null, *, *, *)            =&gt; FAIL
+     * Verifier.verify((Integer) null).between(*, *, *, *)  =&gt; FAIL
+     * Verifier.verify(50).between(0, 25, *, *)             =&gt; FAIL
+     * Verifier.verify(50).between(75, 100, *, *)           =&gt; FAIL
+     * Verifier.verify(50).between(0, 100, *, *)            =&gt; PASS
+     * Verifier.verify(50).between(0, 50, *, *)             =&gt; PASS
+     * Verifier.verify(50).between(50, 100, *, *)           =&gt; PASS
      * </pre>
      *
      * @param start
@@ -133,14 +133,14 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).betweenExclusive(*, null)            => FAIL
-     * Verifier.verify(*).betweenExclusive(null, *)            => FAIL
-     * Verifier.verify((Integer) null).betweenExclusive(*, *)  => FAIL
-     * Verifier.verify(50).betweenExclusive(0, 25)             => FAIL
-     * Verifier.verify(50).betweenExclusive(75, 100)           => FAIL
-     * Verifier.verify(50).betweenExclusive(0, 100)            => PASS
-     * Verifier.verify(50).betweenExclusive(0, 50)             => FAIL
-     * Verifier.verify(50).betweenExclusive(50, 100)           => FAIL
+     * Verifier.verify(*).betweenExclusive(*, null)            =&gt; FAIL
+     * Verifier.verify(*).betweenExclusive(null, *)            =&gt; FAIL
+     * Verifier.verify((Integer) null).betweenExclusive(*, *)  =&gt; FAIL
+     * Verifier.verify(50).betweenExclusive(0, 25)             =&gt; FAIL
+     * Verifier.verify(50).betweenExclusive(75, 100)           =&gt; FAIL
+     * Verifier.verify(50).betweenExclusive(0, 100)            =&gt; PASS
+     * Verifier.verify(50).betweenExclusive(0, 50)             =&gt; FAIL
+     * Verifier.verify(50).betweenExclusive(50, 100)           =&gt; FAIL
      * </pre>
      *
      * @param start
@@ -171,14 +171,14 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).betweenExclusive(*, null, *, *)            => FAIL
-     * Verifier.verify(*).betweenExclusive(null, *, *, *)            => FAIL
-     * Verifier.verify((Integer) null).betweenExclusive(*, *, *, *)  => FAIL
-     * Verifier.verify(50).betweenExclusive(0, 25, *, *)             => FAIL
-     * Verifier.verify(50).betweenExclusive(75, 100, *, *)           => FAIL
-     * Verifier.verify(50).betweenExclusive(0, 100, *, *)            => PASS
-     * Verifier.verify(50).betweenExclusive(0, 50, *, *)             => FAIL
-     * Verifier.verify(50).betweenExclusive(50, 100, *, *)           => FAIL
+     * Verifier.verify(*).betweenExclusive(*, null, *, *)            =&gt; FAIL
+     * Verifier.verify(*).betweenExclusive(null, *, *, *)            =&gt; FAIL
+     * Verifier.verify((Integer) null).betweenExclusive(*, *, *, *)  =&gt; FAIL
+     * Verifier.verify(50).betweenExclusive(0, 25, *, *)             =&gt; FAIL
+     * Verifier.verify(50).betweenExclusive(75, 100, *, *)           =&gt; FAIL
+     * Verifier.verify(50).betweenExclusive(0, 100, *, *)            =&gt; PASS
+     * Verifier.verify(50).betweenExclusive(0, 50, *, *)             =&gt; FAIL
+     * Verifier.verify(50).betweenExclusive(50, 100, *, *)           =&gt; FAIL
      * </pre>
      *
      * @param start
@@ -206,12 +206,12 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).greaterThan(null)              => FAIL
-     * Verifier.verify((Integer) null).greaterThan(*)    => FAIL
-     * Verifier.verify((Integer) null).greaterThan(null) => FAIL
-     * Verifier.verify(123).greaterThan(123)             => FAIL
-     * Verifier.verify(123).greaterThan(987)             => FAIL
-     * Verifier.verify(123).greaterThan(62)              => PASS
+     * Verifier.verify(*).greaterThan(null)              =&gt; FAIL
+     * Verifier.verify((Integer) null).greaterThan(*)    =&gt; FAIL
+     * Verifier.verify((Integer) null).greaterThan(null) =&gt; FAIL
+     * Verifier.verify(123).greaterThan(123)             =&gt; FAIL
+     * Verifier.verify(123).greaterThan(987)             =&gt; FAIL
+     * Verifier.verify(123).greaterThan(62)              =&gt; PASS
      * </pre>
      *
      * @param other
@@ -240,12 +240,12 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).greaterThan(null, *)              => FAIL
-     * Verifier.verify((Integer) null).greaterThan(*, *)    => FAIL
-     * Verifier.verify((Integer) null).greaterThan(null, *) => FAIL
-     * Verifier.verify(123).greaterThan(123, *)             => FAIL
-     * Verifier.verify(123).greaterThan(987, *)             => FAIL
-     * Verifier.verify(123).greaterThan(62, *)              => PASS
+     * Verifier.verify(*).greaterThan(null, *)              =&gt; FAIL
+     * Verifier.verify((Integer) null).greaterThan(*, *)    =&gt; FAIL
+     * Verifier.verify((Integer) null).greaterThan(null, *) =&gt; FAIL
+     * Verifier.verify(123).greaterThan(123, *)             =&gt; FAIL
+     * Verifier.verify(123).greaterThan(987, *)             =&gt; FAIL
+     * Verifier.verify(123).greaterThan(62, *)              =&gt; PASS
      * </pre>
      *
      * @param other
@@ -269,12 +269,12 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).greaterThanOrEqualTo(null)              => FAIL
-     * Verifier.verify((Integer) null).greaterThanOrEqualTo(*)    => FAIL
-     * Verifier.verify((Integer) null).greaterThanOrEqualTo(null) => PASS
-     * Verifier.verify(123).greaterThanOrEqualTo(123)             => PASS
-     * Verifier.verify(123).greaterThanOrEqualTo(987)             => FAIL
-     * Verifier.verify(123).greaterThanOrEqualTo(62)              => PASS
+     * Verifier.verify(*).greaterThanOrEqualTo(null)              =&gt; FAIL
+     * Verifier.verify((Integer) null).greaterThanOrEqualTo(*)    =&gt; FAIL
+     * Verifier.verify((Integer) null).greaterThanOrEqualTo(null) =&gt; PASS
+     * Verifier.verify(123).greaterThanOrEqualTo(123)             =&gt; PASS
+     * Verifier.verify(123).greaterThanOrEqualTo(987)             =&gt; FAIL
+     * Verifier.verify(123).greaterThanOrEqualTo(62)              =&gt; PASS
      * </pre>
      *
      * @param other
@@ -303,12 +303,12 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).greaterThanOrEqualTo(null, *)              => FAIL
-     * Verifier.verify((Integer) null).greaterThanOrEqualTo(*, *)    => FAIL
-     * Verifier.verify((Integer) null).greaterThanOrEqualTo(null, *) => PASS
-     * Verifier.verify(123).greaterThanOrEqualTo(123, *)             => PASS
-     * Verifier.verify(123).greaterThanOrEqualTo(987, *)             => FAIL
-     * Verifier.verify(123).greaterThanOrEqualTo(62, *)              => PASS
+     * Verifier.verify(*).greaterThanOrEqualTo(null, *)              =&gt; FAIL
+     * Verifier.verify((Integer) null).greaterThanOrEqualTo(*, *)    =&gt; FAIL
+     * Verifier.verify((Integer) null).greaterThanOrEqualTo(null, *) =&gt; PASS
+     * Verifier.verify(123).greaterThanOrEqualTo(123, *)             =&gt; PASS
+     * Verifier.verify(123).greaterThanOrEqualTo(987, *)             =&gt; FAIL
+     * Verifier.verify(123).greaterThanOrEqualTo(62, *)              =&gt; PASS
      * </pre>
      *
      * @param other
@@ -332,12 +332,12 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).lessThan(null)              => FAIL
-     * Verifier.verify((Integer) null).lessThan(*)    => FAIL
-     * Verifier.verify((Integer) null).lessThan(null) => FAIL
-     * Verifier.verify(123).lessThan(123)             => FAIL
-     * Verifier.verify(123).lessThan(987)             => PASS
-     * Verifier.verify(123).lessThan(62)              => FAIL
+     * Verifier.verify(*).lessThan(null)              =&gt; FAIL
+     * Verifier.verify((Integer) null).lessThan(*)    =&gt; FAIL
+     * Verifier.verify((Integer) null).lessThan(null) =&gt; FAIL
+     * Verifier.verify(123).lessThan(123)             =&gt; FAIL
+     * Verifier.verify(123).lessThan(987)             =&gt; PASS
+     * Verifier.verify(123).lessThan(62)              =&gt; FAIL
      * </pre>
      *
      * @param other
@@ -365,12 +365,12 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).lessThan(null, *)              => FAIL
-     * Verifier.verify((Integer) null).lessThan(*, *)    => FAIL
-     * Verifier.verify((Integer) null).lessThan(null, *) => FAIL
-     * Verifier.verify(123).lessThan(123, *)             => FAIL
-     * Verifier.verify(123).lessThan(987, *)             => PASS
-     * Verifier.verify(123).lessThan(62, *)              => FAIL
+     * Verifier.verify(*).lessThan(null, *)              =&gt; FAIL
+     * Verifier.verify((Integer) null).lessThan(*, *)    =&gt; FAIL
+     * Verifier.verify((Integer) null).lessThan(null, *) =&gt; FAIL
+     * Verifier.verify(123).lessThan(123, *)             =&gt; FAIL
+     * Verifier.verify(123).lessThan(987, *)             =&gt; PASS
+     * Verifier.verify(123).lessThan(62, *)              =&gt; FAIL
      * </pre>
      *
      * @param other
@@ -394,12 +394,12 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).lessThanOrEqualTo(null)              => FAIL
-     * Verifier.verify((Integer) null).lessThanOrEqualTo(*)    => FAIL
-     * Verifier.verify((Integer) null).lessThanOrEqualTo(null) => PASS
-     * Verifier.verify(123).lessThanOrEqualTo(123)             => PASS
-     * Verifier.verify(123).lessThanOrEqualTo(987)             => PASS
-     * Verifier.verify(123).lessThanOrEqualTo(62)              => FAIL
+     * Verifier.verify(*).lessThanOrEqualTo(null)              =&gt; FAIL
+     * Verifier.verify((Integer) null).lessThanOrEqualTo(*)    =&gt; FAIL
+     * Verifier.verify((Integer) null).lessThanOrEqualTo(null) =&gt; PASS
+     * Verifier.verify(123).lessThanOrEqualTo(123)             =&gt; PASS
+     * Verifier.verify(123).lessThanOrEqualTo(987)             =&gt; PASS
+     * Verifier.verify(123).lessThanOrEqualTo(62)              =&gt; FAIL
      * </pre>
      *
      * @param other
@@ -428,12 +428,12 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).lessThanOrEqualTo(null, *)              => FAIL
-     * Verifier.verify((Integer) null).lessThanOrEqualTo(*, *)    => FAIL
-     * Verifier.verify((Integer) null).lessThanOrEqualTo(null, *) => PASS
-     * Verifier.verify(123).lessThanOrEqualTo(123, *)             => PASS
-     * Verifier.verify(123).lessThanOrEqualTo(987, *)             => PASS
-     * Verifier.verify(123).lessThanOrEqualTo(62, *)              => FAIL
+     * Verifier.verify(*).lessThanOrEqualTo(null, *)              =&gt; FAIL
+     * Verifier.verify((Integer) null).lessThanOrEqualTo(*, *)    =&gt; FAIL
+     * Verifier.verify((Integer) null).lessThanOrEqualTo(null, *) =&gt; PASS
+     * Verifier.verify(123).lessThanOrEqualTo(123, *)             =&gt; PASS
+     * Verifier.verify(123).lessThanOrEqualTo(987, *)             =&gt; PASS
+     * Verifier.verify(123).lessThanOrEqualTo(62, *)              =&gt; FAIL
      * </pre>
      *
      * @param other

@@ -73,12 +73,12 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * Verifies that the value is a letter.
      * </p>
      * <pre>
-     * Verifier.verify((Character) null).alpha() => FAIL
-     * Verifier.verify('\0').alpha()             => FAIL
-     * Verifier.verify('0').alpha()              => FAIL
-     * Verifier.verify('Z').alpha()              => PASS
-     * Verifier.verify('१').alpha()              => FAIL
-     * Verifier.verify('É').alpha()              => PASS
+     * Verifier.verify((Character) null).alpha() =&gt; FAIL
+     * Verifier.verify('\0').alpha()             =&gt; FAIL
+     * Verifier.verify('0').alpha()              =&gt; FAIL
+     * Verifier.verify('Z').alpha()              =&gt; PASS
+     * Verifier.verify('१').alpha()              =&gt; FAIL
+     * Verifier.verify('É').alpha()              =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link CharacterVerifier} for chaining purposes.
@@ -100,12 +100,12 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * Verifies that the value is a letter or digit.
      * </p>
      * <pre>
-     * Verifier.verify((Character) null).alphanumeric() => FAIL
-     * Verifier.verify('\0').alphanumeric()             => FAIL
-     * Verifier.verify('0').alphanumeric()              => PASS
-     * Verifier.verify('Z').alphanumeric()              => PASS
-     * Verifier.verify('१').alphanumeric()              => PASS
-     * Verifier.verify('É').alphanumeric()              => PASS
+     * Verifier.verify((Character) null).alphanumeric() =&gt; FAIL
+     * Verifier.verify('\0').alphanumeric()             =&gt; FAIL
+     * Verifier.verify('0').alphanumeric()              =&gt; PASS
+     * Verifier.verify('Z').alphanumeric()              =&gt; PASS
+     * Verifier.verify('१').alphanumeric()              =&gt; PASS
+     * Verifier.verify('É').alphanumeric()              =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link CharacterVerifier} for chaining purposes.
@@ -127,12 +127,12 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * Verifies that the value is ASCII.
      * </p>
      * <pre>
-     * Verifier.verify((Character) null).ascii() => FAIL
-     * Verifier.verify('\0').ascii()             => PASS
-     * Verifier.verify('0').ascii()              => PASS
-     * Verifier.verify('Z').ascii()              => PASS
-     * Verifier.verify('१').ascii()              => FAIL
-     * Verifier.verify('É').ascii()              => FAIL
+     * Verifier.verify((Character) null).ascii() =&gt; FAIL
+     * Verifier.verify('\0').ascii()             =&gt; PASS
+     * Verifier.verify('0').ascii()              =&gt; PASS
+     * Verifier.verify('Z').ascii()              =&gt; PASS
+     * Verifier.verify('१').ascii()              =&gt; FAIL
+     * Verifier.verify('É').ascii()              =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link CharacterVerifier} for chaining purposes.
@@ -153,12 +153,12 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * Verifies that the value is an ASCII letter.
      * </p>
      * <pre>
-     * Verifier.verify((Character) null).asciiAlpha() => FAIL
-     * Verifier.verify('\0').asciiAlpha()             => FAIL
-     * Verifier.verify('0').asciiAlpha()              => FAIL
-     * Verifier.verify('Z').asciiAlpha()              => PASS
-     * Verifier.verify('१').asciiAlpha()              => FAIL
-     * Verifier.verify('É').asciiAlpha()              => FAIL
+     * Verifier.verify((Character) null).asciiAlpha() =&gt; FAIL
+     * Verifier.verify('\0').asciiAlpha()             =&gt; FAIL
+     * Verifier.verify('0').asciiAlpha()              =&gt; FAIL
+     * Verifier.verify('Z').asciiAlpha()              =&gt; PASS
+     * Verifier.verify('१').asciiAlpha()              =&gt; FAIL
+     * Verifier.verify('É').asciiAlpha()              =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link CharacterVerifier} for chaining purposes.
@@ -180,13 +180,13 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * Verifies that the value is an ASCII lower case letter.
      * </p>
      * <pre>
-     * Verifier.verify((Character) null).asciiAlphaLowerCase() => FAIL
-     * Verifier.verify('\0').asciiAlphaLowerCase()             => FAIL
-     * Verifier.verify('0').asciiAlphaLowerCase()              => FAIL
-     * Verifier.verify('a').asciiAlphaLowerCase()              => PASS
-     * Verifier.verify('Z').asciiAlphaLowerCase()              => FAIL
-     * Verifier.verify('१').asciiAlphaLowerCase()              => FAIL
-     * Verifier.verify('é').asciiAlphaLowerCase()              => FAIL
+     * Verifier.verify((Character) null).asciiAlphaLowerCase() =&gt; FAIL
+     * Verifier.verify('\0').asciiAlphaLowerCase()             =&gt; FAIL
+     * Verifier.verify('0').asciiAlphaLowerCase()              =&gt; FAIL
+     * Verifier.verify('a').asciiAlphaLowerCase()              =&gt; PASS
+     * Verifier.verify('Z').asciiAlphaLowerCase()              =&gt; FAIL
+     * Verifier.verify('१').asciiAlphaLowerCase()              =&gt; FAIL
+     * Verifier.verify('é').asciiAlphaLowerCase()              =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link CharacterVerifier} for chaining purposes.
@@ -209,13 +209,13 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * Verifies that the value is an ASCII upper case letter.
      * </p>
      * <pre>
-     * Verifier.verify((Character) null).asciiAlphaUpperCase() => FAIL
-     * Verifier.verify('\0').asciiAlphaUpperCase()             => FAIL
-     * Verifier.verify('0').asciiAlphaUpperCase()              => FAIL
-     * Verifier.verify('a').asciiAlphaUpperCase()              => FAIL
-     * Verifier.verify('Z').asciiAlphaUpperCase()              => PASS
-     * Verifier.verify('१').asciiAlphaUpperCase()              => FAIL
-     * Verifier.verify('É').asciiAlphaUpperCase()              => FAIL
+     * Verifier.verify((Character) null).asciiAlphaUpperCase() =&gt; FAIL
+     * Verifier.verify('\0').asciiAlphaUpperCase()             =&gt; FAIL
+     * Verifier.verify('0').asciiAlphaUpperCase()              =&gt; FAIL
+     * Verifier.verify('a').asciiAlphaUpperCase()              =&gt; FAIL
+     * Verifier.verify('Z').asciiAlphaUpperCase()              =&gt; PASS
+     * Verifier.verify('१').asciiAlphaUpperCase()              =&gt; FAIL
+     * Verifier.verify('É').asciiAlphaUpperCase()              =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link CharacterVerifier} for chaining purposes.
@@ -238,12 +238,12 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * Verifies that the value is an ASCII letter or digit.
      * </p>
      * <pre>
-     * Verifier.verify((Character) null).asciiAlphanumeric() => FAIL
-     * Verifier.verify('\0').asciiAlphanumeric()             => FAIL
-     * Verifier.verify('0').asciiAlphanumeric()              => PASS
-     * Verifier.verify('Z').asciiAlphanumeric()              => PASS
-     * Verifier.verify('१').asciiAlphanumeric()              => FAIL
-     * Verifier.verify('É').asciiAlphanumeric()              => FAIL
+     * Verifier.verify((Character) null).asciiAlphanumeric() =&gt; FAIL
+     * Verifier.verify('\0').asciiAlphanumeric()             =&gt; FAIL
+     * Verifier.verify('0').asciiAlphanumeric()              =&gt; PASS
+     * Verifier.verify('Z').asciiAlphanumeric()              =&gt; PASS
+     * Verifier.verify('१').asciiAlphanumeric()              =&gt; FAIL
+     * Verifier.verify('É').asciiAlphanumeric()              =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link CharacterVerifier} for chaining purposes.
@@ -265,12 +265,12 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * Verifies that the value is an ASCII control.
      * </p>
      * <pre>
-     * Verifier.verify((Character) null).asciiControl() => FAIL
-     * Verifier.verify('\0').asciiControl()             => PASS
-     * Verifier.verify('0').asciiControl()              => FAIL
-     * Verifier.verify('Z').asciiControl()              => FAIL
-     * Verifier.verify('१').asciiControl()              => FAIL
-     * Verifier.verify('É').asciiControl()              => FAIL
+     * Verifier.verify((Character) null).asciiControl() =&gt; FAIL
+     * Verifier.verify('\0').asciiControl()             =&gt; PASS
+     * Verifier.verify('0').asciiControl()              =&gt; FAIL
+     * Verifier.verify('Z').asciiControl()              =&gt; FAIL
+     * Verifier.verify('१').asciiControl()              =&gt; FAIL
+     * Verifier.verify('É').asciiControl()              =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link CharacterVerifier} for chaining purposes.
@@ -291,12 +291,12 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * Verifies that the value is an ASCII digit.
      * </p>
      * <pre>
-     * Verifier.verify((Character) null).asciiNumeric() => FAIL
-     * Verifier.verify('\0').asciiNumeric()             => FAIL
-     * Verifier.verify('0').asciiNumeric()              => PASS
-     * Verifier.verify('Z').asciiNumeric()              => FAIL
-     * Verifier.verify('१').asciiNumeric()              => FAIL
-     * Verifier.verify('É').asciiNumeric()              => FAIL
+     * Verifier.verify((Character) null).asciiNumeric() =&gt; FAIL
+     * Verifier.verify('\0').asciiNumeric()             =&gt; FAIL
+     * Verifier.verify('0').asciiNumeric()              =&gt; PASS
+     * Verifier.verify('Z').asciiNumeric()              =&gt; FAIL
+     * Verifier.verify('१').asciiNumeric()              =&gt; FAIL
+     * Verifier.verify('É').asciiNumeric()              =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link CharacterVerifier} for chaining purposes.
@@ -318,14 +318,14 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * Verifies that the value is ASCII printable.
      * </p>
      * <pre>
-     * Verifier.verify((Character) null).asciiPrintable() => FAIL
-     * Verifier.verify('\0').asciiPrintable()             => FAIL
-     * Verifier.verify('0').asciiPrintable()              => PASS
-     * Verifier.verify('Z').asciiPrintable()              => PASS
-     * Verifier.verify(' ').asciiPrintable()              => PASS
-     * Verifier.verify('~').asciiPrintable()              => PASS
-     * Verifier.verify('१').asciiPrintable()              => FAIL
-     * Verifier.verify('É').asciiPrintable()              => FAIL
+     * Verifier.verify((Character) null).asciiPrintable() =&gt; FAIL
+     * Verifier.verify('\0').asciiPrintable()             =&gt; FAIL
+     * Verifier.verify('0').asciiPrintable()              =&gt; PASS
+     * Verifier.verify('Z').asciiPrintable()              =&gt; PASS
+     * Verifier.verify(' ').asciiPrintable()              =&gt; PASS
+     * Verifier.verify('~').asciiPrintable()              =&gt; PASS
+     * Verifier.verify('१').asciiPrintable()              =&gt; FAIL
+     * Verifier.verify('É').asciiPrintable()              =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link CharacterVerifier} for chaining purposes.
@@ -356,14 +356,14 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * Verifies that the value is a lower case letter.
      * </p>
      * <pre>
-     * Verifier.verify((Character) null).lowerCase() => FAIL
-     * Verifier.verify('\0').lowerCase()             => FAIL
-     * Verifier.verify('0').lowerCase()              => FAIL
-     * Verifier.verify('a').lowerCase()              => PASS
-     * Verifier.verify('Z').lowerCase()              => FAIL
-     * Verifier.verify('१').lowerCase()              => FAIL
-     * Verifier.verify('é').lowerCase()              => PASS
-     * Verifier.verify('É').lowerCase()              => FAIL
+     * Verifier.verify((Character) null).lowerCase() =&gt; FAIL
+     * Verifier.verify('\0').lowerCase()             =&gt; FAIL
+     * Verifier.verify('0').lowerCase()              =&gt; FAIL
+     * Verifier.verify('a').lowerCase()              =&gt; PASS
+     * Verifier.verify('Z').lowerCase()              =&gt; FAIL
+     * Verifier.verify('१').lowerCase()              =&gt; FAIL
+     * Verifier.verify('é').lowerCase()              =&gt; PASS
+     * Verifier.verify('É').lowerCase()              =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link CharacterVerifier} for chaining purposes.
@@ -386,12 +386,12 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * Verifies that the value is a digit.
      * </p>
      * <pre>
-     * Verifier.verify((Character) null).numeric() => FAIL
-     * Verifier.verify('\0').numeric()             => FAIL
-     * Verifier.verify('0').numeric()              => PASS
-     * Verifier.verify('Z').numeric()              => FAIL
-     * Verifier.verify('१').numeric()              => PASS
-     * Verifier.verify('É').numeric()              => FAIL
+     * Verifier.verify((Character) null).numeric() =&gt; FAIL
+     * Verifier.verify('\0').numeric()             =&gt; FAIL
+     * Verifier.verify('0').numeric()              =&gt; PASS
+     * Verifier.verify('Z').numeric()              =&gt; FAIL
+     * Verifier.verify('१').numeric()              =&gt; PASS
+     * Verifier.verify('É').numeric()              =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link CharacterVerifier} for chaining purposes.
@@ -423,14 +423,14 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * Verifies that the value is an upper case letter.
      * </p>
      * <pre>
-     * Verifier.verify((Character) null).upperCase() => FAIL
-     * Verifier.verify('\0').upperCase()             => FAIL
-     * Verifier.verify('0').upperCase()              => FAIL
-     * Verifier.verify('a').upperCase()              => FAIL
-     * Verifier.verify('Z').upperCase()              => PASS
-     * Verifier.verify('१').upperCase()              => FAIL
-     * Verifier.verify('é').upperCase()              => FAIL
-     * Verifier.verify('É').upperCase()              => PASS
+     * Verifier.verify((Character) null).upperCase() =&gt; FAIL
+     * Verifier.verify('\0').upperCase()             =&gt; FAIL
+     * Verifier.verify('0').upperCase()              =&gt; FAIL
+     * Verifier.verify('a').upperCase()              =&gt; FAIL
+     * Verifier.verify('Z').upperCase()              =&gt; PASS
+     * Verifier.verify('१').upperCase()              =&gt; FAIL
+     * Verifier.verify('é').upperCase()              =&gt; FAIL
+     * Verifier.verify('É').upperCase()              =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link CharacterVerifier} for chaining purposes.
@@ -453,14 +453,14 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * Verifies that the value is whitespace.
      * </p>
      * <pre>
-     * Verifier.verify((Character) null).whitespace() => FAIL
-     * Verifier.verify('\0').whitespace()             => FAIL
-     * Verifier.verify('0').whitespace()              => FAIL
-     * Verifier.verify('Z').whitespace()              => FAIL
-     * Verifier.verify(' ').whitespace()              => PASS
-     * Verifier.verify('\r').whitespace()             => PASS
-     * Verifier.verify('\n').whitespace()             => PASS
-     * Verifier.verify('\t').whitespace()             => PASS
+     * Verifier.verify((Character) null).whitespace() =&gt; FAIL
+     * Verifier.verify('\0').whitespace()             =&gt; FAIL
+     * Verifier.verify('0').whitespace()              =&gt; FAIL
+     * Verifier.verify('Z').whitespace()              =&gt; FAIL
+     * Verifier.verify(' ').whitespace()              =&gt; PASS
+     * Verifier.verify('\r').whitespace()             =&gt; PASS
+     * Verifier.verify('\n').whitespace()             =&gt; PASS
+     * Verifier.verify('\t').whitespace()             =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link CharacterVerifier} for chaining purposes.

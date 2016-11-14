@@ -61,11 +61,11 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).sameDayAs(null)                                                      => FAIL
-     * Verifier.verify((Date) null).sameDayAs(*)                                               => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameDayAs(parse("31 Aug 2016 13:45:30")) => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameDayAs(parse("15 Oct 2016 13:45:30")) => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameDayAs(parse("31 Oct 2016 00:07:02")) => PASS
+     * Verifier.verify(*).sameDayAs(null)                                                      =&gt; FAIL
+     * Verifier.verify((Date) null).sameDayAs(*)                                               =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameDayAs(parse("31 Aug 2016 13:45:30")) =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameDayAs(parse("15 Oct 2016 13:45:30")) =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameDayAs(parse("31 Oct 2016 00:07:02")) =&gt; PASS
      * </pre>
      *
      * @param other
@@ -95,10 +95,10 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).sameEraAs(null)                                                            => FAIL
-     * Verifier.verify((Date) null).sameEraAs(*)                                                     => FAIL
-     * Verifier.verify(parse("31 Oct 2016 AD 13:45:30")).sameEraAs(parse("31 Oct 2016 BC 13:45:30")) => FAIL
-     * Verifier.verify(parse("31 Oct 2016 AD 13:45:30")).sameEraAs(parse("15 Aug 2017 AD 00:07:02")) => PASS
+     * Verifier.verify(*).sameEraAs(null)                                                            =&gt; FAIL
+     * Verifier.verify((Date) null).sameEraAs(*)                                                     =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 AD 13:45:30")).sameEraAs(parse("31 Oct 2016 BC 13:45:30")) =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 AD 13:45:30")).sameEraAs(parse("15 Aug 2017 AD 00:07:02")) =&gt; PASS
      * </pre>
      *
      * @param other
@@ -126,11 +126,11 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).sameHourAs(null)                                                      => FAIL
-     * Verifier.verify((Date) null).sameHourAs(*)                                               => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameHourAs(parse("15 Oct 2016 13:45:30")) => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameHourAs(parse("31 Oct 2016 00:45:30")) => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameHourAs(parse("31 Oct 2016 13:15:02")) => PASS
+     * Verifier.verify(*).sameHourAs(null)                                                      =&gt; FAIL
+     * Verifier.verify((Date) null).sameHourAs(*)                                               =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameHourAs(parse("15 Oct 2016 13:45:30")) =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameHourAs(parse("31 Oct 2016 00:45:30")) =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameHourAs(parse("31 Oct 2016 13:15:02")) =&gt; PASS
      * </pre>
      *
      * @param other
@@ -161,11 +161,11 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).sameMinuteAs(null)                                                      => FAIL
-     * Verifier.verify((Date) null).sameMinuteAs(*)                                               => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMinuteAs(parse("31 Oct 2016 00:45:30")) => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMinuteAs(parse("31 Oct 2016 13:15:30")) => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMinuteAs(parse("31 Oct 2016 13:45:02")) => PASS
+     * Verifier.verify(*).sameMinuteAs(null)                                                      =&gt; FAIL
+     * Verifier.verify((Date) null).sameMinuteAs(*)                                               =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMinuteAs(parse("31 Oct 2016 00:45:30")) =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMinuteAs(parse("31 Oct 2016 13:15:30")) =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMinuteAs(parse("31 Oct 2016 13:45:02")) =&gt; PASS
      * </pre>
      *
      * @param other
@@ -197,11 +197,11 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).sameMonthAs(null)                                                      => FAIL
-     * Verifier.verify((Date) null).sameMonthAs(*)                                               => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMonthAs(parse("31 Oct 2017 13:45:30")) => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMonthAs(parse("31 Aug 2016 13:45:30")) => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMonthAs(parse("15 Oct 2016 00:07:02")) => PASS
+     * Verifier.verify(*).sameMonthAs(null)                                                      =&gt; FAIL
+     * Verifier.verify((Date) null).sameMonthAs(*)                                               =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMonthAs(parse("31 Oct 2017 13:45:30")) =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMonthAs(parse("31 Aug 2016 13:45:30")) =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameMonthAs(parse("15 Oct 2016 00:07:02")) =&gt; PASS
      * </pre>
      *
      * @param other
@@ -231,11 +231,11 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).sameSecondAs(null)                                                      => FAIL
-     * Verifier.verify((Date) null).sameSecondAs(*)                                               => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameSecondAs(parse("31 Oct 2016 13:15:30")) => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameSecondAs(parse("31 Oct 2016 13:45:02")) => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameSecondAs(parse("31 Oct 2016 13:45:30")) => PASS
+     * Verifier.verify(*).sameSecondAs(null)                                                      =&gt; FAIL
+     * Verifier.verify((Date) null).sameSecondAs(*)                                               =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameSecondAs(parse("31 Oct 2016 13:15:30")) =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameSecondAs(parse("31 Oct 2016 13:45:02")) =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameSecondAs(parse("31 Oct 2016 13:45:30")) =&gt; PASS
      * </pre>
      *
      * @param other
@@ -268,11 +268,11 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).sameTimeAs(null)                                                              => FAIL
-     * Verifier.verify((Date) null).sameTimeAs(*)                                                       => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30.123")).sameTimeAs(parse("31 Oct 2016 13:45:15.123")) => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30.123")).sameTimeAs(parse("31 Oct 2016 13:45:30.789")) => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30.123")).sameTimeAs(parse("31 Oct 2016 13:45:30.123")) => PASS
+     * Verifier.verify(*).sameTimeAs(null)                                                              =&gt; FAIL
+     * Verifier.verify((Date) null).sameTimeAs(*)                                                       =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30.123")).sameTimeAs(parse("31 Oct 2016 13:45:15.123")) =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30.123")).sameTimeAs(parse("31 Oct 2016 13:45:30.789")) =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30.123")).sameTimeAs(parse("31 Oct 2016 13:45:30.123")) =&gt; PASS
      * </pre>
      *
      * @param other
@@ -300,11 +300,11 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).sameWeekAs(null)                                                      => FAIL
-     * Verifier.verify((Date) null).sameWeekAs(*)                                               => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameWeekAs(parse("31 Oct 2017 13:45:30")) => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameWeekAs(parse("15 Oct 2016 13:45:30")) => FAIL
-     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameWeekAs(parse("1 Nov 2016 00:07:02"))  => PASS
+     * Verifier.verify(*).sameWeekAs(null)                                                      =&gt; FAIL
+     * Verifier.verify((Date) null).sameWeekAs(*)                                               =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameWeekAs(parse("31 Oct 2017 13:45:30")) =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameWeekAs(parse("15 Oct 2016 13:45:30")) =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 13:45:30")).sameWeekAs(parse("1 Nov 2016 00:07:02"))  =&gt; PASS
      * </pre>
      *
      * @param other
@@ -334,11 +334,11 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * {@literal null} references are handled gracefully without exceptions.
      * </p>
      * <pre>
-     * Verifier.verify(*).sameYearAs(null)                                                            => FAIL
-     * Verifier.verify((Date) null).sameYearAs(*)                                                     => FAIL
-     * Verifier.verify(parse("31 Oct 2016 AD 13:45:30")).sameYearAs(parse("31 Oct 2016 BC 13:45:30")) => FAIL
-     * Verifier.verify(parse("31 Oct 2016 AD 13:45:30")).sameYearAs(parse("31 Oct 2017 AD 13:45:30")) => FAIL
-     * Verifier.verify(parse("31 Oct 2016 AD 13:45:30")).sameYearAs(parse("15 Aug 2016 AD 00:07:02")) => PASS
+     * Verifier.verify(*).sameYearAs(null)                                                            =&gt; FAIL
+     * Verifier.verify((Date) null).sameYearAs(*)                                                     =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 AD 13:45:30")).sameYearAs(parse("31 Oct 2016 BC 13:45:30")) =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 AD 13:45:30")).sameYearAs(parse("31 Oct 2017 AD 13:45:30")) =&gt; FAIL
+     * Verifier.verify(parse("31 Oct 2016 AD 13:45:30")).sameYearAs(parse("15 Aug 2016 AD 00:07:02")) =&gt; PASS
      * </pre>
      *
      * @param other
