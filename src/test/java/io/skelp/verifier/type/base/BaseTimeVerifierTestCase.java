@@ -550,16 +550,16 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
 
     @Test
     public void testSameWeekAsWithDifferentWeek() {
-        Calendar value = createCalendarForWeek(GregorianCalendar.AD, 2016, 1, Calendar.SATURDAY);
-        Calendar other = createCalendarForWeek(GregorianCalendar.AD, 2016, 2, Calendar.SATURDAY);
+        Calendar value = createCalendarForWeek(GregorianCalendar.AD, 2016, 1, Calendar.WEDNESDAY);
+        Calendar other = createCalendarForWeek(GregorianCalendar.AD, 2016, 2, Calendar.WEDNESDAY);
 
         testSameWeekAsHelper(value, other, false);
     }
 
     @Test
     public void testSameWeekAsWithDifferentYear() {
-        Calendar value = createCalendarForWeek(GregorianCalendar.AD, 2016, 1, Calendar.SATURDAY);
-        Calendar other = createCalendarForWeek(GregorianCalendar.AD, 2017, 1, Calendar.SATURDAY);
+        Calendar value = createCalendarForWeek(GregorianCalendar.AD, 2016, 1, Calendar.WEDNESDAY);
+        Calendar other = createCalendarForWeek(GregorianCalendar.AD, 2017, 1, Calendar.WEDNESDAY);
 
         testSameWeekAsHelper(value, other, false);
     }
@@ -581,8 +581,8 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
 
     @Test
     public void testSameWeekAsWithSameWeek() {
-        Calendar value = createCalendarForWeek(GregorianCalendar.AD, 2016, 1, Calendar.SATURDAY);
-        Calendar other = createCalendarForWeek(GregorianCalendar.AD, 2016, 1, Calendar.SUNDAY);
+        Calendar value = createCalendarForWeek(GregorianCalendar.AD, 2016, 1, Calendar.WEDNESDAY);
+        Calendar other = createCalendarForWeek(GregorianCalendar.AD, 2016, 1, Calendar.THURSDAY);
 
         testSameWeekAsHelper(value, other, true);
     }
