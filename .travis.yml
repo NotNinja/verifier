@@ -2,3 +2,10 @@ language: java
 jdk:
   - oraclejdk7
   - oraclejdk8
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/a4d2c0b15b94444b173e
+    on_success: change
+    on_failure: always
+    on_start: never

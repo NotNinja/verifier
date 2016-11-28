@@ -4,9 +4,10 @@
 API with useful (and readable!) error messages, all while being highly configurable so that it's useful in your
 application code.
 
-[![Build Status](https://img.shields.io/travis/Skelp/verifier/develop.svg?style=flat-square)](https://travis-ci.org/Skelp/verifier)
+[![Chat](https://img.shields.io/gitter/room/skelpuk/verifier.svg?style=flat-square)](https://gitter.im/skelpuk/verifier)
+[![Build](https://img.shields.io/travis/Skelp/verifier/develop.svg?style=flat-square)](https://travis-ci.org/Skelp/verifier)
 [![License](https://img.shields.io/github/license/Skelp/verifier.svg?style=flat-square)](https://github.com/Skelp/verifier/blob/master/LICENSE.md)
-[![Release](https://img.shields.io/maven-central/v/io.skelp/verifier.svg?style=flat-square)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22io.skelp%22%20AND%20a%3A%22verifier%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.skelp/verifier.svg?style=flat-square)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22io.skelp%22%20AND%20a%3A%22verifier%22)
 
 * [Install](#install)
 * [API](#api)
