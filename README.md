@@ -30,7 +30,7 @@ To install Verifier, simply add it as a dependency to your project:
 
 **Grails:**
 ``` groovy
-compile 'io.skelp:verifier:0.1.0'
+compile 'io.skelp:verifier:0.2.0-SNAPSHOT'
 ```
 
 That's it! You'll need to have Java 8 or above though.
