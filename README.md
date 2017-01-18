@@ -24,7 +24,7 @@ To install Verifier, simply add it as a dependency to your project:
 <dependency>
     <groupId>io.skelp</groupId>
     <artifactId>verifier</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0-SNAPSHOT</version>
 </dependency>
 ```
 
