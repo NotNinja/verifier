@@ -19,6 +19,7 @@ application code.
 
 To install Verifier, simply add it as a dependency to your project:
 
+**Maven:**
 ``` xml
 <dependency>
     <groupId>io.skelp</groupId>
@@ -27,7 +28,12 @@ To install Verifier, simply add it as a dependency to your project:
 </dependency>
 ```
 
-That's it!
+**Grails:**
+``` groovy
+compile 'io.skelp:verifier:0.1.0'
+```
+
+That's it! You'll need to have Java 8 or above though.
 
 ## API
 

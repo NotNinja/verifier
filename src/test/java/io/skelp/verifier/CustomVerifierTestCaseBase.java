@@ -34,9 +34,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
 import io.skelp.verifier.message.ArrayFormatter;
 import io.skelp.verifier.message.MessageFormatter;
@@ -131,19 +129,9 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
 
     @Before
     public void setUp() {
-        when(mockMessageFormatter.formatArray(any(Object[].class))).thenAnswer(new Answer<ArrayFormatter<?>>() {
-            @Override
-            public ArrayFormatter<?> answer(InvocationOnMock invocation) throws Throwable {
-                return mockArrayFormatter;
-            }
-        });
+        when(mockMessageFormatter.formatArray(any(Object[].class))).thenAnswer(invocation -> mockArrayFormatter);
         when(mockVerification.getMessageFormatter()).thenReturn(mockMessageFormatter);
-        when(mockVerification.getValue()).thenAnswer(new Answer<T>() {
-            @Override
-            public T answer(InvocationOnMock invocation) throws Throwable {
-                return value;
-            }
-        });
+        when(mockVerification.getValue()).thenAnswer(invocation -> value);
 
         value = null;
 
