@@ -26,7 +26,6 @@ import java.util.Map;
 
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseCollectionVerifier;
-import io.skelp.verifier.util.Function;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -81,12 +80,7 @@ public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>
      */
     public MapVerifier<K, V> containAllKeys(final K... keys) throws VerifierException {
         final Map<K, V> value = verification().getValue();
-        final boolean result = value != null && matchAll(keys, new Function<Boolean, K>() {
-            @Override
-            public Boolean apply(final K input) {
-                return value.containsKey(input);
-            }
-        });
+        final boolean result = value != null && matchAll(keys, value::containsKey);
 
         verification().check(result, "contain all keys %s", verification().getMessageFormatter().formatArray(keys));
 
@@ -119,12 +113,7 @@ public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>
      */
     public MapVerifier<K, V> containAnyKey(final K... keys) throws VerifierException {
         final Map<K, V> value = verification().getValue();
-        final boolean result = value != null && matchAny(keys, new Function<Boolean, K>() {
-            @Override
-            public Boolean apply(final K input) {
-                return value.containsKey(input);
-            }
-        });
+        final boolean result = value != null && matchAny(keys, value::containsKey);
 
         verification().check(result, "contain any key %s", verification().getMessageFormatter().formatArray(keys));
 

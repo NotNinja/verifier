@@ -30,7 +30,6 @@ import java.util.Set;
 
 import io.skelp.verifier.AbstractCustomVerifier;
 import io.skelp.verifier.VerifierException;
-import io.skelp.verifier.util.Function;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -139,12 +138,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      */
     public ClassVerifier annotatedWithAll(final Class<? extends Annotation>... types) throws VerifierException {
         final Class<?> value = verification().getValue();
-        final boolean result = value != null && matchAll(types, new Function<Boolean, Class<? extends Annotation>>() {
-            @Override
-            public Boolean apply(Class<? extends Annotation> input) {
-                return input != null && value.isAnnotationPresent(input);
-            }
-        });
+        final boolean result = value != null && matchAll(types, input -> input != null && value.isAnnotationPresent(input));
 
         verification().check(result, "be annotated with all %s", verification().getMessageFormatter().formatArray(types));
 
@@ -175,12 +169,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      */
     public ClassVerifier annotatedWithAny(final Class<? extends Annotation>... types) throws VerifierException {
         final Class<?> value = verification().getValue();
-        final boolean result = value != null && matchAny(types, new Function<Boolean, Class<? extends Annotation>>() {
-            @Override
-            public Boolean apply(Class<? extends Annotation> input) {
-                return input != null && value.isAnnotationPresent(input);
-            }
-        });
+        final boolean result = value != null && matchAny(types, input -> input != null && value.isAnnotationPresent(input));
 
         verification().check(result, "be annotated with any %s", verification().getMessageFormatter().formatArray(types));
 

@@ -22,8 +22,6 @@
 package io.skelp.verifier;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;

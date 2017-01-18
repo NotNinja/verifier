@@ -27,7 +27,6 @@ import io.skelp.verifier.AbstractCustomVerifier;
 import io.skelp.verifier.Verifier;
 import io.skelp.verifier.VerifierAssertion;
 import io.skelp.verifier.VerifierException;
-import io.skelp.verifier.util.Function;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -116,12 +115,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      */
     public V containAll(final E... elements) throws VerifierException {
         final Collection<E> value = getCollection(verification().getValue());
-        final boolean result = value != null && matchAll(elements, new Function<Boolean, E>() {
-            @Override
-            public Boolean apply(final E input) {
-                return value.contains(input);
-            }
-        });
+        final boolean result = value != null && matchAll(elements, value::contains);
 
         verification().check(result, "contain all %s", verification().getMessageFormatter().formatArray(elements));
 
@@ -154,12 +148,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      */
     public V containAny(final E... elements) throws VerifierException {
         final Collection<E> value = getCollection(verification().getValue());
-        final boolean result = value != null && matchAny(elements, new Function<Boolean, E>() {
-            @Override
-            public Boolean apply(final E input) {
-                return value.contains(input);
-            }
-        });
+        final boolean result = value != null && matchAny(elements, value::contains);
 
         verification().check(result, "contain any %s", verification().getMessageFormatter().formatArray(elements));
 
@@ -281,12 +270,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
             .not().nulled();
 
         final Collection<E> value = getCollection(verification().getValue());
-        final boolean result = matchAll(value, new Function<Boolean, E>() {
-            @Override
-            public Boolean apply(E input) {
-                return assertion.verify(input);
-            }
-        });
+        final boolean result = matchAll(value, assertion::verify);
 
         verification().check(result, message, args);
 
@@ -351,12 +335,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
             .not().nulled();
 
         final Collection<E> value = getCollection(verification().getValue());
-        final boolean result = matchAny(value, new Function<Boolean, E>() {
-            @Override
-            public Boolean apply(E input) {
-                return assertion.verify(input);
-            }
-        });
+        final boolean result = matchAny(value, assertion::verify);
 
         verification().check(result, message, args);
 

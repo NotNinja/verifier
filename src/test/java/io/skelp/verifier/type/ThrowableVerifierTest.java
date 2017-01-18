@@ -22,7 +22,6 @@
 package io.skelp.verifier.type;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 import org.junit.Test;

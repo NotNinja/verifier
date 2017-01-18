@@ -40,9 +40,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
 import io.skelp.verifier.factory.CustomVerifierFactory;
 import io.skelp.verifier.factory.DefaultVerifierFactoryProvider;
@@ -106,12 +104,7 @@ public class VerifierTest {
         when(mockVerifierFactoryProvider.getMessageFormatterFactory()).thenReturn(mockMessageFormatterFactory);
         when(mockVerifierFactoryProvider.getVerificationFactory()).thenReturn(mockVerificationFactory);
 
-        when(mockVerificationFactory.create(isA(MessageFormatterFactory.class), any(), any())).thenAnswer(new Answer<Verification>() {
-            @Override
-            public Verification answer(InvocationOnMock invocation) throws Throwable {
-                return mockVerification;
-            }
-        });
+        when(mockVerificationFactory.create(isA(MessageFormatterFactory.class), any(), any())).thenAnswer(invocation -> mockVerification);
 
         Verifier.setFactoryProvider(mockVerifierFactoryProvider);
     }
@@ -459,10 +452,14 @@ public class VerifierTest {
     @SuppressWarnings("unchecked")
     @Test
     public void testVerifyWithCustomVerifierClass() {
-        Verifier.verify("foo", "bar", StringVerifier.class);
+        StringVerifier expected = new StringVerifier((Verification<String>) mockVerification);
 
-        verify(mockCustomVerifierFactory).create(StringVerifier.class, (Verification<String>) mockVerification);
-        verify(mockVerificationFactory).create(mockMessageFormatterFactory, "foo", "bar");
+        when(mockCustomVerifierFactory.create(StringVerifier.class, (Verification<String>) mockVerification)).thenReturn(expected);
+
+        StringVerifier actual = Verifier.verify("foo", "bar", StringVerifier.class);
+
+        assertSame("Uses CustomVerifier created by factory", expected, actual);
+        testVerifyHelper(actual, "foo", "bar");
     }
 
     private <T, V extends CustomVerifier<T, V>> void testVerifyHelper(CustomVerifier<T, V> verifier, T value, Object name) {

@@ -26,6 +26,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
@@ -35,7 +36,6 @@ import io.skelp.verifier.AbstractCustomVerifierTestCase;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
 import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
 import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
-import io.skelp.verifier.util.Function;
 
 /**
  * <p>
@@ -133,46 +133,25 @@ public class CharacterVerifierTest {
         private static Character[] asciiNumbers;
         private static Character[] asciiOtherPrintables;
         private static Character[] asciiUpperCaseLetters;
-        private static Character[] nonAsciiLowerCaseLetters = {'é', 'û', 'ÿ'};
-        private static Character[] nonAsciiNumbers = {'१', '३', '۳'};
-        private static Character[] nonAsciiUpperCaseLetters = {'É', 'Û', 'Ÿ'};
-        private static Character[] whitespace = {' ', '\r', '\n', '\t'};
+        private static Character[] nonAsciiLowerCaseLetters;
+        private static Character[] nonAsciiNumbers;
+        private static Character[] nonAsciiUpperCaseLetters;
+        private static Character[] whitespace;
 
         @BeforeClass
         public static void setUpClass() {
-            asciiControls = getAsciiCharacters(new Function<Boolean, Integer>() {
-                @Override
-                public Boolean apply(Integer input) {
-                    return input < 32 || input == 127;
-                }
-            });
-            asciiLowerCaseLetters = getAsciiCharacters(new Function<Boolean, Integer>() {
-                @Override
-                public Boolean apply(Integer input) {
-                    return input > 96 && input < 123;
-                }
-            });
-            asciiNumbers = getAsciiCharacters(new Function<Boolean, Integer>() {
-                @Override
-                public Boolean apply(Integer input) {
-                    return input > 47 && input < 58;
-                }
-            });
-            asciiOtherPrintables = getAsciiCharacters(new Function<Boolean, Integer>() {
-                @Override
-                public Boolean apply(Integer input) {
-                    return (input > 31 && input < 48) || (input > 57 && input < 65) || (input > 90 && input < 97) || (input > 122 && input < 127);
-                }
-            });
-            asciiUpperCaseLetters = getAsciiCharacters(new Function<Boolean, Integer>() {
-                @Override
-                public Boolean apply(Integer input) {
-                    return input > 64 && input < 91;
-                }
-            });
+            asciiControls = getAsciiCharacters(input -> input < 32 || input == 127);
+            asciiLowerCaseLetters = getAsciiCharacters(input -> input > 96 && input < 123);
+            asciiNumbers = getAsciiCharacters(input -> input > 47 && input < 58);
+            asciiOtherPrintables = getAsciiCharacters(input -> (input > 31 && input < 48) || (input > 57 && input < 65) || (input > 90 && input < 97) || (input > 122 && input < 127));
+            asciiUpperCaseLetters = getAsciiCharacters(input -> input > 64 && input < 91);
+            nonAsciiLowerCaseLetters = new Character[]{'é', 'û', 'ÿ'};
+            nonAsciiNumbers = new Character[]{'१', '३', '۳'};
+            nonAsciiUpperCaseLetters = new Character[]{'É', 'Û', 'Ÿ'};
+            whitespace = new Character[]{' ', '\r', '\n', '\t'};
         }
 
-        private static Character[] getAsciiCharacters(Function<Boolean, Integer> matcher) {
+        private static Character[] getAsciiCharacters(Function<Integer, Boolean> matcher) {
             List<Character> characters = new ArrayList<>();
             for (int i = 0; i < 128; i++) {
                 if (matcher.apply(i)) {
