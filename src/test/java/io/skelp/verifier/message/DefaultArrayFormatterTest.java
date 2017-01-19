@@ -43,11 +43,58 @@ public class DefaultArrayFormatterTest {
     }
 
     @Test
+    public void testFormatWhenArrayContainsCircularReference() {
+        Object[] array = new Object[3];
+        array[0] = 1;
+        array[1] = new Integer[]{2, 3, 4};
+        array[2] = array;
+
+        String expected = "['1', ['2', '3', '4'], {Circular}]";
+        String actual = new DefaultArrayFormatter<>(array).format();
+
+        assertEquals("Formats array containing circular reference", expected, actual);
+    }
+
+    @Test
+    public void testFormatWhenArrayContainsNull() {
+        String expected = "['1', null, '3']";
+        String actual = new DefaultArrayFormatter<>(new Integer[]{1, null, 3}).format();
+
+        assertEquals("Formats array containing null", expected, actual);
+    }
+
+    @Test
     public void testFormatWhenArrayHasSingleItem() {
         String expected = "['1']";
         String actual = new DefaultArrayFormatter<>(new Integer[]{1}).format();
 
         assertEquals("Formats array with single item", expected, actual);
+    }
+
+    @Test
+    public void testFormatWhenArrayIsDeep() {
+        String expected = "[['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]";
+        String actual = new DefaultArrayFormatter<>(new Integer[][]{new Integer[]{1, 2, 3}, new Integer[]{4, 5, 6}, new Integer[]{7, 8, 9}}).format();
+
+        assertEquals("Formats deep array", expected, actual);
+    }
+
+    @Test
+    public void testFormatWhenArrayIsDeepAndContainsCircularReference() {
+        Object[] array = new Object[3];
+        array[0] = 1;
+        array[1] = new Integer[]{2, 3, 4};
+
+        Object[] nestedArray = new Object[2];
+        nestedArray[0] = 5;
+        nestedArray[1] = array;
+
+        array[2] = nestedArray;
+
+        String expected = "['1', ['2', '3', '4'], ['5', {Circular}]]";
+        String actual = new DefaultArrayFormatter<>(array).format();
+
+        assertEquals("Formats deep array containing circular reference", expected, actual);
     }
 
     @Test

@@ -21,6 +21,10 @@
  */
 package io.skelp.verifier.message;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * <p>
  * The default implementation of {@link ArrayFormatter}.
@@ -32,9 +36,8 @@ package io.skelp.verifier.message;
  */
 public final class DefaultArrayFormatter<T> implements ArrayFormatter<T> {
 
-    // TODO: Try to support nested arrays and circular references
-
     private final T[] array;
+    private final Set<Object> hierarchy;
 
     /**
      * <p>
@@ -46,6 +49,13 @@ public final class DefaultArrayFormatter<T> implements ArrayFormatter<T> {
      */
     public DefaultArrayFormatter(final T[] array) {
         this.array = array;
+        this.hierarchy = Collections.singleton(array);
+    }
+
+    private DefaultArrayFormatter(final T[] array, final Set<Object> hierarchy) {
+        this.array = array;
+        this.hierarchy = new HashSet<>(hierarchy);
+        this.hierarchy.add(array);
     }
 
     @Override
@@ -64,9 +74,21 @@ public final class DefaultArrayFormatter<T> implements ArrayFormatter<T> {
 
         int index = 0;
         while (true) {
-            buffer.append('\'');
-            buffer.append(String.valueOf(array[index]));
-            buffer.append('\'');
+            final T element = array[index];
+
+            if (element == null) {
+                buffer.append("null");
+            } else if (hierarchy.contains(element)) {
+                buffer.append("{Circular}");
+            } else if (element.getClass().isArray()) {
+                @SuppressWarnings("unchecked")
+                final T[] childArray = (T[]) element;
+                buffer.append(new DefaultArrayFormatter<>(childArray, hierarchy).format());
+            } else {
+                buffer.append('\'');
+                buffer.append(element);
+                buffer.append('\'');
+            }
 
             if (index == last) {
                 return buffer.append(']').toString();
