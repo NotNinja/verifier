@@ -23,7 +23,6 @@ package io.skelp.verifier.type;
 
 import java.math.BigInteger;
 
-import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseNumberVerifier;
 import io.skelp.verifier.type.base.BaseTruthVerifier;
@@ -57,81 +56,81 @@ public final class BigIntegerVerifier extends BaseComparableVerifier<BigInteger,
     }
 
     @Override
-    public BigIntegerVerifier even() throws VerifierException {
+    public BigIntegerVerifier even() {
         final BigInteger value = verification().getValue();
         final boolean result = value != null && !value.testBit(0);
 
-        verification().check(result, EVEN_MESSAGE);
+        verification().check(result, BaseNumberVerifier.MessageKeys.EVEN);
 
         return this;
     }
 
     @Override
-    public BigIntegerVerifier falsy() throws VerifierException {
+    public BigIntegerVerifier falsy() {
         final BigInteger value = verification().getValue();
         final boolean result = value == null || value.compareTo(BigInteger.ZERO) == 0;
 
-        verification().check(result, FALSY_MESSAGE);
+        verification().check(result, BaseTruthVerifier.MessageKeys.FALSY);
 
         return this;
     }
 
     @Override
-    public BigIntegerVerifier negative() throws VerifierException {
+    public BigIntegerVerifier negative() {
         final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ZERO) < 0;
 
-        verification().check(result, NEGATIVE_MESSAGE);
+        verification().check(result, BaseNumberVerifier.MessageKeys.NEGATIVE);
 
         return this;
     }
 
     @Override
-    public BigIntegerVerifier odd() throws VerifierException {
+    public BigIntegerVerifier odd() {
         final BigInteger value = verification().getValue();
         final boolean result = value != null && value.testBit(0);
 
-        verification().check(result, ODD_MESSAGE);
+        verification().check(result, BaseNumberVerifier.MessageKeys.ODD);
 
         return this;
     }
 
     @Override
-    public BigIntegerVerifier one() throws VerifierException {
+    public BigIntegerVerifier one() {
         final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ONE) == 0;
 
-        verification().check(result, ONE_MESSAGE);
+        verification().check(result, BaseNumberVerifier.MessageKeys.ONE);
 
         return this;
     }
 
     @Override
-    public BigIntegerVerifier positive() throws VerifierException {
+    public BigIntegerVerifier positive() {
         final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ZERO) >= 0;
 
-        verification().check(result, POSITIVE_MESSAGE);
+        verification().check(result, BaseNumberVerifier.MessageKeys.POSITIVE);
 
         return this;
     }
 
     @Override
-    public BigIntegerVerifier truthy() throws VerifierException {
+    public BigIntegerVerifier truthy() {
         final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ONE) == 0;
 
-        verification().check(result, TRUTHY_MESSAGE);
+        verification().check(result, BaseTruthVerifier.MessageKeys.TRUTHY);
 
         return this;
     }
 
     @Override
-    public BigIntegerVerifier zero() throws VerifierException {
+    public BigIntegerVerifier zero() {
         final BigInteger value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigInteger.ZERO) == 0;
 
-        verification().check(result, ZERO_MESSAGE);
+        verification().check(result, BaseNumberVerifier.MessageKeys.ZERO);
 
         return this;
     }

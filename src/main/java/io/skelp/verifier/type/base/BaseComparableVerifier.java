@@ -23,6 +23,7 @@ package io.skelp.verifier.type.base;
 
 import io.skelp.verifier.AbstractCustomVerifier;
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.message.MessageKey;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -79,7 +80,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      *         If the verification fails while not negated or passes while negated.
      * @see #between(Comparable, Comparable, Object, Object)
      */
-    public V between(final T start, final T end) throws VerifierException {
+    public V between(final T start, final T end) {
         return between(start, end, start, end);
     }
 
@@ -121,8 +122,8 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      *         If the verification fails while not negated or passes while negated.
      * @see #between(Comparable, Comparable)
      */
-    public V between(final T start, final T end, final Object startName, final Object endName) throws VerifierException {
-        return between(start, ComparisonOperator.GREATER_THAN_OR_EQUAL_TO, startName, end, ComparisonOperator.LESS_THAN_OR_EQUAL_TO, endName, "be between '%s' and '%s' (inclusive)");
+    public V between(final T start, final T end, final Object startName, final Object endName) {
+        return between(start, ComparisonOperator.GREATER_THAN_OR_EQUAL_TO, startName, end, ComparisonOperator.LESS_THAN_OR_EQUAL_TO, endName, MessageKeys.BETWEEN);
     }
 
     /**
@@ -152,7 +153,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      *         If the verification fails while not negated or passes while negated.
      * @see #betweenExclusive(Comparable, Comparable, Object, Object)
      */
-    public V betweenExclusive(final T start, final T end) throws VerifierException {
+    public V betweenExclusive(final T start, final T end) {
         return betweenExclusive(start, end, start, end);
     }
 
@@ -194,8 +195,8 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      *         If the verification fails while not negated or passes while negated.
      * @see #betweenExclusive(Comparable, Comparable)
      */
-    public V betweenExclusive(final T start, final T end, final Object startName, final Object endName) throws VerifierException {
-        return between(start, ComparisonOperator.GREATER_THAN, startName, end, ComparisonOperator.LESS_THAN, endName, "be between '%s' and '%s' (exclusive)");
+    public V betweenExclusive(final T start, final T end, final Object startName, final Object endName) {
+        return between(start, ComparisonOperator.GREATER_THAN, startName, end, ComparisonOperator.LESS_THAN, endName, MessageKeys.BETWEEN_EXCLUSIVE);
     }
 
     /**
@@ -221,7 +222,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      *         If the verification fails while not negated or passes while negated.
      * @see #greaterThan(Comparable, Object)
      */
-    public V greaterThan(final T other) throws VerifierException {
+    public V greaterThan(final T other) {
         return greaterThan(other, other);
     }
 
@@ -257,8 +258,8 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      *         If the verification fails while not negated or passes while negated.
      * @see #greaterThan(Comparable)
      */
-    public V greaterThan(final T other, final Object name) throws VerifierException {
-        return comparesTo(ComparisonOperator.GREATER_THAN, other, name, "be greater than '%s'");
+    public V greaterThan(final T other, final Object name) {
+        return comparesTo(ComparisonOperator.GREATER_THAN, other, name, MessageKeys.GREATER_THAN);
     }
 
     /**
@@ -284,7 +285,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      *         If the verification fails while not negated or passes while negated.
      * @see #greaterThanOrEqualTo(Comparable, Object)
      */
-    public V greaterThanOrEqualTo(final T other) throws VerifierException {
+    public V greaterThanOrEqualTo(final T other) {
         return greaterThanOrEqualTo(other, other);
     }
 
@@ -320,8 +321,8 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      *         If the verification fails while not negated or passes while negated.
      * @see #greaterThanOrEqualTo(Comparable)
      */
-    public V greaterThanOrEqualTo(final T other, final Object name) throws VerifierException {
-        return comparesTo(ComparisonOperator.GREATER_THAN_OR_EQUAL_TO, other, name, "be greater than or equal to '%s'");
+    public V greaterThanOrEqualTo(final T other, final Object name) {
+        return comparesTo(ComparisonOperator.GREATER_THAN_OR_EQUAL_TO, other, name, MessageKeys.GREATER_THAN_OR_EQUAL_TO);
     }
 
     /**
@@ -347,7 +348,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      *         If the verification fails while not negated or passes while negated.
      * @see #lessThan(Comparable, Object)
      */
-    public V lessThan(final T other) throws VerifierException {
+    public V lessThan(final T other) {
         return lessThan(other, other);
     }
 
@@ -382,8 +383,8 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      *         If the verification fails while not negated or passes while negated.
      * @see #lessThan(Comparable)
      */
-    public V lessThan(final T other, final Object name) throws VerifierException {
-        return comparesTo(ComparisonOperator.LESS_THAN, other, name, "be less than '%s'");
+    public V lessThan(final T other, final Object name) {
+        return comparesTo(ComparisonOperator.LESS_THAN, other, name, MessageKeys.LESS_THAN);
     }
 
     /**
@@ -409,7 +410,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      *         If the verification fails while not negated or passes while negated.
      * @see #lessThanOrEqualTo(Comparable, Object)
      */
-    public V lessThanOrEqualTo(final T other) throws VerifierException {
+    public V lessThanOrEqualTo(final T other) {
         return lessThanOrEqualTo(other, other);
     }
 
@@ -445,25 +446,25 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
      *         If the verification fails while not negated or passes while negated.
      * @see #lessThanOrEqualTo(Comparable)
      */
-    public V lessThanOrEqualTo(final T other, final Object name) throws VerifierException {
-        return comparesTo(ComparisonOperator.LESS_THAN_OR_EQUAL_TO, other, name, "be less than or equal to '%s'");
+    public V lessThanOrEqualTo(final T other, final Object name) {
+        return comparesTo(ComparisonOperator.LESS_THAN_OR_EQUAL_TO, other, name, MessageKeys.LESS_THAN_OR_EQUAL_TO);
     }
 
-    private V between(final T start, final Comparison startComparison, final Object startName, final T end, final Comparison endComparison, final Object endName, final String message) throws VerifierException {
+    private V between(final T start, final Comparison startComparison, final Object startName, final T end, final Comparison endComparison, final Object endName, final MessageKey key) {
         final T value = verification().getValue();
         final boolean result = value != null && start != null && end != null &&
             (startComparison.compare(value.compareTo(start)) && endComparison.compare(value.compareTo(end)));
 
-        verification().check(result, message, startName, endName);
+        verification().check(result, key, startName, endName);
 
         return chain();
     }
 
-    private V comparesTo(final Comparison comparison, final T other, final Object name, final String message) throws VerifierException {
+    private V comparesTo(final Comparison comparison, final T other, final Object name, final MessageKey key) {
         final T value = verification().getValue();
         final boolean result = (value == null || other == null) ? comparison.areNullsEqual() && value == other : comparison.compare(value.compareTo(other));
 
-        verification().check(result, message, name);
+        verification().check(result, key, name);
 
         return chain();
     }
@@ -473,6 +474,34 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
         boolean areNullsEqual();
 
         boolean compare(int result);
+    }
+
+    /**
+     * <p>
+     * The {@link MessageKey MessageKeys} that are used by {@link BaseComparableVerifier}.
+     * </p>
+     *
+     * @since 0.2.0
+     */
+    public enum MessageKeys implements MessageKey {
+
+        BETWEEN("io.skelp.verifier.type.base.BaseComparableVerifier.between"),
+        BETWEEN_EXCLUSIVE("io.skelp.verifier.type.base.BaseComparableVerifier.betweenExclusive"),
+        GREATER_THAN("io.skelp.verifier.type.base.BaseComparableVerifier.greaterThan"),
+        GREATER_THAN_OR_EQUAL_TO("io.skelp.verifier.type.base.BaseComparableVerifier.greaterThanOrEqualTo"),
+        LESS_THAN("io.skelp.verifier.type.base.BaseComparableVerifier.lessThan"),
+        LESS_THAN_OR_EQUAL_TO("io.skelp.verifier.type.base.BaseComparableVerifier.lessThanOrEqualTo");
+
+        private final String code;
+
+        MessageKeys(final String code) {
+            this.code = code;
+        }
+
+        @Override
+        public String code() {
+            return code;
+        }
     }
 
     enum ComparisonOperator implements Comparison {

@@ -30,6 +30,7 @@ import java.util.Set;
 
 import io.skelp.verifier.AbstractCustomVerifier;
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.message.MessageKey;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -74,11 +75,11 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public ClassVerifier annotated() throws VerifierException {
+    public ClassVerifier annotated() {
         final Class<?> value = verification().getValue();
         final boolean result = value != null && value.getAnnotations().length > 0;
 
-        verification().check(result, "be annotated");
+        verification().check(result, MessageKeys.ANNOTATED);
 
         return this;
     }
@@ -104,11 +105,11 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public ClassVerifier annotatedWith(final Class<? extends Annotation> type) throws VerifierException {
+    public ClassVerifier annotatedWith(final Class<? extends Annotation> type) {
         final Class<?> value = verification().getValue();
         final boolean result = value != null && type != null && value.isAnnotationPresent(type);
 
-        verification().check(result, "be annotated with '%s'", type);
+        verification().check(result, MessageKeys.ANNOTATED_WITH, type);
 
         return this;
     }
@@ -136,11 +137,11 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public ClassVerifier annotatedWithAll(final Class<? extends Annotation>... types) throws VerifierException {
+    public ClassVerifier annotatedWithAll(final Class<? extends Annotation>... types) {
         final Class<?> value = verification().getValue();
         final boolean result = value != null && matchAll(types, input -> input != null && value.isAnnotationPresent(input));
 
-        verification().check(result, "be annotated with all %s", verification().getMessageFormatter().formatArray(types));
+        verification().check(result, MessageKeys.ANNOTATED_WITH_ALL, (Object) types);
 
         return this;
     }
@@ -167,11 +168,11 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public ClassVerifier annotatedWithAny(final Class<? extends Annotation>... types) throws VerifierException {
+    public ClassVerifier annotatedWithAny(final Class<? extends Annotation>... types) {
         final Class<?> value = verification().getValue();
         final boolean result = value != null && matchAny(types, input -> input != null && value.isAnnotationPresent(input));
 
-        verification().check(result, "be annotated with any %s", verification().getMessageFormatter().formatArray(types));
+        verification().check(result, MessageKeys.ANNOTATED_WITH_ANY, (Object) types);
 
         return this;
     }
@@ -190,11 +191,11 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public ClassVerifier annotation() throws VerifierException {
+    public ClassVerifier annotation() {
         final Class<?> value = verification().getValue();
         final boolean result = value != null && value.isAnnotation();
 
-        verification().check(result, "be an annotation");
+        verification().check(result, MessageKeys.ANNOTATION);
 
         return this;
     }
@@ -213,11 +214,11 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public ClassVerifier anonymous() throws VerifierException {
+    public ClassVerifier anonymous() {
         final Class<?> value = verification().getValue();
         final boolean result = value != null && value.isAnonymousClass();
 
-        verification().check(result, "be anonymous");
+        verification().check(result, MessageKeys.ANONYMOUS);
 
         return this;
     }
@@ -236,11 +237,11 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public ClassVerifier array() throws VerifierException {
+    public ClassVerifier array() {
         final Class<?> value = verification().getValue();
         final boolean result = value != null && value.isArray();
 
-        verification().check(result, "be an array");
+        verification().check(result, MessageKeys.ARRAY);
 
         return this;
     }
@@ -266,11 +267,11 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public ClassVerifier assignableFrom(final Class<?> type) throws VerifierException {
+    public ClassVerifier assignableFrom(final Class<?> type) {
         final Class<?> value = verification().getValue();
         final boolean result = value != null && type != null && value.isAssignableFrom(type);
 
-        verification().check(result, "be assignable from '%s'", type);
+        verification().check(result, MessageKeys.ASSIGNABLE_FROM, type);
 
         return this;
     }
@@ -289,11 +290,11 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public ClassVerifier enumeration() throws VerifierException {
+    public ClassVerifier enumeration() {
         final Class<?> value = verification().getValue();
         final boolean result = value != null && value.isEnum();
 
-        verification().check(result, "be an enum");
+        verification().check(result, MessageKeys.ENUMERATION);
 
         return this;
     }
@@ -312,11 +313,11 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public ClassVerifier interfacing() throws VerifierException {
+    public ClassVerifier interfacing() {
         final Class<?> value = verification().getValue();
         final boolean result = value != null && value.isInterface();
 
-        verification().check(result, "be an interface");
+        verification().check(result, MessageKeys.INTERFACING);
 
         return this;
     }
@@ -335,11 +336,11 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public ClassVerifier nested() throws VerifierException {
+    public ClassVerifier nested() {
         final Class<?> value = verification().getValue();
         final boolean result = value != null && value.getEnclosingClass() != null;
 
-        verification().check(result, "be nested");
+        verification().check(result, MessageKeys.NESTED);
 
         return this;
     }
@@ -359,11 +360,11 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public ClassVerifier primitive() throws VerifierException {
+    public ClassVerifier primitive() {
         final Class<?> value = verification().getValue();
         final boolean result = value != null && value.isPrimitive();
 
-        verification().check(result, "be a primitive");
+        verification().check(result, MessageKeys.PRIMITIVE);
 
         return this;
     }
@@ -383,11 +384,11 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public ClassVerifier primitiveOrWrapper() throws VerifierException {
+    public ClassVerifier primitiveOrWrapper() {
         final Class<?> value = verification().getValue();
         final boolean result = value != null && (value.isPrimitive() || PRIMITIVE_WRAPPERS.contains(value));
 
-        verification().check(result, "be a primitive or primitive wrapper");
+        verification().check(result, MessageKeys.PRIMITIVE_OR_WRAPPER);
 
         return this;
     }
@@ -407,12 +408,48 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public ClassVerifier primitiveWrapper() throws VerifierException {
+    public ClassVerifier primitiveWrapper() {
         final Class<?> value = verification().getValue();
         final boolean result = PRIMITIVE_WRAPPERS.contains(value);
 
-        verification().check(result, "be a primitive wrapper");
+        verification().check(result, MessageKeys.PRIMITIVE_WRAPPER);
 
         return this;
+    }
+
+    /**
+     * <p>
+     * The {@link MessageKey MessageKeys} that are used by {@link ClassVerifier}.
+     * </p>
+     *
+     * @since 0.2.0
+     */
+    enum MessageKeys implements MessageKey {
+
+        ANNOTATED("io.skelp.verifier.type.ClassVerifier.annotated"),
+        ANNOTATED_WITH("io.skelp.verifier.type.ClassVerifier.annotatedWith"),
+        ANNOTATED_WITH_ALL("io.skelp.verifier.type.ClassVerifier.annotatedWithAll"),
+        ANNOTATED_WITH_ANY("io.skelp.verifier.type.ClassVerifier.annotatedWithAny"),
+        ANNOTATION("io.skelp.verifier.type.ClassVerifier.annotation"),
+        ANONYMOUS("io.skelp.verifier.type.ClassVerifier.anonymous"),
+        ARRAY("io.skelp.verifier.type.ClassVerifier.array"),
+        ASSIGNABLE_FROM("io.skelp.verifier.type.ClassVerifier.assignableFrom"),
+        ENUMERATION("io.skelp.verifier.type.ClassVerifier.enumeration"),
+        INTERFACING("io.skelp.verifier.type.ClassVerifier.interfacing"),
+        NESTED("io.skelp.verifier.type.ClassVerifier.nested"),
+        PRIMITIVE("io.skelp.verifier.type.ClassVerifier.primitive"),
+        PRIMITIVE_OR_WRAPPER("io.skelp.verifier.type.ClassVerifier.primitiveOrWrapper"),
+        PRIMITIVE_WRAPPER("io.skelp.verifier.type.ClassVerifier.primitiveWrapper");
+
+        private final String code;
+
+        MessageKeys(final String code) {
+            this.code = code;
+        }
+
+        @Override
+        public String code() {
+            return code;
+        }
     }
 }

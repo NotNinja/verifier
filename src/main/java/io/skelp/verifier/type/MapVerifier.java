@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.message.MessageKey;
 import io.skelp.verifier.type.base.BaseCollectionVerifier;
 import io.skelp.verifier.verification.Verification;
 
@@ -78,11 +79,11 @@ public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public MapVerifier<K, V> containAllKeys(final K... keys) throws VerifierException {
+    public MapVerifier<K, V> containAllKeys(final K... keys) {
         final Map<K, V> value = verification().getValue();
         final boolean result = value != null && matchAll(keys, value::containsKey);
 
-        verification().check(result, "contain all keys %s", verification().getMessageFormatter().formatArray(keys));
+        verification().check(result, MessageKeys.CONTAIN_ALL_KEYS, (Object) keys);
 
         return this;
     }
@@ -111,11 +112,11 @@ public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public MapVerifier<K, V> containAnyKey(final K... keys) throws VerifierException {
+    public MapVerifier<K, V> containAnyKey(final K... keys) {
         final Map<K, V> value = verification().getValue();
         final boolean result = value != null && matchAny(keys, value::containsKey);
 
-        verification().check(result, "contain any key %s", verification().getMessageFormatter().formatArray(keys));
+        verification().check(result, MessageKeys.CONTAIN_ANY_KEY, (Object) keys);
 
         return this;
     }
@@ -142,11 +143,11 @@ public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public MapVerifier<K, V> containKey(final K key) throws VerifierException {
+    public MapVerifier<K, V> containKey(final K key) {
         final Map<K, V> value = verification().getValue();
         final boolean result = value != null && value.containsKey(key);
 
-        verification().check(result, "contain key '%s'", key);
+        verification().check(result, MessageKeys.CONTAIN_KEY, key);
 
         return this;
     }
@@ -159,5 +160,30 @@ public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>
     @Override
     protected int getSize(final Map<K, V> value) {
         return value.size();
+    }
+
+    /**
+     * <p>
+     * The {@link MessageKey MessageKeys} that are used by {@link MapVerifier}.
+     * </p>
+     *
+     * @since 0.2.0
+     */
+    enum MessageKeys implements MessageKey {
+
+        CONTAIN_ALL_KEYS("io.skelp.verifier.type.MapVerifier.containAllKeys"),
+        CONTAIN_ANY_KEY("io.skelp.verifier.type.MapVerifier.containAnyKey"),
+        CONTAIN_KEY("io.skelp.verifier.type.MapVerifier.containKey");
+
+        private final String code;
+
+        MessageKeys(final String code) {
+            this.code = code;
+        }
+
+        @Override
+        public String code() {
+            return code;
+        }
     }
 }

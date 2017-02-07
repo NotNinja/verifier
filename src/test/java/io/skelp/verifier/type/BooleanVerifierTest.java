@@ -30,6 +30,7 @@ import org.junit.runner.RunWith;
 
 import io.skelp.verifier.AbstractCustomVerifierTestCase;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
+import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
 
 /**
@@ -87,7 +88,7 @@ public class BooleanVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().between(false, true));
 
-            verify(getMockVerification()).check(eq(true), eq("be between '%s' and '%s' (inclusive)"), getArgsCaptor().capture());
+            verify(getMockVerification()).check(eq(true), eq(BaseComparableVerifier.MessageKeys.BETWEEN), getArgsCaptor().capture());
 
             assertArrayEquals("Passes start and end for message formatting", new Object[]{false, true}, getArgsCaptor().getAllValues().toArray());
         }
@@ -107,7 +108,7 @@ public class BooleanVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().betweenExclusive(false, true));
 
-            verify(getMockVerification()).check(eq(false), eq("be between '%s' and '%s' (exclusive)"), getArgsCaptor().capture());
+            verify(getMockVerification()).check(eq(false), eq(BaseComparableVerifier.MessageKeys.BETWEEN_EXCLUSIVE), getArgsCaptor().capture());
 
             assertArrayEquals("Passes start and end for message formatting", new Object[]{false, true}, getArgsCaptor().getAllValues().toArray());
         }
@@ -132,7 +133,7 @@ public class BooleanVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().lessThan(other));
 
-            verify(getMockVerification()).check(eq(expected), eq("be less than '%s'"), getArgsCaptor().capture());
+            verify(getMockVerification()).check(eq(expected), eq(BaseComparableVerifier.MessageKeys.LESS_THAN), getArgsCaptor().capture());
 
             assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
         }
@@ -157,7 +158,7 @@ public class BooleanVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().lessThanOrEqualTo(other));
 
-            verify(getMockVerification()).check(eq(expected), eq("be less than or equal to '%s'"), getArgsCaptor().capture());
+            verify(getMockVerification()).check(eq(expected), eq(BaseComparableVerifier.MessageKeys.LESS_THAN_OR_EQUAL_TO), getArgsCaptor().capture());
 
             assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
         }
@@ -182,7 +183,7 @@ public class BooleanVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().greaterThan(other));
 
-            verify(getMockVerification()).check(eq(expected), eq("be greater than '%s'"), getArgsCaptor().capture());
+            verify(getMockVerification()).check(eq(expected), eq(BaseComparableVerifier.MessageKeys.GREATER_THAN), getArgsCaptor().capture());
 
             assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
         }
@@ -207,7 +208,7 @@ public class BooleanVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().greaterThanOrEqualTo(other));
 
-            verify(getMockVerification()).check(eq(expected), eq("be greater than or equal to '%s'"), getArgsCaptor().capture());
+            verify(getMockVerification()).check(eq(expected), eq(BaseComparableVerifier.MessageKeys.GREATER_THAN_OR_EQUAL_TO), getArgsCaptor().capture());
 
             assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
         }

@@ -21,12 +21,12 @@
  */
 package io.skelp.verifier;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.lang.reflect.Array;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
@@ -36,9 +36,14 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import io.skelp.verifier.message.ArrayFormatter;
-import io.skelp.verifier.message.MessageFormatter;
+import io.skelp.verifier.message.MessageSource;
+import io.skelp.verifier.message.ResourceBundleMessageSource;
+import io.skelp.verifier.message.locale.LocaleContext;
+import io.skelp.verifier.message.locale.SimpleLocaleContext;
+import io.skelp.verifier.verification.SimpleVerification;
+import io.skelp.verifier.verification.TestVerificationProvider;
 import io.skelp.verifier.verification.Verification;
+import io.skelp.verifier.verification.VerificationProvider;
 
 /**
  * <p>
@@ -117,20 +122,26 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     @Captor
     private ArgumentCaptor<Object> argsCaptor;
     @Mock
-    private ArrayFormatter<?> mockArrayFormatter;
+    private LocaleContext mockLocaleContext;
     @Mock
-    private MessageFormatter mockMessageFormatter;
+    private MessageSource mockMessageSource;
     @Mock
     private Verification<T> mockVerification;
+    @Mock
+    private VerificationProvider mockVerificationProvider;
 
     private T value;
 
     private V customVerifier;
 
     @Before
-    public void setUp() {
-        when(mockMessageFormatter.formatArray(any(Object[].class))).thenAnswer(invocation -> mockArrayFormatter);
-        when(mockVerification.getMessageFormatter()).thenReturn(mockMessageFormatter);
+    public void setUp() throws Exception {
+        when(mockVerificationProvider.getVerification(any(), any())).thenAnswer(invocation -> new SimpleVerification<>(new SimpleLocaleContext(), new ResourceBundleMessageSource(), invocation.getArguments()[0], invocation.getArguments()[1]));
+
+        TestVerificationProvider.setDelegate(mockVerificationProvider);
+
+        when(mockVerification.getLocaleContext()).thenReturn(mockLocaleContext);
+        when(mockVerification.getMessageSource()).thenReturn(mockMessageSource);
         when(mockVerification.getValue()).thenAnswer(invocation -> value);
 
         value = null;
@@ -138,21 +149,9 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
         customVerifier = createCustomVerifier();
     }
 
-    /**
-     * <p>
-     * Asserts that the an {@link ArrayFormatter} was passed as the specified {@code arg} for the {@code array}
-     * provided.
-     * </p>
-     *
-     * @param arg
-     *         the captured argument to be checked
-     * @param array
-     *         the expected array to be formatted
-     */
-    protected void assertArrayFormatter(Object arg, Object[] array) {
-        assertSame("Passes array formatter for message formatting", getMockArrayFormatter(), arg);
-
-        verify(getMockMessageFormatter()).formatArray(array);
+    @After
+    public void tearDown() throws Exception {
+        TestVerificationProvider.setDelegate(null);
     }
 
     /**
@@ -189,24 +188,24 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
 
     /**
      * <p>
-     * Returns the mock array formatter being used to test the subject.
+     * Returns the mock locale context being used to test the subject.
      * </p>
      *
-     * @return The mock {@link ArrayFormatter}.
+     * @return The mock {@link LocaleContext}.
      */
-    protected ArrayFormatter<?> getMockArrayFormatter() {
-        return mockArrayFormatter;
+    protected LocaleContext getMockLocaleContext() {
+        return mockLocaleContext;
     }
 
     /**
      * <p>
-     * Returns the mock message formatter being used to test the subject.
+     * Returns the mock message source being used to test the subject.
      * </p>
      *
-     * @return The mock {@link MessageFormatter}.
+     * @return The mock {@link MessageSource}.
      */
-    protected MessageFormatter getMockMessageFormatter() {
-        return mockMessageFormatter;
+    protected MessageSource getMockMessageSource() {
+        return mockMessageSource;
     }
 
     /**

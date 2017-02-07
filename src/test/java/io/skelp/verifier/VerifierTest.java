@@ -36,16 +36,11 @@ import java.util.Locale;
 import java.util.Map;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import io.skelp.verifier.factory.CustomVerifierFactory;
-import io.skelp.verifier.factory.DefaultVerifierFactoryProvider;
-import io.skelp.verifier.factory.VerifierFactoryProvider;
-import io.skelp.verifier.message.factory.MessageFormatterFactory;
 import io.skelp.verifier.type.ArrayVerifier;
 import io.skelp.verifier.type.BigDecimalVerifier;
 import io.skelp.verifier.type.BigIntegerVerifier;
@@ -67,8 +62,9 @@ import io.skelp.verifier.type.ObjectVerifier;
 import io.skelp.verifier.type.ShortVerifier;
 import io.skelp.verifier.type.StringVerifier;
 import io.skelp.verifier.type.ThrowableVerifier;
+import io.skelp.verifier.verification.TestVerificationProvider;
 import io.skelp.verifier.verification.Verification;
-import io.skelp.verifier.verification.factory.VerificationFactory;
+import io.skelp.verifier.verification.VerificationProvider;
 
 /**
  * <p>
@@ -80,38 +76,25 @@ import io.skelp.verifier.verification.factory.VerificationFactory;
 @RunWith(MockitoJUnitRunner.class)
 public class VerifierTest {
 
-    private static VerifierFactoryProvider originalFactoryProvider;
-
-    @BeforeClass
-    public static void setUpClass() {
-        originalFactoryProvider = Verifier.getFactoryProvider();
-    }
-
     @Mock
-    private CustomVerifierFactory mockCustomVerifierFactory;
-    @Mock
-    private MessageFormatterFactory mockMessageFormatterFactory;
+    private CustomVerifierProvider mockCustomVerifierProvider;
     @Mock
     private Verification<?> mockVerification;
     @Mock
-    private VerificationFactory mockVerificationFactory;
-    @Mock
-    private VerifierFactoryProvider mockVerifierFactoryProvider;
+    private VerificationProvider mockVerificationProvider;
 
     @Before
     public void setUp() {
-        when(mockVerifierFactoryProvider.getCustomVerifierFactory()).thenReturn(mockCustomVerifierFactory);
-        when(mockVerifierFactoryProvider.getMessageFormatterFactory()).thenReturn(mockMessageFormatterFactory);
-        when(mockVerifierFactoryProvider.getVerificationFactory()).thenReturn(mockVerificationFactory);
+        when(mockVerificationProvider.getVerification(any(), any())).thenAnswer(invocation -> mockVerification);
 
-        when(mockVerificationFactory.create(isA(MessageFormatterFactory.class), any(), any())).thenAnswer(invocation -> mockVerification);
-
-        Verifier.setFactoryProvider(mockVerifierFactoryProvider);
+        TestCustomVerifierProvider.setDelegate(mockCustomVerifierProvider);
+        TestVerificationProvider.setDelegate(mockVerificationProvider);
     }
 
     @After
     public void tearDown() {
-        Verifier.setFactoryProvider(originalFactoryProvider);
+        TestCustomVerifierProvider.setDelegate(null);
+        TestVerificationProvider.setDelegate(null);
     }
 
     @Test
@@ -121,16 +104,12 @@ public class VerifierTest {
     }
 
     @Test
-    public void testFactoryProvider() {
-        assertTrue("DefaultVerifierFactoryProvider instance is used by default", originalFactoryProvider instanceof DefaultVerifierFactoryProvider);
+    public void testGetVerification() {
+        Verification<String> verification = Verifier.getVerification("foo", "bar");
 
-        Verifier.setFactoryProvider(mockVerifierFactoryProvider);
+        assertSame("Returns verification from provider", mockVerification, verification);
 
-        assertSame("Factory provider can be changed", mockVerifierFactoryProvider, Verifier.getFactoryProvider());
-
-        Verifier.setFactoryProvider(null);
-
-        assertTrue("DefaultVerifierFactoryProvider instance is used as fallback", Verifier.getFactoryProvider() instanceof DefaultVerifierFactoryProvider);
+        verify(mockVerificationProvider).getVerification("foo", "bar");
     }
 
     @Test
@@ -454,7 +433,7 @@ public class VerifierTest {
     public void testVerifyWithCustomVerifierClass() {
         StringVerifier expected = new StringVerifier((Verification<String>) mockVerification);
 
-        when(mockCustomVerifierFactory.create(StringVerifier.class, (Verification<String>) mockVerification)).thenReturn(expected);
+        when(mockCustomVerifierProvider.getCustomVerifier(StringVerifier.class, (Verification<String>) mockVerification)).thenReturn(expected);
 
         StringVerifier actual = Verifier.verify("foo", "bar", StringVerifier.class);
 
@@ -466,7 +445,7 @@ public class VerifierTest {
         assertNotNull("Never returns null", verifier);
         assertSame("Uses Verification created by factory", mockVerification, verifier.verification());
 
-        verify(mockVerificationFactory).create(mockMessageFormatterFactory, value, name);
+        verify(mockVerificationProvider).getVerification(value, name);
     }
 
     @Test

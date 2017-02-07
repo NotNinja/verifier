@@ -26,6 +26,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.AbstractMap;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.Test;
@@ -34,6 +35,7 @@ import org.junit.runner.RunWith;
 
 import io.skelp.verifier.AbstractCustomVerifierTestCase;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
+import io.skelp.verifier.message.MessageKeyEnumTestCase;
 import io.skelp.verifier.type.base.BaseCollectionVerifierTestCase;
 
 /**
@@ -125,38 +127,6 @@ public class MapVerifierTest {
         }
 
         @Test
-        public void testContainKeyWhenKeyIsNotPresentInValue() {
-            testContainKeyHelper(createFullValue(), getMissingKey(), false);
-        }
-
-        @Test
-        public void testContainKeyWhenKeyIsPresentInValue() {
-            testContainKeyHelper(createFullValue(), getExistingKey(), true);
-        }
-
-        @Test
-        public void testContainKeyWithNullKey() {
-            Map<String, Integer> value = createMap(new String[]{null}, new Integer[]{123});
-
-            testContainKeyHelper(value, null, true);
-        }
-
-        @Test
-        public void testContainKeyWithNullValue() {
-            testContainKeyHelper(null, getExistingKey(), false);
-        }
-
-        private void testContainKeyHelper(Map<String, Integer> value, String key, boolean expected) {
-            setValue(value);
-
-            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containKey(key));
-
-            verify(getMockVerification()).check(eq(expected), eq("contain key '%s'"), getArgsCaptor().capture());
-
-            assertSame("Passes key for message formatting", key, getArgsCaptor().getValue());
-        }
-
-        @Test
         public void testContainAllKeysWhenNoKeys() {
             testContainAllKeysHelper(createFullValue(), new String[0], true);
         }
@@ -206,9 +176,7 @@ public class MapVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAllKeys(keys));
 
-            verify(getMockVerification()).check(eq(expected), eq("contain all keys %s"), getArgsCaptor().capture());
-
-            assertArrayFormatter(getArgsCaptor().getValue(), keys);
+            verify(getMockVerification()).check(expected, MapVerifier.MessageKeys.CONTAIN_ALL_KEYS, (Object) keys);
         }
 
         @Test
@@ -261,9 +229,39 @@ public class MapVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAnyKey(keys));
 
-            verify(getMockVerification()).check(eq(expected), eq("contain any key %s"), getArgsCaptor().capture());
+            verify(getMockVerification()).check(expected, MapVerifier.MessageKeys.CONTAIN_ANY_KEY, (Object) keys);
+        }
 
-            assertArrayFormatter(getArgsCaptor().getValue(), keys);
+        @Test
+        public void testContainKeyWhenKeyIsNotPresentInValue() {
+            testContainKeyHelper(createFullValue(), getMissingKey(), false);
+        }
+
+        @Test
+        public void testContainKeyWhenKeyIsPresentInValue() {
+            testContainKeyHelper(createFullValue(), getExistingKey(), true);
+        }
+
+        @Test
+        public void testContainKeyWithNullKey() {
+            Map<String, Integer> value = createMap(new String[]{null}, new Integer[]{123});
+
+            testContainKeyHelper(value, null, true);
+        }
+
+        @Test
+        public void testContainKeyWithNullValue() {
+            testContainKeyHelper(null, getExistingKey(), false);
+        }
+
+        private void testContainKeyHelper(Map<String, Integer> value, String key, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containKey(key));
+
+            verify(getMockVerification()).check(eq(expected), eq(MapVerifier.MessageKeys.CONTAIN_KEY), getArgsCaptor().capture());
+
+            assertSame("Passes key for message formatting", key, getArgsCaptor().getValue());
         }
 
         private Map<String, Integer> createEmptyValue() {
@@ -280,6 +278,24 @@ public class MapVerifierTest {
 
         private String getMissingKey() {
             return "foo";
+        }
+    }
+
+    public static class MapVerifierMessageKeysTest extends MessageKeyEnumTestCase<MapVerifier.MessageKeys> {
+
+        @Override
+        protected Class<? extends Enum> getEnumClass() {
+            return MapVerifier.MessageKeys.class;
+        }
+
+        @Override
+        protected Map<String, String> getMessageKeys() {
+            Map<String, String> messageKeys = new HashMap<>();
+            messageKeys.put("CONTAIN_ALL_KEYS", "io.skelp.verifier.type.MapVerifier.containAllKeys");
+            messageKeys.put("CONTAIN_ANY_KEY", "io.skelp.verifier.type.MapVerifier.containAnyKey");
+            messageKeys.put("CONTAIN_KEY", "io.skelp.verifier.type.MapVerifier.containKey");
+
+            return messageKeys;
         }
     }
 }
