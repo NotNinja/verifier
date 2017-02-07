@@ -31,13 +31,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
 import io.skelp.verifier.AbstractCustomVerifierTestCase;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
+import io.skelp.verifier.message.MessageKeyEnumTestCase;
 
 /**
  * <p>
@@ -112,7 +115,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotated());
 
-            verify(getMockVerification()).check(expected, "be annotated");
+            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.ANNOTATED);
         }
 
         @Test
@@ -150,7 +153,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotatedWith(type));
 
-            verify(getMockVerification()).check(eq(expected), eq("be annotated with '%s'"), getArgsCaptor().capture());
+            verify(getMockVerification()).check(eq(expected), eq(ClassVerifier.MessageKeys.ANNOTATED_WITH), getArgsCaptor().capture());
 
             assertSame("Passes type for message formatting", type, getArgsCaptor().getValue());
         }
@@ -205,9 +208,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotatedWithAll(types));
 
-            verify(getMockVerification()).check(eq(expected), eq("be annotated with all %s"), getArgsCaptor().capture());
-
-            assertArrayFormatter(getArgsCaptor().getValue(), types);
+            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.ANNOTATED_WITH_ALL, (Object) types);
         }
 
         @Test
@@ -260,9 +261,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotatedWithAny(types));
 
-            verify(getMockVerification()).check(eq(expected), eq("be annotated with any %s"), getArgsCaptor().capture());
-
-            assertArrayFormatter(getArgsCaptor().getValue(), types);
+            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.ANNOTATED_WITH_ANY, (Object) types);
         }
 
         @Test
@@ -285,7 +284,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotation());
 
-            verify(getMockVerification()).check(expected, "be an annotation");
+            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.ANNOTATION);
         }
 
         @Test
@@ -309,7 +308,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().anonymous());
 
-            verify(getMockVerification()).check(expected, "be anonymous");
+            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.ANONYMOUS);
         }
 
         @Test
@@ -332,7 +331,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().array());
 
-            verify(getMockVerification()).check(expected, "be an array");
+            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.ARRAY);
         }
 
         @Test
@@ -365,7 +364,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().assignableFrom(type));
 
-            verify(getMockVerification()).check(eq(expected), eq("be assignable from '%s'"), getArgsCaptor().capture());
+            verify(getMockVerification()).check(eq(expected), eq(ClassVerifier.MessageKeys.ASSIGNABLE_FROM), getArgsCaptor().capture());
 
             assertSame("Passes type for message formatting", type, getArgsCaptor().getValue());
         }
@@ -390,7 +389,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().enumeration());
 
-            verify(getMockVerification()).check(expected, "be an enum");
+            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.ENUMERATION);
         }
 
         @Test
@@ -413,7 +412,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().interfacing());
 
-            verify(getMockVerification()).check(expected, "be an interface");
+            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.INTERFACING);
         }
 
         @Test
@@ -436,7 +435,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().nested());
 
-            verify(getMockVerification()).check(expected, "be nested");
+            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.NESTED);
         }
 
         @Test
@@ -469,7 +468,7 @@ public class ClassVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().primitive());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be a primitive");
+            verify(getMockVerification(), times(values.length)).check(expected, ClassVerifier.MessageKeys.PRIMITIVE);
         }
 
         @Test
@@ -499,7 +498,7 @@ public class ClassVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().primitiveOrWrapper());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be a primitive or primitive wrapper");
+            verify(getMockVerification(), times(values.length)).check(expected, ClassVerifier.MessageKeys.PRIMITIVE_OR_WRAPPER);
         }
 
         @Test
@@ -532,7 +531,36 @@ public class ClassVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().primitiveWrapper());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be a primitive wrapper");
+            verify(getMockVerification(), times(values.length)).check(expected, ClassVerifier.MessageKeys.PRIMITIVE_WRAPPER);
+        }
+    }
+
+    public static class ClassVerifierMessageKeysTest extends MessageKeyEnumTestCase<ClassVerifier.MessageKeys> {
+
+        @Override
+        protected Class<? extends Enum> getEnumClass() {
+            return ClassVerifier.MessageKeys.class;
+        }
+
+        @Override
+        protected Map<String, String> getMessageKeys() {
+            Map<String, String> messageKeys = new HashMap<>();
+            messageKeys.put("ANNOTATED", "io.skelp.verifier.type.ClassVerifier.annotated");
+            messageKeys.put("ANNOTATED_WITH", "io.skelp.verifier.type.ClassVerifier.annotatedWith");
+            messageKeys.put("ANNOTATED_WITH_ALL", "io.skelp.verifier.type.ClassVerifier.annotatedWithAll");
+            messageKeys.put("ANNOTATED_WITH_ANY", "io.skelp.verifier.type.ClassVerifier.annotatedWithAny");
+            messageKeys.put("ANNOTATION", "io.skelp.verifier.type.ClassVerifier.annotation");
+            messageKeys.put("ANONYMOUS", "io.skelp.verifier.type.ClassVerifier.anonymous");
+            messageKeys.put("ARRAY", "io.skelp.verifier.type.ClassVerifier.array");
+            messageKeys.put("ASSIGNABLE_FROM", "io.skelp.verifier.type.ClassVerifier.assignableFrom");
+            messageKeys.put("ENUMERATION", "io.skelp.verifier.type.ClassVerifier.enumeration");
+            messageKeys.put("INTERFACING", "io.skelp.verifier.type.ClassVerifier.interfacing");
+            messageKeys.put("NESTED", "io.skelp.verifier.type.ClassVerifier.nested");
+            messageKeys.put("PRIMITIVE", "io.skelp.verifier.type.ClassVerifier.primitive");
+            messageKeys.put("PRIMITIVE_OR_WRAPPER", "io.skelp.verifier.type.ClassVerifier.primitiveOrWrapper");
+            messageKeys.put("PRIMITIVE_WRAPPER", "io.skelp.verifier.type.ClassVerifier.primitiveWrapper");
+
+            return messageKeys;
         }
     }
 

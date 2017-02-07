@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.Function;
 
+import io.skelp.verifier.message.MessageKey;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -182,65 +183,65 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     }
 
     @Override
-    public V equalTo(final Object other) throws VerifierException {
+    public V equalTo(final Object other) {
         return equalTo(other, other);
     }
 
     @Override
-    public V equalTo(final Object other, final Object name) throws VerifierException {
+    public V equalTo(final Object other, final Object name) {
         final T value = verification.getValue();
         final boolean result = isEqualTo(value, other);
 
-        verification.check(result, "be equal to '%s'", name);
+        verification.check(result, MessageKeys.EQUAL_TO, name);
 
         return chain();
     }
 
     @Override
-    public V equalToAny(final Object... others) throws VerifierException {
+    public V equalToAny(final Object... others) {
         final T value = verification.getValue();
         final boolean result = matchAny(others, input -> isEqualTo(value, input));
 
-        verification.check(result, "be equal to any %s", verification.getMessageFormatter().formatArray(others));
+        verification.check(result, MessageKeys.EQUAL_TO_ANY, (Object) others);
 
         return chain();
     }
 
     @Override
-    public V hashedAs(final int hashCode) throws VerifierException {
+    public V hashedAs(final int hashCode) {
         final T value = verification.getValue();
         final boolean result = value != null && value.hashCode() == hashCode;
 
-        verification.check(result, "have hash code '%d'", hashCode);
+        verification.check(result, MessageKeys.HASHED_AS, hashCode);
 
         return chain();
     }
 
     @Override
-    public V instanceOf(final Class<?> cls) throws VerifierException {
+    public V instanceOf(final Class<?> cls) {
         final boolean result = cls != null && cls.isInstance(verification.getValue());
 
-        verification.check(result, "be an instance of '%s'", cls);
+        verification.check(result, MessageKeys.INSTANCE_OF, cls);
 
         return chain();
     }
 
     @Override
-    public V instanceOfAll(final Class<?>... classes) throws VerifierException {
+    public V instanceOfAll(final Class<?>... classes) {
         final T value = verification.getValue();
         final boolean result = value != null && matchAll(classes, input -> input != null && input.isInstance(value));
 
-        verification.check(result, "be an instance of all %s", verification.getMessageFormatter().formatArray(classes));
+        verification.check(result, MessageKeys.INSTANCE_OF_ALL, (Object) classes);
 
         return chain();
     }
 
     @Override
-    public V instanceOfAny(final Class<?>... classes) throws VerifierException {
+    public V instanceOfAny(final Class<?>... classes) {
         final T value = verification.getValue();
         final boolean result = value != null && matchAny(classes, input -> input != null && input.isInstance(value));
 
-        verification.check(result, "be an instance of any %s", verification.getMessageFormatter().formatArray(classes));
+        verification.check(result, MessageKeys.INSTANCE_OF_ANY, (Object) classes);
 
         return chain();
     }
@@ -272,45 +273,57 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     }
 
     @Override
-    public V nulled() throws VerifierException {
+    public V nulled() {
         final boolean result = verification.getValue() == null;
 
-        verification.check(result, "be null");
+        verification.check(result, MessageKeys.NULLED);
 
         return chain();
     }
 
     @Override
-    public V sameAs(final Object other) throws VerifierException {
+    public V sameAs(final Object other) {
         return sameAs(other, other);
     }
 
     @Override
-    public V sameAs(final Object other, final Object name) throws VerifierException {
+    public V sameAs(final Object other, final Object name) {
         final boolean result = verification.getValue() == other;
 
-        verification.check(result, "be same as '%s'", name);
+        verification.check(result, MessageKeys.SAME_AS, name);
 
         return chain();
     }
 
     @Override
-    public V sameAsAny(final Object... others) throws VerifierException {
+    public V sameAsAny(final Object... others) {
         final T value = verification.getValue();
         final boolean result = matchAny(others, input -> value == input);
 
-        verification.check(result, "be same as any %s", verification.getMessageFormatter().formatArray(others));
+        verification.check(result, MessageKeys.SAME_AS_ANY, (Object) others);
 
         return chain();
     }
 
     @Override
-    public V that(final VerifierAssertion<T> assertion) throws VerifierException {
-        return that(assertion, null);
+    public V that(final VerifierAssertion<T> assertion) {
+        return that(assertion, (String) null);
     }
 
     @Override
-    public V that(final VerifierAssertion<T> assertion, final String message, final Object... args) throws VerifierException {
+    public V that(final VerifierAssertion<T> assertion, final MessageKey key, final Object... args) {
+        Verifier.verify(assertion, "assertion")
+            .not().nulled();
+
+        final boolean result = assertion.verify(verification.getValue());
+
+        verification.check(result, key, args);
+
+        return chain();
+    }
+
+    @Override
+    public V that(final VerifierAssertion<T> assertion, final String message, final Object... args) {
         Verifier.verify(assertion, "assertion")
             .not().nulled();
 
@@ -329,5 +342,36 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     @Override
     public Verification<T> verification() {
         return verification;
+    }
+
+    /**
+     * <p>
+     * The {@link MessageKey MessageKeys} that are used by {@link AbstractCustomVerifier}.
+     * </p>
+     *
+     * @since 0.2.0
+     */
+    public enum MessageKeys implements MessageKey {
+
+        EQUAL_TO("io.skelp.verifier.AbstractCustomVerifier.equalTo"),
+        EQUAL_TO_ANY("io.skelp.verifier.AbstractCustomVerifier.equalToAny"),
+        HASHED_AS("io.skelp.verifier.AbstractCustomVerifier.hashedAs"),
+        INSTANCE_OF("io.skelp.verifier.AbstractCustomVerifier.instanceOf"),
+        INSTANCE_OF_ALL("io.skelp.verifier.AbstractCustomVerifier.instanceOfAll"),
+        INSTANCE_OF_ANY("io.skelp.verifier.AbstractCustomVerifier.instanceOfAny"),
+        NULLED("io.skelp.verifier.AbstractCustomVerifier.nulled"),
+        SAME_AS("io.skelp.verifier.AbstractCustomVerifier.sameAs"),
+        SAME_AS_ANY("io.skelp.verifier.AbstractCustomVerifier.sameAsAny");
+
+        private final String code;
+
+        MessageKeys(final String code) {
+            this.code = code;
+        }
+
+        @Override
+        public String code() {
+            return code;
+        }
     }
 }

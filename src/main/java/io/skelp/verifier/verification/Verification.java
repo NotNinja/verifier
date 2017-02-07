@@ -22,13 +22,15 @@
 package io.skelp.verifier.verification;
 
 import io.skelp.verifier.VerifierException;
-import io.skelp.verifier.message.MessageFormatter;
+import io.skelp.verifier.message.MessageKey;
+import io.skelp.verifier.message.MessageSource;
+import io.skelp.verifier.message.locale.LocaleContext;
 
 /**
  * <p>
  * Contains contextual information for a verification and also provides verifiers with a clean and simply way of
- * checking the results of their verifications without having to handle negation, throwing errors, or message
- * formatting.
+ * checking the results of their verifications without having to handle negation, throwing errors, or message lookup
+ * and/or formatting.
  * </p>
  * <p>
  * A {@code Verification} encapsulates a single value which may well be verified multiple times.
@@ -47,8 +49,37 @@ public interface Verification<T> {
      * <p>
      * {@code result} will pass it is {@literal true} and this {@link Verification} has not be negated or if it has been
      * negated and {@code result} is {@literal false}. If it does not pass, a {@link VerifierException} will be thrown
-     * with a suitable message, which can be enhanced using the optional {@code message} and format {@code args}
-     * provided.
+     * with a suitable localized message, which can be enhanced by providing an optional {@code key} and format
+     * {@code args}.
+     * </p>
+     * <p>
+     * This {@link Verification} will no longer be negated as a result of calling this method, regardless of whether
+     * {@code result} passes verification.
+     * </p>
+     *
+     * @param result
+     *         the result of the verification
+     * @param key
+     *         the optional {@link MessageKey} which provides a more detailed localized explanation of what was
+     *         verified
+     * @param args
+     *         the optional format arguments which are used to format the localized message
+     * @return A reference to this {@link Verification} for chaining purposes.
+     * @throws VerifierException
+     *         If {@code result} does not pass verification or if a problem occurs while formatting the error message.
+     * @see #check(boolean, String, Object...)
+     * @since 0.2.0
+     */
+    Verification<T> check(boolean result, MessageKey key, Object... args);
+
+    /**
+     * <p>
+     * Checks the specified {@code result} to determine whether it passes verification.
+     * </p>
+     * <p>
+     * {@code result} will pass it is {@literal true} and this {@link Verification} has not be negated or if it has been
+     * negated and {@code result} is {@literal false}. If it does not pass, a {@link VerifierException} will be thrown
+     * with a suitable message, which can be enhanced by providing an optional {@code message} and format {@code args}.
      * </p>
      * <p>
      * This {@link Verification} will no longer be negated as a result of calling this method, regardless of whether
@@ -58,26 +89,37 @@ public interface Verification<T> {
      * @param result
      *         the result of the verification
      * @param message
-     *         the optional message which provides a (slightly) more detailed explanation of what was verified
+     *         the optional message which provides a more detailed explanation of what was verified
      * @param args
-     *         the optional format arguments which are only used to format {@code message}
+     *         the optional format arguments which are used to format {@code message}
      * @return A reference to this {@link Verification} for chaining purposes.
      * @throws VerifierException
-     *         If {@code result} does not pass verification.
+     *         If {@code result} does not pass verification or if a problem occurs while formatting the error message.
+     * @see #check(boolean, MessageKey, Object...)
      */
-    Verification<T> check(boolean result, String message, Object... args) throws VerifierException;
+    Verification<T> check(boolean result, String message, Object... args);
 
     /**
      * <p>
-     * Returns the message formatter that is being used by this {@link Verification} to format the messages for any
-     * {@link VerifierException VerifierExceptions} that are thrown by {@link #check(boolean, String, Object...)}.
+     * Returns the {@link LocaleContext} that is being used by this {@link Verification} to lookup and format messages
+     * for any {@link VerifierException VerifierExceptions} that are thrown by {@link #check}.
      * </p>
      *
-     * @return The {@link MessageFormatter}.
-     * @throws VerifierException
-     *         If a problem occurs while trying to retrieve the {@link MessageFormatter}.
+     * @return The {@link LocaleContext}.
+     * @since 0.2.0
      */
-    MessageFormatter getMessageFormatter() throws VerifierException;
+    LocaleContext getLocaleContext();
+
+    /**
+     * <p>
+     * Returns the message source that is being used by this {@link Verification} to lookup and/or format the messages
+     * for any {@link VerifierException VerifierExceptions} that are thrown by {@link #check}.
+     * </p>
+     *
+     * @return The {@link MessageSource}.
+     * @since 0.2.0
+     */
+    MessageSource getMessageSource();
 
     /**
      * <p>

@@ -158,7 +158,7 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameDayAs(other));
 
-        verify(getMockVerification()).check(eq(expected), eq("be same day as '%s'"), getArgsCaptor().capture());
+        verify(getMockVerification()).check(eq(expected), eq(BaseTimeVerifier.MessageKeys.SAME_DAY_AS), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }
@@ -202,7 +202,7 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameEraAs(other));
 
-        verify(getMockVerification()).check(eq(expected), eq("be same era as '%s'"), getArgsCaptor().capture());
+        verify(getMockVerification()).check(eq(expected), eq(BaseTimeVerifier.MessageKeys.SAME_ERA_AS), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }
@@ -271,7 +271,7 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameHourAs(other));
 
-        verify(getMockVerification()).check(eq(expected), eq("be same hour as '%s'"), getArgsCaptor().capture());
+        verify(getMockVerification()).check(eq(expected), eq(BaseTimeVerifier.MessageKeys.SAME_HOUR_AS), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }
@@ -347,7 +347,7 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameMinuteAs(other));
 
-        verify(getMockVerification()).check(eq(expected), eq("be same minute as '%s'"), getArgsCaptor().capture());
+        verify(getMockVerification()).check(eq(expected), eq(BaseTimeVerifier.MessageKeys.SAME_MINUTE_AS), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }
@@ -407,7 +407,7 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameMonthAs(other));
 
-        verify(getMockVerification()).check(eq(expected), eq("be same month as '%s'"), getArgsCaptor().capture());
+        verify(getMockVerification()).check(eq(expected), eq(BaseTimeVerifier.MessageKeys.SAME_MONTH_AS), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }
@@ -491,7 +491,7 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameSecondAs(other));
 
-        verify(getMockVerification()).check(eq(expected), eq("be same second as '%s'"), getArgsCaptor().capture());
+        verify(getMockVerification()).check(eq(expected), eq(BaseTimeVerifier.MessageKeys.SAME_SECOND_AS), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }
@@ -535,7 +535,7 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameTimeAs(other));
 
-        verify(getMockVerification()).check(eq(expected), eq("be same time as '%s'"), getArgsCaptor().capture());
+        verify(getMockVerification()).check(eq(expected), eq(BaseTimeVerifier.MessageKeys.SAME_TIME_AS), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }
@@ -595,7 +595,7 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameWeekAs(other));
 
-        verify(getMockVerification()).check(eq(expected), eq("be same week as '%s'"), getArgsCaptor().capture());
+        verify(getMockVerification()).check(eq(expected), eq(BaseTimeVerifier.MessageKeys.SAME_WEEK_AS), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }
@@ -647,7 +647,7 @@ public abstract class BaseTimeVerifierTestCase<T extends Comparable<? super T>, 
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameYearAs(other));
 
-        verify(getMockVerification()).check(eq(expected), eq("be same year as '%s'"), getArgsCaptor().capture());
+        verify(getMockVerification()).check(eq(expected), eq(BaseTimeVerifier.MessageKeys.SAME_YEAR_AS), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }

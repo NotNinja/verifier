@@ -25,7 +25,9 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -34,6 +36,7 @@ import org.junit.runner.RunWith;
 
 import io.skelp.verifier.AbstractCustomVerifierTestCase;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
+import io.skelp.verifier.message.MessageKeyEnumTestCase;
 import io.skelp.verifier.type.base.BaseComparableVerifierTestCase;
 import io.skelp.verifier.type.base.BaseTruthVerifierTestCase;
 
@@ -209,7 +212,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().alpha());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be a letter");
+            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ALPHA);
         }
 
         @Test
@@ -259,7 +262,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().alphanumeric());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be a letter or digit");
+            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ALPHANUMERIC);
         }
 
         @Test
@@ -309,7 +312,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().ascii());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be ASCII");
+            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ASCII);
         }
 
         @Test
@@ -359,7 +362,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().asciiAlpha());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be an ASCII letter");
+            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ASCII_ALPHA);
         }
 
         @Test
@@ -409,7 +412,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().asciiAlphaLowerCase());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be an ASCII lower case letter");
+            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ASCII_ALPHA_LOWER_CASE);
         }
 
         @Test
@@ -459,7 +462,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().asciiAlphaUpperCase());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be an ASCII upper case letter");
+            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ASCII_ALPHA_UPPER_CASE);
         }
 
         @Test
@@ -509,7 +512,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().asciiAlphanumeric());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be an ASCII letter or digit");
+            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ASCII_ALPHANUMERIC);
         }
 
         @Test
@@ -559,7 +562,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().asciiControl());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be an ASCII control");
+            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ASCII_CONTROL);
         }
 
         @Test
@@ -609,7 +612,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().asciiNumeric());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be an ASCII digit");
+            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ASCII_NUMERIC);
         }
 
         @Test
@@ -664,7 +667,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().asciiPrintable());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be ASCII printable");
+            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ASCII_PRINTABLE);
         }
 
         @Test
@@ -719,7 +722,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().lowerCase());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be lower case");
+            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.LOWER_CASE);
         }
 
         @Test
@@ -774,7 +777,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().numeric());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be a digit");
+            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.NUMERIC);
         }
 
         @Test
@@ -829,7 +832,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().upperCase());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be upper case");
+            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.UPPER_CASE);
         }
 
         @Test
@@ -879,12 +882,41 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().whitespace());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be whitespace");
+            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.WHITESPACE);
         }
 
         @Override
         protected CharacterVerifier createCustomVerifier() {
             return new CharacterVerifier(getMockVerification());
+        }
+    }
+
+    public static class CharacterVerifierMessageKeysTest extends MessageKeyEnumTestCase<CharacterVerifier.MessageKeys> {
+
+        @Override
+        protected Class<? extends Enum> getEnumClass() {
+            return CharacterVerifier.MessageKeys.class;
+        }
+
+        @Override
+        protected Map<String, String> getMessageKeys() {
+            Map<String, String> messageKeys = new HashMap<>();
+            messageKeys.put("ALPHA", "io.skelp.verifier.type.CharacterVerifier.alpha");
+            messageKeys.put("ALPHANUMERIC", "io.skelp.verifier.type.CharacterVerifier.alphanumeric");
+            messageKeys.put("ASCII", "io.skelp.verifier.type.CharacterVerifier.ascii");
+            messageKeys.put("ASCII_ALPHA", "io.skelp.verifier.type.CharacterVerifier.asciiAlpha");
+            messageKeys.put("ASCII_ALPHA_LOWER_CASE", "io.skelp.verifier.type.CharacterVerifier.asciiAlphaLowerCase");
+            messageKeys.put("ASCII_ALPHA_UPPER_CASE", "io.skelp.verifier.type.CharacterVerifier.asciiAlphaUpperCase");
+            messageKeys.put("ASCII_ALPHANUMERIC", "io.skelp.verifier.type.CharacterVerifier.asciiAlphanumeric");
+            messageKeys.put("ASCII_CONTROL", "io.skelp.verifier.type.CharacterVerifier.asciiControl");
+            messageKeys.put("ASCII_NUMERIC", "io.skelp.verifier.type.CharacterVerifier.asciiNumeric");
+            messageKeys.put("ASCII_PRINTABLE", "io.skelp.verifier.type.CharacterVerifier.asciiPrintable");
+            messageKeys.put("LOWER_CASE", "io.skelp.verifier.type.CharacterVerifier.lowerCase");
+            messageKeys.put("NUMERIC", "io.skelp.verifier.type.CharacterVerifier.numeric");
+            messageKeys.put("UPPER_CASE", "io.skelp.verifier.type.CharacterVerifier.upperCase");
+            messageKeys.put("WHITESPACE", "io.skelp.verifier.type.CharacterVerifier.whitespace");
+
+            return messageKeys;
         }
     }
 }
