@@ -21,12 +21,13 @@
  */
 package io.skelp.verifier.type;
 
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.message.MessageKey;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseTruthVerifier;
-import io.skelp.verifier.util.Function;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -68,7 +69,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         return other == null ? value == null : value != null && regionMatches(value, true, 0, other, 0, value.length());
     }
 
-    private static boolean matchCharacters(final String value, final Function<Boolean, Character> matcher) {
+    private static boolean matchCharacters(final String value, final Function<Character, Boolean> matcher) {
         if (value == null) {
             return false;
         }
@@ -150,16 +151,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #alphaSpace()
      */
-    public StringVerifier alpha() throws VerifierException {
+    public StringVerifier alpha() {
         final String value = verification().getValue();
-        final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
-            @Override
-            public Boolean apply(final Character character) {
-                return Character.isLetter(character);
-            }
-        });
+        final boolean result = matchCharacters(value, Character::isLetter);
 
-        verification().check(result, "contain only letters");
+        verification().report(result, MessageKeys.ALPHA);
 
         return this;
     }
@@ -181,16 +177,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #alpha()
      */
-    public StringVerifier alphaSpace() throws VerifierException {
+    public StringVerifier alphaSpace() {
         final String value = verification().getValue();
-        final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
-            @Override
-            public Boolean apply(final Character character) {
-                return Character.isLetter(character) || character == ' ';
-            }
-        });
+        final boolean result = matchCharacters(value, character -> Character.isLetter(character) || character == ' ');
 
-        verification().check(result, "contain only letters or space");
+        verification().report(result, MessageKeys.ALPHA_SPACE);
 
         return this;
     }
@@ -213,16 +204,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #alphanumericSpace()
      */
-    public StringVerifier alphanumeric() throws VerifierException {
+    public StringVerifier alphanumeric() {
         final String value = verification().getValue();
-        final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
-            @Override
-            public Boolean apply(final Character character) {
-                return Character.isLetterOrDigit(character);
-            }
-        });
+        final boolean result = matchCharacters(value, Character::isLetterOrDigit);
 
-        verification().check(result, "contain only letters or digits");
+        verification().report(result, MessageKeys.ALPHANUMERIC);
 
         return this;
     }
@@ -244,16 +230,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #alphanumeric()
      */
-    public StringVerifier alphanumericSpace() throws VerifierException {
+    public StringVerifier alphanumericSpace() {
         final String value = verification().getValue();
-        final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
-            @Override
-            public Boolean apply(final Character character) {
-                return Character.isLetterOrDigit(character) || character == ' ';
-            }
-        });
+        final boolean result = matchCharacters(value, character -> Character.isLetterOrDigit(character) || character == ' ');
 
-        verification().check(result, "contain only letters or digits or space");
+        verification().report(result, MessageKeys.ALPHANUMERIC_SPACE);
 
         return this;
     }
@@ -273,16 +254,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public StringVerifier asciiPrintable() throws VerifierException {
+    public StringVerifier asciiPrintable() {
         final String value = verification().getValue();
-        final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
-            @Override
-            public Boolean apply(final Character character) {
-                return character >= 32 && character < 127;
-            }
-        });
+        final boolean result = matchCharacters(value, character -> character >= 32 && character < 127);
 
-        verification().check(result, "contain only ASCII printable characters");
+        verification().report(result, MessageKeys.ASCII_PRINTABLE);
 
         return this;
     }
@@ -309,11 +285,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #empty()
      */
-    public StringVerifier blank() throws VerifierException {
+    public StringVerifier blank() {
         final String value = verification().getValue();
         final boolean result = value == null || value.trim().isEmpty();
 
-        verification().check(result, "be blank");
+        verification().report(result, MessageKeys.BLANK);
 
         return this;
     }
@@ -342,11 +318,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #containIgnoreCase(CharSequence)
      */
-    public StringVerifier contain(final CharSequence other) throws VerifierException {
+    public StringVerifier contain(final CharSequence other) {
         final String value = verification().getValue();
         final boolean result = value != null && other != null && value.contains(other);
 
-        verification().check(result, "contain '%s'", other);
+        verification().report(result, MessageKeys.CONTAIN, other);
 
         return this;
     }
@@ -374,16 +350,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #containAllIgnoreCase(CharSequence...)
      */
-    public StringVerifier containAll(final CharSequence... others) throws VerifierException {
+    public StringVerifier containAll(final CharSequence... others) {
         final String value = verification().getValue();
-        final boolean result = value != null && matchAll(others, new Function<Boolean, CharSequence>() {
-            @Override
-            public Boolean apply(final CharSequence input) {
-                return input != null && value.contains(input);
-            }
-        });
+        final boolean result = value != null && matchAll(others, input -> input != null && value.contains(input));
 
-        verification().check(result, "contain all %s", verification().getMessageFormatter().formatArray(others));
+        verification().report(result, MessageKeys.CONTAIN_ALL, (Object) others);
 
         return this;
     }
@@ -411,16 +382,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #containAll(CharSequence...)
      */
-    public StringVerifier containAllIgnoreCase(final CharSequence... others) throws VerifierException {
+    public StringVerifier containAllIgnoreCase(final CharSequence... others) {
         final String value = verification().getValue();
-        final boolean result = value != null && matchAll(others, new Function<Boolean, CharSequence>() {
-            @Override
-            public Boolean apply(final CharSequence input) {
-                return containsIgnoreCase(value, input);
-            }
-        });
+        final boolean result = value != null && matchAll(others, input -> containsIgnoreCase(value, input));
 
-        verification().check(result, "contain all %s (ignore case)", verification().getMessageFormatter().formatArray(others));
+        verification().report(result, MessageKeys.CONTAIN_ALL_IGNORE_CASE, (Object) others);
 
         return this;
     }
@@ -449,16 +415,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #containAnyIgnoreCase(CharSequence...)
      */
-    public StringVerifier containAny(final CharSequence... others) throws VerifierException {
+    public StringVerifier containAny(final CharSequence... others) {
         final String value = verification().getValue();
-        final boolean result = value != null && matchAny(others, new Function<Boolean, CharSequence>() {
-            @Override
-            public Boolean apply(final CharSequence input) {
-                return input != null && value.contains(input);
-            }
-        });
+        final boolean result = value != null && matchAny(others, input -> input != null && value.contains(input));
 
-        verification().check(result, "contain any %s", verification().getMessageFormatter().formatArray(others));
+        verification().report(result, MessageKeys.CONTAIN_ANY, (Object) others);
 
         return this;
     }
@@ -487,16 +448,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #containAny(CharSequence...)
      */
-    public StringVerifier containAnyIgnoreCase(final CharSequence... others) throws VerifierException {
+    public StringVerifier containAnyIgnoreCase(final CharSequence... others) {
         final String value = verification().getValue();
-        final boolean result = value != null && matchAny(others, new Function<Boolean, CharSequence>() {
-            @Override
-            public Boolean apply(final CharSequence input) {
-                return containsIgnoreCase(value, input);
-            }
-        });
+        final boolean result = value != null && matchAny(others, input -> containsIgnoreCase(value, input));
 
-        verification().check(result, "contain any %s (ignore case)", verification().getMessageFormatter().formatArray(others));
+        verification().report(result, MessageKeys.CONTAIN_ANY_IGNORE_CASE, (Object) others);
 
         return this;
     }
@@ -525,11 +481,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #contain(CharSequence)
      */
-    public StringVerifier containIgnoreCase(final CharSequence other) throws VerifierException {
+    public StringVerifier containIgnoreCase(final CharSequence other) {
         final String value = verification().getValue();
         final boolean result = value != null && containsIgnoreCase(value, other);
 
-        verification().check(result, "contain '%s' (ignore case)", other);
+        verification().report(result, MessageKeys.CONTAIN_IGNORE_CASE, other);
 
         return this;
     }
@@ -554,11 +510,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #blank()
      */
-    public StringVerifier empty() throws VerifierException {
+    public StringVerifier empty() {
         final String value = verification().getValue();
         final boolean result = value == null || value.isEmpty();
 
-        verification().check(result, "be empty");
+        verification().report(result, MessageKeys.EMPTY);
 
         return this;
     }
@@ -587,11 +543,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #endWithIgnoreCase(CharSequence)
      */
-    public StringVerifier endWith(final CharSequence other) throws VerifierException {
+    public StringVerifier endWith(final CharSequence other) {
         final String value = verification().getValue();
         final boolean result = value != null && endsWith(value, other, false);
 
-        verification().check(result, "end with '%s'", other);
+        verification().report(result, MessageKeys.END_WITH, other);
 
         return this;
     }
@@ -619,16 +575,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #endWithAnyIgnoreCase(CharSequence...)
      */
-    public StringVerifier endWithAny(final CharSequence... others) throws VerifierException {
+    public StringVerifier endWithAny(final CharSequence... others) {
         final String value = verification().getValue();
-        final boolean result = value != null && matchAny(others, new Function<Boolean, CharSequence>() {
-            @Override
-            public Boolean apply(final CharSequence input) {
-                return endsWith(value, input, false);
-            }
-        });
+        final boolean result = value != null && matchAny(others, input -> endsWith(value, input, false));
 
-        verification().check(result, "end with any %s", verification().getMessageFormatter().formatArray(others));
+        verification().report(result, MessageKeys.END_WITH_ANY, (Object) others);
 
         return this;
     }
@@ -656,16 +607,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #endWithAny(CharSequence...)
      */
-    public StringVerifier endWithAnyIgnoreCase(final CharSequence... others) throws VerifierException {
+    public StringVerifier endWithAnyIgnoreCase(final CharSequence... others) {
         final String value = verification().getValue();
-        final boolean result = value != null && matchAny(others, new Function<Boolean, CharSequence>() {
-            @Override
-            public Boolean apply(final CharSequence input) {
-                return endsWith(value, input, true);
-            }
-        });
+        final boolean result = value != null && matchAny(others, input -> endsWith(value, input, true));
 
-        verification().check(result, "end with any %s (ignore case)", verification().getMessageFormatter().formatArray(others));
+        verification().report(result, MessageKeys.END_WITH_ANY_IGNORE_CASE, (Object) others);
 
         return this;
     }
@@ -694,11 +640,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #endWith(CharSequence)
      */
-    public StringVerifier endWithIgnoreCase(final CharSequence other) throws VerifierException {
+    public StringVerifier endWithIgnoreCase(final CharSequence other) {
         final String value = verification().getValue();
         final boolean result = value != null && endsWith(value, other, true);
 
-        verification().check(result, "end with '%s' (ignore case)", other);
+        verification().report(result, MessageKeys.END_WITH_IGNORE_CASE, other);
 
         return this;
     }
@@ -728,16 +674,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #equalToAny(Object...)
      */
-    public StringVerifier equalToAnyIgnoreCase(final CharSequence... others) throws VerifierException {
+    public StringVerifier equalToAnyIgnoreCase(final CharSequence... others) {
         final String value = verification().getValue();
-        final boolean result = matchAny(others, new Function<Boolean, CharSequence>() {
-            @Override
-            public Boolean apply(final CharSequence input) {
-                return isEqualToIgnoreCase(value, input);
-            }
-        });
+        final boolean result = matchAny(others, input -> isEqualToIgnoreCase(value, input));
 
-        verification().check(result, "be equal to any %s (ignore case)", verification().getMessageFormatter().formatArray(others));
+        verification().report(result, MessageKeys.EQUAL_TO_ANY_IGNORE_CASE, (Object) others);
 
         return chain();
     }
@@ -765,21 +706,21 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #equalTo(Object)
      */
-    public StringVerifier equalToIgnoreCase(final CharSequence other) throws VerifierException {
+    public StringVerifier equalToIgnoreCase(final CharSequence other) {
         final String value = verification().getValue();
         final boolean result = isEqualToIgnoreCase(value, other);
 
-        verification().check(result, "be equal to '%s' (ignore case)", other);
+        verification().report(result, MessageKeys.EQUAL_TO_IGNORE_CASE, other);
 
         return this;
     }
 
     @Override
-    public StringVerifier falsy() throws VerifierException {
+    public StringVerifier falsy() {
         final String value = verification().getValue();
         final boolean result = value == null || value.isEmpty() || Boolean.FALSE.toString().equalsIgnoreCase(value);
 
-        verification().check(result, FALSY_MESSAGE);
+        verification().report(result, BaseTruthVerifier.MessageKeys.FALSY);
 
         return this;
     }
@@ -802,16 +743,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #upperCase()
      */
-    public StringVerifier lowerCase() throws VerifierException {
+    public StringVerifier lowerCase() {
         final String value = verification().getValue();
-        final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
-            @Override
-            public Boolean apply(final Character character) {
-                return Character.isLowerCase(character);
-            }
-        });
+        final boolean result = matchCharacters(value, Character::isLowerCase);
 
-        verification().check(result, "be all lower case");
+        verification().report(result, MessageKeys.LOWER_CASE);
 
         return this;
     }
@@ -838,11 +774,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #match(Pattern)
      */
-    public StringVerifier match(final CharSequence regex) throws VerifierException {
+    public StringVerifier match(final CharSequence regex) {
         final String value = verification().getValue();
         final boolean result = value != null && regex != null && value.matches(regex.toString());
 
-        verification().check(result, "match '%s'", regex);
+        verification().report(result, MessageKeys.MATCH, regex);
 
         return this;
     }
@@ -869,11 +805,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #match(CharSequence)
      */
-    public StringVerifier match(final Pattern pattern) throws VerifierException {
+    public StringVerifier match(final Pattern pattern) {
         final String value = verification().getValue();
         final boolean result = value != null && pattern != null && pattern.matcher(value).matches();
 
-        verification().check(result, "match '%s'", pattern);
+        verification().report(result, MessageKeys.MATCH, pattern);
 
         return this;
     }
@@ -896,16 +832,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #numericSpace()
      */
-    public StringVerifier numeric() throws VerifierException {
+    public StringVerifier numeric() {
         final String value = verification().getValue();
-        final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
-            @Override
-            public Boolean apply(final Character character) {
-                return Character.isDigit(character);
-            }
-        });
+        final boolean result = matchCharacters(value, Character::isDigit);
 
-        verification().check(result, "contain only digits");
+        verification().report(result, MessageKeys.NUMERIC);
 
         return this;
     }
@@ -927,16 +858,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #numeric()
      */
-    public StringVerifier numericSpace() throws VerifierException {
+    public StringVerifier numericSpace() {
         final String value = verification().getValue();
-        final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
-            @Override
-            public Boolean apply(final Character character) {
-                return Character.isDigit(character) || character == ' ';
-            }
-        });
+        final boolean result = matchCharacters(value, character -> Character.isDigit(character) || character == ' ');
 
-        verification().check(result, "contain only digits or space");
+        verification().report(result, MessageKeys.NUMERIC_SPACE);
 
         return this;
     }
@@ -964,11 +890,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public StringVerifier sizeOf(final int size) throws VerifierException {
+    public StringVerifier sizeOf(final int size) {
         final String value = verification().getValue();
         final boolean result = value == null ? size == 0 : value.length() == size;
 
-        verification().check(result, "have a size of '%d'", size);
+        verification().report(result, MessageKeys.SIZE_OF, size);
 
         return this;
     }
@@ -997,11 +923,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #startWithIgnoreCase(CharSequence)
      */
-    public StringVerifier startWith(final CharSequence other) throws VerifierException {
+    public StringVerifier startWith(final CharSequence other) {
         final String value = verification().getValue();
         final boolean result = startsWith(value, other, false);
 
-        verification().check(result, "start with '%s'", other);
+        verification().report(result, MessageKeys.START_WITH, other);
 
         return this;
     }
@@ -1029,16 +955,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #startWithAnyIgnoreCase(CharSequence...)
      */
-    public StringVerifier startWithAny(final CharSequence... others) throws VerifierException {
+    public StringVerifier startWithAny(final CharSequence... others) {
         final String value = verification().getValue();
-        final boolean result = matchAny(others, new Function<Boolean, CharSequence>() {
-            @Override
-            public Boolean apply(final CharSequence input) {
-                return startsWith(value, input, false);
-            }
-        });
+        final boolean result = matchAny(others, input -> startsWith(value, input, false));
 
-        verification().check(result, "start with any %s", verification().getMessageFormatter().formatArray(others));
+        verification().report(result, MessageKeys.START_WITH_ANY, (Object) others);
 
         return this;
     }
@@ -1066,16 +987,11 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #startWithAny(CharSequence...)
      */
-    public StringVerifier startWithAnyIgnoreCase(final CharSequence... others) throws VerifierException {
+    public StringVerifier startWithAnyIgnoreCase(final CharSequence... others) {
         final String value = verification().getValue();
-        final boolean result = matchAny(others, new Function<Boolean, CharSequence>() {
-            @Override
-            public Boolean apply(final CharSequence input) {
-                return startsWith(value, input, true);
-            }
-        });
+        final boolean result = matchAny(others, input -> startsWith(value, input, true));
 
-        verification().check(result, "start with any %s (ignore case)", verification().getMessageFormatter().formatArray(others));
+        verification().report(result, MessageKeys.START_WITH_ANY_IGNORE_CASE, (Object) others);
 
         return this;
     }
@@ -1104,21 +1020,21 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #startWith(CharSequence)
      */
-    public StringVerifier startWithIgnoreCase(final CharSequence other) throws VerifierException {
+    public StringVerifier startWithIgnoreCase(final CharSequence other) {
         final String value = verification().getValue();
         final boolean result = startsWith(value, other, true);
 
-        verification().check(result, "start with '%s' (ignore case)", other);
+        verification().report(result, MessageKeys.START_WITH_IGNORE_CASE, other);
 
         return this;
     }
 
     @Override
-    public StringVerifier truthy() throws VerifierException {
+    public StringVerifier truthy() {
         final String value = verification().getValue();
         final boolean result = Boolean.TRUE.toString().equalsIgnoreCase(value);
 
-        verification().check(result, TRUTHY_MESSAGE);
+        verification().report(result, BaseTruthVerifier.MessageKeys.TRUTHY);
 
         return this;
     }
@@ -1141,17 +1057,63 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      *         If the verification fails while not negated or passes while negated.
      * @see #lowerCase()
      */
-    public StringVerifier upperCase() throws VerifierException {
+    public StringVerifier upperCase() {
         final String value = verification().getValue();
-        final boolean result = matchCharacters(value, new Function<Boolean, Character>() {
-            @Override
-            public Boolean apply(final Character character) {
-                return Character.isUpperCase(character);
-            }
-        });
+        final boolean result = matchCharacters(value, Character::isUpperCase);
 
-        verification().check(result, "be all upper case");
+        verification().report(result, MessageKeys.UPPER_CASE);
 
         return this;
+    }
+
+    /**
+     * <p>
+     * The {@link MessageKey MessageKeys} that are used by {@link StringVerifier}.
+     * </p>
+     *
+     * @since 0.2.0
+     */
+    enum MessageKeys implements MessageKey {
+
+        ALPHA("io.skelp.verifier.type.StringVerifier.alpha"),
+        ALPHA_SPACE("io.skelp.verifier.type.StringVerifier.alphaSpace"),
+        ALPHANUMERIC("io.skelp.verifier.type.StringVerifier.alphanumeric"),
+        ALPHANUMERIC_SPACE("io.skelp.verifier.type.StringVerifier.alphanumericSpace"),
+        ASCII_PRINTABLE("io.skelp.verifier.type.StringVerifier.asciiPrintable"),
+        BLANK("io.skelp.verifier.type.StringVerifier.blank"),
+        CONTAIN("io.skelp.verifier.type.StringVerifier.contain"),
+        CONTAIN_ALL("io.skelp.verifier.type.StringVerifier.containAll"),
+        CONTAIN_ALL_IGNORE_CASE("io.skelp.verifier.type.StringVerifier.containAllIgnoreCase"),
+        CONTAIN_ANY("io.skelp.verifier.type.StringVerifier.containAny"),
+        CONTAIN_ANY_IGNORE_CASE("io.skelp.verifier.type.StringVerifier.containAnyIgnoreCase"),
+        CONTAIN_IGNORE_CASE("io.skelp.verifier.type.StringVerifier.containIgnoreCase"),
+        EMPTY("io.skelp.verifier.type.StringVerifier.empty"),
+        END_WITH("io.skelp.verifier.type.StringVerifier.endWith"),
+        END_WITH_ANY("io.skelp.verifier.type.StringVerifier.endWithAny"),
+        END_WITH_ANY_IGNORE_CASE("io.skelp.verifier.type.StringVerifier.endWithAnyIgnoreCase"),
+        END_WITH_IGNORE_CASE("io.skelp.verifier.type.StringVerifier.endWithIgnoreCase"),
+        EQUAL_TO_ANY_IGNORE_CASE("io.skelp.verifier.type.StringVerifier.equalToAnyIgnoreCase"),
+        EQUAL_TO_IGNORE_CASE("io.skelp.verifier.type.StringVerifier.equalToIgnoreCase"),
+        LOWER_CASE("io.skelp.verifier.type.StringVerifier.lowerCase"),
+        MATCH("io.skelp.verifier.type.StringVerifier.match"),
+        NUMERIC("io.skelp.verifier.type.StringVerifier.numeric"),
+        NUMERIC_SPACE("io.skelp.verifier.type.StringVerifier.numericSpace"),
+        SIZE_OF("io.skelp.verifier.type.StringVerifier.sizeOf"),
+        START_WITH("io.skelp.verifier.type.StringVerifier.startWith"),
+        START_WITH_ANY("io.skelp.verifier.type.StringVerifier.startWithAny"),
+        START_WITH_ANY_IGNORE_CASE("io.skelp.verifier.type.StringVerifier.startWithAnyIgnoreCase"),
+        START_WITH_IGNORE_CASE("io.skelp.verifier.type.StringVerifier.startWithIgnoreCase"),
+        UPPER_CASE("io.skelp.verifier.type.StringVerifier.upperCase");
+
+        private final String code;
+
+        MessageKeys(final String code) {
+            this.code = code;
+        }
+
+        @Override
+        public String code() {
+            return code;
+        }
     }
 }

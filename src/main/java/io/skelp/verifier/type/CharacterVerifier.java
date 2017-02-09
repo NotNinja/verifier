@@ -22,6 +22,7 @@
 package io.skelp.verifier.type;
 
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.message.MessageKey;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseTruthVerifier;
 import io.skelp.verifier.verification.Verification;
@@ -86,11 +87,11 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      *         If the verification fails while not negated or passes while negated.
      * @see #asciiAlpha()
      */
-    public CharacterVerifier alpha() throws VerifierException {
+    public CharacterVerifier alpha() {
         final Character value = verification().getValue();
         final boolean result = value != null && Character.isLetter(value);
 
-        verification().check(result, "be a letter");
+        verification().report(result, MessageKeys.ALPHA);
 
         return this;
     }
@@ -113,11 +114,11 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      *         If the verification fails while not negated or passes while negated.
      * @see #asciiAlphanumeric()
      */
-    public CharacterVerifier alphanumeric() throws VerifierException {
+    public CharacterVerifier alphanumeric() {
         final Character value = verification().getValue();
         final boolean result = value != null && Character.isLetterOrDigit(value);
 
-        verification().check(result, "be a letter or digit");
+        verification().report(result, MessageKeys.ALPHANUMERIC);
 
         return this;
     }
@@ -139,11 +140,11 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public CharacterVerifier ascii() throws VerifierException {
+    public CharacterVerifier ascii() {
         final Character value = verification().getValue();
         final boolean result = value != null && value < 128;
 
-        verification().check(result, "be ASCII");
+        verification().report(result, MessageKeys.ASCII);
 
         return this;
     }
@@ -166,11 +167,11 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      *         If the verification fails while not negated or passes while negated.
      * @see #alpha()
      */
-    public CharacterVerifier asciiAlpha() throws VerifierException {
+    public CharacterVerifier asciiAlpha() {
         final Character value = verification().getValue();
         final boolean result = value != null && isAsciiAlpha(value);
 
-        verification().check(result, "be an ASCII letter");
+        verification().report(result, MessageKeys.ASCII_ALPHA);
 
         return this;
     }
@@ -195,11 +196,11 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * @see #asciiAlphaUpperCase()
      * @see #lowerCase()
      */
-    public CharacterVerifier asciiAlphaLowerCase() throws VerifierException {
+    public CharacterVerifier asciiAlphaLowerCase() {
         final Character value = verification().getValue();
         final boolean result = value != null && isAsciiAlphaLowerCase(value);
 
-        verification().check(result, "be an ASCII lower case letter");
+        verification().report(result, MessageKeys.ASCII_ALPHA_LOWER_CASE);
 
         return this;
     }
@@ -224,11 +225,11 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * @see #asciiAlphaLowerCase()
      * @see #upperCase()
      */
-    public CharacterVerifier asciiAlphaUpperCase() throws VerifierException {
+    public CharacterVerifier asciiAlphaUpperCase() {
         final Character value = verification().getValue();
         final boolean result = value != null && isAsciiAlphaUpperCase(value);
 
-        verification().check(result, "be an ASCII upper case letter");
+        verification().report(result, MessageKeys.ASCII_ALPHA_UPPER_CASE);
 
         return this;
     }
@@ -251,11 +252,11 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      *         If the verification fails while not negated or passes while negated.
      * @see #alphanumeric()
      */
-    public CharacterVerifier asciiAlphanumeric() throws VerifierException {
+    public CharacterVerifier asciiAlphanumeric() {
         final Character value = verification().getValue();
         final boolean result = value != null && (isAsciiAlpha(value) || isAsciiNumeric(value));
 
-        verification().check(result, "be an ASCII letter or digit");
+        verification().report(result, MessageKeys.ASCII_ALPHANUMERIC);
 
         return this;
     }
@@ -277,11 +278,11 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public CharacterVerifier asciiControl() throws VerifierException {
+    public CharacterVerifier asciiControl() {
         final Character value = verification().getValue();
         final boolean result = value != null && (value < 32 || value == 127);
 
-        verification().check(result, "be an ASCII control");
+        verification().report(result, MessageKeys.ASCII_CONTROL);
 
         return this;
     }
@@ -304,11 +305,11 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      *         If the verification fails while not negated or passes while negated.
      * @see #numeric()
      */
-    public CharacterVerifier asciiNumeric() throws VerifierException {
+    public CharacterVerifier asciiNumeric() {
         final Character value = verification().getValue();
         final boolean result = value != null && isAsciiNumeric(value);
 
-        verification().check(result, "be an ASCII digit");
+        verification().report(result, MessageKeys.ASCII_NUMERIC);
 
         return this;
     }
@@ -332,21 +333,21 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public CharacterVerifier asciiPrintable() throws VerifierException {
+    public CharacterVerifier asciiPrintable() {
         final Character value = verification().getValue();
         final boolean result = value != null && value >= 32 && value < 127;
 
-        verification().check(result, "be ASCII printable");
+        verification().report(result, MessageKeys.ASCII_PRINTABLE);
 
         return this;
     }
 
     @Override
-    public CharacterVerifier falsy() throws VerifierException {
+    public CharacterVerifier falsy() {
         final Character value = verification().getValue();
         final boolean result = value == null || value == '0';
 
-        verification().check(result, FALSY_MESSAGE);
+        verification().report(result, BaseTruthVerifier.MessageKeys.FALSY);
 
         return this;
     }
@@ -372,11 +373,11 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * @see #asciiAlphaLowerCase()
      * @see #upperCase()
      */
-    public CharacterVerifier lowerCase() throws VerifierException {
+    public CharacterVerifier lowerCase() {
         final Character value = verification().getValue();
         final boolean result = value != null && Character.isLowerCase(value);
 
-        verification().check(result, "be lower case");
+        verification().report(result, MessageKeys.LOWER_CASE);
 
         return this;
     }
@@ -399,21 +400,21 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      *         If the verification fails while not negated or passes while negated.
      * @see #asciiNumeric()
      */
-    public CharacterVerifier numeric() throws VerifierException {
+    public CharacterVerifier numeric() {
         final Character value = verification().getValue();
         final boolean result = value != null && Character.isDigit(value);
 
-        verification().check(result, "be a digit");
+        verification().report(result, MessageKeys.NUMERIC);
 
         return this;
     }
 
     @Override
-    public CharacterVerifier truthy() throws VerifierException {
+    public CharacterVerifier truthy() {
         final Character value = verification().getValue();
         final boolean result = value != null && value == '1';
 
-        verification().check(result, TRUTHY_MESSAGE);
+        verification().report(result, BaseTruthVerifier.MessageKeys.TRUTHY);
 
         return this;
     }
@@ -439,11 +440,11 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * @see #asciiAlphaUpperCase()
      * @see #lowerCase()
      */
-    public CharacterVerifier upperCase() throws VerifierException {
+    public CharacterVerifier upperCase() {
         final Character value = verification().getValue();
         final boolean result = value != null && Character.isUpperCase(value);
 
-        verification().check(result, "be upper case");
+        verification().report(result, MessageKeys.UPPER_CASE);
 
         return this;
     }
@@ -467,12 +468,48 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public CharacterVerifier whitespace() throws VerifierException {
+    public CharacterVerifier whitespace() {
         final Character value = verification().getValue();
         final boolean result = value != null && Character.isWhitespace(value);
 
-        verification().check(result, "be whitespace");
+        verification().report(result, MessageKeys.WHITESPACE);
 
         return this;
+    }
+
+    /**
+     * <p>
+     * The {@link MessageKey MessageKeys} that are used by {@link CharacterVerifier}.
+     * </p>
+     *
+     * @since 0.2.0
+     */
+    enum MessageKeys implements MessageKey {
+
+        ALPHA("io.skelp.verifier.type.CharacterVerifier.alpha"),
+        ALPHANUMERIC("io.skelp.verifier.type.CharacterVerifier.alphanumeric"),
+        ASCII("io.skelp.verifier.type.CharacterVerifier.ascii"),
+        ASCII_ALPHA("io.skelp.verifier.type.CharacterVerifier.asciiAlpha"),
+        ASCII_ALPHA_LOWER_CASE("io.skelp.verifier.type.CharacterVerifier.asciiAlphaLowerCase"),
+        ASCII_ALPHA_UPPER_CASE("io.skelp.verifier.type.CharacterVerifier.asciiAlphaUpperCase"),
+        ASCII_ALPHANUMERIC("io.skelp.verifier.type.CharacterVerifier.asciiAlphanumeric"),
+        ASCII_CONTROL("io.skelp.verifier.type.CharacterVerifier.asciiControl"),
+        ASCII_NUMERIC("io.skelp.verifier.type.CharacterVerifier.asciiNumeric"),
+        ASCII_PRINTABLE("io.skelp.verifier.type.CharacterVerifier.asciiPrintable"),
+        LOWER_CASE("io.skelp.verifier.type.CharacterVerifier.lowerCase"),
+        NUMERIC("io.skelp.verifier.type.CharacterVerifier.numeric"),
+        UPPER_CASE("io.skelp.verifier.type.CharacterVerifier.upperCase"),
+        WHITESPACE("io.skelp.verifier.type.CharacterVerifier.whitespace");
+
+        private final String code;
+
+        MessageKeys(final String code) {
+            this.code = code;
+        }
+
+        @Override
+        public String code() {
+            return code;
+        }
     }
 }

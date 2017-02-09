@@ -26,6 +26,7 @@ import java.util.List;
 
 import io.skelp.verifier.AbstractCustomVerifier;
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.message.MessageKey;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -61,32 +62,6 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
 
     /**
      * <p>
-     * Verifies that the value is a checked exception.
-     * </p>
-     * <pre>
-     * Verifier.verify((Throwable) null).checked()           =&gt; FAIL
-     * Verifier.verify(new Exception()).checked()            =&gt; PASS
-     * Verifier.verify(new IOException()).checked()          =&gt; PASS
-     * Verifier.verify(new RuntimeException()).checked()     =&gt; FAIL
-     * Verifier.verify(new NullPointerException()).checked() =&gt; FAIL
-     * </pre>
-     *
-     * @return A reference to this {@link ThrowableVerifier} for chaining purposes.
-     * @throws VerifierException
-     *         If the verification fails while not negated or passes while negated.
-     * @see #unchecked()
-     */
-    public ThrowableVerifier checked() throws VerifierException {
-        final Throwable value = verification().getValue();
-        final boolean result = value != null && !(value instanceof RuntimeException);
-
-        verification().check(result, "be checked");
-
-        return this;
-    }
-
-    /**
-     * <p>
      * Verifies that the value is or has been caused by the {@code Class} provided.
      * </p>
      * <p>
@@ -111,7 +86,7 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * @see #causedBy(Throwable)
      * @see #causedBy(Throwable, Object)
      */
-    public ThrowableVerifier causedBy(final Class<?> type) throws VerifierException {
+    public ThrowableVerifier causedBy(final Class<?> type) {
         final Throwable value = verification().getValue();
         boolean result = false;
         for (final Throwable throwable : getThrowables(value)) {
@@ -121,7 +96,7 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
             }
         }
 
-        verification().check(result, "have been caused by '%s'", type);
+        verification().report(result, MessageKeys.CAUSED_BY, type);
 
         return this;
     }
@@ -149,7 +124,7 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * @see #causedBy(Throwable)
      * @see #causedBy(Throwable, Object)
      */
-    public ThrowableVerifier causedBy(final Throwable cause) throws VerifierException {
+    public ThrowableVerifier causedBy(final Throwable cause) {
         return causedBy(cause, cause);
     }
 
@@ -184,11 +159,37 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * @see #causedBy(Class)
      * @see #causedBy(Throwable)
      */
-    public ThrowableVerifier causedBy(final Throwable cause, final Object name) throws VerifierException {
+    public ThrowableVerifier causedBy(final Throwable cause, final Object name) {
         final Throwable value = verification().getValue();
         final boolean result = getThrowables(value).contains(cause);
 
-        verification().check(result, "have been caused by '%s'", name);
+        verification().report(result, MessageKeys.CAUSED_BY, name);
+
+        return this;
+    }
+
+    /**
+     * <p>
+     * Verifies that the value is a checked exception.
+     * </p>
+     * <pre>
+     * Verifier.verify((Throwable) null).checked()           =&gt; FAIL
+     * Verifier.verify(new Exception()).checked()            =&gt; PASS
+     * Verifier.verify(new IOException()).checked()          =&gt; PASS
+     * Verifier.verify(new RuntimeException()).checked()     =&gt; FAIL
+     * Verifier.verify(new NullPointerException()).checked() =&gt; FAIL
+     * </pre>
+     *
+     * @return A reference to this {@link ThrowableVerifier} for chaining purposes.
+     * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
+     * @see #unchecked()
+     */
+    public ThrowableVerifier checked() {
+        final Throwable value = verification().getValue();
+        final boolean result = value != null && !(value instanceof RuntimeException);
+
+        verification().report(result, MessageKeys.CHECKED);
 
         return this;
     }
@@ -216,11 +217,11 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public ThrowableVerifier message(final String message) throws VerifierException {
+    public ThrowableVerifier message(final String message) {
         final Throwable value = verification().getValue();
         final boolean result = value != null && (value.getMessage() == null ? message == null : value.getMessage().equals(message));
 
-        verification().check(result, "have message '%s'", message);
+        verification().report(result, MessageKeys.MESSAGE, message);
 
         return this;
     }
@@ -242,12 +243,38 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
      *         If the verification fails while not negated or passes while negated.
      * @see #checked()
      */
-    public ThrowableVerifier unchecked() throws VerifierException {
+    public ThrowableVerifier unchecked() {
         final Throwable value = verification().getValue();
         final boolean result = value instanceof RuntimeException;
 
-        verification().check(result, "be unchecked");
+        verification().report(result, MessageKeys.UNCHECKED);
 
         return this;
+    }
+
+    /**
+     * <p>
+     * The {@link MessageKey MessageKeys} that are used by {@link ThrowableVerifier}.
+     * </p>
+     *
+     * @since 0.2.0
+     */
+    enum MessageKeys implements MessageKey {
+
+        CAUSED_BY("io.skelp.verifier.type.ThrowableVerifier.causedBy"),
+        CHECKED("io.skelp.verifier.type.ThrowableVerifier.checked"),
+        MESSAGE("io.skelp.verifier.type.ThrowableVerifier.message"),
+        UNCHECKED("io.skelp.verifier.type.ThrowableVerifier.unchecked");
+
+        private final String code;
+
+        MessageKeys(final String code) {
+            this.code = code;
+        }
+
+        @Override
+        public String code() {
+            return code;
+        }
     }
 }

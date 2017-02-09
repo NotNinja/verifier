@@ -21,7 +21,6 @@
  */
 package io.skelp.verifier.type;
 
-import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseNumberVerifier;
 import io.skelp.verifier.type.base.BaseTruthVerifier;
@@ -55,81 +54,81 @@ public final class DoubleVerifier extends BaseComparableVerifier<Double, DoubleV
     }
 
     @Override
-    public DoubleVerifier even() throws VerifierException {
+    public DoubleVerifier even() {
         final Double value = verification().getValue();
         final boolean result = value != null && value % 2D == 0;
 
-        verification().check(result, EVEN_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.EVEN);
 
         return this;
     }
 
     @Override
-    public DoubleVerifier falsy() throws VerifierException {
+    public DoubleVerifier falsy() {
         final Double value = verification().getValue();
         final boolean result = value == null || value == 0D;
 
-        verification().check(result, FALSY_MESSAGE);
+        verification().report(result, BaseTruthVerifier.MessageKeys.FALSY);
 
         return this;
     }
 
     @Override
-    public DoubleVerifier negative() throws VerifierException {
+    public DoubleVerifier negative() {
         final Double value = verification().getValue();
         final boolean result = value != null && value < 0D;
 
-        verification().check(result, NEGATIVE_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.NEGATIVE);
 
         return this;
     }
 
     @Override
-    public DoubleVerifier odd() throws VerifierException {
+    public DoubleVerifier odd() {
         final Double value = verification().getValue();
         final boolean result = value != null && value % 2 != 0D;
 
-        verification().check(result, ODD_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.ODD);
 
         return this;
     }
 
     @Override
-    public DoubleVerifier one() throws VerifierException {
+    public DoubleVerifier one() {
         final Double value = verification().getValue();
         final boolean result = value != null && value == 1D;
 
-        verification().check(result, ONE_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.ONE);
 
         return this;
     }
 
     @Override
-    public DoubleVerifier positive() throws VerifierException {
+    public DoubleVerifier positive() {
         final Double value = verification().getValue();
         final boolean result = value != null && value >= 0D;
 
-        verification().check(result, POSITIVE_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.POSITIVE);
 
         return this;
     }
 
     @Override
-    public DoubleVerifier truthy() throws VerifierException {
+    public DoubleVerifier truthy() {
         final Double value = verification().getValue();
         final boolean result = value != null && value == 1D;
 
-        verification().check(result, TRUTHY_MESSAGE);
+        verification().report(result, BaseTruthVerifier.MessageKeys.TRUTHY);
 
         return this;
     }
 
     @Override
-    public DoubleVerifier zero() throws VerifierException {
+    public DoubleVerifier zero() {
         final Double value = verification().getValue();
         final boolean result = value != null && value == 0D;
 
-        verification().check(result, ZERO_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.ZERO);
 
         return this;
     }

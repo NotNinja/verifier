@@ -21,6 +21,7 @@
  */
 package io.skelp.verifier;
 
+import io.skelp.verifier.message.MessageKey;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -61,7 +62,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * @see #equalTo(Object, Object)
      * @see Object#equals(Object)
      */
-    V equalTo(Object other) throws VerifierException;
+    V equalTo(Object other);
 
     /**
      * <p>
@@ -94,7 +95,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * @see #equalTo(Object)
      * @see Object#equals(Object)
      */
-    V equalTo(Object other, Object name) throws VerifierException;
+    V equalTo(Object other, Object name);
 
     /**
      * <p>
@@ -120,7 +121,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      *         If the verification fails while not negated or passes while negated.
      * @see Object#equals(Object)
      */
-    V equalToAny(Object... others) throws VerifierException;
+    V equalToAny(Object... others);
 
     /**
      * <p>
@@ -144,7 +145,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      *         If the verification fails while not negated or passes while negated.
      * @see Object#hashCode()
      */
-    V hashedAs(int hashCode) throws VerifierException;
+    V hashedAs(int hashCode);
 
     /**
      * <p>
@@ -168,7 +169,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      *         If the verification fails while not negated or passes while negated.
      * @see Class#isInstance(Object)
      */
-    V instanceOf(Class<?> cls) throws VerifierException;
+    V instanceOf(Class<?> cls);
 
     /**
      * <p>
@@ -195,7 +196,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      *         If the verification fails while not negated or passes while negated.
      * @see Class#isInstance(Object)
      */
-    V instanceOfAll(Class<?>... classes) throws VerifierException;
+    V instanceOfAll(Class<?>... classes);
 
     /**
      * <p>
@@ -221,7 +222,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      *         If the verification fails while not negated or passes while negated.
      * @see Class#isInstance(Object)
      */
-    V instanceOfAny(Class<?>... classes) throws VerifierException;
+    V instanceOfAny(Class<?>... classes);
 
     /**
      * <p>
@@ -255,7 +256,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    V nulled() throws VerifierException;
+    V nulled();
 
     /**
      * <p>
@@ -279,7 +280,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      *         If the verification fails while not negated or passes while negated.
      * @see #sameAs(Object, Object)
      */
-    V sameAs(Object other) throws VerifierException;
+    V sameAs(Object other);
 
     /**
      * <p>
@@ -310,7 +311,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      *         If the verification fails while not negated or passes while negated.
      * @see #sameAs(Object)
      */
-    V sameAs(Object other, Object name) throws VerifierException;
+    V sameAs(Object other, Object name);
 
     /**
      * <p>
@@ -335,7 +336,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    V sameAsAny(Object... others) throws VerifierException;
+    V sameAsAny(Object... others);
 
     /**
      * <p>
@@ -355,9 +356,33 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * @throws VerifierException
      *         If {@code assertion} is {@literal null} or the verification fails while not negated or passes while
      *         negated.
+     * @see #that(VerifierAssertion, MessageKey, Object...)
      * @see #that(VerifierAssertion, String, Object...)
      */
-    V that(VerifierAssertion<T> assertion) throws VerifierException;
+    V that(VerifierAssertion<T> assertion);
+
+    /**
+     * <p>
+     * Verifies that the value passes the {@code assertion} provided while allowing an optional {@code key} and format
+     * {@code args} to be specified to enhance the {@link VerifierException} message in the event that one is thrown.
+     * </p>
+     *
+     * @param assertion
+     *         the {@link VerifierAssertion} to be used to verify the value
+     * @param key
+     *         the key {@link MessageKey} which provides a more detailed localized explanation of what is being
+     *         verified
+     * @param args
+     *         the optional format arguments which are only used to format the localized message
+     * @return A reference to this {@link CustomVerifier} for chaining purposes.
+     * @throws VerifierException
+     *         If {@code assertion} is {@literal null} or the verification fails while not negated or passes while
+     *         negated.
+     * @see #that(VerifierAssertion)
+     * @see #that(VerifierAssertion, String, Object...)
+     * @since 0.2.0
+     */
+    V that(VerifierAssertion<T> assertion, MessageKey key, Object... args);
 
     /**
      * <p>
@@ -369,7 +394,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * @param assertion
      *         the {@link VerifierAssertion} to be used to verify the value
      * @param message
-     *         the optional message which provides a (slightly) more detailed explanation of what is being verified
+     *         the optional message which provides a more detailed explanation of what is being verified
      * @param args
      *         the optional format arguments which are only used to format {@code message}
      * @return A reference to this {@link CustomVerifier} for chaining purposes.
@@ -377,8 +402,9 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      *         If {@code assertion} is {@literal null} or the verification fails while not negated or passes while
      *         negated.
      * @see #that(VerifierAssertion)
+     * @see #that(VerifierAssertion, MessageKey, Object...)
      */
-    V that(VerifierAssertion<T> assertion, String message, Object... args) throws VerifierException;
+    V that(VerifierAssertion<T> assertion, String message, Object... args);
 
     /**
      * <p>

@@ -22,15 +22,17 @@
 package io.skelp.verifier.type;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
 import io.skelp.verifier.AbstractCustomVerifierTestCase;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
+import io.skelp.verifier.message.MessageKeyEnumTestCase;
 
 /**
  * <p>
@@ -73,29 +75,6 @@ public class ThrowableVerifierTest {
     public static class ThrowableVerifierMiscTest extends CustomVerifierTestCaseBase<Throwable, ThrowableVerifier> {
 
         @Test
-        public void testCheckedWhenValueIsChecked() {
-            testCheckedHelper(new CheckedException(null, null), true);
-        }
-
-        @Test
-        public void testCheckedWhenValueIsNull() {
-            testCheckedHelper(null, false);
-        }
-
-        @Test
-        public void testCheckedWhenValueIsUnchecked() {
-            testCheckedHelper(new UncheckedException(null, null), false);
-        }
-
-        private void testCheckedHelper(Throwable value, boolean expected) {
-            setValue(value);
-
-            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().checked());
-
-            verify(getMockVerification()).check(expected, "be checked");
-        }
-
-        @Test
         public void testCausedByWithClassWhenValueHasCircularCause() {
             testCausedByHelper(new CheckedException(null, new CircularException()), CircularException.class, true);
         }
@@ -130,7 +109,7 @@ public class ThrowableVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().causedBy(type));
 
-            verify(getMockVerification()).check(eq(expected), eq("have been caused by '%s'"), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(ThrowableVerifier.MessageKeys.CAUSED_BY), getArgsCaptor().capture());
 
             assertSame("Passes type for message formatting", type, getArgsCaptor().getValue());
         }
@@ -176,7 +155,7 @@ public class ThrowableVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().causedBy(cause));
 
-            verify(getMockVerification()).check(eq(expected), eq("have been caused by '%s'"), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(ThrowableVerifier.MessageKeys.CAUSED_BY), getArgsCaptor().capture());
 
             assertSame("Passes cause for message formatting", cause, getArgsCaptor().getValue());
         }
@@ -222,9 +201,32 @@ public class ThrowableVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().causedBy(cause, name));
 
-            verify(getMockVerification()).check(eq(expected), eq("have been caused by '%s'"), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(ThrowableVerifier.MessageKeys.CAUSED_BY), getArgsCaptor().capture());
 
             assertSame("Passes name for message formatting", name, getArgsCaptor().getValue());
+        }
+
+        @Test
+        public void testCheckedWhenValueIsChecked() {
+            testCheckedHelper(new CheckedException(null, null), true);
+        }
+
+        @Test
+        public void testCheckedWhenValueIsNull() {
+            testCheckedHelper(null, false);
+        }
+
+        @Test
+        public void testCheckedWhenValueIsUnchecked() {
+            testCheckedHelper(new UncheckedException(null, null), false);
+        }
+
+        private void testCheckedHelper(Throwable value, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().checked());
+
+            verify(getMockVerification()).report(expected, ThrowableVerifier.MessageKeys.CHECKED);
         }
 
         @Test
@@ -257,7 +259,7 @@ public class ThrowableVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().message(message));
 
-            verify(getMockVerification()).check(eq(expected), eq("have message '%s'"), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(ThrowableVerifier.MessageKeys.MESSAGE), getArgsCaptor().capture());
 
             assertSame("Passes message for message formatting", message, getArgsCaptor().getValue());
         }
@@ -282,12 +284,31 @@ public class ThrowableVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().unchecked());
 
-            verify(getMockVerification()).check(expected, "be unchecked");
+            verify(getMockVerification()).report(expected, ThrowableVerifier.MessageKeys.UNCHECKED);
         }
 
         @Override
         protected ThrowableVerifier createCustomVerifier() {
             return new ThrowableVerifier(getMockVerification());
+        }
+    }
+
+    public static class ThrowableVerifierMessageKeysTest extends MessageKeyEnumTestCase<ThrowableVerifier.MessageKeys> {
+
+        @Override
+        protected Class<? extends Enum> getEnumClass() {
+            return ThrowableVerifier.MessageKeys.class;
+        }
+
+        @Override
+        protected Map<String, String> getMessageKeys() {
+            Map<String, String> messageKeys = new HashMap<>();
+            messageKeys.put("CAUSED_BY", "io.skelp.verifier.type.ThrowableVerifier.causedBy");
+            messageKeys.put("CHECKED", "io.skelp.verifier.type.ThrowableVerifier.checked");
+            messageKeys.put("MESSAGE", "io.skelp.verifier.type.ThrowableVerifier.message");
+            messageKeys.put("UNCHECKED", "io.skelp.verifier.type.ThrowableVerifier.unchecked");
+
+            return messageKeys;
         }
     }
 

@@ -30,6 +30,7 @@ import java.util.Set;
 
 import io.skelp.verifier.AbstractCustomVerifier;
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.message.MessageKey;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -67,11 +68,11 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public LocaleVerifier available() throws VerifierException {
+    public LocaleVerifier available() {
         final Locale value = verification().getValue();
         final boolean result = LazyHolder.AVAILABLE_LOCALES.contains(value);
 
-        verification().check(result, "be available");
+        verification().report(result, MessageKeys.AVAILABLE);
 
         return this;
     }
@@ -97,11 +98,11 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public LocaleVerifier country(final String country) throws VerifierException {
+    public LocaleVerifier country(final String country) {
         final Locale value = verification().getValue();
         final boolean result = value != null && value.getCountry().equals(country);
 
-        verification().check(result, "be country '%s'", country);
+        verification().report(result, MessageKeys.COUNTRY, country);
 
         return this;
     }
@@ -120,11 +121,11 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public LocaleVerifier defaulting() throws VerifierException {
+    public LocaleVerifier defaulting() {
         final Locale value = verification().getValue();
         final boolean result = Locale.getDefault().equals(value);
 
-        verification().check(result, "be default");
+        verification().report(result, MessageKeys.DEFAULTING);
 
         return this;
     }
@@ -149,11 +150,11 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public LocaleVerifier language(final String language) throws VerifierException {
+    public LocaleVerifier language(final String language) {
         final Locale value = verification().getValue();
         final boolean result = value != null && value.getLanguage().equals(language);
 
-        verification().check(result, "be language '%s'", language);
+        verification().report(result, MessageKeys.LANGUAGE, language);
 
         return this;
     }
@@ -179,11 +180,11 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public LocaleVerifier script(final String script) throws VerifierException {
+    public LocaleVerifier script(final String script) {
         final Locale value = verification().getValue();
         final boolean result = value != null && value.getScript().equals(script);
 
-        verification().check(result, "be script '%s'", script);
+        verification().report(result, MessageKeys.SCRIPT, script);
 
         return this;
     }
@@ -209,13 +210,41 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public LocaleVerifier variant(final String variant) throws VerifierException {
+    public LocaleVerifier variant(final String variant) {
         final Locale value = verification().getValue();
         final boolean result = value != null && value.getVariant().equals(variant);
 
-        verification().check(result, "be variant '%s'", variant);
+        verification().report(result, MessageKeys.VARIANT, variant);
 
         return this;
+    }
+
+    /**
+     * <p>
+     * The {@link MessageKey MessageKeys} that are used by {@link LocaleVerifier}.
+     * </p>
+     *
+     * @since 0.2.0
+     */
+    enum MessageKeys implements MessageKey {
+
+        AVAILABLE("io.skelp.verifier.type.LocaleVerifier.available"),
+        COUNTRY("io.skelp.verifier.type.LocaleVerifier.country"),
+        DEFAULTING("io.skelp.verifier.type.LocaleVerifier.defaulting"),
+        LANGUAGE("io.skelp.verifier.type.LocaleVerifier.language"),
+        SCRIPT("io.skelp.verifier.type.LocaleVerifier.script"),
+        VARIANT("io.skelp.verifier.type.LocaleVerifier.variant");
+
+        private final String code;
+
+        MessageKeys(final String code) {
+            this.code = code;
+        }
+
+        @Override
+        public String code() {
+            return code;
+        }
     }
 
     private static class LazyHolder {

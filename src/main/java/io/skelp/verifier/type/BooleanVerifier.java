@@ -21,7 +21,6 @@
  */
 package io.skelp.verifier.type;
 
-import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseTruthVerifier;
 import io.skelp.verifier.verification.Verification;
@@ -53,19 +52,19 @@ public final class BooleanVerifier extends BaseComparableVerifier<Boolean, Boole
     }
 
     @Override
-    public BooleanVerifier falsy() throws VerifierException {
+    public BooleanVerifier falsy() {
         final boolean result = !Boolean.TRUE.equals(verification().getValue());
 
-        verification().check(result, FALSY_MESSAGE);
+        verification().report(result, BaseTruthVerifier.MessageKeys.FALSY);
 
         return this;
     }
 
     @Override
-    public BooleanVerifier truthy() throws VerifierException {
+    public BooleanVerifier truthy() {
         final boolean result = Boolean.TRUE.equals(verification().getValue());
 
-        verification().check(result, TRUTHY_MESSAGE);
+        verification().report(result, BaseTruthVerifier.MessageKeys.TRUTHY);
 
         return this;
     }
