@@ -162,7 +162,7 @@ public class LocaleVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().available());
 
-            verify(getMockVerification()).check(expected, LocaleVerifier.MessageKeys.AVAILABLE);
+            verify(getMockVerification()).report(expected, LocaleVerifier.MessageKeys.AVAILABLE);
         }
 
         @Test
@@ -186,7 +186,7 @@ public class LocaleVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().defaulting());
 
-            verify(getMockVerification()).check(expected, LocaleVerifier.MessageKeys.DEFAULTING);
+            verify(getMockVerification()).report(expected, LocaleVerifier.MessageKeys.DEFAULTING);
         }
 
         @Test
@@ -209,7 +209,7 @@ public class LocaleVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().country(country));
 
-            verify(getMockVerification()).check(eq(expected), eq(LocaleVerifier.MessageKeys.COUNTRY), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(LocaleVerifier.MessageKeys.COUNTRY), getArgsCaptor().capture());
 
             assertSame("Passes country for message formatting", country, getArgsCaptor().getValue());
         }
@@ -234,7 +234,7 @@ public class LocaleVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().language(language));
 
-            verify(getMockVerification()).check(eq(expected), eq(LocaleVerifier.MessageKeys.LANGUAGE), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(LocaleVerifier.MessageKeys.LANGUAGE), getArgsCaptor().capture());
 
             assertSame("Passes language for message formatting", language, getArgsCaptor().getValue());
         }
@@ -263,7 +263,7 @@ public class LocaleVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().script(script));
 
-            verify(getMockVerification()).check(eq(expected), eq(LocaleVerifier.MessageKeys.SCRIPT), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(LocaleVerifier.MessageKeys.SCRIPT), getArgsCaptor().capture());
 
             assertSame("Passes script for message formatting", script, getArgsCaptor().getValue());
         }
@@ -288,7 +288,7 @@ public class LocaleVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().variant(variant));
 
-            verify(getMockVerification()).check(eq(expected), eq(LocaleVerifier.MessageKeys.VARIANT), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(LocaleVerifier.MessageKeys.VARIANT), getArgsCaptor().capture());
 
             assertSame("Passes variant for message formatting", variant, getArgsCaptor().getValue());
         }

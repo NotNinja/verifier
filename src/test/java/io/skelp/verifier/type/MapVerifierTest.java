@@ -176,7 +176,7 @@ public class MapVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAllKeys(keys));
 
-            verify(getMockVerification()).check(expected, MapVerifier.MessageKeys.CONTAIN_ALL_KEYS, (Object) keys);
+            verify(getMockVerification()).report(expected, MapVerifier.MessageKeys.CONTAIN_ALL_KEYS, (Object) keys);
         }
 
         @Test
@@ -229,7 +229,7 @@ public class MapVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAnyKey(keys));
 
-            verify(getMockVerification()).check(expected, MapVerifier.MessageKeys.CONTAIN_ANY_KEY, (Object) keys);
+            verify(getMockVerification()).report(expected, MapVerifier.MessageKeys.CONTAIN_ANY_KEY, (Object) keys);
         }
 
         @Test
@@ -259,7 +259,7 @@ public class MapVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containKey(key));
 
-            verify(getMockVerification()).check(eq(expected), eq(MapVerifier.MessageKeys.CONTAIN_KEY), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(MapVerifier.MessageKeys.CONTAIN_KEY), getArgsCaptor().capture());
 
             assertSame("Passes key for message formatting", key, getArgsCaptor().getValue());
         }

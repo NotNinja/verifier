@@ -76,7 +76,7 @@ public interface MessageSource {
      * @throws NoSuchMessageException
      *         If no message could be found for {@code key} or any other that is required to build the full message.
      */
-    String getMessage(Verification<?> verification, MessageKey key, Object... args);
+    String getMessage(Verification<?> verification, MessageKey key, Object[] args);
 
     /**
      * <p>
@@ -102,5 +102,5 @@ public interface MessageSource {
      * @throws NoSuchMessageException
      *         If no message could be found for any keys that are required to build the full message.
      */
-    String getMessage(Verification<?> verification, String message, Object... args);
+    String getMessage(Verification<?> verification, String message, Object[] args);
 }

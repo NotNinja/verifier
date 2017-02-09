@@ -38,6 +38,9 @@ import io.skelp.verifier.message.locale.LocaleContext;
 import io.skelp.verifier.message.locale.LocaleContextProvider;
 import io.skelp.verifier.message.locale.TestLocaleContextProvider;
 import io.skelp.verifier.service.Weighted;
+import io.skelp.verifier.verification.report.ReportExecutor;
+import io.skelp.verifier.verification.report.ReportExecutorProvider;
+import io.skelp.verifier.verification.report.TestReportExecutorProvider;
 
 /**
  * <p>
@@ -57,6 +60,10 @@ public class DefaultVerificationProviderTest {
     private MessageSource mockMessageSource;
     @Mock
     private MessageSourceProvider mockMessageSourceProvider;
+    @Mock
+    private ReportExecutor mockReportExecutor;
+    @Mock
+    private ReportExecutorProvider mockReportExecutorProvider;
 
     private DefaultVerificationProvider provider;
 
@@ -64,9 +71,11 @@ public class DefaultVerificationProviderTest {
     public void setUp() {
         when(mockLocaleContextProvider.getLocaleContext()).thenReturn(mockLocaleContext);
         when(mockMessageSourceProvider.getMessageSource()).thenReturn(mockMessageSource);
+        when(mockReportExecutorProvider.getReportExecutor()).thenReturn(mockReportExecutor);
 
         TestLocaleContextProvider.setDelegate(mockLocaleContextProvider);
         TestMessageSourceProvider.setDelegate(mockMessageSourceProvider);
+        TestReportExecutorProvider.setDelegate(mockReportExecutorProvider);
 
         provider = new DefaultVerificationProvider();
     }
@@ -75,6 +84,7 @@ public class DefaultVerificationProviderTest {
     public void tearDown() {
         TestLocaleContextProvider.setDelegate(null);
         TestMessageSourceProvider.setDelegate(null);
+        TestReportExecutorProvider.setDelegate(null);
     }
 
     @Test
@@ -85,6 +95,7 @@ public class DefaultVerificationProviderTest {
         assertTrue("Returns instance of SimpleVerification", verification instanceof SimpleVerification);
         assertSame("Passed LocaleContext from provider", mockLocaleContext, verification.getLocaleContext());
         assertSame("Passed MessageSource from provider", mockMessageSource, verification.getMessageSource());
+        assertSame("Passed ReportExecutor from provider", mockReportExecutor, verification.getReportExecutor());
         assertEquals("Passed name", "foo", verification.getName());
         assertEquals("Passed value", Integer.valueOf(123), verification.getValue());
     }

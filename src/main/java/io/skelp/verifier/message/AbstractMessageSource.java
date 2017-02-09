@@ -290,7 +290,7 @@ public abstract class AbstractMessageSource implements MessageSource {
     }
 
     @Override
-    public String getMessage(final Verification<?> verification, final MessageKey key, final Object... args) {
+    public String getMessage(final Verification<?> verification, final MessageKey key, final Object[] args) {
         final String formattedMessage = getMessageInternal(key, args, verification);
         if (formattedMessage != null) {
             return buildMessage(formattedMessage, verification);
@@ -305,7 +305,7 @@ public abstract class AbstractMessageSource implements MessageSource {
     }
 
     @Override
-    public String getMessage(final Verification<?> verification, final String message, final Object... args) {
+    public String getMessage(final Verification<?> verification, final String message, final Object[] args) {
         final String formattedMessage = getMessageInternal(message, args, verification);
         if (formattedMessage != null) {
             return buildMessage(formattedMessage, verification);
@@ -317,7 +317,7 @@ public abstract class AbstractMessageSource implements MessageSource {
 
     /**
      * <p>
-     * Called internally by {@link #getMessage(Verification, MessageKey, Object...)} to handle the actual logic of
+     * Called internally by {@link #getMessage(Verification, MessageKey, Object[])} to handle the actual logic of
      * looking up a message based on the specified {@code key} and potentially formatting it using the optional format
      * {@code args} provided.
      * </p>
@@ -342,7 +342,7 @@ public abstract class AbstractMessageSource implements MessageSource {
      * @throws IllegalArgumentException
      *         If the resolved message is formatted but is an invalid format pattern or any of the format {@code args}
      *         are invalid for their placeholders.
-     * @see #getMessage(Verification, MessageKey, Object...)
+     * @see #getMessage(Verification, MessageKey, Object[])
      */
     protected String getMessageInternal(final MessageKey key, final Object[] args, final Verification<?> verification) {
         if (key == null) {
@@ -366,7 +366,7 @@ public abstract class AbstractMessageSource implements MessageSource {
 
     /**
      * <p>
-     * Called internally by {@link #getMessage(Verification, String, Object...)} to handle the actual logic of
+     * Called internally by {@link #getMessage(Verification, String, Object[])} to handle the actual logic of
      * potentially formatting {@code message} using the optional format {@code args} provided.
      * </p>
      * <p>
@@ -388,7 +388,7 @@ public abstract class AbstractMessageSource implements MessageSource {
      * @throws IllegalArgumentException
      *         If {@code message} is formatted but is an invalid format pattern or any of the format {@code args} are
      *         invalid for their placeholders.
-     * @see #getMessage(Verification, String, Object...)
+     * @see #getMessage(Verification, String, Object[])
      */
     protected String getMessageInternal(final String message, final Object[] args, final Verification<?> verification) {
         if (message == null) {

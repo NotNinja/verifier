@@ -212,7 +212,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().alpha());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ALPHA);
+            verify(getMockVerification(), times(values.length)).report(expected, CharacterVerifier.MessageKeys.ALPHA);
         }
 
         @Test
@@ -262,7 +262,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().alphanumeric());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ALPHANUMERIC);
+            verify(getMockVerification(), times(values.length)).report(expected, CharacterVerifier.MessageKeys.ALPHANUMERIC);
         }
 
         @Test
@@ -312,7 +312,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().ascii());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ASCII);
+            verify(getMockVerification(), times(values.length)).report(expected, CharacterVerifier.MessageKeys.ASCII);
         }
 
         @Test
@@ -362,7 +362,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().asciiAlpha());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ASCII_ALPHA);
+            verify(getMockVerification(), times(values.length)).report(expected, CharacterVerifier.MessageKeys.ASCII_ALPHA);
         }
 
         @Test
@@ -412,7 +412,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().asciiAlphaLowerCase());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ASCII_ALPHA_LOWER_CASE);
+            verify(getMockVerification(), times(values.length)).report(expected, CharacterVerifier.MessageKeys.ASCII_ALPHA_LOWER_CASE);
         }
 
         @Test
@@ -462,7 +462,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().asciiAlphaUpperCase());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ASCII_ALPHA_UPPER_CASE);
+            verify(getMockVerification(), times(values.length)).report(expected, CharacterVerifier.MessageKeys.ASCII_ALPHA_UPPER_CASE);
         }
 
         @Test
@@ -512,7 +512,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().asciiAlphanumeric());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ASCII_ALPHANUMERIC);
+            verify(getMockVerification(), times(values.length)).report(expected, CharacterVerifier.MessageKeys.ASCII_ALPHANUMERIC);
         }
 
         @Test
@@ -562,7 +562,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().asciiControl());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ASCII_CONTROL);
+            verify(getMockVerification(), times(values.length)).report(expected, CharacterVerifier.MessageKeys.ASCII_CONTROL);
         }
 
         @Test
@@ -612,7 +612,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().asciiNumeric());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ASCII_NUMERIC);
+            verify(getMockVerification(), times(values.length)).report(expected, CharacterVerifier.MessageKeys.ASCII_NUMERIC);
         }
 
         @Test
@@ -667,7 +667,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().asciiPrintable());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.ASCII_PRINTABLE);
+            verify(getMockVerification(), times(values.length)).report(expected, CharacterVerifier.MessageKeys.ASCII_PRINTABLE);
         }
 
         @Test
@@ -722,7 +722,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().lowerCase());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.LOWER_CASE);
+            verify(getMockVerification(), times(values.length)).report(expected, CharacterVerifier.MessageKeys.LOWER_CASE);
         }
 
         @Test
@@ -777,7 +777,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().numeric());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.NUMERIC);
+            verify(getMockVerification(), times(values.length)).report(expected, CharacterVerifier.MessageKeys.NUMERIC);
         }
 
         @Test
@@ -832,7 +832,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().upperCase());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.UPPER_CASE);
+            verify(getMockVerification(), times(values.length)).report(expected, CharacterVerifier.MessageKeys.UPPER_CASE);
         }
 
         @Test
@@ -882,7 +882,7 @@ public class CharacterVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().whitespace());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, CharacterVerifier.MessageKeys.WHITESPACE);
+            verify(getMockVerification(), times(values.length)).report(expected, CharacterVerifier.MessageKeys.WHITESPACE);
         }
 
         @Override

@@ -98,7 +98,7 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().between(start, end));
 
-        verify(getMockVerification()).check(eq(expected), eq(BaseComparableVerifier.MessageKeys.BETWEEN), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseComparableVerifier.MessageKeys.BETWEEN), getArgsCaptor().capture());
 
         assertArrayEquals("Passes start and end for message formatting", new Object[]{start, end}, getArgsCaptor().getAllValues().toArray());
     }
@@ -153,7 +153,7 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().between(start, end, startName, endName));
 
-        verify(getMockVerification()).check(eq(expected), eq(BaseComparableVerifier.MessageKeys.BETWEEN), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseComparableVerifier.MessageKeys.BETWEEN), getArgsCaptor().capture());
 
         assertArrayEquals("Passes start and end names for message formatting", new Object[]{startName, endName}, getArgsCaptor().getAllValues().toArray());
     }
@@ -208,7 +208,7 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().betweenExclusive(start, end));
 
-        verify(getMockVerification()).check(eq(expected), eq(BaseComparableVerifier.MessageKeys.BETWEEN_EXCLUSIVE), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseComparableVerifier.MessageKeys.BETWEEN_EXCLUSIVE), getArgsCaptor().capture());
 
         assertArrayEquals("Passes start and end for message formatting", new Object[]{start, end}, getArgsCaptor().getAllValues().toArray());
     }
@@ -263,7 +263,7 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().betweenExclusive(start, end, startName, endName));
 
-        verify(getMockVerification()).check(eq(expected), eq(BaseComparableVerifier.MessageKeys.BETWEEN_EXCLUSIVE), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseComparableVerifier.MessageKeys.BETWEEN_EXCLUSIVE), getArgsCaptor().capture());
 
         assertArrayEquals("Passes start and end names for message formatting", new Object[]{startName, endName}, getArgsCaptor().getAllValues().toArray());
     }
@@ -303,7 +303,7 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().greaterThan(other));
 
-        verify(getMockVerification()).check(eq(expected), eq(BaseComparableVerifier.MessageKeys.GREATER_THAN), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseComparableVerifier.MessageKeys.GREATER_THAN), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }
@@ -343,7 +343,7 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().greaterThan(other, otherName));
 
-        verify(getMockVerification()).check(eq(expected), eq(BaseComparableVerifier.MessageKeys.GREATER_THAN), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseComparableVerifier.MessageKeys.GREATER_THAN), getArgsCaptor().capture());
 
         assertSame("Passes other name for message formatting", otherName, getArgsCaptor().getValue());
     }
@@ -383,7 +383,7 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().greaterThanOrEqualTo(other));
 
-        verify(getMockVerification()).check(eq(expected), eq(BaseComparableVerifier.MessageKeys.GREATER_THAN_OR_EQUAL_TO), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseComparableVerifier.MessageKeys.GREATER_THAN_OR_EQUAL_TO), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }
@@ -423,7 +423,7 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().greaterThanOrEqualTo(other, otherName));
 
-        verify(getMockVerification()).check(eq(expected), eq(BaseComparableVerifier.MessageKeys.GREATER_THAN_OR_EQUAL_TO), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseComparableVerifier.MessageKeys.GREATER_THAN_OR_EQUAL_TO), getArgsCaptor().capture());
 
         assertSame("Passes other name for message formatting", otherName, getArgsCaptor().getValue());
     }
@@ -463,7 +463,7 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().lessThan(other));
 
-        verify(getMockVerification()).check(eq(expected), eq(BaseComparableVerifier.MessageKeys.LESS_THAN), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseComparableVerifier.MessageKeys.LESS_THAN), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }
@@ -503,7 +503,7 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().lessThan(other, otherName));
 
-        verify(getMockVerification()).check(eq(expected), eq(BaseComparableVerifier.MessageKeys.LESS_THAN), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseComparableVerifier.MessageKeys.LESS_THAN), getArgsCaptor().capture());
 
         assertSame("Passes other name for message formatting", otherName, getArgsCaptor().getValue());
     }
@@ -543,7 +543,7 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().lessThanOrEqualTo(other));
 
-        verify(getMockVerification()).check(eq(expected), eq(BaseComparableVerifier.MessageKeys.LESS_THAN_OR_EQUAL_TO), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseComparableVerifier.MessageKeys.LESS_THAN_OR_EQUAL_TO), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }
@@ -583,7 +583,7 @@ public abstract class BaseComparableVerifierTestCase<T extends Comparable<? supe
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().lessThanOrEqualTo(other, otherName));
 
-        verify(getMockVerification()).check(eq(expected), eq(BaseComparableVerifier.MessageKeys.LESS_THAN_OR_EQUAL_TO), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseComparableVerifier.MessageKeys.LESS_THAN_OR_EQUAL_TO), getArgsCaptor().capture());
 
         assertSame("Passes other name for message formatting", otherName, getArgsCaptor().getValue());
     }

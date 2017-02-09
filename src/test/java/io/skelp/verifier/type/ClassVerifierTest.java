@@ -115,7 +115,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotated());
 
-            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.ANNOTATED);
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ANNOTATED);
         }
 
         @Test
@@ -153,7 +153,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotatedWith(type));
 
-            verify(getMockVerification()).check(eq(expected), eq(ClassVerifier.MessageKeys.ANNOTATED_WITH), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(ClassVerifier.MessageKeys.ANNOTATED_WITH), getArgsCaptor().capture());
 
             assertSame("Passes type for message formatting", type, getArgsCaptor().getValue());
         }
@@ -208,7 +208,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotatedWithAll(types));
 
-            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.ANNOTATED_WITH_ALL, (Object) types);
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ANNOTATED_WITH_ALL, (Object) types);
         }
 
         @Test
@@ -261,7 +261,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotatedWithAny(types));
 
-            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.ANNOTATED_WITH_ANY, (Object) types);
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ANNOTATED_WITH_ANY, (Object) types);
         }
 
         @Test
@@ -284,7 +284,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotation());
 
-            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.ANNOTATION);
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ANNOTATION);
         }
 
         @Test
@@ -308,7 +308,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().anonymous());
 
-            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.ANONYMOUS);
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ANONYMOUS);
         }
 
         @Test
@@ -331,7 +331,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().array());
 
-            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.ARRAY);
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ARRAY);
         }
 
         @Test
@@ -364,7 +364,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().assignableFrom(type));
 
-            verify(getMockVerification()).check(eq(expected), eq(ClassVerifier.MessageKeys.ASSIGNABLE_FROM), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(ClassVerifier.MessageKeys.ASSIGNABLE_FROM), getArgsCaptor().capture());
 
             assertSame("Passes type for message formatting", type, getArgsCaptor().getValue());
         }
@@ -389,7 +389,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().enumeration());
 
-            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.ENUMERATION);
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ENUMERATION);
         }
 
         @Test
@@ -412,7 +412,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().interfacing());
 
-            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.INTERFACING);
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.INTERFACING);
         }
 
         @Test
@@ -435,7 +435,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().nested());
 
-            verify(getMockVerification()).check(expected, ClassVerifier.MessageKeys.NESTED);
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.NESTED);
         }
 
         @Test
@@ -468,7 +468,7 @@ public class ClassVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().primitive());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, ClassVerifier.MessageKeys.PRIMITIVE);
+            verify(getMockVerification(), times(values.length)).report(expected, ClassVerifier.MessageKeys.PRIMITIVE);
         }
 
         @Test
@@ -498,7 +498,7 @@ public class ClassVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().primitiveOrWrapper());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, ClassVerifier.MessageKeys.PRIMITIVE_OR_WRAPPER);
+            verify(getMockVerification(), times(values.length)).report(expected, ClassVerifier.MessageKeys.PRIMITIVE_OR_WRAPPER);
         }
 
         @Test
@@ -531,7 +531,7 @@ public class ClassVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().primitiveWrapper());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, ClassVerifier.MessageKeys.PRIMITIVE_WRAPPER);
+            verify(getMockVerification(), times(values.length)).report(expected, ClassVerifier.MessageKeys.PRIMITIVE_WRAPPER);
         }
     }
 

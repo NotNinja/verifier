@@ -22,13 +22,15 @@
 package io.skelp.verifier.verification;
 
 import static org.junit.Assert.*;
+import static org.mockito.AdditionalMatchers.*;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.eq;
 
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -36,6 +38,8 @@ import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.message.MessageKey;
 import io.skelp.verifier.message.MessageSource;
 import io.skelp.verifier.message.locale.LocaleContext;
+import io.skelp.verifier.verification.report.MessageHolder;
+import io.skelp.verifier.verification.report.ReportExecutor;
 
 /**
  * <p>
@@ -47,149 +51,113 @@ import io.skelp.verifier.message.locale.LocaleContext;
 @RunWith(MockitoJUnitRunner.class)
 public class SimpleVerificationTest {
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    private static final Object TEST_NAME = "foo";
+    private static final Object TEST_VALUE = 123;
 
+    @Captor
+    private ArgumentCaptor<MessageHolder> messageHolderCaptor;
     @Mock
     private LocaleContext mockLocaleContext;
     @Mock
     private MessageSource mockMessageSource;
+    @Mock
+    private ReportExecutor mockReportExecutor;
+
+    private SimpleVerification<?> verification;
+
+    @Before
+    public void setUp() {
+        verification = new SimpleVerification<>(mockLocaleContext, mockMessageSource, mockReportExecutor, TEST_VALUE, TEST_NAME);
+    }
 
     @Test
-    public void testCheckWithMessageWhenResultIsBad() {
-        thrown.expect(VerifierException.class);
-        thrown.expectMessage("i am expected");
+    public void testReportWithMessage() {
+        verification.setNegated(true);
 
-        SimpleVerification<?> verification = new SimpleVerification<>(mockLocaleContext, mockMessageSource, null, null);
+        verification.report(false, "test", "foo", "bar");
 
-        when(mockMessageSource.getMessage(same(verification), eq("test"), Matchers.anyVararg())).thenReturn("i am expected");
+        assertFalse("Negated state is reset", verification.isNegated());
+
+        verify(mockReportExecutor).execute(eq(verification), eq(false), messageHolderCaptor.capture());
+
+        MessageHolder messageHolder = messageHolderCaptor.getValue();
+
+        assertNotNull("Message holder is never null", messageHolder);
+
+        messageHolder.getMessage(verification);
+
+        verify(mockMessageSource).getMessage(eq(verification), eq("test"), aryEq(new Object[]{"foo", "bar"}));
+    }
+
+    @Test(expected = VerifierException.class)
+    public void testReportWithMessageWhenReportExecutorThrows() {
+        doThrow(new VerifierException()).when(mockReportExecutor).execute(eq(verification), eq(true), isA(MessageHolder.class));
+
+        verification.setNegated(true);
 
         try {
-            verification.check(false, "test", "foo", "bar");
-            fail("VerifierException expected");
-        } catch (VerifierException e) {
-            assertFalse("Still not negated", verification.isNegated());
-            throw e;
+            verification.report(true, "test", "foo", "bar");
+        } finally {
+            assertFalse("Negated state is reset", verification.isNegated());
         }
     }
 
     @Test
-    public void testCheckWithMessageWhenResultIsBadAndIsNegated() {
-        SimpleVerification<?> verification = new SimpleVerification<>(mockLocaleContext, mockMessageSource, null, null);
-        verification.setNegated(true);
-
-        assertSame("Chains reference", verification, verification.check(false, "test", "foo", "bar"));
-        assertFalse("No longer negated", verification.isNegated());
-    }
-
-    @Test
-    public void testCheckWithMessageWhenResultIsGood() {
-        SimpleVerification<?> verification = new SimpleVerification<>(mockLocaleContext, mockMessageSource, null, null);
-
-        assertSame("Chains reference", verification, verification.check(true, "test", "foo", "bar"));
-        assertFalse("Still not negated", verification.isNegated());
-    }
-
-    @Test
-    public void testCheckWithMessageWhenResultIsGoodAndIsNegated() {
-        thrown.expect(VerifierException.class);
-        thrown.expectMessage("i am expected");
-
-        SimpleVerification<?> verification = new SimpleVerification<>(mockLocaleContext, mockMessageSource, null, null);
-        verification.setNegated(true);
-
-        when(mockMessageSource.getMessage(same(verification), eq("test"), Matchers.anyVararg())).thenReturn("i am expected");
-
-        try {
-            verification.check(true, "test", "foo", "bar");
-            fail("VerifierException expected");
-        } catch (VerifierException e) {
-            assertFalse("No longer negated", verification.isNegated());
-            throw e;
-        }
-    }
-
-    @Test
-    public void testCheckWithMessageKeyWhenResultIsBad() {
-        thrown.expect(VerifierException.class);
-        thrown.expectMessage("i am expected");
-
+    public void testReportWithMessageKey() {
         MessageKey key = () -> "test";
-        SimpleVerification<?> verification = new SimpleVerification<>(mockLocaleContext, mockMessageSource, null, null);
 
-        when(mockMessageSource.getMessage(same(verification), same(key), Matchers.anyVararg())).thenReturn("i am expected");
-
-        try {
-            verification.check(false, key, "foo", "bar");
-            fail("VerifierException expected");
-        } catch (VerifierException e) {
-            assertFalse("Still not negated", verification.isNegated());
-            throw e;
-        }
-    }
-
-    @Test
-    public void testCheckWithMessageKeyWhenResultIsBadAndIsNegated() {
-        SimpleVerification<?> verification = new SimpleVerification<>(mockLocaleContext, mockMessageSource, null, null);
         verification.setNegated(true);
 
-        assertSame("Chains reference", verification, verification.check(false, () -> "test", "foo", "bar"));
-        assertFalse("No longer negated", verification.isNegated());
+        verification.report(false, key, "foo", "bar");
+
+        assertFalse("Negated state is reset", verification.isNegated());
+
+        verify(mockReportExecutor).execute(eq(verification), eq(false), messageHolderCaptor.capture());
+
+        MessageHolder messageHolder = messageHolderCaptor.getValue();
+
+        assertNotNull("Message holder is never null", messageHolder);
+
+        messageHolder.getMessage(verification);
+
+        verify(mockMessageSource).getMessage(eq(verification), eq(key), aryEq(new Object[]{"foo", "bar"}));
     }
 
-    @Test
-    public void testCheckWithMessageKeyWhenResultIsGood() {
-        SimpleVerification<?> verification = new SimpleVerification<>(mockLocaleContext, mockMessageSource, null, null);
+    @Test(expected = VerifierException.class)
+    public void testReportWithMessageKeyWhenReportExecutorThrows() {
+        doThrow(new VerifierException()).when(mockReportExecutor).execute(eq(verification), eq(true), isA(MessageHolder.class));
 
-        assertSame("Chains reference", verification, verification.check(true, () -> "test", "foo", "bar"));
-        assertFalse("Still not negated", verification.isNegated());
-    }
-
-    @Test
-    public void testCheckWithMessageKeyWhenResultIsGoodAndIsNegated() {
-        thrown.expect(VerifierException.class);
-        thrown.expectMessage("i am expected");
-
-        MessageKey key = () -> "test";
-        SimpleVerification<?> verification = new SimpleVerification<>(mockLocaleContext, mockMessageSource, null, null);
         verification.setNegated(true);
 
-        when(mockMessageSource.getMessage(same(verification), same(key), Matchers.anyVararg())).thenReturn("i am expected");
-
         try {
-            verification.check(true, key, "foo", "bar");
-            fail("VerifierException expected");
-        } catch (VerifierException e) {
-            assertFalse("No longer negated", verification.isNegated());
-            throw e;
+            verification.report(true, () -> "test", "foo", "bar");
+        } finally {
+            assertFalse("Negated state is reset", verification.isNegated());
         }
     }
 
     @Test
     public void testLocaleContext() {
-        SimpleVerification<?> verification = new SimpleVerification<>(mockLocaleContext, null, null, null);
-
         assertEquals("LocaleContext property is readable", mockLocaleContext, verification.getLocaleContext());
     }
 
     @Test
     public void testMessageSource() {
-        SimpleVerification<?> verification = new SimpleVerification<>(null, mockMessageSource, null, null);
-
         assertEquals("MessageSource property is readable", mockMessageSource, verification.getMessageSource());
     }
 
     @Test
-    public void testName() {
-        SimpleVerification<?> verification = new SimpleVerification<>(null, null, null, "foo");
+    public void testReportExecutor() {
+        assertEquals("ReportExecutor property is readable", mockReportExecutor, verification.getReportExecutor());
+    }
 
-        assertEquals("Name property is readable", "foo", verification.getName());
+    @Test
+    public void testName() {
+        assertEquals("Name property is readable", TEST_NAME, verification.getName());
     }
 
     @Test
     public void testNegated() {
-        SimpleVerification<?> verification = new SimpleVerification<>(null, null, null, null);
-
         assertFalse("Negated property is readable and is false by default", verification.isNegated());
 
         verification.setNegated(true);
@@ -199,8 +167,6 @@ public class SimpleVerificationTest {
 
     @Test
     public void testValue() {
-        SimpleVerification<?> verification = new SimpleVerification<>(null, null, 123, null);
-
-        assertEquals("Value property is readable", 123, verification.getValue());
+        assertEquals("Value property is readable", TEST_VALUE, verification.getValue());
     }
 }

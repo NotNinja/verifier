@@ -33,7 +33,7 @@ import java.util.Locale;
  * @see Locale#getDefault()
  * @since 0.2.0
  */
-public class DefaultLocaleContextProvider implements LocaleContextProvider {
+public final class DefaultLocaleContextProvider implements LocaleContextProvider {
 
     @Override
     public LocaleContext getLocaleContext() {

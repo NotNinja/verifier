@@ -86,7 +86,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().equalTo(other));
 
-        verify(getMockVerification()).check(eq(expected), eq(AbstractCustomVerifier.MessageKeys.EQUAL_TO), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(AbstractCustomVerifier.MessageKeys.EQUAL_TO), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }
@@ -128,7 +128,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().equalTo(other, name));
 
-        verify(getMockVerification()).check(eq(expected), eq(AbstractCustomVerifier.MessageKeys.EQUAL_TO), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(AbstractCustomVerifier.MessageKeys.EQUAL_TO), getArgsCaptor().capture());
 
         assertSame("Passes name for message formatting", name, getArgsCaptor().getValue());
     }
@@ -185,7 +185,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().equalToAny(others));
 
-        verify(getMockVerification()).check(expected, AbstractCustomVerifier.MessageKeys.EQUAL_TO_ANY, (Object) others);
+        verify(getMockVerification()).report(expected, AbstractCustomVerifier.MessageKeys.EQUAL_TO_ANY, (Object) others);
     }
 
     @Test
@@ -212,7 +212,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().hashedAs(hashCode));
 
-        verify(getMockVerification()).check(eq(expected), eq(AbstractCustomVerifier.MessageKeys.HASHED_AS), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(AbstractCustomVerifier.MessageKeys.HASHED_AS), getArgsCaptor().capture());
 
         assertEquals("Passes hash code for message formatting", hashCode, getArgsCaptor().getValue());
     }
@@ -252,7 +252,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().instanceOf(cls));
 
-        verify(getMockVerification()).check(eq(expected), eq(AbstractCustomVerifier.MessageKeys.INSTANCE_OF), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(AbstractCustomVerifier.MessageKeys.INSTANCE_OF), getArgsCaptor().capture());
 
         assertEquals("Passes class for message formatting", cls, getArgsCaptor().getValue());
     }
@@ -307,7 +307,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().instanceOfAll(classes));
 
-        verify(getMockVerification()).check(expected, AbstractCustomVerifier.MessageKeys.INSTANCE_OF_ALL, (Object) classes);
+        verify(getMockVerification()).report(expected, AbstractCustomVerifier.MessageKeys.INSTANCE_OF_ALL, (Object) classes);
     }
 
     @Test
@@ -360,7 +360,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().instanceOfAny(classes));
 
-        verify(getMockVerification()).check(expected, AbstractCustomVerifier.MessageKeys.INSTANCE_OF_ANY, (Object) classes);
+        verify(getMockVerification()).report(expected, AbstractCustomVerifier.MessageKeys.INSTANCE_OF_ANY, (Object) classes);
     }
 
     @Test
@@ -394,7 +394,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().nulled());
 
-        verify(getMockVerification()).check(expected, AbstractCustomVerifier.MessageKeys.NULLED);
+        verify(getMockVerification()).report(expected, AbstractCustomVerifier.MessageKeys.NULLED);
     }
 
     @Test
@@ -434,7 +434,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameAs(other));
 
-        verify(getMockVerification()).check(eq(expected), eq(AbstractCustomVerifier.MessageKeys.SAME_AS), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(AbstractCustomVerifier.MessageKeys.SAME_AS), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }
@@ -476,7 +476,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameAs(other, name));
 
-        verify(getMockVerification()).check(eq(expected), eq(AbstractCustomVerifier.MessageKeys.SAME_AS), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(AbstractCustomVerifier.MessageKeys.SAME_AS), getArgsCaptor().capture());
 
         assertSame("Passes name for message formatting", name, getArgsCaptor().getValue());
     }
@@ -533,7 +533,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameAsAny(others));
 
-        verify(getMockVerification()).check(expected, AbstractCustomVerifier.MessageKeys.SAME_AS_ANY, (Object) others);
+        verify(getMockVerification()).report(expected, AbstractCustomVerifier.MessageKeys.SAME_AS_ANY, (Object) others);
     }
 
     @Test
@@ -563,7 +563,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().that(mockAssertion));
 
         verify(mockAssertion).verify(value);
-        verify(getMockVerification()).check(eq(expected), isNull(String.class));
+        verify(getMockVerification()).report(eq(expected), isNull(String.class));
     }
 
     @Test
@@ -593,7 +593,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().that(mockAssertion, message, args));
 
         verify(mockAssertion).verify(value);
-        verify(getMockVerification()).check(eq(expected), eq(message), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(message), getArgsCaptor().capture());
 
         assertEquals("Passes args for message formatting", Arrays.asList(args), getArgsCaptor().getAllValues());
     }
@@ -625,7 +625,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().that(mockAssertion, key, args));
 
         verify(mockAssertion).verify(value);
-        verify(getMockVerification()).check(eq(expected), eq(key), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(key), getArgsCaptor().capture());
 
         assertEquals("Passes args for message formatting", Arrays.asList(args), getArgsCaptor().getAllValues());
     }

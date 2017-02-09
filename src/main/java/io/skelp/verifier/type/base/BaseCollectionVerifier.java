@@ -85,7 +85,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
         final Collection<E> value = getCollection(verification().getValue());
         final boolean result = value != null && value.contains(element);
 
-        verification().check(result, MessageKeys.CONTAIN, element);
+        verification().report(result, MessageKeys.CONTAIN, element);
 
         return chain();
     }
@@ -118,7 +118,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
         final Collection<E> value = getCollection(verification().getValue());
         final boolean result = value != null && matchAll(elements, value::contains);
 
-        verification().check(result, MessageKeys.CONTAIN_ALL, (Object) elements);
+        verification().report(result, MessageKeys.CONTAIN_ALL, (Object) elements);
 
         return chain();
     }
@@ -151,7 +151,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
         final Collection<E> value = getCollection(verification().getValue());
         final boolean result = value != null && matchAny(elements, value::contains);
 
-        verification().check(result, MessageKeys.CONTAIN_ANY, (Object) elements);
+        verification().report(result, MessageKeys.CONTAIN_ANY, (Object) elements);
 
         return chain();
     }
@@ -177,7 +177,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
         final T value = verification().getValue();
         final boolean result = value == null || getSize(value) == 0;
 
-        verification().check(result, MessageKeys.EMPTY);
+        verification().report(result, MessageKeys.EMPTY);
 
         return chain();
     }
@@ -208,7 +208,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
         final T value = verification().getValue();
         final boolean result = value == null ? size == 0 : getSize(value) == size;
 
-        verification().check(result, MessageKeys.SIZE_OF, size);
+        verification().report(result, MessageKeys.SIZE_OF, size);
 
         return chain();
     }
@@ -241,7 +241,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @see #thatAll(VerifierAssertion, String, Object...)
      */
     public V thatAll(final VerifierAssertion<E> assertion) {
-        verification().check(thatAllInternal(assertion), (String) null);
+        verification().report(thatAllInternal(assertion), (String) null);
 
         return chain();
     }
@@ -273,7 +273,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @since 0.2.0
      */
     public V thatAll(final VerifierAssertion<E> assertion, final MessageKey key, final Object... args) {
-        verification().check(thatAllInternal(assertion), key, args);
+        verification().report(thatAllInternal(assertion), key, args);
 
         return chain();
     }
@@ -303,7 +303,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @see #thatAll(VerifierAssertion, MessageKey, Object...)
      */
     public V thatAll(final VerifierAssertion<E> assertion, final String message, final Object... args) {
-        verification().check(thatAllInternal(assertion), message, args);
+        verification().report(thatAllInternal(assertion), message, args);
 
         return chain();
     }
@@ -364,7 +364,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @see #thatAny(VerifierAssertion, String, Object...)
      */
     public V thatAny(final VerifierAssertion<E> assertion) {
-        verification().check(thatAnyInternal(assertion), (String) null);
+        verification().report(thatAnyInternal(assertion), (String) null);
 
         return chain();
     }
@@ -396,7 +396,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @since 0.2.0
      */
     public V thatAny(final VerifierAssertion<E> assertion, final MessageKey key, final Object... args) {
-        verification().check(thatAnyInternal(assertion), key, args);
+        verification().report(thatAnyInternal(assertion), key, args);
 
         return chain();
     }
@@ -426,7 +426,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @see #thatAny(VerifierAssertion, MessageKey, Object...)
      */
     public V thatAny(final VerifierAssertion<E> assertion, final String message, final Object... args) {
-        verification().check(thatAnyInternal(assertion), message, args);
+        verification().report(thatAnyInternal(assertion), message, args);
 
         return chain();
     }

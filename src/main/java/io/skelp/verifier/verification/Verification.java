@@ -25,6 +25,9 @@ import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.message.MessageKey;
 import io.skelp.verifier.message.MessageSource;
 import io.skelp.verifier.message.locale.LocaleContext;
+import io.skelp.verifier.verification.report.AssertionReporter;
+import io.skelp.verifier.verification.report.ReportExecutor;
+import io.skelp.verifier.verification.report.Reporter;
 
 /**
  * <p>
@@ -44,13 +47,14 @@ public interface Verification<T> {
 
     /**
      * <p>
-     * Checks the specified {@code result} to determine whether it passes verification.
+     * Reports the specified {@code result}, which may determine whether it passes verification.
      * </p>
      * <p>
-     * {@code result} will pass it is {@literal true} and this {@link Verification} has not be negated or if it has been
-     * negated and {@code result} is {@literal false}. If it does not pass, a {@link VerifierException} will be thrown
-     * with a suitable localized message, which can be enhanced by providing an optional {@code key} and format
-     * {@code args}.
+     * The {@code result} will pass depending on the {@link Reporter Reporters}. That said; generally, the default
+     * reporter ({@link AssertionReporter}) will pass {@code result} if it is {@literal true} and this
+     * {@link Verification} has not be negated or if it has been negated and {@code result} is {@literal false}. If it
+     * does not pass, a {@link VerifierException} will be thrown with a suitable localized message, which can be
+     * enhanced by providing an optional {@code key} and format {@code args}.
      * </p>
      * <p>
      * This {@link Verification} will no longer be negated as a result of calling this method, regardless of whether
@@ -66,20 +70,22 @@ public interface Verification<T> {
      *         the optional format arguments which are used to format the localized message
      * @return A reference to this {@link Verification} for chaining purposes.
      * @throws VerifierException
-     *         If {@code result} does not pass verification or if a problem occurs while formatting the error message.
-     * @see #check(boolean, String, Object...)
+     *         If any {@link Reporter} deems that {@code result} should not pass verification.
+     * @see #report(boolean, String, Object...)
      * @since 0.2.0
      */
-    Verification<T> check(boolean result, MessageKey key, Object... args);
+    Verification<T> report(boolean result, MessageKey key, Object... args);
 
     /**
      * <p>
-     * Checks the specified {@code result} to determine whether it passes verification.
+     * Reports the specified {@code result}, which may determine whether it passes verification.
      * </p>
      * <p>
-     * {@code result} will pass it is {@literal true} and this {@link Verification} has not be negated or if it has been
-     * negated and {@code result} is {@literal false}. If it does not pass, a {@link VerifierException} will be thrown
-     * with a suitable message, which can be enhanced by providing an optional {@code message} and format {@code args}.
+     * The {@code result} will pass depending on the {@link Reporter Reporters}. That said; generally, the default
+     * reporter ({@link AssertionReporter}) will pass {@code result} if it is {@literal true} and this
+     * {@link Verification} has not be negated or if it has been negated and {@code result} is {@literal false}. If it
+     * does not pass, a {@link VerifierException} will be thrown with a suitable localized message, which can be
+     * enhanced by providing an optional (unlocalized) {@code message} and format {@code args}.
      * </p>
      * <p>
      * This {@link Verification} will no longer be negated as a result of calling this method, regardless of whether
@@ -94,15 +100,16 @@ public interface Verification<T> {
      *         the optional format arguments which are used to format {@code message}
      * @return A reference to this {@link Verification} for chaining purposes.
      * @throws VerifierException
-     *         If {@code result} does not pass verification or if a problem occurs while formatting the error message.
-     * @see #check(boolean, MessageKey, Object...)
+     *         If any {@link Reporter} deems that {@code result} should not pass verification.
+     * @see #report(boolean, MessageKey, Object...)
+     * @since 0.2.0
      */
-    Verification<T> check(boolean result, String message, Object... args);
+    Verification<T> report(boolean result, String message, Object... args);
 
     /**
      * <p>
      * Returns the {@link LocaleContext} that is being used by this {@link Verification} to lookup and format messages
-     * for any {@link VerifierException VerifierExceptions} that are thrown by {@link #check}.
+     * for any {@link VerifierException VerifierExceptions} that are thrown by a {@link Reporter}.
      * </p>
      *
      * @return The {@link LocaleContext}.
@@ -113,7 +120,7 @@ public interface Verification<T> {
     /**
      * <p>
      * Returns the message source that is being used by this {@link Verification} to lookup and/or format the messages
-     * for any {@link VerifierException VerifierExceptions} that are thrown by {@link #check}.
+     * for any {@link VerifierException VerifierExceptions} that are thrown by a {@link Reporter}.
      * </p>
      *
      * @return The {@link MessageSource}.
@@ -132,8 +139,7 @@ public interface Verification<T> {
 
     /**
      * <p>
-     * Returns whether the next result that is passed to {@link #check(boolean, String, Object...)} is negated for this
-     * {@link Verification}.
+     * Returns whether the next result that is passed to {@link #report} is negated for this {@link Verification}.
      * </p>
      *
      * @return {@literal true} if the next result will be negated; otherwise {@literal false}.
@@ -142,14 +148,25 @@ public interface Verification<T> {
 
     /**
      * <p>
-     * Sets whether the next result that is passed to {@link #check(boolean, String, Object...)} is negated for this
-     * {@link Verification} to {@code negated}.
+     * Sets whether the next result that is passed to {@link #report} is negated for this {@link Verification} to
+     * {@code negated}.
      * </p>
      *
      * @param negated
      *         {@literal true} to negate the next result; otherwise {@literal false}
      */
     void setNegated(boolean negated);
+
+    /**
+     * <p>
+     * Returns the report executor that is being used by this {@link Verification} to execute {@link Reporter Reporters}
+     * for a verification result.
+     * </p>
+     *
+     * @return The {@link ReportExecutor}.
+     * @since 0.2.0
+     */
+    ReportExecutor getReportExecutor();
 
     /**
      * <p>

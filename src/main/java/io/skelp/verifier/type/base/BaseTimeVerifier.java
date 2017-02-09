@@ -83,7 +83,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
                 calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
                 calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR));
 
-        verification().check(result, MessageKeys.SAME_DAY_AS, other);
+        verification().report(result, MessageKeys.SAME_DAY_AS, other);
 
         return chain();
     }
@@ -114,7 +114,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
         final boolean result = calendar1 != null && calendar2 != null &&
             calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA);
 
-        verification().check(result, MessageKeys.SAME_ERA_AS, other);
+        verification().report(result, MessageKeys.SAME_ERA_AS, other);
 
         return chain();
     }
@@ -149,7 +149,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
                 calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR) &&
                 calendar1.get(Calendar.HOUR_OF_DAY) == calendar2.get(Calendar.HOUR_OF_DAY));
 
-        verification().check(result, MessageKeys.SAME_HOUR_AS, other);
+        verification().report(result, MessageKeys.SAME_HOUR_AS, other);
 
         return chain();
     }
@@ -185,7 +185,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
                 calendar1.get(Calendar.HOUR_OF_DAY) == calendar2.get(Calendar.HOUR_OF_DAY) &&
                 calendar1.get(Calendar.MINUTE) == calendar2.get(Calendar.MINUTE));
 
-        verification().check(result, MessageKeys.SAME_MINUTE_AS, other);
+        verification().report(result, MessageKeys.SAME_MINUTE_AS, other);
 
         return chain();
     }
@@ -219,7 +219,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
                 calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
                 calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH));
 
-        verification().check(result, MessageKeys.SAME_MONTH_AS, other);
+        verification().report(result, MessageKeys.SAME_MONTH_AS, other);
 
         return chain();
     }
@@ -256,7 +256,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
                 calendar1.get(Calendar.MINUTE) == calendar2.get(Calendar.MINUTE) &&
                 calendar1.get(Calendar.SECOND) == calendar2.get(Calendar.SECOND));
 
-        verification().check(result, MessageKeys.SAME_SECOND_AS, other);
+        verification().report(result, MessageKeys.SAME_SECOND_AS, other);
 
         return chain();
     }
@@ -288,7 +288,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
         final boolean result = calendar1 != null && calendar2 != null &&
             calendar1.getTimeInMillis() == calendar2.getTimeInMillis();
 
-        verification().check(result, MessageKeys.SAME_TIME_AS, other);
+        verification().report(result, MessageKeys.SAME_TIME_AS, other);
 
         return chain();
     }
@@ -322,7 +322,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
                 calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
                 calendar1.get(Calendar.WEEK_OF_YEAR) == calendar2.get(Calendar.WEEK_OF_YEAR));
 
-        verification().check(result, MessageKeys.SAME_WEEK_AS, other);
+        verification().report(result, MessageKeys.SAME_WEEK_AS, other);
 
         return chain();
     }
@@ -355,7 +355,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
             (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
                 calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR));
 
-        verification().check(result, MessageKeys.SAME_YEAR_AS, other);
+        verification().report(result, MessageKeys.SAME_YEAR_AS, other);
 
         return chain();
     }

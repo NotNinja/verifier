@@ -29,6 +29,16 @@ import io.skelp.verifier.service.Weighted;
  * Provides {@link Verification} instances to be used to provide context to verifications based on a given value and
  * optional name.
  * </p>
+ * <p>
+ * {@code VerificationProviders} are registered via Java's SPI, so in order to register a custom
+ * {@code VerificationProvider} projects should contain should create a
+ * {@code io.skelp.verifier.verification.verification.VerificationProvider} file within {@code META-INF/services}
+ * listing the class reference for each custom {@code VerificationProvider} (e.g.
+ * {@code com.example.verifier.MyCustomVerificationProvider}) on separate lines. {@code VerificationProviders} are also
+ * {@link Weighted}, which means that they are loaded in priority order (the lower the weight, the higher the priority).
+ * Verifier has a built-in default {@code VerificationProvider} which is given a low priority (i.e.
+ * {@value #DEFAULT_IMPLEMENTATION_WEIGHT}) to allow custom implementations to be easily ordered around it.
+ * </p>
  *
  * @author Alasdair Mercer
  * @since 0.2.0

@@ -55,7 +55,7 @@ public final class BooleanVerifier extends BaseComparableVerifier<Boolean, Boole
     public BooleanVerifier falsy() {
         final boolean result = !Boolean.TRUE.equals(verification().getValue());
 
-        verification().check(result, BaseTruthVerifier.MessageKeys.FALSY);
+        verification().report(result, BaseTruthVerifier.MessageKeys.FALSY);
 
         return this;
     }
@@ -64,7 +64,7 @@ public final class BooleanVerifier extends BaseComparableVerifier<Boolean, Boole
     public BooleanVerifier truthy() {
         final boolean result = Boolean.TRUE.equals(verification().getValue());
 
-        verification().check(result, BaseTruthVerifier.MessageKeys.TRUTHY);
+        verification().report(result, BaseTruthVerifier.MessageKeys.TRUTHY);
 
         return this;
     }
