@@ -1501,7 +1501,7 @@ public class StringVerifierTest {
         }
 
         @Test
-        public void testMatchWhenValueIsEmptyAndNotMatchAndOtherIsCharSequence() {
+        public void testMatchWhenValueIsEmptyAndNotMatchAndRegexIsCharSequence() {
             testMatchHelper(EMPTY, new StringWrapper("fo{2}"), false);
         }
 
@@ -1511,7 +1511,7 @@ public class StringVerifierTest {
         }
 
         @Test
-        public void testMatchWhenValueIsMatchAndOtherIsCharSequence() {
+        public void testMatchWhenValueIsMatchAndRegexIsCharSequence() {
             testMatchHelper("foo", new StringWrapper("fo{2}"), true);
         }
 
@@ -1533,6 +1533,122 @@ public class StringVerifierTest {
             verify(getMockVerification()).report(eq(expected), eq(StringVerifier.MessageKeys.MATCH), getArgsCaptor().capture());
 
             assertSame("Passes regex for message formatting", regex, getArgsCaptor().getValue());
+        }
+
+        @Test
+        public void testMatchAllWhenNoRegularExpressions() {
+            testMatchAllHelper("foo", createEmptyArray(CharSequence.class), true);
+        }
+
+        @Test
+        public void testMatchAllWhenRegularExpressionIsNull() {
+            testMatchAllHelper("foo", createArray((CharSequence) null), false);
+        }
+
+        @Test
+        public void testMatchAllWhenRegularExpressionsIsNull() {
+            testMatchAllHelper("foo", null, true);
+        }
+
+        @Test
+        public void testMatchAllWhenValueMatchesAllRegularExpressions() {
+            testMatchAllHelper("foo", createArray("fo{2}", ".*"), true);
+        }
+
+        @Test
+        public void testMatchAllWhenValueMatchesAllRegularExpressionsWhenNotCharSequences() {
+            testMatchAllHelper("foo", createArray(new StringWrapper("fo{2}"), new StringWrapper(".*")), true);
+        }
+
+        @Test
+        public void testMatchAllWhenValueMatchesSomeRegularExpressions() {
+            testMatchAllHelper("foo", createArray("fo{2}", "fiz{2}"), false);
+        }
+
+        @Test
+        public void testMatchAllWhenValueMatchesSomeRegularExpressionsWhenNotCharSequences() {
+            testMatchAllHelper("foo", createArray(new StringWrapper("fo{2}"), new StringWrapper("fiz{2}")), false);
+        }
+
+        @Test
+        public void testMatchAllWhenValueDoesNotMatchAnyRegularExpression() {
+            testMatchAllHelper("foo", createArray("fiz{2}", "buz{2}"), false);
+        }
+
+        @Test
+        public void testMatchAllWhenValueDoesNotMatchAnyRegularExpressionWhenNotCharSequences() {
+            testMatchAllHelper("foo", createArray(new StringWrapper("fiz{2}"), new StringWrapper("buz{2}")), false);
+        }
+
+        @Test
+        public void testMatchAllWhenValueIsNull() {
+            testMatchAllHelper(null, createArray(".*"), false);
+        }
+
+        private void testMatchAllHelper(String value, CharSequence[] regexes, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().matchAll(regexes));
+
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.MATCH_ALL, (Object) regexes);
+        }
+
+        @Test
+        public void testMatchAnyWhenNoRegularExpressions() {
+            testMatchAnyHelper("foo", createEmptyArray(CharSequence.class), false);
+        }
+
+        @Test
+        public void testMatchAnyWhenRegularExpressionIsNull() {
+            testMatchAnyHelper("foo", createArray((CharSequence) null), false);
+        }
+
+        @Test
+        public void testMatchAnyWhenRegularExpressionsIsNull() {
+            testMatchAnyHelper("foo", null, false);
+        }
+
+        @Test
+        public void testMatchAnyWhenValueMatchesAllRegularExpressions() {
+            testMatchAnyHelper("foo", createArray("fo{2}", ".*"), true);
+        }
+
+        @Test
+        public void testMatchAnyWhenValueMatchesAllRegularExpressionsWhenNotCharSequences() {
+            testMatchAnyHelper("foo", createArray(new StringWrapper("fo{2}"), new StringWrapper(".*")), true);
+        }
+
+        @Test
+        public void testMatchAnyWhenValueMatchesSomeRegularExpressions() {
+            testMatchAnyHelper("foo", createArray("fo{2}", "fiz{2}"), true);
+        }
+
+        @Test
+        public void testMatchAnyWhenValueMatchesSomeRegularExpressionsWhenNotCharSequences() {
+            testMatchAnyHelper("foo", createArray(new StringWrapper("fo{2}"), new StringWrapper("fiz{2}")), true);
+        }
+
+        @Test
+        public void testMatchAnyWhenValueDoesNotMatchAnyRegularExpression() {
+            testMatchAnyHelper("foo", createArray("fiz{2}", "buz{2}"), false);
+        }
+
+        @Test
+        public void testMatchAnyWhenValueDoesNotMatchAnyRegularExpressionWhenNotCharSequences() {
+            testMatchAnyHelper("foo", createArray(new StringWrapper("fiz{2}"), new StringWrapper("buz{2}")), false);
+        }
+
+        @Test
+        public void testMatchAnyWhenValueIsNull() {
+            testMatchAnyHelper(null, createArray(".*"), false);
+        }
+
+        private void testMatchAnyHelper(String value, CharSequence[] regexes, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().matchAny(regexes));
+
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.MATCH_ANY, (Object) regexes);
         }
 
         @Test
@@ -1573,6 +1689,92 @@ public class StringVerifierTest {
             verify(getMockVerification()).report(eq(expected), eq(StringVerifier.MessageKeys.MATCH), getArgsCaptor().capture());
 
             assertSame("Passes pattern for message formatting", pattern, getArgsCaptor().getValue());
+        }
+
+        @Test
+        public void testMatchAllWithPatternsWhenNoPatterns() {
+            testMatchAllWithPatternsHelper("foo", createEmptyArray(Pattern.class), true);
+        }
+
+        @Test
+        public void testMatchAllWithPatternsWhenPatternIsNull() {
+            testMatchAllWithPatternsHelper("foo", createArray((Pattern) null), false);
+        }
+
+        @Test
+        public void testMatchAllWithPatternsWhenPatternsIsNull() {
+            testMatchAllWithPatternsHelper("foo", null, true);
+        }
+
+        @Test
+        public void testMatchAllWithPatternsWhenValueMatchesAllPatterns() {
+            testMatchAllWithPatternsHelper("foo", createArray(Pattern.compile("fo{2}"), Pattern.compile(".*")), true);
+        }
+
+        @Test
+        public void testMatchAllWithPatternsWhenValueMatchesSomePatterns() {
+            testMatchAllWithPatternsHelper("foo", createArray(Pattern.compile("fo{2}"), Pattern.compile("fiz{2}")), false);
+        }
+
+        @Test
+        public void testMatchAllWithPatternsWhenValueDoesNotMatchAnyPattern() {
+            testMatchAllWithPatternsHelper("foo", createArray(Pattern.compile("fiz{2}"), Pattern.compile("buz{2}")), false);
+        }
+
+        @Test
+        public void testMatchAllWithPatternsWhenValueIsNull() {
+            testMatchAllWithPatternsHelper(null, createArray(Pattern.compile(".*")), false);
+        }
+
+        private void testMatchAllWithPatternsHelper(String value, Pattern[] patterns, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().matchAll(patterns));
+
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.MATCH_ALL, (Object) patterns);
+        }
+
+        @Test
+        public void testMatchAnyWithPatternsWhenNoPatterns() {
+            testMatchAnyWithPatternsHelper("foo", createEmptyArray(Pattern.class), false);
+        }
+
+        @Test
+        public void testMatchAnyWithPatternsWhenPatternIsNull() {
+            testMatchAnyWithPatternsHelper("foo", createArray((Pattern) null), false);
+        }
+
+        @Test
+        public void testMatchAnyWithPatternsWhenPatternsIsNull() {
+            testMatchAnyWithPatternsHelper("foo", null, false);
+        }
+
+        @Test
+        public void testMatchAnyWithPatternsWhenValueMatchesAllPatterns() {
+            testMatchAnyWithPatternsHelper("foo", createArray(Pattern.compile("fo{2}"), Pattern.compile(".*")), true);
+        }
+
+        @Test
+        public void testMatchAnyWithPatternsWhenValueMatchesSomePatterns() {
+            testMatchAnyWithPatternsHelper("foo", createArray(Pattern.compile("fo{2}"), Pattern.compile("fiz{2}")), true);
+        }
+
+        @Test
+        public void testMatchAnyWithPatternsWhenValueDoesNotMatchAnyPattern() {
+            testMatchAnyWithPatternsHelper("foo", createArray(Pattern.compile("fiz{2}"), Pattern.compile("buz{2}")), false);
+        }
+
+        @Test
+        public void testMatchAnyWithPatternsWhenValueIsNull() {
+            testMatchAnyWithPatternsHelper(null, createArray(Pattern.compile(".*")), false);
+        }
+
+        private void testMatchAnyWithPatternsHelper(String value, Pattern[] patterns, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().matchAny(patterns));
+
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.MATCH_ANY, (Object) patterns);
         }
 
         @Test
@@ -2112,6 +2314,8 @@ public class StringVerifierTest {
             messageKeys.put("EQUAL_TO_IGNORE_CASE", "io.skelp.verifier.type.StringVerifier.equalToIgnoreCase");
             messageKeys.put("LOWER_CASE", "io.skelp.verifier.type.StringVerifier.lowerCase");
             messageKeys.put("MATCH", "io.skelp.verifier.type.StringVerifier.match");
+            messageKeys.put("MATCH_ALL", "io.skelp.verifier.type.StringVerifier.matchAll");
+            messageKeys.put("MATCH_ANY", "io.skelp.verifier.type.StringVerifier.matchAny");
             messageKeys.put("NUMERIC", "io.skelp.verifier.type.StringVerifier.numeric");
             messageKeys.put("NUMERIC_SPACE", "io.skelp.verifier.type.StringVerifier.numericSpace");
             messageKeys.put("SIZE_OF", "io.skelp.verifier.type.StringVerifier.sizeOf");
