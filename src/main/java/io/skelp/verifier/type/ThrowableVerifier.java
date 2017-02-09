@@ -96,7 +96,7 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
             }
         }
 
-        verification().check(result, MessageKeys.CAUSED_BY, type);
+        verification().report(result, MessageKeys.CAUSED_BY, type);
 
         return this;
     }
@@ -163,7 +163,7 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
         final Throwable value = verification().getValue();
         final boolean result = getThrowables(value).contains(cause);
 
-        verification().check(result, MessageKeys.CAUSED_BY, name);
+        verification().report(result, MessageKeys.CAUSED_BY, name);
 
         return this;
     }
@@ -189,7 +189,7 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
         final Throwable value = verification().getValue();
         final boolean result = value != null && !(value instanceof RuntimeException);
 
-        verification().check(result, MessageKeys.CHECKED);
+        verification().report(result, MessageKeys.CHECKED);
 
         return this;
     }
@@ -221,7 +221,7 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
         final Throwable value = verification().getValue();
         final boolean result = value != null && (value.getMessage() == null ? message == null : value.getMessage().equals(message));
 
-        verification().check(result, MessageKeys.MESSAGE, message);
+        verification().report(result, MessageKeys.MESSAGE, message);
 
         return this;
     }
@@ -247,7 +247,7 @@ public final class ThrowableVerifier extends AbstractCustomVerifier<Throwable, T
         final Throwable value = verification().getValue();
         final boolean result = value instanceof RuntimeException;
 
-        verification().check(result, MessageKeys.UNCHECKED);
+        verification().report(result, MessageKeys.UNCHECKED);
 
         return this;
     }

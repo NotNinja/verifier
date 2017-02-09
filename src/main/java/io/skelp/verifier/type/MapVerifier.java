@@ -83,7 +83,7 @@ public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>
         final Map<K, V> value = verification().getValue();
         final boolean result = value != null && matchAll(keys, value::containsKey);
 
-        verification().check(result, MessageKeys.CONTAIN_ALL_KEYS, (Object) keys);
+        verification().report(result, MessageKeys.CONTAIN_ALL_KEYS, (Object) keys);
 
         return this;
     }
@@ -116,7 +116,7 @@ public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>
         final Map<K, V> value = verification().getValue();
         final boolean result = value != null && matchAny(keys, value::containsKey);
 
-        verification().check(result, MessageKeys.CONTAIN_ANY_KEY, (Object) keys);
+        verification().report(result, MessageKeys.CONTAIN_ANY_KEY, (Object) keys);
 
         return this;
     }
@@ -147,7 +147,7 @@ public final class MapVerifier<K, V> extends BaseCollectionVerifier<V, Map<K, V>
         final Map<K, V> value = verification().getValue();
         final boolean result = value != null && value.containsKey(key);
 
-        verification().check(result, MessageKeys.CONTAIN_KEY, key);
+        verification().report(result, MessageKeys.CONTAIN_KEY, key);
 
         return this;
     }

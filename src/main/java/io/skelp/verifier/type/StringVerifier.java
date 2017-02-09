@@ -155,7 +155,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = matchCharacters(value, Character::isLetter);
 
-        verification().check(result, MessageKeys.ALPHA);
+        verification().report(result, MessageKeys.ALPHA);
 
         return this;
     }
@@ -181,7 +181,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = matchCharacters(value, character -> Character.isLetter(character) || character == ' ');
 
-        verification().check(result, MessageKeys.ALPHA_SPACE);
+        verification().report(result, MessageKeys.ALPHA_SPACE);
 
         return this;
     }
@@ -208,7 +208,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = matchCharacters(value, Character::isLetterOrDigit);
 
-        verification().check(result, MessageKeys.ALPHANUMERIC);
+        verification().report(result, MessageKeys.ALPHANUMERIC);
 
         return this;
     }
@@ -234,7 +234,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = matchCharacters(value, character -> Character.isLetterOrDigit(character) || character == ' ');
 
-        verification().check(result, MessageKeys.ALPHANUMERIC_SPACE);
+        verification().report(result, MessageKeys.ALPHANUMERIC_SPACE);
 
         return this;
     }
@@ -258,7 +258,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = matchCharacters(value, character -> character >= 32 && character < 127);
 
-        verification().check(result, MessageKeys.ASCII_PRINTABLE);
+        verification().report(result, MessageKeys.ASCII_PRINTABLE);
 
         return this;
     }
@@ -289,7 +289,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = value == null || value.trim().isEmpty();
 
-        verification().check(result, MessageKeys.BLANK);
+        verification().report(result, MessageKeys.BLANK);
 
         return this;
     }
@@ -322,7 +322,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = value != null && other != null && value.contains(other);
 
-        verification().check(result, MessageKeys.CONTAIN, other);
+        verification().report(result, MessageKeys.CONTAIN, other);
 
         return this;
     }
@@ -354,7 +354,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = value != null && matchAll(others, input -> input != null && value.contains(input));
 
-        verification().check(result, MessageKeys.CONTAIN_ALL, (Object) others);
+        verification().report(result, MessageKeys.CONTAIN_ALL, (Object) others);
 
         return this;
     }
@@ -386,7 +386,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = value != null && matchAll(others, input -> containsIgnoreCase(value, input));
 
-        verification().check(result, MessageKeys.CONTAIN_ALL_IGNORE_CASE, (Object) others);
+        verification().report(result, MessageKeys.CONTAIN_ALL_IGNORE_CASE, (Object) others);
 
         return this;
     }
@@ -419,7 +419,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = value != null && matchAny(others, input -> input != null && value.contains(input));
 
-        verification().check(result, MessageKeys.CONTAIN_ANY, (Object) others);
+        verification().report(result, MessageKeys.CONTAIN_ANY, (Object) others);
 
         return this;
     }
@@ -452,7 +452,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = value != null && matchAny(others, input -> containsIgnoreCase(value, input));
 
-        verification().check(result, MessageKeys.CONTAIN_ANY_IGNORE_CASE, (Object) others);
+        verification().report(result, MessageKeys.CONTAIN_ANY_IGNORE_CASE, (Object) others);
 
         return this;
     }
@@ -485,7 +485,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = value != null && containsIgnoreCase(value, other);
 
-        verification().check(result, MessageKeys.CONTAIN_IGNORE_CASE, other);
+        verification().report(result, MessageKeys.CONTAIN_IGNORE_CASE, other);
 
         return this;
     }
@@ -514,7 +514,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = value == null || value.isEmpty();
 
-        verification().check(result, MessageKeys.EMPTY);
+        verification().report(result, MessageKeys.EMPTY);
 
         return this;
     }
@@ -547,7 +547,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = value != null && endsWith(value, other, false);
 
-        verification().check(result, MessageKeys.END_WITH, other);
+        verification().report(result, MessageKeys.END_WITH, other);
 
         return this;
     }
@@ -579,7 +579,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = value != null && matchAny(others, input -> endsWith(value, input, false));
 
-        verification().check(result, MessageKeys.END_WITH_ANY, (Object) others);
+        verification().report(result, MessageKeys.END_WITH_ANY, (Object) others);
 
         return this;
     }
@@ -611,7 +611,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = value != null && matchAny(others, input -> endsWith(value, input, true));
 
-        verification().check(result, MessageKeys.END_WITH_ANY_IGNORE_CASE, (Object) others);
+        verification().report(result, MessageKeys.END_WITH_ANY_IGNORE_CASE, (Object) others);
 
         return this;
     }
@@ -644,7 +644,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = value != null && endsWith(value, other, true);
 
-        verification().check(result, MessageKeys.END_WITH_IGNORE_CASE, other);
+        verification().report(result, MessageKeys.END_WITH_IGNORE_CASE, other);
 
         return this;
     }
@@ -678,7 +678,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = matchAny(others, input -> isEqualToIgnoreCase(value, input));
 
-        verification().check(result, MessageKeys.EQUAL_TO_ANY_IGNORE_CASE, (Object) others);
+        verification().report(result, MessageKeys.EQUAL_TO_ANY_IGNORE_CASE, (Object) others);
 
         return chain();
     }
@@ -710,7 +710,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = isEqualToIgnoreCase(value, other);
 
-        verification().check(result, MessageKeys.EQUAL_TO_IGNORE_CASE, other);
+        verification().report(result, MessageKeys.EQUAL_TO_IGNORE_CASE, other);
 
         return this;
     }
@@ -720,7 +720,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = value == null || value.isEmpty() || Boolean.FALSE.toString().equalsIgnoreCase(value);
 
-        verification().check(result, BaseTruthVerifier.MessageKeys.FALSY);
+        verification().report(result, BaseTruthVerifier.MessageKeys.FALSY);
 
         return this;
     }
@@ -747,7 +747,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = matchCharacters(value, Character::isLowerCase);
 
-        verification().check(result, MessageKeys.LOWER_CASE);
+        verification().report(result, MessageKeys.LOWER_CASE);
 
         return this;
     }
@@ -778,7 +778,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = value != null && regex != null && value.matches(regex.toString());
 
-        verification().check(result, MessageKeys.MATCH, regex);
+        verification().report(result, MessageKeys.MATCH, regex);
 
         return this;
     }
@@ -809,7 +809,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = value != null && pattern != null && pattern.matcher(value).matches();
 
-        verification().check(result, MessageKeys.MATCH, pattern);
+        verification().report(result, MessageKeys.MATCH, pattern);
 
         return this;
     }
@@ -836,7 +836,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = matchCharacters(value, Character::isDigit);
 
-        verification().check(result, MessageKeys.NUMERIC);
+        verification().report(result, MessageKeys.NUMERIC);
 
         return this;
     }
@@ -862,7 +862,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = matchCharacters(value, character -> Character.isDigit(character) || character == ' ');
 
-        verification().check(result, MessageKeys.NUMERIC_SPACE);
+        verification().report(result, MessageKeys.NUMERIC_SPACE);
 
         return this;
     }
@@ -894,7 +894,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = value == null ? size == 0 : value.length() == size;
 
-        verification().check(result, MessageKeys.SIZE_OF, size);
+        verification().report(result, MessageKeys.SIZE_OF, size);
 
         return this;
     }
@@ -927,7 +927,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = startsWith(value, other, false);
 
-        verification().check(result, MessageKeys.START_WITH, other);
+        verification().report(result, MessageKeys.START_WITH, other);
 
         return this;
     }
@@ -959,7 +959,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = matchAny(others, input -> startsWith(value, input, false));
 
-        verification().check(result, MessageKeys.START_WITH_ANY, (Object) others);
+        verification().report(result, MessageKeys.START_WITH_ANY, (Object) others);
 
         return this;
     }
@@ -991,7 +991,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = matchAny(others, input -> startsWith(value, input, true));
 
-        verification().check(result, MessageKeys.START_WITH_ANY_IGNORE_CASE, (Object) others);
+        verification().report(result, MessageKeys.START_WITH_ANY_IGNORE_CASE, (Object) others);
 
         return this;
     }
@@ -1024,7 +1024,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = startsWith(value, other, true);
 
-        verification().check(result, MessageKeys.START_WITH_IGNORE_CASE, other);
+        verification().report(result, MessageKeys.START_WITH_IGNORE_CASE, other);
 
         return this;
     }
@@ -1034,7 +1034,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = Boolean.TRUE.toString().equalsIgnoreCase(value);
 
-        verification().check(result, BaseTruthVerifier.MessageKeys.TRUTHY);
+        verification().report(result, BaseTruthVerifier.MessageKeys.TRUTHY);
 
         return this;
     }
@@ -1061,7 +1061,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         final String value = verification().getValue();
         final boolean result = matchCharacters(value, Character::isUpperCase);
 
-        verification().check(result, MessageKeys.UPPER_CASE);
+        verification().report(result, MessageKeys.UPPER_CASE);
 
         return this;
     }

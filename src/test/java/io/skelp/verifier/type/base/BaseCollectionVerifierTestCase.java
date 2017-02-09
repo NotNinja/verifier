@@ -79,7 +79,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().contain(element));
 
-        verify(getMockVerification()).check(eq(expected), eq(BaseCollectionVerifier.MessageKeys.CONTAIN), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseCollectionVerifier.MessageKeys.CONTAIN), getArgsCaptor().capture());
 
         assertSame("Passes element for message formatting", element, getArgsCaptor().getValue());
     }
@@ -134,7 +134,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAll(elements));
 
-        verify(getMockVerification()).check(expected, BaseCollectionVerifier.MessageKeys.CONTAIN_ALL, (Object) elements);
+        verify(getMockVerification()).report(expected, BaseCollectionVerifier.MessageKeys.CONTAIN_ALL, (Object) elements);
     }
 
     @Test
@@ -187,7 +187,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAny(elements));
 
-        verify(getMockVerification()).check(expected, BaseCollectionVerifier.MessageKeys.CONTAIN_ANY, (Object) elements);
+        verify(getMockVerification()).report(expected, BaseCollectionVerifier.MessageKeys.CONTAIN_ANY, (Object) elements);
     }
 
     @Test
@@ -210,7 +210,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().empty());
 
-        verify(getMockVerification()).check(expected, BaseCollectionVerifier.MessageKeys.EMPTY);
+        verify(getMockVerification()).report(expected, BaseCollectionVerifier.MessageKeys.EMPTY);
     }
 
     @Test
@@ -248,7 +248,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sizeOf(size));
 
-        verify(getMockVerification()).check(eq(expected), eq(BaseCollectionVerifier.MessageKeys.SIZE_OF), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseCollectionVerifier.MessageKeys.SIZE_OF), getArgsCaptor().capture());
 
         assertSame("Passes size for message formatting", size, getArgsCaptor().getValue());
     }
@@ -298,7 +298,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().thatAll(mockAssertion));
 
-        verify(getMockVerification()).check(expected, (String) null);
+        verify(getMockVerification()).report(expected, (String) null);
         verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
     }
 
@@ -347,8 +347,8 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertEquals("Matches elements correctly", expected, getCustomVerifier().thatAllInternal(mockAssertion));
 
-        verify(getMockVerification(), never()).check(anyBoolean(), any(MessageKey.class), anyVararg());
-        verify(getMockVerification(), never()).check(anyBoolean(), any(String.class), anyVararg());
+        verify(getMockVerification(), never()).report(anyBoolean(), any(MessageKey.class), anyVararg());
+        verify(getMockVerification(), never()).report(anyBoolean(), any(String.class), anyVararg());
         verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
     }
 
@@ -397,7 +397,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().thatAll(mockAssertion, message, args));
 
-        verify(getMockVerification()).check(eq(expected), eq(message), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(message), getArgsCaptor().capture());
         verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
 
         assertEquals("Passes args for message formatting", Arrays.asList(args), getArgsCaptor().getAllValues());
@@ -448,7 +448,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().thatAll(mockAssertion, key, args));
 
-        verify(getMockVerification()).check(eq(expected), eq(key), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(key), getArgsCaptor().capture());
         verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
 
         assertEquals("Passes args for message formatting", Arrays.asList(args), getArgsCaptor().getAllValues());
@@ -499,7 +499,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().thatAny(mockAssertion));
 
-        verify(getMockVerification()).check(expected, (String) null);
+        verify(getMockVerification()).report(expected, (String) null);
         verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
     }
 
@@ -548,8 +548,8 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertEquals("Matches elements correctly", expected, getCustomVerifier().thatAnyInternal(mockAssertion));
 
-        verify(getMockVerification(), never()).check(anyBoolean(), any(MessageKey.class), anyVararg());
-        verify(getMockVerification(), never()).check(anyBoolean(), any(String.class), anyVararg());
+        verify(getMockVerification(), never()).report(anyBoolean(), any(MessageKey.class), anyVararg());
+        verify(getMockVerification(), never()).report(anyBoolean(), any(String.class), anyVararg());
         verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
     }
 
@@ -598,7 +598,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().thatAny(mockAssertion, message, args));
 
-        verify(getMockVerification()).check(eq(expected), eq(message), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(message), getArgsCaptor().capture());
         verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
 
         assertEquals("Passes args for message formatting", Arrays.asList(args), getArgsCaptor().getAllValues());
@@ -649,7 +649,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().thatAny(mockAssertion, key, args));
 
-        verify(getMockVerification()).check(eq(expected), eq(key), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(key), getArgsCaptor().capture());
         verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
 
         assertEquals("Passes args for message formatting", Arrays.asList(args), getArgsCaptor().getAllValues());

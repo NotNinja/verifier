@@ -79,7 +79,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         final Class<?> value = verification().getValue();
         final boolean result = value != null && value.getAnnotations().length > 0;
 
-        verification().check(result, MessageKeys.ANNOTATED);
+        verification().report(result, MessageKeys.ANNOTATED);
 
         return this;
     }
@@ -109,7 +109,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         final Class<?> value = verification().getValue();
         final boolean result = value != null && type != null && value.isAnnotationPresent(type);
 
-        verification().check(result, MessageKeys.ANNOTATED_WITH, type);
+        verification().report(result, MessageKeys.ANNOTATED_WITH, type);
 
         return this;
     }
@@ -141,7 +141,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         final Class<?> value = verification().getValue();
         final boolean result = value != null && matchAll(types, input -> input != null && value.isAnnotationPresent(input));
 
-        verification().check(result, MessageKeys.ANNOTATED_WITH_ALL, (Object) types);
+        verification().report(result, MessageKeys.ANNOTATED_WITH_ALL, (Object) types);
 
         return this;
     }
@@ -172,7 +172,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         final Class<?> value = verification().getValue();
         final boolean result = value != null && matchAny(types, input -> input != null && value.isAnnotationPresent(input));
 
-        verification().check(result, MessageKeys.ANNOTATED_WITH_ANY, (Object) types);
+        verification().report(result, MessageKeys.ANNOTATED_WITH_ANY, (Object) types);
 
         return this;
     }
@@ -195,7 +195,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         final Class<?> value = verification().getValue();
         final boolean result = value != null && value.isAnnotation();
 
-        verification().check(result, MessageKeys.ANNOTATION);
+        verification().report(result, MessageKeys.ANNOTATION);
 
         return this;
     }
@@ -218,7 +218,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         final Class<?> value = verification().getValue();
         final boolean result = value != null && value.isAnonymousClass();
 
-        verification().check(result, MessageKeys.ANONYMOUS);
+        verification().report(result, MessageKeys.ANONYMOUS);
 
         return this;
     }
@@ -241,7 +241,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         final Class<?> value = verification().getValue();
         final boolean result = value != null && value.isArray();
 
-        verification().check(result, MessageKeys.ARRAY);
+        verification().report(result, MessageKeys.ARRAY);
 
         return this;
     }
@@ -271,7 +271,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         final Class<?> value = verification().getValue();
         final boolean result = value != null && type != null && value.isAssignableFrom(type);
 
-        verification().check(result, MessageKeys.ASSIGNABLE_FROM, type);
+        verification().report(result, MessageKeys.ASSIGNABLE_FROM, type);
 
         return this;
     }
@@ -294,7 +294,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         final Class<?> value = verification().getValue();
         final boolean result = value != null && value.isEnum();
 
-        verification().check(result, MessageKeys.ENUMERATION);
+        verification().report(result, MessageKeys.ENUMERATION);
 
         return this;
     }
@@ -317,7 +317,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         final Class<?> value = verification().getValue();
         final boolean result = value != null && value.isInterface();
 
-        verification().check(result, MessageKeys.INTERFACING);
+        verification().report(result, MessageKeys.INTERFACING);
 
         return this;
     }
@@ -340,7 +340,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         final Class<?> value = verification().getValue();
         final boolean result = value != null && value.getEnclosingClass() != null;
 
-        verification().check(result, MessageKeys.NESTED);
+        verification().report(result, MessageKeys.NESTED);
 
         return this;
     }
@@ -364,7 +364,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         final Class<?> value = verification().getValue();
         final boolean result = value != null && value.isPrimitive();
 
-        verification().check(result, MessageKeys.PRIMITIVE);
+        verification().report(result, MessageKeys.PRIMITIVE);
 
         return this;
     }
@@ -388,7 +388,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         final Class<?> value = verification().getValue();
         final boolean result = value != null && (value.isPrimitive() || PRIMITIVE_WRAPPERS.contains(value));
 
-        verification().check(result, MessageKeys.PRIMITIVE_OR_WRAPPER);
+        verification().report(result, MessageKeys.PRIMITIVE_OR_WRAPPER);
 
         return this;
     }
@@ -412,7 +412,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         final Class<?> value = verification().getValue();
         final boolean result = PRIMITIVE_WRAPPERS.contains(value);
 
-        verification().check(result, MessageKeys.PRIMITIVE_WRAPPER);
+        verification().report(result, MessageKeys.PRIMITIVE_WRAPPER);
 
         return this;
     }

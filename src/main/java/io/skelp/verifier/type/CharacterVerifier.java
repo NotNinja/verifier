@@ -91,7 +91,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value != null && Character.isLetter(value);
 
-        verification().check(result, MessageKeys.ALPHA);
+        verification().report(result, MessageKeys.ALPHA);
 
         return this;
     }
@@ -118,7 +118,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value != null && Character.isLetterOrDigit(value);
 
-        verification().check(result, MessageKeys.ALPHANUMERIC);
+        verification().report(result, MessageKeys.ALPHANUMERIC);
 
         return this;
     }
@@ -144,7 +144,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value != null && value < 128;
 
-        verification().check(result, MessageKeys.ASCII);
+        verification().report(result, MessageKeys.ASCII);
 
         return this;
     }
@@ -171,7 +171,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value != null && isAsciiAlpha(value);
 
-        verification().check(result, MessageKeys.ASCII_ALPHA);
+        verification().report(result, MessageKeys.ASCII_ALPHA);
 
         return this;
     }
@@ -200,7 +200,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value != null && isAsciiAlphaLowerCase(value);
 
-        verification().check(result, MessageKeys.ASCII_ALPHA_LOWER_CASE);
+        verification().report(result, MessageKeys.ASCII_ALPHA_LOWER_CASE);
 
         return this;
     }
@@ -229,7 +229,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value != null && isAsciiAlphaUpperCase(value);
 
-        verification().check(result, MessageKeys.ASCII_ALPHA_UPPER_CASE);
+        verification().report(result, MessageKeys.ASCII_ALPHA_UPPER_CASE);
 
         return this;
     }
@@ -256,7 +256,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value != null && (isAsciiAlpha(value) || isAsciiNumeric(value));
 
-        verification().check(result, MessageKeys.ASCII_ALPHANUMERIC);
+        verification().report(result, MessageKeys.ASCII_ALPHANUMERIC);
 
         return this;
     }
@@ -282,7 +282,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value != null && (value < 32 || value == 127);
 
-        verification().check(result, MessageKeys.ASCII_CONTROL);
+        verification().report(result, MessageKeys.ASCII_CONTROL);
 
         return this;
     }
@@ -309,7 +309,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value != null && isAsciiNumeric(value);
 
-        verification().check(result, MessageKeys.ASCII_NUMERIC);
+        verification().report(result, MessageKeys.ASCII_NUMERIC);
 
         return this;
     }
@@ -337,7 +337,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value != null && value >= 32 && value < 127;
 
-        verification().check(result, MessageKeys.ASCII_PRINTABLE);
+        verification().report(result, MessageKeys.ASCII_PRINTABLE);
 
         return this;
     }
@@ -347,7 +347,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value == null || value == '0';
 
-        verification().check(result, BaseTruthVerifier.MessageKeys.FALSY);
+        verification().report(result, BaseTruthVerifier.MessageKeys.FALSY);
 
         return this;
     }
@@ -377,7 +377,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value != null && Character.isLowerCase(value);
 
-        verification().check(result, MessageKeys.LOWER_CASE);
+        verification().report(result, MessageKeys.LOWER_CASE);
 
         return this;
     }
@@ -404,7 +404,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value != null && Character.isDigit(value);
 
-        verification().check(result, MessageKeys.NUMERIC);
+        verification().report(result, MessageKeys.NUMERIC);
 
         return this;
     }
@@ -414,7 +414,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value != null && value == '1';
 
-        verification().check(result, BaseTruthVerifier.MessageKeys.TRUTHY);
+        verification().report(result, BaseTruthVerifier.MessageKeys.TRUTHY);
 
         return this;
     }
@@ -444,7 +444,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value != null && Character.isUpperCase(value);
 
-        verification().check(result, MessageKeys.UPPER_CASE);
+        verification().report(result, MessageKeys.UPPER_CASE);
 
         return this;
     }
@@ -472,7 +472,7 @@ public final class CharacterVerifier extends BaseComparableVerifier<Character, C
         final Character value = verification().getValue();
         final boolean result = value != null && Character.isWhitespace(value);
 
-        verification().check(result, MessageKeys.WHITESPACE);
+        verification().report(result, MessageKeys.WHITESPACE);
 
         return this;
     }

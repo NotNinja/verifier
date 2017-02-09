@@ -44,6 +44,8 @@ import io.skelp.verifier.verification.SimpleVerification;
 import io.skelp.verifier.verification.TestVerificationProvider;
 import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.verification.VerificationProvider;
+import io.skelp.verifier.verification.report.DefaultReportExecutorProvider;
+import io.skelp.verifier.verification.report.ReportExecutor;
 
 /**
  * <p>
@@ -126,6 +128,8 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     @Mock
     private MessageSource mockMessageSource;
     @Mock
+    private ReportExecutor mockReportExecutor;
+    @Mock
     private Verification<T> mockVerification;
     @Mock
     private VerificationProvider mockVerificationProvider;
@@ -136,12 +140,13 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
 
     @Before
     public void setUp() throws Exception {
-        when(mockVerificationProvider.getVerification(any(), any())).thenAnswer(invocation -> new SimpleVerification<>(new SimpleLocaleContext(), new ResourceBundleMessageSource(), invocation.getArguments()[0], invocation.getArguments()[1]));
+        when(mockVerificationProvider.getVerification(any(), any())).thenAnswer(invocation -> new SimpleVerification<>(new SimpleLocaleContext(), new ResourceBundleMessageSource(), new DefaultReportExecutorProvider().getReportExecutor(), invocation.getArguments()[0], invocation.getArguments()[1]));
 
         TestVerificationProvider.setDelegate(mockVerificationProvider);
 
         when(mockVerification.getLocaleContext()).thenReturn(mockLocaleContext);
         when(mockVerification.getMessageSource()).thenReturn(mockMessageSource);
+        when(mockVerification.getReportExecutor()).thenReturn(mockReportExecutor);
         when(mockVerification.getValue()).thenAnswer(invocation -> value);
 
         value = null;
@@ -165,8 +170,7 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
 
     /**
      * <p>
-     * Returns an argument captor to be be used to capture any varargs that are passed to {@link
-     * Verification#check(boolean, String, Object...)}.
+     * Returns an argument captor to be be used to capture any varargs that are passed to {@link Verification#report}.
      * </p>
      *
      * @return An {@code ArgumentCaptor} to be used to capture optional format arguments.
@@ -206,6 +210,17 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
      */
     protected MessageSource getMockMessageSource() {
         return mockMessageSource;
+    }
+
+    /**
+     * <p>
+     * Returns the mock report executor being used to test the subject.
+     * </p>
+     *
+     * @return The mock {@link ReportExecutor}.
+     */
+    protected ReportExecutor getMockReportExecutor() {
+        return mockReportExecutor;
     }
 
     /**

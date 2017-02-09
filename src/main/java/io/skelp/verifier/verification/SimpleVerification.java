@@ -21,12 +21,14 @@
  */
 package io.skelp.verifier.verification;
 
-import java.util.function.Supplier;
-
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.message.MessageKey;
 import io.skelp.verifier.message.MessageSource;
 import io.skelp.verifier.message.locale.LocaleContext;
+import io.skelp.verifier.verification.report.KeyMessageHolder;
+import io.skelp.verifier.verification.report.MessageHolder;
+import io.skelp.verifier.verification.report.ReportExecutor;
+import io.skelp.verifier.verification.report.StringMessageHolder;
 
 /**
  * <p>
@@ -44,6 +46,7 @@ public final class SimpleVerification<T> implements Verification<T> {
     private final MessageSource messageSource;
     private final Object name;
     private boolean negated;
+    private final ReportExecutor reportExecutor;
     private final T value;
 
     /**
@@ -56,37 +59,37 @@ public final class SimpleVerification<T> implements Verification<T> {
      * @param messageSource
      *         the {@link MessageSource} to be used to lookup and/or format the messages for any {@link
      *         VerifierException VerifierExceptions}
+     * @param reportExecutor
+     *         the {@link ReportExecutor} to be used to report verification results
      * @param value
      *         the value being verified
      * @param name
      *         the optional name used to represent {@code value}
      */
-    public SimpleVerification(final LocaleContext localeContext, final MessageSource messageSource, final T value, final Object name) {
+    public SimpleVerification(final LocaleContext localeContext, final MessageSource messageSource, final ReportExecutor reportExecutor, final T value, final Object name) {
         this.localeContext = localeContext;
         this.messageSource = messageSource;
+        this.reportExecutor = reportExecutor;
         this.value = value;
         this.name = name;
     }
 
     @Override
-    public SimpleVerification<T> check(final boolean result, final MessageKey key, final Object... args) {
-        return check(result, () -> getMessageSource().getMessage(this, key, args));
+    public SimpleVerification<T> report(final boolean result, final MessageKey key, final Object... args) {
+        return report(result, new KeyMessageHolder(key, args));
     }
 
     @Override
-    public SimpleVerification<T> check(final boolean result, final String message, final Object... args) {
-        return check(result, () -> getMessageSource().getMessage(this, message, args));
+    public SimpleVerification<T> report(final boolean result, final String message, final Object... args) {
+        return report(result, new StringMessageHolder(message, args));
     }
 
-    private SimpleVerification<T> check(final boolean result, final Supplier<String> messageSupplier) {
-        if (result && isNegated() || !result && !isNegated()) {
-            final String errorMessage = messageSupplier.get();
+    private SimpleVerification<T> report(final boolean result, final MessageHolder messageHolder) {
+        try {
+            reportExecutor.execute(this, result, messageHolder);
+        } finally {
             setNegated(false);
-
-            throw new VerifierException(errorMessage);
         }
-
-        setNegated(false);
 
         return this;
     }
@@ -114,6 +117,11 @@ public final class SimpleVerification<T> implements Verification<T> {
     @Override
     public void setNegated(final boolean negated) {
         this.negated = negated;
+    }
+
+    @Override
+    public ReportExecutor getReportExecutor() {
+        return reportExecutor;
     }
 
     @Override

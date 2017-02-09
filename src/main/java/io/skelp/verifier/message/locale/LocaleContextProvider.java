@@ -28,6 +28,16 @@ import io.skelp.verifier.service.Weighted;
  * <p>
  * Provides {@link LocaleContext} instances to be used to localize messages.
  * </p>
+ * <p>
+ * {@code LocaleContextProviders} are registered via Java's SPI, so in order to register a custom
+ * {@code LocaleContextProvider} projects should contain should create a
+ * {@code io.skelp.verifier.verification.message.locale.LocaleContextProvider} file within {@code META-INF/services}
+ * listing the class reference for each custom {@code LocaleContextProvider} (e.g.
+ * {@code com.example.verifier.MyCustomLocaleContextProvider}) on separate lines. {@code LocaleContextProviders} are
+ * also {@link Weighted}, which means that they are loaded in priority order (the lower the weight, the higher the
+ * priority). Verifier has a built-in default {@code LocaleContextProvider} which is given a low priority (i.e.
+ * {@value #DEFAULT_IMPLEMENTATION_WEIGHT}) to allow custom implementations to be easily ordered around it.
+ * </p>
  *
  * @author Alasdair Mercer
  * @since 0.2.0

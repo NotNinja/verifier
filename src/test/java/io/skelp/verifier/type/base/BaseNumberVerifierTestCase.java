@@ -66,7 +66,7 @@ public abstract class BaseNumberVerifierTestCase<T extends Number, V extends Bas
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().even());
 
-        verify(getMockVerification()).check(expected, BaseNumberVerifier.MessageKeys.EVEN);
+        verify(getMockVerification()).report(expected, BaseNumberVerifier.MessageKeys.EVEN);
     }
 
     @Test
@@ -94,7 +94,7 @@ public abstract class BaseNumberVerifierTestCase<T extends Number, V extends Bas
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().negative());
 
-        verify(getMockVerification()).check(expected, BaseNumberVerifier.MessageKeys.NEGATIVE);
+        verify(getMockVerification()).report(expected, BaseNumberVerifier.MessageKeys.NEGATIVE);
     }
 
     @Test
@@ -122,7 +122,7 @@ public abstract class BaseNumberVerifierTestCase<T extends Number, V extends Bas
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().odd());
 
-        verify(getMockVerification()).check(expected, BaseNumberVerifier.MessageKeys.ODD);
+        verify(getMockVerification()).report(expected, BaseNumberVerifier.MessageKeys.ODD);
     }
 
     @Test
@@ -150,7 +150,7 @@ public abstract class BaseNumberVerifierTestCase<T extends Number, V extends Bas
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().one());
 
-        verify(getMockVerification()).check(expected, BaseNumberVerifier.MessageKeys.ONE);
+        verify(getMockVerification()).report(expected, BaseNumberVerifier.MessageKeys.ONE);
     }
 
     @Test
@@ -178,7 +178,7 @@ public abstract class BaseNumberVerifierTestCase<T extends Number, V extends Bas
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().positive());
 
-        verify(getMockVerification()).check(expected, BaseNumberVerifier.MessageKeys.POSITIVE);
+        verify(getMockVerification()).report(expected, BaseNumberVerifier.MessageKeys.POSITIVE);
     }
 
     @Test
@@ -206,7 +206,7 @@ public abstract class BaseNumberVerifierTestCase<T extends Number, V extends Bas
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().zero());
 
-        verify(getMockVerification()).check(expected, BaseNumberVerifier.MessageKeys.ZERO);
+        verify(getMockVerification()).report(expected, BaseNumberVerifier.MessageKeys.ZERO);
     }
 
     /**

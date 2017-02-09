@@ -196,7 +196,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().alpha());
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.ALPHA);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.ALPHA);
         }
 
         @Test
@@ -244,7 +244,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().alphaSpace());
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.ALPHA_SPACE);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.ALPHA_SPACE);
         }
 
         @Test
@@ -302,7 +302,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().alphanumeric());
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.ALPHANUMERIC);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.ALPHANUMERIC);
         }
 
         @Test
@@ -360,7 +360,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().alphanumericSpace());
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.ALPHANUMERIC_SPACE);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.ALPHANUMERIC_SPACE);
         }
 
         @Test
@@ -398,7 +398,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().asciiPrintable());
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.ASCII_PRINTABLE);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.ASCII_PRINTABLE);
         }
 
         @Test
@@ -426,7 +426,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().blank());
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.BLANK);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.BLANK);
         }
 
         @Test
@@ -494,7 +494,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().contain(other));
 
-            verify(getMockVerification()).check(eq(expected), eq(StringVerifier.MessageKeys.CONTAIN), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(StringVerifier.MessageKeys.CONTAIN), getArgsCaptor().capture());
 
             assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
         }
@@ -594,7 +594,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAll(others));
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.CONTAIN_ALL, (Object) others);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.CONTAIN_ALL, (Object) others);
         }
 
         @Test
@@ -692,7 +692,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAllIgnoreCase(others));
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.CONTAIN_ALL_IGNORE_CASE, (Object) others);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.CONTAIN_ALL_IGNORE_CASE, (Object) others);
         }
 
         @Test
@@ -770,7 +770,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAny(others));
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.CONTAIN_ANY, (Object) others);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.CONTAIN_ANY, (Object) others);
         }
 
         @Test
@@ -848,7 +848,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAnyIgnoreCase(others));
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.CONTAIN_ANY_IGNORE_CASE, (Object) others);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.CONTAIN_ANY_IGNORE_CASE, (Object) others);
         }
 
         @Test
@@ -936,7 +936,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containIgnoreCase(other));
 
-            verify(getMockVerification()).check(eq(expected), eq(StringVerifier.MessageKeys.CONTAIN_IGNORE_CASE), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(StringVerifier.MessageKeys.CONTAIN_IGNORE_CASE), getArgsCaptor().capture());
 
             assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
         }
@@ -966,7 +966,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().empty());
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.EMPTY);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.EMPTY);
         }
 
         @Test
@@ -1039,7 +1039,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().endWith(other));
 
-            verify(getMockVerification()).check(eq(expected), eq(StringVerifier.MessageKeys.END_WITH), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(StringVerifier.MessageKeys.END_WITH), getArgsCaptor().capture());
 
             assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
         }
@@ -1124,7 +1124,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().endWithAny(others));
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.END_WITH_ANY, (Object) others);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.END_WITH_ANY, (Object) others);
         }
 
         @Test
@@ -1207,7 +1207,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().endWithAnyIgnoreCase(others));
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.END_WITH_ANY_IGNORE_CASE, (Object) others);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.END_WITH_ANY_IGNORE_CASE, (Object) others);
         }
 
         @Test
@@ -1280,7 +1280,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().endWithIgnoreCase(other));
 
-            verify(getMockVerification()).check(eq(expected), eq(StringVerifier.MessageKeys.END_WITH_IGNORE_CASE), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(StringVerifier.MessageKeys.END_WITH_IGNORE_CASE), getArgsCaptor().capture());
 
             assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
         }
@@ -1362,7 +1362,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().equalToAnyIgnoreCase(others));
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.EQUAL_TO_ANY_IGNORE_CASE, (Object) others);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.EQUAL_TO_ANY_IGNORE_CASE, (Object) others);
         }
 
         @Test
@@ -1432,7 +1432,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().equalToIgnoreCase(other));
 
-            verify(getMockVerification()).check(eq(expected), eq(StringVerifier.MessageKeys.EQUAL_TO_IGNORE_CASE), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(StringVerifier.MessageKeys.EQUAL_TO_IGNORE_CASE), getArgsCaptor().capture());
 
             assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
         }
@@ -1482,7 +1482,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().lowerCase());
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.LOWER_CASE);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.LOWER_CASE);
         }
 
         @Test
@@ -1530,7 +1530,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().match(regex));
 
-            verify(getMockVerification()).check(eq(expected), eq(StringVerifier.MessageKeys.MATCH), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(StringVerifier.MessageKeys.MATCH), getArgsCaptor().capture());
 
             assertSame("Passes regex for message formatting", regex, getArgsCaptor().getValue());
         }
@@ -1570,7 +1570,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().match(pattern));
 
-            verify(getMockVerification()).check(eq(expected), eq(StringVerifier.MessageKeys.MATCH), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(StringVerifier.MessageKeys.MATCH), getArgsCaptor().capture());
 
             assertSame("Passes pattern for message formatting", pattern, getArgsCaptor().getValue());
         }
@@ -1620,7 +1620,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().numeric());
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.NUMERIC);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.NUMERIC);
         }
 
         @Test
@@ -1668,7 +1668,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().numericSpace());
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.NUMERIC_SPACE);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.NUMERIC_SPACE);
         }
 
         @Test
@@ -1706,7 +1706,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sizeOf(size));
 
-            verify(getMockVerification()).check(eq(expected), eq(StringVerifier.MessageKeys.SIZE_OF), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(StringVerifier.MessageKeys.SIZE_OF), getArgsCaptor().capture());
 
             assertSame("Passes size for message formatting", size, getArgsCaptor().getValue());
         }
@@ -1781,7 +1781,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().startWith(other));
 
-            verify(getMockVerification()).check(eq(expected), eq(StringVerifier.MessageKeys.START_WITH), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(StringVerifier.MessageKeys.START_WITH), getArgsCaptor().capture());
 
             assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
         }
@@ -1866,7 +1866,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().startWithAny(others));
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.START_WITH_ANY, (Object) others);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.START_WITH_ANY, (Object) others);
         }
 
         @Test
@@ -1949,7 +1949,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().startWithAnyIgnoreCase(others));
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.START_WITH_ANY_IGNORE_CASE, (Object) others);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.START_WITH_ANY_IGNORE_CASE, (Object) others);
         }
 
         @Test
@@ -2022,7 +2022,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().startWithIgnoreCase(other));
 
-            verify(getMockVerification()).check(eq(expected), eq(StringVerifier.MessageKeys.START_WITH_IGNORE_CASE), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(StringVerifier.MessageKeys.START_WITH_IGNORE_CASE), getArgsCaptor().capture());
 
             assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
         }
@@ -2072,7 +2072,7 @@ public class StringVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().upperCase());
 
-            verify(getMockVerification()).check(expected, StringVerifier.MessageKeys.UPPER_CASE);
+            verify(getMockVerification()).report(expected, StringVerifier.MessageKeys.UPPER_CASE);
         }
 
         @Override

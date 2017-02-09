@@ -400,7 +400,7 @@ public abstract class AbstractMessageSourceTestCase<T extends AbstractMessageSou
 
     @Test(expected = NoSuchMessageException.class)
     public void testGetMessageWithMessageKeyThrowsWhenMessageNotFound() throws Exception {
-        messageSource.getMessage(mockVerification, (MessageKey) null);
+        messageSource.getMessage(mockVerification, getMissingMessageKey(), null);
     }
 
     private void testGetMessageWithMessageKeyHelper(MessageKey key, Object[] args, boolean useKeyAsDefaultMessage, boolean negated, String expected) {

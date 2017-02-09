@@ -63,7 +63,7 @@ public abstract class BaseTruthVerifierTestCase<T, V extends BaseTruthVerifier<T
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().falsy());
         }
 
-        verify(getMockVerification(), times(values.length)).check(expected, BaseTruthVerifier.MessageKeys.FALSY);
+        verify(getMockVerification(), times(values.length)).report(expected, BaseTruthVerifier.MessageKeys.FALSY);
     }
 
     @Test
@@ -88,7 +88,7 @@ public abstract class BaseTruthVerifierTestCase<T, V extends BaseTruthVerifier<T
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().truthy());
         }
 
-        verify(getMockVerification(), times(values.length)).check(expected, BaseTruthVerifier.MessageKeys.TRUTHY);
+        verify(getMockVerification(), times(values.length)).report(expected, BaseTruthVerifier.MessageKeys.TRUTHY);
     }
 
     /**

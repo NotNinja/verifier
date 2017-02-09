@@ -58,7 +58,7 @@ public final class IntegerVerifier extends BaseComparableVerifier<Integer, Integ
         final Integer value = verification().getValue();
         final boolean result = value != null && value % 2 == 0;
 
-        verification().check(result, BaseNumberVerifier.MessageKeys.EVEN);
+        verification().report(result, BaseNumberVerifier.MessageKeys.EVEN);
 
         return this;
     }
@@ -68,7 +68,7 @@ public final class IntegerVerifier extends BaseComparableVerifier<Integer, Integ
         final Integer value = verification().getValue();
         final boolean result = value == null || value == 0;
 
-        verification().check(result, BaseTruthVerifier.MessageKeys.FALSY);
+        verification().report(result, BaseTruthVerifier.MessageKeys.FALSY);
 
         return this;
     }
@@ -78,7 +78,7 @@ public final class IntegerVerifier extends BaseComparableVerifier<Integer, Integ
         final Integer value = verification().getValue();
         final boolean result = value != null && value < 0;
 
-        verification().check(result, BaseNumberVerifier.MessageKeys.NEGATIVE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.NEGATIVE);
 
         return this;
     }
@@ -88,7 +88,7 @@ public final class IntegerVerifier extends BaseComparableVerifier<Integer, Integ
         final Integer value = verification().getValue();
         final boolean result = value != null && value % 2 != 0;
 
-        verification().check(result, BaseNumberVerifier.MessageKeys.ODD);
+        verification().report(result, BaseNumberVerifier.MessageKeys.ODD);
 
         return this;
     }
@@ -98,7 +98,7 @@ public final class IntegerVerifier extends BaseComparableVerifier<Integer, Integ
         final Integer value = verification().getValue();
         final boolean result = value != null && value == 1;
 
-        verification().check(result, BaseNumberVerifier.MessageKeys.ONE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.ONE);
 
         return this;
     }
@@ -108,7 +108,7 @@ public final class IntegerVerifier extends BaseComparableVerifier<Integer, Integ
         final Integer value = verification().getValue();
         final boolean result = value != null && value >= 0;
 
-        verification().check(result, BaseNumberVerifier.MessageKeys.POSITIVE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.POSITIVE);
 
         return this;
     }
@@ -118,7 +118,7 @@ public final class IntegerVerifier extends BaseComparableVerifier<Integer, Integ
         final Integer value = verification().getValue();
         final boolean result = value != null && value == 1;
 
-        verification().check(result, BaseTruthVerifier.MessageKeys.TRUTHY);
+        verification().report(result, BaseTruthVerifier.MessageKeys.TRUTHY);
 
         return this;
     }
@@ -128,7 +128,7 @@ public final class IntegerVerifier extends BaseComparableVerifier<Integer, Integ
         final Integer value = verification().getValue();
         final boolean result = value != null && value == 0;
 
-        verification().check(result, BaseNumberVerifier.MessageKeys.ZERO);
+        verification().report(result, BaseNumberVerifier.MessageKeys.ZERO);
 
         return this;
     }

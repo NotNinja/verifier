@@ -109,7 +109,7 @@ public class ThrowableVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().causedBy(type));
 
-            verify(getMockVerification()).check(eq(expected), eq(ThrowableVerifier.MessageKeys.CAUSED_BY), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(ThrowableVerifier.MessageKeys.CAUSED_BY), getArgsCaptor().capture());
 
             assertSame("Passes type for message formatting", type, getArgsCaptor().getValue());
         }
@@ -155,7 +155,7 @@ public class ThrowableVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().causedBy(cause));
 
-            verify(getMockVerification()).check(eq(expected), eq(ThrowableVerifier.MessageKeys.CAUSED_BY), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(ThrowableVerifier.MessageKeys.CAUSED_BY), getArgsCaptor().capture());
 
             assertSame("Passes cause for message formatting", cause, getArgsCaptor().getValue());
         }
@@ -201,7 +201,7 @@ public class ThrowableVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().causedBy(cause, name));
 
-            verify(getMockVerification()).check(eq(expected), eq(ThrowableVerifier.MessageKeys.CAUSED_BY), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(ThrowableVerifier.MessageKeys.CAUSED_BY), getArgsCaptor().capture());
 
             assertSame("Passes name for message formatting", name, getArgsCaptor().getValue());
         }
@@ -226,7 +226,7 @@ public class ThrowableVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().checked());
 
-            verify(getMockVerification()).check(expected, ThrowableVerifier.MessageKeys.CHECKED);
+            verify(getMockVerification()).report(expected, ThrowableVerifier.MessageKeys.CHECKED);
         }
 
         @Test
@@ -259,7 +259,7 @@ public class ThrowableVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().message(message));
 
-            verify(getMockVerification()).check(eq(expected), eq(ThrowableVerifier.MessageKeys.MESSAGE), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(ThrowableVerifier.MessageKeys.MESSAGE), getArgsCaptor().capture());
 
             assertSame("Passes message for message formatting", message, getArgsCaptor().getValue());
         }
@@ -284,7 +284,7 @@ public class ThrowableVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().unchecked());
 
-            verify(getMockVerification()).check(expected, ThrowableVerifier.MessageKeys.UNCHECKED);
+            verify(getMockVerification()).report(expected, ThrowableVerifier.MessageKeys.UNCHECKED);
         }
 
         @Override

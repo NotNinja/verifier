@@ -72,7 +72,7 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
         final Locale value = verification().getValue();
         final boolean result = LazyHolder.AVAILABLE_LOCALES.contains(value);
 
-        verification().check(result, MessageKeys.AVAILABLE);
+        verification().report(result, MessageKeys.AVAILABLE);
 
         return this;
     }
@@ -102,7 +102,7 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
         final Locale value = verification().getValue();
         final boolean result = value != null && value.getCountry().equals(country);
 
-        verification().check(result, MessageKeys.COUNTRY, country);
+        verification().report(result, MessageKeys.COUNTRY, country);
 
         return this;
     }
@@ -125,7 +125,7 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
         final Locale value = verification().getValue();
         final boolean result = Locale.getDefault().equals(value);
 
-        verification().check(result, MessageKeys.DEFAULTING);
+        verification().report(result, MessageKeys.DEFAULTING);
 
         return this;
     }
@@ -154,7 +154,7 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
         final Locale value = verification().getValue();
         final boolean result = value != null && value.getLanguage().equals(language);
 
-        verification().check(result, MessageKeys.LANGUAGE, language);
+        verification().report(result, MessageKeys.LANGUAGE, language);
 
         return this;
     }
@@ -184,7 +184,7 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
         final Locale value = verification().getValue();
         final boolean result = value != null && value.getScript().equals(script);
 
-        verification().check(result, MessageKeys.SCRIPT, script);
+        verification().report(result, MessageKeys.SCRIPT, script);
 
         return this;
     }
@@ -214,7 +214,7 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
         final Locale value = verification().getValue();
         final boolean result = value != null && value.getVariant().equals(variant);
 
-        verification().check(result, MessageKeys.VARIANT, variant);
+        verification().report(result, MessageKeys.VARIANT, variant);
 
         return this;
     }

@@ -192,7 +192,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
         final T value = verification.getValue();
         final boolean result = isEqualTo(value, other);
 
-        verification.check(result, MessageKeys.EQUAL_TO, name);
+        verification.report(result, MessageKeys.EQUAL_TO, name);
 
         return chain();
     }
@@ -202,7 +202,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
         final T value = verification.getValue();
         final boolean result = matchAny(others, input -> isEqualTo(value, input));
 
-        verification.check(result, MessageKeys.EQUAL_TO_ANY, (Object) others);
+        verification.report(result, MessageKeys.EQUAL_TO_ANY, (Object) others);
 
         return chain();
     }
@@ -212,7 +212,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
         final T value = verification.getValue();
         final boolean result = value != null && value.hashCode() == hashCode;
 
-        verification.check(result, MessageKeys.HASHED_AS, hashCode);
+        verification.report(result, MessageKeys.HASHED_AS, hashCode);
 
         return chain();
     }
@@ -221,7 +221,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     public V instanceOf(final Class<?> cls) {
         final boolean result = cls != null && cls.isInstance(verification.getValue());
 
-        verification.check(result, MessageKeys.INSTANCE_OF, cls);
+        verification.report(result, MessageKeys.INSTANCE_OF, cls);
 
         return chain();
     }
@@ -231,7 +231,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
         final T value = verification.getValue();
         final boolean result = value != null && matchAll(classes, input -> input != null && input.isInstance(value));
 
-        verification.check(result, MessageKeys.INSTANCE_OF_ALL, (Object) classes);
+        verification.report(result, MessageKeys.INSTANCE_OF_ALL, (Object) classes);
 
         return chain();
     }
@@ -241,7 +241,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
         final T value = verification.getValue();
         final boolean result = value != null && matchAny(classes, input -> input != null && input.isInstance(value));
 
-        verification.check(result, MessageKeys.INSTANCE_OF_ANY, (Object) classes);
+        verification.report(result, MessageKeys.INSTANCE_OF_ANY, (Object) classes);
 
         return chain();
     }
@@ -276,7 +276,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     public V nulled() {
         final boolean result = verification.getValue() == null;
 
-        verification.check(result, MessageKeys.NULLED);
+        verification.report(result, MessageKeys.NULLED);
 
         return chain();
     }
@@ -290,7 +290,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     public V sameAs(final Object other, final Object name) {
         final boolean result = verification.getValue() == other;
 
-        verification.check(result, MessageKeys.SAME_AS, name);
+        verification.report(result, MessageKeys.SAME_AS, name);
 
         return chain();
     }
@@ -300,7 +300,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
         final T value = verification.getValue();
         final boolean result = matchAny(others, input -> value == input);
 
-        verification.check(result, MessageKeys.SAME_AS_ANY, (Object) others);
+        verification.report(result, MessageKeys.SAME_AS_ANY, (Object) others);
 
         return chain();
     }
@@ -317,7 +317,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
 
         final boolean result = assertion.verify(verification.getValue());
 
-        verification.check(result, key, args);
+        verification.report(result, key, args);
 
         return chain();
     }
@@ -329,7 +329,7 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
 
         final boolean result = assertion.verify(verification.getValue());
 
-        verification.check(result, message, args);
+        verification.report(result, message, args);
 
         return chain();
     }

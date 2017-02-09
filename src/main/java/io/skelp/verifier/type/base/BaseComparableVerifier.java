@@ -455,7 +455,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
         final boolean result = value != null && start != null && end != null &&
             (startComparison.compare(value.compareTo(start)) && endComparison.compare(value.compareTo(end)));
 
-        verification().check(result, key, startName, endName);
+        verification().report(result, key, startName, endName);
 
         return chain();
     }
@@ -464,7 +464,7 @@ public abstract class BaseComparableVerifier<T extends Comparable<? super T>, V 
         final T value = verification().getValue();
         final boolean result = (value == null || other == null) ? comparison.areNullsEqual() && value == other : comparison.compare(value.compareTo(other));
 
-        verification().check(result, key, name);
+        verification().report(result, key, name);
 
         return chain();
     }

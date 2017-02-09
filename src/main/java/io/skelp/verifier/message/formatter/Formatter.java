@@ -31,6 +31,12 @@ import io.skelp.verifier.verification.Verification;
  * {@code Formatters} can choose which types of objects that they support to allow other implementations to provide more
  * precise formatting for that type as only one {@code Formatter} will be used for a single instance.
  * </p>
+ * <p>
+ * {@code Formatters} are registered via Java's SPI, so in order to register a custom {@code Formatter} projects should
+ * contain should create a {@code io.skelp.verifier.message.formatter.Formatter} file within {@code META-INF/services}
+ * listing the class reference for each custom {@code Formatter} (e.g. {@code com.example.verifier.MyCustomFormatter})
+ * on separate lines.
+ * </p>
  *
  * @author Alasdair Mercer
  * @since 0.2.0

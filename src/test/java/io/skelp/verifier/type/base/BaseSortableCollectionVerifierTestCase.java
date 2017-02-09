@@ -86,7 +86,7 @@ public abstract class BaseSortableCollectionVerifierTestCase<E extends Comparabl
 
         verify(comparator, comparatorUseExpected ? atLeastOnce() : never()).compare(any(getElementClass()), any(getElementClass()));
 
-        verify(getMockVerification()).check(eq(expected), eq(BaseSortableCollectionVerifier.MessageKeys.SORTED_BY), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseSortableCollectionVerifier.MessageKeys.SORTED_BY), getArgsCaptor().capture());
 
         assertSame("Passes comparator for message formatting", comparator, getArgsCaptor().getValue());
     }
@@ -133,7 +133,7 @@ public abstract class BaseSortableCollectionVerifierTestCase<E extends Comparabl
 
         verify(comparator, comparatorUseExpected ? atLeastOnce() : never()).compare(any(getElementClass()), any(getElementClass()));
 
-        verify(getMockVerification()).check(eq(expected), eq(BaseSortableCollectionVerifier.MessageKeys.SORTED_BY), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseSortableCollectionVerifier.MessageKeys.SORTED_BY), getArgsCaptor().capture());
 
         assertSame("Passes name for message formatting", name, getArgsCaptor().getValue());
     }

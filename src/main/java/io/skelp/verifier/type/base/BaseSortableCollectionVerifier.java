@@ -144,7 +144,7 @@ public abstract class BaseSortableCollectionVerifier<E, T, V extends BaseSortabl
             }
         }
 
-        verification().check(result, MessageKeys.SORTED_BY, name);
+        verification().report(result, MessageKeys.SORTED_BY, name);
 
         return chain();
     }

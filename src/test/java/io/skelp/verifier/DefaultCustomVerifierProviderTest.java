@@ -39,6 +39,7 @@ import io.skelp.verifier.verification.SimpleVerification;
 import io.skelp.verifier.verification.TestVerificationProvider;
 import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.verification.VerificationProvider;
+import io.skelp.verifier.verification.report.DefaultReportExecutorProvider;
 
 /**
  * <p>
@@ -59,7 +60,7 @@ public class DefaultCustomVerifierProviderTest {
 
     @Before
     public void setUp() {
-        when(mockVerificationProvider.getVerification(any(), any())).thenAnswer(invocation -> new SimpleVerification<>(new SimpleLocaleContext(Locale.ENGLISH), new ResourceBundleMessageSource(), invocation.getArguments()[0], invocation.getArguments()[1]));
+        when(mockVerificationProvider.getVerification(any(), any())).thenAnswer(invocation -> new SimpleVerification<>(new SimpleLocaleContext(Locale.ENGLISH), new ResourceBundleMessageSource(), new DefaultReportExecutorProvider().getReportExecutor(), invocation.getArguments()[0], invocation.getArguments()[1]));
 
         TestVerificationProvider.setDelegate(mockVerificationProvider);
 

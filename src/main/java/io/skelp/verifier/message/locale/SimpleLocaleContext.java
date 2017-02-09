@@ -33,7 +33,7 @@ import java.util.Locale;
  * @see Locale#getDefault()
  * @since 0.2.0
  */
-public class SimpleLocaleContext implements LocaleContext {
+public final class SimpleLocaleContext implements LocaleContext {
 
     private final Locale locale;
 
