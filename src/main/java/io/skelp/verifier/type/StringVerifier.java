@@ -816,6 +816,136 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
 
     /**
      * <p>
+     * Verifies that the value matches <b>all</b> of the regular expressions provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).matchAll()                      =&gt; PASS
+     * Verifier.verify(*).matchAll((CharSequence[]) null) =&gt; PASS
+     * Verifier.verify(*).matchAll(*, null)               =&gt; FAIL
+     * Verifier.verify((String) null).matchAll(*)         =&gt; FAIL
+     * Verifier.verify("foo").matchAll(".*", "fo{2}")     =&gt; PASS
+     * Verifier.verify("foo").matchAll(".*", "fiz{2}")    =&gt; FAIL
+     * </pre>
+     *
+     * @param regexes
+     *         the regular expressions to be matched against of the value (may be {@literal null} or contain {@literal
+     *         null} references)
+     * @return A reference to this {@link StringVerifier} for chaining purposes.
+     * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
+     * @see #matchAll(Pattern...)
+     */
+    public StringVerifier matchAll(final CharSequence... regexes) {
+        final String value = verification().getValue();
+        final boolean result = value != null && matchAll(regexes, input -> input != null && value.matches(input.toString()));
+
+        verification().report(result, MessageKeys.MATCH_ALL, (Object) regexes);
+
+        return this;
+    }
+
+    /**
+     * <p>
+     * Verifies that the value matches <b>all</b> of the regular expression {@code patterns} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).matchAll()                                                     =&gt; PASS
+     * Verifier.verify(*).matchAll((Pattern[]) null)                                     =&gt; PASS
+     * Verifier.verify(*).matchAll(*, null)                                              =&gt; FAIL
+     * Verifier.verify((String) null).matchAll(*)                                        =&gt; FAIL
+     * Verifier.verify("foo").matchAll(Pattern.compile(".*"), Pattern.compile("fo{2}"))  =&gt; PASS
+     * Verifier.verify("foo").matchAll(Pattern.compile(".*"), Pattern.compile("fiz{2}")) =&gt; FAIL
+     * </pre>
+     *
+     * @param patterns
+     *         the regular expression {@code Patterns} to be matched against of the value (may be {@literal null} or
+     *         contain {@literal null} references)
+     * @return A reference to this {@link StringVerifier} for chaining purposes.
+     * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
+     * @see #matchAll(CharSequence...)
+     */
+    public StringVerifier matchAll(final Pattern... patterns) {
+        final String value = verification().getValue();
+        final boolean result = value != null && matchAll(patterns, input -> input != null && input.matcher(value).matches());
+
+        verification().report(result, MessageKeys.MATCH_ALL, (Object) patterns);
+
+        return this;
+    }
+
+    /**
+     * <p>
+     * Verifies that the value matches <b>any</b> of the regular expressions provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).matchAny()                       =&gt; FAIL
+     * Verifier.verify(*).matchAny((CharSequence[]) null)  =&gt; FAIL
+     * Verifier.verify((String) null).matchAny(*)          =&gt; FAIL
+     * Verifier.verify("foo").matchAny("fo{2}", "fiz{2}")  =&gt; PASS
+     * Verifier.verify("foo").matchAny("fiz{2}", "buz{2}") =&gt; FAIL
+     * </pre>
+     *
+     * @param regexes
+     *         the regular expressions to be matched against of the value (may be {@literal null} or contain {@literal
+     *         null} references)
+     * @return A reference to this {@link StringVerifier} for chaining purposes.
+     * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
+     * @see #matchAny(Pattern...)
+     */
+    public StringVerifier matchAny(final CharSequence... regexes) {
+        final String value = verification().getValue();
+        final boolean result = value != null && matchAny(regexes, input -> input != null && value.matches(input.toString()));
+
+        verification().report(result, MessageKeys.MATCH_ANY, (Object) regexes);
+
+        return this;
+    }
+
+    /**
+     * <p>
+     * Verifies that the value matches <b>any</b> of the regular expression {@code patterns} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).matchAny()                                                         =&gt; FAIL
+     * Verifier.verify(*).matchAny((Pattern[]) null)                                         =&gt; FAIL
+     * Verifier.verify((String) null).matchAny(*)                                            =&gt; FAIL
+     * Verifier.verify("foo").matchAny(Pattern.compile("fo{2}"), Pattern.compile("fiz{2}"))  =&gt; PASS
+     * Verifier.verify("foo").matchAny(Pattern.compile("fiz{2}"), Pattern.compile("buz{2}")) =&gt; FAIL
+     * </pre>
+     *
+     * @param patterns
+     *         the regular expression {@code Patterns} to be matched against of the value (may be {@literal null} or
+     *         contain {@literal null} references)
+     * @return A reference to this {@link StringVerifier} for chaining purposes.
+     * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
+     * @see #matchAny(CharSequence...)
+     */
+    public StringVerifier matchAny(final Pattern... patterns) {
+        final String value = verification().getValue();
+        final boolean result = value != null && matchAny(patterns, input -> input != null && input.matcher(value).matches());
+
+        verification().report(result, MessageKeys.MATCH_ANY, (Object) patterns);
+
+        return this;
+    }
+
+    /**
+     * <p>
      * Verifies that the value contains only digits.
      * </p>
      * <pre>
@@ -1096,6 +1226,8 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
         EQUAL_TO_IGNORE_CASE("io.skelp.verifier.type.StringVerifier.equalToIgnoreCase"),
         LOWER_CASE("io.skelp.verifier.type.StringVerifier.lowerCase"),
         MATCH("io.skelp.verifier.type.StringVerifier.match"),
+        MATCH_ALL("io.skelp.verifier.type.StringVerifier.matchAll"),
+        MATCH_ANY("io.skelp.verifier.type.StringVerifier.matchAny"),
         NUMERIC("io.skelp.verifier.type.StringVerifier.numeric"),
         NUMERIC_SPACE("io.skelp.verifier.type.StringVerifier.numericSpace"),
         SIZE_OF("io.skelp.verifier.type.StringVerifier.sizeOf"),
