@@ -373,20 +373,21 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
      * Verifies that the value is an interface.
      * </p>
      * <pre>
-     * Verifier.verify((Class) null).interfacing()       =&gt; FAIL
-     * Verifier.verify(Object.class).interfacing()       =&gt; FAIL
-     * Verifier.verify(Serializable.class).interfacing() =&gt; PASS
+     * Verifier.verify((Class) null).interfaced()       =&gt; FAIL
+     * Verifier.verify(Object.class).interfaced()       =&gt; FAIL
+     * Verifier.verify(Serializable.class).interfaced() =&gt; PASS
      * </pre>
      *
      * @return A reference to this {@link ClassVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
+     * @since 0.2.0
      */
-    public ClassVerifier interfacing() {
+    public ClassVerifier interfaced() {
         final Class<?> value = verification().getValue();
         final boolean result = value != null && value.isInterface();
 
-        verification().report(result, MessageKeys.INTERFACING);
+        verification().report(result, MessageKeys.INTERFACED);
 
         return this;
     }
@@ -506,7 +507,7 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         ASSIGNABLE_FROM_ALL("io.skelp.verifier.type.ClassVerifier.assignableFromAll"),
         ASSIGNABLE_FROM_ANY("io.skelp.verifier.type.ClassVerifier.assignableFromAny"),
         ENUMERATION("io.skelp.verifier.type.ClassVerifier.enumeration"),
-        INTERFACING("io.skelp.verifier.type.ClassVerifier.interfacing"),
+        INTERFACED("io.skelp.verifier.type.ClassVerifier.interfaced"),
         NESTED("io.skelp.verifier.type.ClassVerifier.nested"),
         PRIMITIVE("io.skelp.verifier.type.ClassVerifier.primitive"),
         PRIMITIVE_OR_WRAPPER("io.skelp.verifier.type.ClassVerifier.primitiveOrWrapper"),

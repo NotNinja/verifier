@@ -482,26 +482,26 @@ public class ClassVerifierTest {
         }
 
         @Test
-        public void testInterfacingWhenValueIsInterface() {
-            testInterfacingHelper(AnInterface.class, true);
+        public void testInterfacedWhenValueIsInterface() {
+            testInterfacedHelper(AnInterface.class, true);
         }
 
         @Test
-        public void testInterfacingWhenValueIsNotInterface() {
-            testInterfacingHelper(ClassVerifierTest.class, false);
+        public void testInterfacedWhenValueIsNotInterface() {
+            testInterfacedHelper(ClassVerifierTest.class, false);
         }
 
         @Test
-        public void testInterfacingWhenValueIsNull() {
-            testInterfacingHelper(null, false);
+        public void testInterfacedWhenValueIsNull() {
+            testInterfacedHelper(null, false);
         }
 
-        private void testInterfacingHelper(Class<?> value, boolean expected) {
+        private void testInterfacedHelper(Class<?> value, boolean expected) {
             setValue(value);
 
-            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().interfacing());
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().interfaced());
 
-            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.INTERFACING);
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.INTERFACED);
         }
 
         @Test
@@ -645,7 +645,7 @@ public class ClassVerifierTest {
             messageKeys.put("ASSIGNABLE_FROM_ALL", "io.skelp.verifier.type.ClassVerifier.assignableFromAll");
             messageKeys.put("ASSIGNABLE_FROM_ANY", "io.skelp.verifier.type.ClassVerifier.assignableFromAny");
             messageKeys.put("ENUMERATION", "io.skelp.verifier.type.ClassVerifier.enumeration");
-            messageKeys.put("INTERFACING", "io.skelp.verifier.type.ClassVerifier.interfacing");
+            messageKeys.put("INTERFACED", "io.skelp.verifier.type.ClassVerifier.interfaced");
             messageKeys.put("NESTED", "io.skelp.verifier.type.ClassVerifier.nested");
             messageKeys.put("PRIMITIVE", "io.skelp.verifier.type.ClassVerifier.primitive");
             messageKeys.put("PRIMITIVE_OR_WRAPPER", "io.skelp.verifier.type.ClassVerifier.primitiveOrWrapper");
