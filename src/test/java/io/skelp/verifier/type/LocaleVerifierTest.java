@@ -166,27 +166,27 @@ public class LocaleVerifierTest {
         }
 
         @Test
-        public void testDefaultingWithDefaultValue() {
-            testDefaultingHelper(Locale.ENGLISH, Locale.ENGLISH, true);
+        public void testDefaultedWithDefaultValue() {
+            testDefaultedHelper(Locale.ENGLISH, Locale.ENGLISH, true);
         }
 
         @Test
-        public void testDefaultingWithNonDefaultValue() {
-            testDefaultingHelper(Locale.GERMAN, Locale.ENGLISH, false);
+        public void testDefaultedWithNonDefaultValue() {
+            testDefaultedHelper(Locale.GERMAN, Locale.ENGLISH, false);
         }
 
         @Test
-        public void testDefaultingWithNullValue() {
-            testDefaultingHelper(null, Locale.ENGLISH, false);
+        public void testDefaultedWithNullValue() {
+            testDefaultedHelper(null, Locale.ENGLISH, false);
         }
 
-        private void testDefaultingHelper(Locale value, Locale defaultLocale, boolean expected) {
+        private void testDefaultedHelper(Locale value, Locale defaultLocale, boolean expected) {
             setValue(value);
             Locale.setDefault(defaultLocale);
 
-            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().defaulting());
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().defaulted());
 
-            verify(getMockVerification()).report(expected, LocaleVerifier.MessageKeys.DEFAULTING);
+            verify(getMockVerification()).report(expected, LocaleVerifier.MessageKeys.DEFAULTED);
         }
 
         @Test
@@ -311,7 +311,7 @@ public class LocaleVerifierTest {
             Map<String, String> messageKeys = new HashMap<>();
             messageKeys.put("AVAILABLE", "io.skelp.verifier.type.LocaleVerifier.available");
             messageKeys.put("COUNTRY", "io.skelp.verifier.type.LocaleVerifier.country");
-            messageKeys.put("DEFAULTING", "io.skelp.verifier.type.LocaleVerifier.defaulting");
+            messageKeys.put("DEFAULTED", "io.skelp.verifier.type.LocaleVerifier.defaulted");
             messageKeys.put("LANGUAGE", "io.skelp.verifier.type.LocaleVerifier.language");
             messageKeys.put("SCRIPT", "io.skelp.verifier.type.LocaleVerifier.script");
             messageKeys.put("VARIANT", "io.skelp.verifier.type.LocaleVerifier.variant");
