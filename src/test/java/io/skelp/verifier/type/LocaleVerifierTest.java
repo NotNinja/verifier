@@ -24,12 +24,13 @@ package io.skelp.verifier.type;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import org.junit.After;
@@ -40,8 +41,6 @@ import org.junit.runner.RunWith;
 
 import io.skelp.verifier.AbstractCustomVerifierTestCase;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
-import io.skelp.verifier.message.MessageKeyEnumTestCase;
-import io.skelp.verifier.util.TestUtils;
 
 /**
  * <p>
@@ -92,15 +91,6 @@ public class LocaleVerifierTest {
             originalDefaultLocale = Locale.getDefault();
         }
 
-        @After
-        @Override
-        public void tearDown() throws Exception {
-            super.tearDown();
-
-            setAvailableLocales(originalAvailableLocales);
-            Locale.setDefault(originalDefaultLocale);
-        }
-
         private static Locale findAvailableLocaleWithScript() {
             Locale locale = null;
             for (Locale availableLocale : originalAvailableLocales) {
@@ -117,23 +107,43 @@ public class LocaleVerifierTest {
             return locale;
         }
 
-        @SuppressWarnings("unchecked")
         private static Set<Locale> getAvailableLocales() throws ReflectiveOperationException {
-            return (Set<Locale>) TestUtils.getStaticField(getLazyHolderClass(), "AVAILABLE_LOCALES", true);
+            @SuppressWarnings("unchecked")
+            Set<Locale> availableLocales = (Set<Locale>) getAvailableLocalesField().get(null);
+            return availableLocales;
         }
 
         private static void setAvailableLocales(Set<Locale> availableLocales) throws ReflectiveOperationException {
-            TestUtils.setStaticField(getLazyHolderClass(), "AVAILABLE_LOCALES", availableLocales, true);
+            getAvailableLocalesField().set(null, availableLocales);
+        }
+
+        private static Field getAvailableLocalesField() throws ReflectiveOperationException {
+            Field field = getLazyHolderClass().getDeclaredField("AVAILABLE_LOCALES");
+            field.setAccessible(true);
+
+            Field modifiersField = Field.class.getDeclaredField("modifiers");
+            modifiersField.setAccessible(true);
+            modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+
+            return field;
         }
 
         private static Class<?> getLazyHolderClass() throws ReflectiveOperationException {
             return Class.forName(LocaleVerifier.class.getName() + "$LazyHolder");
         }
 
+        @After
+        public void tearDown() throws Exception {
+            setAvailableLocales(originalAvailableLocales);
+            Locale.setDefault(originalDefaultLocale);
+        }
+
         @Test
         public void hackCoverage() throws Exception {
             // TODO: Determine how to avoid this
-            TestUtils.createInstance(getLazyHolderClass(), null, true);
+            Constructor<?> constructor = getLazyHolderClass().getDeclaredConstructor();
+            constructor.setAccessible(true);
+            constructor.newInstance();
         }
 
         @Test
@@ -162,7 +172,7 @@ public class LocaleVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().available());
 
-            verify(getMockVerification()).report(expected, LocaleVerifier.MessageKeys.AVAILABLE);
+            verify(getMockVerification()).check(expected, "be available");
         }
 
         @Test
@@ -186,7 +196,7 @@ public class LocaleVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().defaulting());
 
-            verify(getMockVerification()).report(expected, LocaleVerifier.MessageKeys.DEFAULTING);
+            verify(getMockVerification()).check(expected, "be default");
         }
 
         @Test
@@ -209,7 +219,7 @@ public class LocaleVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().country(country));
 
-            verify(getMockVerification()).report(eq(expected), eq(LocaleVerifier.MessageKeys.COUNTRY), getArgsCaptor().capture());
+            verify(getMockVerification()).check(eq(expected), eq("be country '%s'"), getArgsCaptor().capture());
 
             assertSame("Passes country for message formatting", country, getArgsCaptor().getValue());
         }
@@ -234,7 +244,7 @@ public class LocaleVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().language(language));
 
-            verify(getMockVerification()).report(eq(expected), eq(LocaleVerifier.MessageKeys.LANGUAGE), getArgsCaptor().capture());
+            verify(getMockVerification()).check(eq(expected), eq("be language '%s'"), getArgsCaptor().capture());
 
             assertSame("Passes language for message formatting", language, getArgsCaptor().getValue());
         }
@@ -263,7 +273,7 @@ public class LocaleVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().script(script));
 
-            verify(getMockVerification()).report(eq(expected), eq(LocaleVerifier.MessageKeys.SCRIPT), getArgsCaptor().capture());
+            verify(getMockVerification()).check(eq(expected), eq("be script '%s'"), getArgsCaptor().capture());
 
             assertSame("Passes script for message formatting", script, getArgsCaptor().getValue());
         }
@@ -288,7 +298,7 @@ public class LocaleVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().variant(variant));
 
-            verify(getMockVerification()).report(eq(expected), eq(LocaleVerifier.MessageKeys.VARIANT), getArgsCaptor().capture());
+            verify(getMockVerification()).check(eq(expected), eq("be variant '%s'"), getArgsCaptor().capture());
 
             assertSame("Passes variant for message formatting", variant, getArgsCaptor().getValue());
         }
@@ -296,27 +306,6 @@ public class LocaleVerifierTest {
         @Override
         protected LocaleVerifier createCustomVerifier() {
             return new LocaleVerifier(getMockVerification());
-        }
-    }
-
-    public static class LocaleVerifierMessageKeysTest extends MessageKeyEnumTestCase<LocaleVerifier.MessageKeys> {
-
-        @Override
-        protected Class<? extends Enum> getEnumClass() {
-            return LocaleVerifier.MessageKeys.class;
-        }
-
-        @Override
-        protected Map<String, String> getMessageKeys() {
-            Map<String, String> messageKeys = new HashMap<>();
-            messageKeys.put("AVAILABLE", "io.skelp.verifier.type.LocaleVerifier.available");
-            messageKeys.put("COUNTRY", "io.skelp.verifier.type.LocaleVerifier.country");
-            messageKeys.put("DEFAULTING", "io.skelp.verifier.type.LocaleVerifier.defaulting");
-            messageKeys.put("LANGUAGE", "io.skelp.verifier.type.LocaleVerifier.language");
-            messageKeys.put("SCRIPT", "io.skelp.verifier.type.LocaleVerifier.script");
-            messageKeys.put("VARIANT", "io.skelp.verifier.type.LocaleVerifier.variant");
-
-            return messageKeys;
         }
     }
 }

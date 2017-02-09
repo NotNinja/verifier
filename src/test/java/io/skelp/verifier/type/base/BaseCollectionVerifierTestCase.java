@@ -22,6 +22,8 @@
 package io.skelp.verifier.type.base;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
@@ -33,7 +35,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
 import io.skelp.verifier.VerifierAssertion;
 import io.skelp.verifier.VerifierException;
-import io.skelp.verifier.message.MessageKey;
 
 /**
  * <p>
@@ -79,7 +80,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().contain(element));
 
-        verify(getMockVerification()).report(eq(expected), eq(BaseCollectionVerifier.MessageKeys.CONTAIN), getArgsCaptor().capture());
+        verify(getMockVerification()).check(eq(expected), eq("contain '%s'"), getArgsCaptor().capture());
 
         assertSame("Passes element for message formatting", element, getArgsCaptor().getValue());
     }
@@ -134,7 +135,9 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAll(elements));
 
-        verify(getMockVerification()).report(expected, BaseCollectionVerifier.MessageKeys.CONTAIN_ALL, (Object) elements);
+        verify(getMockVerification()).check(eq(expected), eq("contain all %s"), getArgsCaptor().capture());
+
+        assertArrayFormatter(getArgsCaptor().getValue(), elements);
     }
 
     @Test
@@ -187,7 +190,9 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().containAny(elements));
 
-        verify(getMockVerification()).report(expected, BaseCollectionVerifier.MessageKeys.CONTAIN_ANY, (Object) elements);
+        verify(getMockVerification()).check(eq(expected), eq("contain any %s"), getArgsCaptor().capture());
+
+        assertArrayFormatter(getArgsCaptor().getValue(), elements);
     }
 
     @Test
@@ -210,7 +215,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().empty());
 
-        verify(getMockVerification()).report(expected, BaseCollectionVerifier.MessageKeys.EMPTY);
+        verify(getMockVerification()).check(expected, "be empty");
     }
 
     @Test
@@ -248,7 +253,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sizeOf(size));
 
-        verify(getMockVerification()).report(eq(expected), eq(BaseCollectionVerifier.MessageKeys.SIZE_OF), getArgsCaptor().capture());
+        verify(getMockVerification()).check(eq(expected), eq("have a size of '%d'"), getArgsCaptor().capture());
 
         assertSame("Passes size for message formatting", size, getArgsCaptor().getValue());
     }
@@ -298,57 +303,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().thatAll(mockAssertion));
 
-        verify(getMockVerification()).report(expected, (String) null);
-        verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
-    }
-
-    @Test
-    public void testThatAllInternalThrowsWhenAssertionIsNull() {
-        thrown.expect(VerifierException.class);
-        thrown.expectMessage("assertion must not be null: null");
-
-        getCustomVerifier().thatAllInternal(null);
-    }
-
-    @Test
-    public void testThatAllInternalWhenAssertionFailsForAllElements() {
-        when(mockAssertion.verify(any(getElementClass()))).thenReturn(false);
-
-        testThatAllInternalHelper(createFullValue(), 1, false);
-    }
-
-    @Test
-    public void testThatAllInternalWhenAssertionFailsForSomeElements() {
-        when(mockAssertion.verify(any(getElementClass()))).thenReturn(true);
-        when(mockAssertion.verify(getExistingElement())).thenReturn(false);
-
-        testThatAllInternalHelper(createFullValue(), getFullValueSize(), false);
-    }
-
-    @Test
-    public void testThatAllInternalWhenAssertionPassesForAllElements() {
-        when(mockAssertion.verify(any(getElementClass()))).thenReturn(true);
-
-        testThatAllInternalHelper(createFullValue(), getFullValueSize(), true);
-    }
-
-    @Test
-    public void testThatAllInternalWhenValueIsEmpty() {
-        testThatAllInternalHelper(createEmptyValue(), 0, true);
-    }
-
-    @Test
-    public void testThatAllInternalWhenValueIsNull() {
-        testThatAllInternalHelper(null, 0, true);
-    }
-
-    private void testThatAllInternalHelper(T value, int assertionCalls, boolean expected) {
-        setValue(value);
-
-        assertEquals("Matches elements correctly", expected, getCustomVerifier().thatAllInternal(mockAssertion));
-
-        verify(getMockVerification(), never()).report(anyBoolean(), any(MessageKey.class), anyVararg());
-        verify(getMockVerification(), never()).report(anyBoolean(), any(String.class), anyVararg());
+        verify(getMockVerification()).check(expected, null);
         verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
     }
 
@@ -357,14 +312,14 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
         thrown.expect(VerifierException.class);
         thrown.expectMessage("assertion must not be null: null");
 
-        getCustomVerifier().thatAll(null, "foo {0}", "bar");
+        getCustomVerifier().thatAll(null, "foo %s", "bar");
     }
 
     @Test
     public void testThatAllWithMessageWhenAssertionFailsForAllElements() {
         when(mockAssertion.verify(any(getElementClass()))).thenReturn(false);
 
-        testThatAllHelper(createFullValue(), 1, false, "foo {0}", new Object[]{"bar"});
+        testThatAllHelper(createFullValue(), 1, false, "foo %s", new Object[]{"bar"});
     }
 
     @Test
@@ -372,24 +327,24 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
         when(mockAssertion.verify(any(getElementClass()))).thenReturn(true);
         when(mockAssertion.verify(getExistingElement())).thenReturn(false);
 
-        testThatAllHelper(createFullValue(), getFullValueSize(), false, "foo {0}", new Object[]{"bar"});
+        testThatAllHelper(createFullValue(), getFullValueSize(), false, "foo %s", new Object[]{"bar"});
     }
 
     @Test
     public void testThatAllWithMessageWhenAssertionPassesForAllElements() {
         when(mockAssertion.verify(any(getElementClass()))).thenReturn(true);
 
-        testThatAllHelper(createFullValue(), getFullValueSize(), true, "foo {0}", new Object[]{"bar"});
+        testThatAllHelper(createFullValue(), getFullValueSize(), true, "foo %s", new Object[]{"bar"});
     }
 
     @Test
     public void testThatAllWithMessageWhenValueIsEmpty() {
-        testThatAllHelper(createEmptyValue(), 0, true, "foo {0}", new Object[]{"bar"});
+        testThatAllHelper(createEmptyValue(), 0, true, "foo %s", new Object[]{"bar"});
     }
 
     @Test
     public void testThatAllWithMessageWhenValueIsNull() {
-        testThatAllHelper(null, 0, true, "foo {0}", new Object[]{"bar"});
+        testThatAllHelper(null, 0, true, "foo %s", new Object[]{"bar"});
     }
 
     private void testThatAllHelper(T value, int assertionCalls, boolean expected, String message, Object[] args) {
@@ -397,58 +352,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().thatAll(mockAssertion, message, args));
 
-        verify(getMockVerification()).report(eq(expected), eq(message), getArgsCaptor().capture());
-        verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
-
-        assertEquals("Passes args for message formatting", Arrays.asList(args), getArgsCaptor().getAllValues());
-    }
-
-    @Test
-    public void testThatAllWithMessageKeyThrowsWhenAssertionIsNull() {
-        thrown.expect(VerifierException.class);
-        thrown.expectMessage("assertion must not be null: null");
-
-        getCustomVerifier().thatAll(null, () -> "foo", "bar");
-    }
-
-    @Test
-    public void testThatAllWithMessageKeyWhenAssertionFailsForAllElements() {
-        when(mockAssertion.verify(any(getElementClass()))).thenReturn(false);
-
-        testThatAllHelper(createFullValue(), 1, false, () -> "foo", new Object[]{"bar"});
-    }
-
-    @Test
-    public void testThatAllWithMessageKeyWhenAssertionFailsForSomeElements() {
-        when(mockAssertion.verify(any(getElementClass()))).thenReturn(true);
-        when(mockAssertion.verify(getExistingElement())).thenReturn(false);
-
-        testThatAllHelper(createFullValue(), getFullValueSize(), false, () -> "foo", new Object[]{"bar"});
-    }
-
-    @Test
-    public void testThatAllWithMessageKeyWhenAssertionPassesForAllElements() {
-        when(mockAssertion.verify(any(getElementClass()))).thenReturn(true);
-
-        testThatAllHelper(createFullValue(), getFullValueSize(), true, () -> "foo", new Object[]{"bar"});
-    }
-
-    @Test
-    public void testThatAllWithMessageKeyWhenValueIsEmpty() {
-        testThatAllHelper(createEmptyValue(), 0, true, () -> "foo", new Object[]{"bar"});
-    }
-
-    @Test
-    public void testThatAllWithMessageKeyWhenValueIsNull() {
-        testThatAllHelper(null, 0, true, () -> "foo", new Object[]{"bar"});
-    }
-
-    private void testThatAllHelper(T value, int assertionCalls, boolean expected, MessageKey key, Object[] args) {
-        setValue(value);
-
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().thatAll(mockAssertion, key, args));
-
-        verify(getMockVerification()).report(eq(expected), eq(key), getArgsCaptor().capture());
+        verify(getMockVerification()).check(eq(expected), eq(message), getArgsCaptor().capture());
         verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
 
         assertEquals("Passes args for message formatting", Arrays.asList(args), getArgsCaptor().getAllValues());
@@ -499,57 +403,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().thatAny(mockAssertion));
 
-        verify(getMockVerification()).report(expected, (String) null);
-        verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
-    }
-
-    @Test
-    public void testThatAnyInternalThrowsWhenAssertionIsNull() {
-        thrown.expect(VerifierException.class);
-        thrown.expectMessage("assertion must not be null: null");
-
-        getCustomVerifier().thatAnyInternal(null);
-    }
-
-    @Test
-    public void testThatAnyInternalWhenAssertionFailsForAllElements() {
-        when(mockAssertion.verify(any(getElementClass()))).thenReturn(false);
-
-        testThatAnyInternalHelper(createFullValue(), getFullValueSize(), false);
-    }
-
-    @Test
-    public void testThatAnyInternalWhenAssertionFailsForSomeElements() {
-        when(mockAssertion.verify(any(getElementClass()))).thenReturn(false);
-        when(mockAssertion.verify(getExistingElement())).thenReturn(true);
-
-        testThatAnyInternalHelper(createFullValue(), getFullValueSize(), true);
-    }
-
-    @Test
-    public void testThatAnyInternalWhenAssertionPassesForAllElements() {
-        when(mockAssertion.verify(any(getElementClass()))).thenReturn(true);
-
-        testThatAnyInternalHelper(createFullValue(), 1, true);
-    }
-
-    @Test
-    public void testThatAnyInternalWhenValueIsEmpty() {
-        testThatAnyInternalHelper(createEmptyValue(), 0, false);
-    }
-
-    @Test
-    public void testThatAnyInternalWhenValueIsNull() {
-        testThatAnyInternalHelper(null, 0, false);
-    }
-
-    private void testThatAnyInternalHelper(T value, int assertionCalls, boolean expected) {
-        setValue(value);
-
-        assertEquals("Matches elements correctly", expected, getCustomVerifier().thatAnyInternal(mockAssertion));
-
-        verify(getMockVerification(), never()).report(anyBoolean(), any(MessageKey.class), anyVararg());
-        verify(getMockVerification(), never()).report(anyBoolean(), any(String.class), anyVararg());
+        verify(getMockVerification()).check(expected, null);
         verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
     }
 
@@ -558,14 +412,14 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
         thrown.expect(VerifierException.class);
         thrown.expectMessage("assertion must not be null: null");
 
-        getCustomVerifier().thatAny(null, "foo {0}", "bar");
+        getCustomVerifier().thatAny(null, "foo %s", "bar");
     }
 
     @Test
     public void testThatAnyWithMessageWhenAssertionFailsForAllElements() {
         when(mockAssertion.verify(any(getElementClass()))).thenReturn(false);
 
-        testThatAnyHelper(createFullValue(), getFullValueSize(), false, "foo {0}", new Object[]{"bar"});
+        testThatAnyHelper(createFullValue(), getFullValueSize(), false, "foo %s", new Object[]{"bar"});
     }
 
     @Test
@@ -573,24 +427,24 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
         when(mockAssertion.verify(any(getElementClass()))).thenReturn(false);
         when(mockAssertion.verify(getExistingElement())).thenReturn(true);
 
-        testThatAnyHelper(createFullValue(), getFullValueSize(), true, "foo {0}", new Object[]{"bar"});
+        testThatAnyHelper(createFullValue(), getFullValueSize(), true, "foo %s", new Object[]{"bar"});
     }
 
     @Test
     public void testThatAnyWithMessageWhenAssertionPassesForAllElements() {
         when(mockAssertion.verify(any(getElementClass()))).thenReturn(true);
 
-        testThatAnyHelper(createFullValue(), 1, true, "foo {0}", new Object[]{"bar"});
+        testThatAnyHelper(createFullValue(), 1, true, "foo %s", new Object[]{"bar"});
     }
 
     @Test
     public void testThatAnyWithMessageWhenValueIsEmpty() {
-        testThatAnyHelper(createEmptyValue(), 0, false, "foo {0}", new Object[]{"bar"});
+        testThatAnyHelper(createEmptyValue(), 0, false, "foo %s", new Object[]{"bar"});
     }
 
     @Test
     public void testThatAnyWithMessageWhenValueIsNull() {
-        testThatAnyHelper(null, 0, false, "foo {0}", new Object[]{"bar"});
+        testThatAnyHelper(null, 0, false, "foo %s", new Object[]{"bar"});
     }
 
     private void testThatAnyHelper(T value, int assertionCalls, boolean expected, String message, Object[] args) {
@@ -598,58 +452,7 @@ public abstract class BaseCollectionVerifierTestCase<E, T, V extends BaseCollect
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().thatAny(mockAssertion, message, args));
 
-        verify(getMockVerification()).report(eq(expected), eq(message), getArgsCaptor().capture());
-        verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
-
-        assertEquals("Passes args for message formatting", Arrays.asList(args), getArgsCaptor().getAllValues());
-    }
-
-    @Test
-    public void testThatAnyWithMessageKeyThrowsWhenAssertionIsNull() {
-        thrown.expect(VerifierException.class);
-        thrown.expectMessage("assertion must not be null: null");
-
-        getCustomVerifier().thatAny(null, () -> "foo", "bar");
-    }
-
-    @Test
-    public void testThatAnyWithMessageKeyWhenAssertionFailsForAllElements() {
-        when(mockAssertion.verify(any(getElementClass()))).thenReturn(false);
-
-        testThatAnyHelper(createFullValue(), getFullValueSize(), false, () -> "foo", new Object[]{"bar"});
-    }
-
-    @Test
-    public void testThatAnyWithMessageKeyWhenAssertionFailsForSomeElements() {
-        when(mockAssertion.verify(any(getElementClass()))).thenReturn(false);
-        when(mockAssertion.verify(getExistingElement())).thenReturn(true);
-
-        testThatAnyHelper(createFullValue(), getFullValueSize(), true, () -> "foo", new Object[]{"bar"});
-    }
-
-    @Test
-    public void testThatAnyWithMessageKeyWhenAssertionPassesForAllElements() {
-        when(mockAssertion.verify(any(getElementClass()))).thenReturn(true);
-
-        testThatAnyHelper(createFullValue(), 1, true, () -> "foo", new Object[]{"bar"});
-    }
-
-    @Test
-    public void testThatAnyWithMessageKeyWhenValueIsEmpty() {
-        testThatAnyHelper(createEmptyValue(), 0, false, () -> "foo", new Object[]{"bar"});
-    }
-
-    @Test
-    public void testThatAnyWithMessageKeyWhenValueIsNull() {
-        testThatAnyHelper(null, 0, false, () -> "foo", new Object[]{"bar"});
-    }
-
-    private void testThatAnyHelper(T value, int assertionCalls, boolean expected, MessageKey key, Object[] args) {
-        setValue(value);
-
-        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().thatAny(mockAssertion, key, args));
-
-        verify(getMockVerification()).report(eq(expected), eq(key), getArgsCaptor().capture());
+        verify(getMockVerification()).check(eq(expected), eq(message), getArgsCaptor().capture());
         verify(mockAssertion, times(assertionCalls)).verify(any(getElementClass()));
 
         assertEquals("Passes args for message formatting", Arrays.asList(args), getArgsCaptor().getAllValues());

@@ -23,9 +23,8 @@ package io.skelp.verifier;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.function.Function;
 
-import io.skelp.verifier.message.MessageKey;
+import io.skelp.verifier.util.Function;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -54,14 +53,14 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
      * @param inputs
      *         the input values to be matched
      * @param matcher
-     *         the {@code Function} to be used to match each input value
+     *         the {@link Function} to be used to match each input value
      * @param <I>
      *         the type of the input values
      * @return {@literal true} if {@code inputs} is {@literal null} or {@code matcher} returns {@literal true} for all
      * input values; otherwise {@literal false}.
      * @see #matchAll(Collection, Function)
      */
-    protected static <I> boolean matchAll(final I[] inputs, final Function<I, Boolean> matcher) {
+    protected static <I> boolean matchAll(final I[] inputs, final Function<Boolean, I> matcher) {
         return inputs == null || matchAll(Arrays.asList(inputs), matcher);
     }
 
@@ -77,14 +76,14 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
      * @param inputs
      *         the input values to be matched
      * @param matcher
-     *         the {@code Function} to be used to match each input value
+     *         the {@link Function} to be used to match each input value
      * @param <I>
      *         the type of the input values
      * @return {@literal true} if {@code inputs} is {@literal null} or {@code matcher} returns {@literal true} for all
      * input values; otherwise {@literal false}.
      * @see #matchAll(Object[], Function)
      */
-    protected static <I> boolean matchAll(final Collection<I> inputs, final Function<I, Boolean> matcher) {
+    protected static <I> boolean matchAll(final Collection<I> inputs, final Function<Boolean, I> matcher) {
         if (inputs == null) {
             return true;
         }
@@ -110,14 +109,14 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
      * @param inputs
      *         the input values to be matched
      * @param matcher
-     *         the {@code Function} to be used to match each input value
+     *         the {@link Function} to be used to match each input value
      * @param <I>
      *         the type of the input values
      * @return {@literal true} if {@code inputs} is not {@literal null} and {@code matcher} returns {@literal true} for
      * any input value; otherwise {@literal false}.
      * @see #matchAny(Collection, Function)
      */
-    protected static <I> boolean matchAny(final I[] inputs, final Function<I, Boolean> matcher) {
+    protected static <I> boolean matchAny(final I[] inputs, final Function<Boolean, I> matcher) {
         return inputs != null && matchAny(Arrays.asList(inputs), matcher);
     }
 
@@ -133,14 +132,14 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
      * @param inputs
      *         the input values to be matched
      * @param matcher
-     *         the {@code Function} to be used to match each input value
+     *         the {@link Function} to be used to match each input value
      * @param <I>
      *         the type of the input values
      * @return {@literal true} if {@code inputs} is not {@literal null} and {@code matcher} returns {@literal true} for
      * any input value; otherwise {@literal false}.
      * @see #matchAny(Object[], Function)
      */
-    protected static <I> boolean matchAny(final Collection<I> inputs, final Function<I, Boolean> matcher) {
+    protected static <I> boolean matchAny(final Collection<I> inputs, final Function<Boolean, I> matcher) {
         if (inputs == null) {
             return false;
         }
@@ -183,65 +182,80 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     }
 
     @Override
-    public V equalTo(final Object other) {
+    public V equalTo(final Object other) throws VerifierException {
         return equalTo(other, other);
     }
 
     @Override
-    public V equalTo(final Object other, final Object name) {
+    public V equalTo(final Object other, final Object name) throws VerifierException {
         final T value = verification.getValue();
         final boolean result = isEqualTo(value, other);
 
-        verification.report(result, MessageKeys.EQUAL_TO, name);
+        verification.check(result, "be equal to '%s'", name);
 
         return chain();
     }
 
     @Override
-    public V equalToAny(final Object... others) {
+    public V equalToAny(final Object... others) throws VerifierException {
         final T value = verification.getValue();
-        final boolean result = matchAny(others, input -> isEqualTo(value, input));
+        final boolean result = matchAny(others, new Function<Boolean, Object>() {
+            @Override
+            public Boolean apply(final Object input) {
+                return isEqualTo(value, input);
+            }
+        });
 
-        verification.report(result, MessageKeys.EQUAL_TO_ANY, (Object) others);
+        verification.check(result, "be equal to any %s", verification.getMessageFormatter().formatArray(others));
 
         return chain();
     }
 
     @Override
-    public V hashedAs(final int hashCode) {
+    public V hashedAs(final int hashCode) throws VerifierException {
         final T value = verification.getValue();
         final boolean result = value != null && value.hashCode() == hashCode;
 
-        verification.report(result, MessageKeys.HASHED_AS, hashCode);
+        verification.check(result, "have hash code '%d'", hashCode);
 
         return chain();
     }
 
     @Override
-    public V instanceOf(final Class<?> cls) {
+    public V instanceOf(final Class<?> cls) throws VerifierException {
         final boolean result = cls != null && cls.isInstance(verification.getValue());
 
-        verification.report(result, MessageKeys.INSTANCE_OF, cls);
+        verification.check(result, "be an instance of '%s'", cls);
 
         return chain();
     }
 
     @Override
-    public V instanceOfAll(final Class<?>... classes) {
+    public V instanceOfAll(final Class<?>... classes) throws VerifierException {
         final T value = verification.getValue();
-        final boolean result = value != null && matchAll(classes, input -> input != null && input.isInstance(value));
+        final boolean result = value != null && matchAll(classes, new Function<Boolean, Class<?>>() {
+            @Override
+            public Boolean apply(final Class<?> input) {
+                return input != null && input.isInstance(value);
+            }
+        });
 
-        verification.report(result, MessageKeys.INSTANCE_OF_ALL, (Object) classes);
+        verification.check(result, "be an instance of all %s", verification.getMessageFormatter().formatArray(classes));
 
         return chain();
     }
 
     @Override
-    public V instanceOfAny(final Class<?>... classes) {
+    public V instanceOfAny(final Class<?>... classes) throws VerifierException {
         final T value = verification.getValue();
-        final boolean result = value != null && matchAny(classes, input -> input != null && input.isInstance(value));
+        final boolean result = value != null && matchAny(classes, new Function<Boolean, Class<?>>() {
+            @Override
+            public Boolean apply(final Class<?> input) {
+                return input != null && input.isInstance(value);
+            }
+        });
 
-        verification.report(result, MessageKeys.INSTANCE_OF_ANY, (Object) classes);
+        verification.check(result, "be an instance of any %s", verification.getMessageFormatter().formatArray(classes));
 
         return chain();
     }
@@ -273,63 +287,56 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     }
 
     @Override
-    public V nulled() {
+    public V nulled() throws VerifierException {
         final boolean result = verification.getValue() == null;
 
-        verification.report(result, MessageKeys.NULLED);
+        verification.check(result, "be null");
 
         return chain();
     }
 
     @Override
-    public V sameAs(final Object other) {
+    public V sameAs(final Object other) throws VerifierException {
         return sameAs(other, other);
     }
 
     @Override
-    public V sameAs(final Object other, final Object name) {
+    public V sameAs(final Object other, final Object name) throws VerifierException {
         final boolean result = verification.getValue() == other;
 
-        verification.report(result, MessageKeys.SAME_AS, name);
+        verification.check(result, "be same as '%s'", name);
 
         return chain();
     }
 
     @Override
-    public V sameAsAny(final Object... others) {
+    public V sameAsAny(final Object... others) throws VerifierException {
         final T value = verification.getValue();
-        final boolean result = matchAny(others, input -> value == input);
+        final boolean result = matchAny(others, new Function<Boolean, Object>() {
+            @Override
+            public Boolean apply(final Object input) {
+                return value == input;
+            }
+        });
 
-        verification.report(result, MessageKeys.SAME_AS_ANY, (Object) others);
-
-        return chain();
-    }
-
-    @Override
-    public V that(final VerifierAssertion<T> assertion) {
-        return that(assertion, (String) null);
-    }
-
-    @Override
-    public V that(final VerifierAssertion<T> assertion, final MessageKey key, final Object... args) {
-        Verifier.verify(assertion, "assertion")
-            .not().nulled();
-
-        final boolean result = assertion.verify(verification.getValue());
-
-        verification.report(result, key, args);
+        verification.check(result, "be same as any %s", verification.getMessageFormatter().formatArray(others));
 
         return chain();
     }
 
     @Override
-    public V that(final VerifierAssertion<T> assertion, final String message, final Object... args) {
+    public V that(final VerifierAssertion<T> assertion) throws VerifierException {
+        return that(assertion, null);
+    }
+
+    @Override
+    public V that(final VerifierAssertion<T> assertion, final String message, final Object... args) throws VerifierException {
         Verifier.verify(assertion, "assertion")
             .not().nulled();
 
         final boolean result = assertion.verify(verification.getValue());
 
-        verification.report(result, message, args);
+        verification.check(result, message, args);
 
         return chain();
     }
@@ -342,36 +349,5 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
     @Override
     public Verification<T> verification() {
         return verification;
-    }
-
-    /**
-     * <p>
-     * The {@link MessageKey MessageKeys} that are used by {@link AbstractCustomVerifier}.
-     * </p>
-     *
-     * @since 0.2.0
-     */
-    public enum MessageKeys implements MessageKey {
-
-        EQUAL_TO("io.skelp.verifier.AbstractCustomVerifier.equalTo"),
-        EQUAL_TO_ANY("io.skelp.verifier.AbstractCustomVerifier.equalToAny"),
-        HASHED_AS("io.skelp.verifier.AbstractCustomVerifier.hashedAs"),
-        INSTANCE_OF("io.skelp.verifier.AbstractCustomVerifier.instanceOf"),
-        INSTANCE_OF_ALL("io.skelp.verifier.AbstractCustomVerifier.instanceOfAll"),
-        INSTANCE_OF_ANY("io.skelp.verifier.AbstractCustomVerifier.instanceOfAny"),
-        NULLED("io.skelp.verifier.AbstractCustomVerifier.nulled"),
-        SAME_AS("io.skelp.verifier.AbstractCustomVerifier.sameAs"),
-        SAME_AS_ANY("io.skelp.verifier.AbstractCustomVerifier.sameAsAny");
-
-        private final String code;
-
-        MessageKeys(final String code) {
-            this.code = code;
-        }
-
-        @Override
-        public String code() {
-            return code;
-        }
     }
 }

@@ -24,7 +24,6 @@ package io.skelp.verifier.type.base;
 import java.util.Calendar;
 
 import io.skelp.verifier.VerifierException;
-import io.skelp.verifier.message.MessageKey;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -75,7 +74,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public V sameDayAs(final T other) {
+    public V sameDayAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
@@ -83,7 +82,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
                 calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
                 calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR));
 
-        verification().report(result, MessageKeys.SAME_DAY_AS, other);
+        verification().check(result, "be same day as '%s'", other);
 
         return chain();
     }
@@ -108,13 +107,13 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public V sameEraAs(final T other) {
+    public V sameEraAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
             calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA);
 
-        verification().report(result, MessageKeys.SAME_ERA_AS, other);
+        verification().check(result, "be same era as '%s'", other);
 
         return chain();
     }
@@ -140,7 +139,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public V sameHourAs(final T other) {
+    public V sameHourAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
@@ -149,7 +148,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
                 calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR) &&
                 calendar1.get(Calendar.HOUR_OF_DAY) == calendar2.get(Calendar.HOUR_OF_DAY));
 
-        verification().report(result, MessageKeys.SAME_HOUR_AS, other);
+        verification().check(result, "be same hour as '%s'", other);
 
         return chain();
     }
@@ -175,7 +174,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public V sameMinuteAs(final T other) {
+    public V sameMinuteAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
@@ -185,7 +184,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
                 calendar1.get(Calendar.HOUR_OF_DAY) == calendar2.get(Calendar.HOUR_OF_DAY) &&
                 calendar1.get(Calendar.MINUTE) == calendar2.get(Calendar.MINUTE));
 
-        verification().report(result, MessageKeys.SAME_MINUTE_AS, other);
+        verification().check(result, "be same minute as '%s'", other);
 
         return chain();
     }
@@ -211,7 +210,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public V sameMonthAs(final T other) {
+    public V sameMonthAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
@@ -219,7 +218,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
                 calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
                 calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH));
 
-        verification().report(result, MessageKeys.SAME_MONTH_AS, other);
+        verification().check(result, "be same month as '%s'", other);
 
         return chain();
     }
@@ -245,7 +244,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public V sameSecondAs(final T other) {
+    public V sameSecondAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
@@ -256,7 +255,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
                 calendar1.get(Calendar.MINUTE) == calendar2.get(Calendar.MINUTE) &&
                 calendar1.get(Calendar.SECOND) == calendar2.get(Calendar.SECOND));
 
-        verification().report(result, MessageKeys.SAME_SECOND_AS, other);
+        verification().check(result, "be same second as '%s'", other);
 
         return chain();
     }
@@ -282,13 +281,13 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public V sameTimeAs(final T other) {
+    public V sameTimeAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
             calendar1.getTimeInMillis() == calendar2.getTimeInMillis();
 
-        verification().report(result, MessageKeys.SAME_TIME_AS, other);
+        verification().check(result, "be same time as '%s'", other);
 
         return chain();
     }
@@ -314,7 +313,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public V sameWeekAs(final T other) {
+    public V sameWeekAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
@@ -322,7 +321,7 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
                 calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
                 calendar1.get(Calendar.WEEK_OF_YEAR) == calendar2.get(Calendar.WEEK_OF_YEAR));
 
-        verification().report(result, MessageKeys.SAME_WEEK_AS, other);
+        verification().check(result, "be same week as '%s'", other);
 
         return chain();
     }
@@ -348,14 +347,14 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public V sameYearAs(final T other) {
+    public V sameYearAs(final T other) throws VerifierException {
         final Calendar calendar1 = getCalendar(verification().getValue());
         final Calendar calendar2 = getCalendar(other);
         final boolean result = calendar1 != null && calendar2 != null &&
             (calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA) &&
                 calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR));
 
-        verification().report(result, MessageKeys.SAME_YEAR_AS, other);
+        verification().check(result, "be same year as '%s'", other);
 
         return chain();
     }
@@ -374,35 +373,4 @@ public abstract class BaseTimeVerifier<T extends Comparable<? super T>, V extend
      * null}.
      */
     protected abstract Calendar getCalendar(T value);
-
-    /**
-     * <p>
-     * The {@link MessageKey MessageKeys} that are used by {@link BaseTimeVerifier}.
-     * </p>
-     *
-     * @since 0.2.0
-     */
-    enum MessageKeys implements MessageKey {
-
-        SAME_DAY_AS("io.skelp.verifier.type.base.BaseTimeVerifier.sameDayAs"),
-        SAME_ERA_AS("io.skelp.verifier.type.base.BaseTimeVerifier.sameEraAs"),
-        SAME_HOUR_AS("io.skelp.verifier.type.base.BaseTimeVerifier.sameHourAs"),
-        SAME_MINUTE_AS("io.skelp.verifier.type.base.BaseTimeVerifier.sameMinuteAs"),
-        SAME_MONTH_AS("io.skelp.verifier.type.base.BaseTimeVerifier.sameMonthAs"),
-        SAME_SECOND_AS("io.skelp.verifier.type.base.BaseTimeVerifier.sameSecondAs"),
-        SAME_TIME_AS("io.skelp.verifier.type.base.BaseTimeVerifier.sameTimeAs"),
-        SAME_WEEK_AS("io.skelp.verifier.type.base.BaseTimeVerifier.sameWeekAs"),
-        SAME_YEAR_AS("io.skelp.verifier.type.base.BaseTimeVerifier.sameYearAs");
-
-        private final String code;
-
-        MessageKeys(final String code) {
-            this.code = code;
-        }
-
-        @Override
-        public String code() {
-            return code;
-        }
-    }
 }
