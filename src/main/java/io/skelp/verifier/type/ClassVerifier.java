@@ -278,6 +278,75 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
 
     /**
      * <p>
+     * Verifies that the value is either the same as, or is a superclass or superinterface of, a class or interface
+     * represented by <b>all</b> of the {@code types} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).assignableFromAll()                                                      =&gt; PASS
+     * Verifier.verify(*).assignableFromAll((Class[]) null)                                        =&gt; PASS
+     * Verifier.verify(*).assignableFromAll(*, null)                                               =&gt; FAIL
+     * Verifier.verify((Class) null).assignableFromAll(*)                                          =&gt; FAIL
+     * Verifier.verify(Object.class).assignableFromAll(*)                                          =&gt; PASS
+     * Verifier.verify(Collection.class).assignableFromAll(List.class, Set.class, ArrayList.class) =&gt; PASS
+     * Verifier.verify(Collection.class).assignableFromAll(List.class, Map.class, ArrayList.class) =&gt; FAIL
+     * </pre>
+     *
+     * @param types
+     *         the classes to be checked as assigned from the value (may be {@literal null} or contain {@literal null}
+     *         references)
+     * @return A reference to this {@link ClassVerifier} for chaining purposes.
+     * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
+     * @since 0.2.0
+     */
+    public ClassVerifier assignableFromAll(final Class<?>... types) {
+        final Class<?> value = verification().getValue();
+        final boolean result = value != null && matchAll(types, input -> input != null && value.isAssignableFrom(input));
+
+        verification().report(result, MessageKeys.ASSIGNABLE_FROM_ALL, (Object) types);
+
+        return this;
+    }
+
+    /**
+     * <p>
+     * Verifies that the value is either the same as, or is a superclass or superinterface of, a class or interface
+     * represented by <b>any</b> of the {@code types} provided.
+     * </p>
+     * <p>
+     * {@literal null} references are handled gracefully without exceptions.
+     * </p>
+     * <pre>
+     * Verifier.verify(*).assignableFromAny()                                                         =&gt; FAIL
+     * Verifier.verify(*).assignableFromAny((Class[]) null)                                           =&gt; FAIL
+     * Verifier.verify((Class) null).assignableFromAny(*)                                             =&gt; FAIL
+     * Verifier.verify(Object.class).assignableFromAny(*)                                             =&gt; PASS
+     * Verifier.verify(Collection.class).assignableFromAny(Boolean.class, Map.class, ArrayList.class) =&gt; PASS
+     * Verifier.verify(Collection.class).assignableFromAny(Boolean.class, Map.class, URI.class)       =&gt; FAIL
+     * </pre>
+     *
+     * @param types
+     *         the classes to be checked as assigned from the value (may be {@literal null} or contain {@literal null}
+     *         references)
+     * @return A reference to this {@link ClassVerifier} for chaining purposes.
+     * @throws VerifierException
+     *         If the verification fails while not negated or passes while negated.
+     * @since 0.2.0
+     */
+    public ClassVerifier assignableFromAny(final Class<?>... types) {
+        final Class<?> value = verification().getValue();
+        final boolean result = value != null && matchAny(types, input -> input != null && value.isAssignableFrom(input));
+
+        verification().report(result, MessageKeys.ASSIGNABLE_FROM_ANY, (Object) types);
+
+        return this;
+    }
+
+    /**
+     * <p>
      * Verifies that the value is an enum.
      * </p>
      * <pre>
@@ -434,6 +503,8 @@ public final class ClassVerifier extends AbstractCustomVerifier<Class, ClassVeri
         ANONYMOUS("io.skelp.verifier.type.ClassVerifier.anonymous"),
         ARRAY("io.skelp.verifier.type.ClassVerifier.array"),
         ASSIGNABLE_FROM("io.skelp.verifier.type.ClassVerifier.assignableFrom"),
+        ASSIGNABLE_FROM_ALL("io.skelp.verifier.type.ClassVerifier.assignableFromAll"),
+        ASSIGNABLE_FROM_ANY("io.skelp.verifier.type.ClassVerifier.assignableFromAny"),
         ENUMERATION("io.skelp.verifier.type.ClassVerifier.enumeration"),
         INTERFACING("io.skelp.verifier.type.ClassVerifier.interfacing"),
         NESTED("io.skelp.verifier.type.ClassVerifier.nested"),

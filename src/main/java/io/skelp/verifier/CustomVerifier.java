@@ -180,7 +180,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * </p>
      * <pre>
      * Verifier.verify(*).instanceOfAll()                                                            =&gt; PASS
-     * Verifier.verify(*).instanceOfAll((Object[]) null)                                             =&gt; PASS
+     * Verifier.verify(*).instanceOfAll((Class[]) null)                                              =&gt; PASS
      * Verifier.verify(*).instanceOfAll(Object.class)                                                =&gt; PASS
      * Verifier.verify(*).instanceOfAll(*, null)                                                     =&gt; FAIL
      * Verifier.verify(null).instanceOfAll(*)                                                        =&gt; FAIL
@@ -207,7 +207,7 @@ public interface CustomVerifier<T, V extends CustomVerifier<T, V>> {
      * </p>
      * <pre>
      * Verifier.verify(*).instanceOfAny()                                                         =&gt; FAIL
-     * Verifier.verify(*).instanceOfAny((Object[]) null)                                          =&gt; FAIL
+     * Verifier.verify(*).instanceOfAny((Class[]) null)                                           =&gt; FAIL
      * Verifier.verify(*).instanceOfAny(*, Object.class)                                          =&gt; PASS
      * Verifier.verify(null).instanceOfAny(*)                                                     =&gt; FAIL
      * Verifier.verify(new ArrayList()).instanceOfAny(Boolean.class, Map.class, Collection.class) =&gt; PASS

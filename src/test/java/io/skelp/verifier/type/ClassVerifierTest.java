@@ -29,11 +29,14 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
@@ -370,6 +373,92 @@ public class ClassVerifierTest {
         }
 
         @Test
+        public void testAssignableFromAllWhenNoTypes() {
+            testAssignableFromAllHelper(Collection.class, createEmptyArray(Class.class), true);
+        }
+
+        @Test
+        public void testAssignableFromAllWhenTypeIsNull() {
+            testAssignableFromAllHelper(Collection.class, createArray((Class<?>) null), false);
+        }
+
+        @Test
+        public void testAssignableFromAllWhenTypesIsNull() {
+            testAssignableFromAllHelper(Collection.class, null, true);
+        }
+
+        @Test
+        public void testAssignableFromAllWhenValueIsAssignableFromAllTypes() {
+            testAssignableFromAllHelper(Collection.class, createArray(List.class, Set.class, ArrayList.class), true);
+        }
+
+        @Test
+        public void testAssignableFromAllWhenValueIsAssignableFromSomeTypes() {
+            testAssignableFromAllHelper(Collection.class, createArray(List.class, Map.class, ArrayList.class), false);
+        }
+
+        @Test
+        public void testAssignableFromAllWhenValueIsNotAssignableFromAnyType() {
+            testAssignableFromAllHelper(Collection.class, createArray(Boolean.class, Map.class, URI.class), false);
+        }
+
+        @Test
+        public void testAssignableFromAllWhenValueIsNull() {
+            testAssignableFromAllHelper(null, createArray(Object.class), false);
+        }
+
+        private void testAssignableFromAllHelper(Class<?> value, Class<?>[] types, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().assignableFromAll(types));
+
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ASSIGNABLE_FROM_ALL, (Object) types);
+        }
+
+        @Test
+        public void testAssignableFromAnyWhenNoTypes() {
+            testAssignableFromAnyHelper(Collection.class, createEmptyArray(Class.class), false);
+        }
+
+        @Test
+        public void testAssignableFromAnyWhenTypeIsNull() {
+            testAssignableFromAnyHelper(Collection.class, createArray((Class<?>) null), false);
+        }
+
+        @Test
+        public void testAssignableFromAnyWhenTypesIsNull() {
+            testAssignableFromAnyHelper(Collection.class, null, false);
+        }
+
+        @Test
+        public void testAssignableFromAnyWhenValueIsAssignableFromAllTypes() {
+            testAssignableFromAnyHelper(Collection.class, createArray(List.class, Set.class, ArrayList.class), true);
+        }
+
+        @Test
+        public void testAssignableFromAnyWhenValueIsAssignableFromSomeTypes() {
+            testAssignableFromAnyHelper(Collection.class, createArray(List.class, Map.class, ArrayList.class), true);
+        }
+
+        @Test
+        public void testAssignableFromAnyWhenValueIsNotAssignableFromAnyType() {
+            testAssignableFromAnyHelper(Collection.class, createArray(Boolean.class, Map.class, URI.class), false);
+        }
+
+        @Test
+        public void testAssignableFromAnyWhenValueIsNull() {
+            testAssignableFromAnyHelper(null, createArray(Object.class), false);
+        }
+
+        private void testAssignableFromAnyHelper(Class<?> value, Class<?>[] types, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().assignableFromAny(types));
+
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ASSIGNABLE_FROM_ANY, (Object) types);
+        }
+
+        @Test
         public void testEnumerationWhenValueIsEnum() {
             testEnumerationHelper(AnEnum.class, true);
         }
@@ -553,6 +642,8 @@ public class ClassVerifierTest {
             messageKeys.put("ANONYMOUS", "io.skelp.verifier.type.ClassVerifier.anonymous");
             messageKeys.put("ARRAY", "io.skelp.verifier.type.ClassVerifier.array");
             messageKeys.put("ASSIGNABLE_FROM", "io.skelp.verifier.type.ClassVerifier.assignableFrom");
+            messageKeys.put("ASSIGNABLE_FROM_ALL", "io.skelp.verifier.type.ClassVerifier.assignableFromAll");
+            messageKeys.put("ASSIGNABLE_FROM_ANY", "io.skelp.verifier.type.ClassVerifier.assignableFromAny");
             messageKeys.put("ENUMERATION", "io.skelp.verifier.type.ClassVerifier.enumeration");
             messageKeys.put("INTERFACING", "io.skelp.verifier.type.ClassVerifier.interfacing");
             messageKeys.put("NESTED", "io.skelp.verifier.type.ClassVerifier.nested");
