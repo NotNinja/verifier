@@ -112,20 +112,21 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
      * Verifies that the value is the default {@code Locale}.
      * </p>
      * <pre>
-     * Verifier.verify((Locale) null).defaulting()            =&gt; FAIL
-     * Verifier.verify(Locale.getDefault()).defaulting()      =&gt; PASS
-     * Verifier.verify(new Locale("foo", "BAR")).defaulting() =&gt; FAIL
+     * Verifier.verify((Locale) null).defaulted()            =&gt; FAIL
+     * Verifier.verify(Locale.getDefault()).defaulted()      =&gt; PASS
+     * Verifier.verify(new Locale("foo", "BAR")).defaulted() =&gt; FAIL
      * </pre>
      *
      * @return A reference to this {@link LocaleVerifier} for chaining purposes.
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
+     * @since 0.2.0
      */
-    public LocaleVerifier defaulting() {
+    public LocaleVerifier defaulted() {
         final Locale value = verification().getValue();
         final boolean result = Locale.getDefault().equals(value);
 
-        verification().report(result, MessageKeys.DEFAULTING);
+        verification().report(result, MessageKeys.DEFAULTED);
 
         return this;
     }
@@ -230,7 +231,7 @@ public final class LocaleVerifier extends AbstractCustomVerifier<Locale, LocaleV
 
         AVAILABLE("io.skelp.verifier.type.LocaleVerifier.available"),
         COUNTRY("io.skelp.verifier.type.LocaleVerifier.country"),
-        DEFAULTING("io.skelp.verifier.type.LocaleVerifier.defaulting"),
+        DEFAULTED("io.skelp.verifier.type.LocaleVerifier.defaulted"),
         LANGUAGE("io.skelp.verifier.type.LocaleVerifier.language"),
         SCRIPT("io.skelp.verifier.type.LocaleVerifier.script"),
         VARIANT("io.skelp.verifier.type.LocaleVerifier.variant");
