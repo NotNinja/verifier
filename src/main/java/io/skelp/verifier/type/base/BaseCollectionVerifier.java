@@ -27,7 +27,7 @@ import io.skelp.verifier.AbstractCustomVerifier;
 import io.skelp.verifier.Verifier;
 import io.skelp.verifier.VerifierAssertion;
 import io.skelp.verifier.VerifierException;
-import io.skelp.verifier.message.MessageKey;
+import io.skelp.verifier.util.Function;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -81,11 +81,11 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public V contain(final E element) {
+    public V contain(final E element) throws VerifierException {
         final Collection<E> value = getCollection(verification().getValue());
         final boolean result = value != null && value.contains(element);
 
-        verification().report(result, MessageKeys.CONTAIN, element);
+        verification().check(result, "contain '%s'", element);
 
         return chain();
     }
@@ -114,11 +114,16 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public V containAll(final E... elements) {
+    public V containAll(final E... elements) throws VerifierException {
         final Collection<E> value = getCollection(verification().getValue());
-        final boolean result = value != null && matchAll(elements, value::contains);
+        final boolean result = value != null && matchAll(elements, new Function<Boolean, E>() {
+            @Override
+            public Boolean apply(final E input) {
+                return value.contains(input);
+            }
+        });
 
-        verification().report(result, MessageKeys.CONTAIN_ALL, (Object) elements);
+        verification().check(result, "contain all %s", verification().getMessageFormatter().formatArray(elements));
 
         return chain();
     }
@@ -147,11 +152,16 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public V containAny(final E... elements) {
+    public V containAny(final E... elements) throws VerifierException {
         final Collection<E> value = getCollection(verification().getValue());
-        final boolean result = value != null && matchAny(elements, value::contains);
+        final boolean result = value != null && matchAny(elements, new Function<Boolean, E>() {
+            @Override
+            public Boolean apply(final E input) {
+                return value.contains(input);
+            }
+        });
 
-        verification().report(result, MessageKeys.CONTAIN_ANY, (Object) elements);
+        verification().check(result, "contain any %s", verification().getMessageFormatter().formatArray(elements));
 
         return chain();
     }
@@ -173,11 +183,11 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public V empty() {
+    public V empty() throws VerifierException {
         final T value = verification().getValue();
         final boolean result = value == null || getSize(value) == 0;
 
-        verification().report(result, MessageKeys.EMPTY);
+        verification().check(result, "be empty");
 
         return chain();
     }
@@ -204,11 +214,11 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      */
-    public V sizeOf(final int size) {
+    public V sizeOf(final int size) throws VerifierException {
         final T value = verification().getValue();
         final boolean result = value == null ? size == 0 : getSize(value) == size;
 
-        verification().report(result, MessageKeys.SIZE_OF, size);
+        verification().check(result, "have a size of '%d'", size);
 
         return chain();
     }
@@ -237,45 +247,10 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @throws VerifierException
      *         If {@code assertion} is {@literal null} or the verification fails while not negated or passes while
      *         negated.
-     * @see #thatAll(VerifierAssertion, MessageKey, Object...)
      * @see #thatAll(VerifierAssertion, String, Object...)
      */
-    public V thatAll(final VerifierAssertion<E> assertion) {
-        verification().report(thatAllInternal(assertion), (String) null);
-
-        return chain();
-    }
-
-    /**
-     * <p>
-     * Verifies that <b>all</b> of the elements within the value pass the {@code assertion} provided while allowing an
-     * optional {@code key} and format {@code args} to be specified to enhance the {@link VerifierException} message in
-     * the event that one is thrown.
-     * </p>
-     * <p>
-     * Unlike {@link #that(VerifierAssertion, MessageKey, Object[])}, this method will pass each of the elements within
-     * the value to {@code assertion} instead of the value itself.
-     * </p>
-     *
-     * @param assertion
-     *         the {@link VerifierAssertion} to be used to verify the elements within the value
-     * @param key
-     *         the optional {@link MessageKey} which provides a more detailed localized explanation of what is being
-     *         verified
-     * @param args
-     *         the optional format arguments which are only used to format the localized message
-     * @return A reference to this {@link BaseCollectionVerifier} for chaining purposes.
-     * @throws VerifierException
-     *         If {@code assertion} is {@literal null} or the verification fails while not negated or passes while
-     *         negated.
-     * @see #thatAll(VerifierAssertion)
-     * @see #thatAll(VerifierAssertion, String, Object...)
-     * @since 0.2.0
-     */
-    public V thatAll(final VerifierAssertion<E> assertion, final MessageKey key, final Object... args) {
-        verification().report(thatAllInternal(assertion), key, args);
-
-        return chain();
+    public V thatAll(final VerifierAssertion<E> assertion) throws VerifierException {
+        return thatAll(assertion, null);
     }
 
     /**
@@ -292,7 +267,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @param assertion
      *         the {@link VerifierAssertion} to be used to verify the elements within the value
      * @param message
-     *         the optional message which provides a more detailed explanation of what is being verified
+     *         the optional message which provides a (slightly) more detailed explanation of what is being verified
      * @param args
      *         the optional format arguments which are only used to format {@code message}
      * @return A reference to this {@link BaseCollectionVerifier} for chaining purposes.
@@ -300,40 +275,22 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      *         If {@code assertion} is {@literal null} or the verification fails while not negated or passes while
      *         negated.
      * @see #thatAll(VerifierAssertion)
-     * @see #thatAll(VerifierAssertion, MessageKey, Object...)
      */
-    public V thatAll(final VerifierAssertion<E> assertion, final String message, final Object... args) {
-        verification().report(thatAllInternal(assertion), message, args);
-
-        return chain();
-    }
-
-    /**
-     * <p>
-     * Returns whether <b>all</b> of the elements within the value pass the {@code assertion} provided.
-     * </p>
-     * <p>
-     * {@code assertion} will be passed all elements within the value individually.
-     * </p>
-     *
-     * @param assertion
-     *         the {@link VerifierAssertion} to be used to verify the elements within the value
-     * @return {@literal true} if the {@code assertion} successfully verifies all elements within the value; otherwise
-     * {@literal false}.
-     * @throws VerifierException
-     *         If {@code assertion} is {@literal null}.
-     * @see #thatAll(VerifierAssertion)
-     * @see #thatAll(VerifierAssertion, MessageKey, Object...)
-     * @see #thatAll(VerifierAssertion, String, Object...)
-     * @since 0.2.0
-     */
-    protected boolean thatAllInternal(final VerifierAssertion<E> assertion) {
+    public V thatAll(final VerifierAssertion<E> assertion, final String message, final Object... args) throws VerifierException {
         Verifier.verify(assertion, "assertion")
             .not().nulled();
 
         final Collection<E> value = getCollection(verification().getValue());
+        final boolean result = matchAll(value, new Function<Boolean, E>() {
+            @Override
+            public Boolean apply(E input) {
+                return assertion.verify(input);
+            }
+        });
 
-        return matchAll(value, assertion::verify);
+        verification().check(result, message, args);
+
+        return chain();
     }
 
     /**
@@ -360,45 +317,10 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @throws VerifierException
      *         If {@code assertion} is {@literal null} or the verification fails while not negated or passes while
      *         negated.
-     * @see #thatAny(VerifierAssertion, MessageKey, Object...)
      * @see #thatAny(VerifierAssertion, String, Object...)
      */
-    public V thatAny(final VerifierAssertion<E> assertion) {
-        verification().report(thatAnyInternal(assertion), (String) null);
-
-        return chain();
-    }
-
-    /**
-     * <p>
-     * Verifies that <b>any</b> of the elements within the value pass the {@code assertion} provided while allowing an
-     * optional {@code key} and format {@code args} to be specified to enhance the {@link VerifierException} message in
-     * the event that one is thrown.
-     * </p>
-     * <p>
-     * Unlike {@link #that(VerifierAssertion, MessageKey, Object[])}, this method will pass each of the elements within
-     * the value to {@code assertion} instead of the value itself.
-     * </p>
-     *
-     * @param assertion
-     *         the {@link VerifierAssertion} to be used to verify the elements within the value
-     * @param key
-     *         the optional {@link MessageKey} which provides a more detailed localized explanation of what is being
-     *         verified
-     * @param args
-     *         the optional format arguments which are only used to format the localized message
-     * @return A reference to this {@link BaseCollectionVerifier} for chaining purposes.
-     * @throws VerifierException
-     *         If {@code assertion} is {@literal null} or the verification fails while not negated or passes while
-     *         negated.
-     * @see #thatAny(VerifierAssertion)
-     * @see #thatAny(VerifierAssertion, String, Object...)
-     * @since 0.2.0
-     */
-    public V thatAny(final VerifierAssertion<E> assertion, final MessageKey key, final Object... args) {
-        verification().report(thatAnyInternal(assertion), key, args);
-
-        return chain();
+    public V thatAny(final VerifierAssertion<E> assertion) throws VerifierException {
+        return thatAny(assertion, null);
     }
 
     /**
@@ -415,7 +337,7 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @param assertion
      *         the {@link VerifierAssertion} to be used to verify the elements within the value
      * @param message
-     *         the optional message which provides a more detailed explanation of what is being verified
+     *         the optional message which provides a (slightly) more detailed explanation of what is being verified
      * @param args
      *         the optional format arguments which are only used to format {@code message}
      * @return A reference to this {@link BaseCollectionVerifier} for chaining purposes.
@@ -423,40 +345,22 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      *         If {@code assertion} is {@literal null} or the verification fails while not negated or passes while
      *         negated.
      * @see #thatAny(VerifierAssertion)
-     * @see #thatAny(VerifierAssertion, MessageKey, Object...)
      */
-    public V thatAny(final VerifierAssertion<E> assertion, final String message, final Object... args) {
-        verification().report(thatAnyInternal(assertion), message, args);
-
-        return chain();
-    }
-
-    /**
-     * <p>
-     * Returns whether <b>any</b> of the elements within the value pass the {@code assertion} provided.
-     * </p>
-     * <p>
-     * {@code assertion} will be passed all elements within the value individually until one passes.
-     * </p>
-     *
-     * @param assertion
-     *         the {@link VerifierAssertion} to be used to verify the elements within the value
-     * @return {@literal true} if the {@code assertion} successfully verifies any element within the value; otherwise
-     * {@literal false}.
-     * @throws VerifierException
-     *         If {@code assertion} is {@literal null}.
-     * @see #thatAny(VerifierAssertion)
-     * @see #thatAny(VerifierAssertion, MessageKey, Object...)
-     * @see #thatAny(VerifierAssertion, String, Object...)
-     * @since 0.2.0
-     */
-    protected boolean thatAnyInternal(final VerifierAssertion<E> assertion) {
+    public V thatAny(final VerifierAssertion<E> assertion, final String message, final Object... args) throws VerifierException {
         Verifier.verify(assertion, "assertion")
             .not().nulled();
 
         final Collection<E> value = getCollection(verification().getValue());
+        final boolean result = matchAny(value, new Function<Boolean, E>() {
+            @Override
+            public Boolean apply(E input) {
+                return assertion.verify(input);
+            }
+        });
 
-        return matchAny(value, assertion::verify);
+        verification().check(result, message, args);
+
+        return chain();
     }
 
     /**
@@ -490,31 +394,4 @@ public abstract class BaseCollectionVerifier<E, T, V extends BaseCollectionVerif
      * @return The number of elements within {@code value} or zero if {@code value} is empty.
      */
     protected abstract int getSize(T value);
-
-    /**
-     * <p>
-     * The {@link MessageKey MessageKeys} that are used by {@link BaseCollectionVerifier}.
-     * </p>
-     *
-     * @since 0.2.0
-     */
-    public enum MessageKeys implements MessageKey {
-
-        CONTAIN("io.skelp.verifier.type.base.BaseCollectionVerifier.contain"),
-        CONTAIN_ALL("io.skelp.verifier.type.base.BaseCollectionVerifier.containAll"),
-        CONTAIN_ANY("io.skelp.verifier.type.base.BaseCollectionVerifier.containAny"),
-        EMPTY("io.skelp.verifier.type.base.BaseCollectionVerifier.empty"),
-        SIZE_OF("io.skelp.verifier.type.base.BaseCollectionVerifier.sizeOf");
-
-        private final String code;
-
-        MessageKeys(final String code) {
-            this.code = code;
-        }
-
-        @Override
-        public String code() {
-            return code;
-        }
-    }
 }

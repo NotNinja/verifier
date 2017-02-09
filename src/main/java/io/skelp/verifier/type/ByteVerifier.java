@@ -21,6 +21,7 @@
  */
 package io.skelp.verifier.type;
 
+import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseNumberVerifier;
 import io.skelp.verifier.type.base.BaseTruthVerifier;
@@ -54,81 +55,81 @@ public final class ByteVerifier extends BaseComparableVerifier<Byte, ByteVerifie
     }
 
     @Override
-    public ByteVerifier even() {
+    public ByteVerifier even() throws VerifierException {
         final Byte value = verification().getValue();
         final boolean result = value != null && value % 2 == 0;
 
-        verification().report(result, BaseNumberVerifier.MessageKeys.EVEN);
+        verification().check(result, EVEN_MESSAGE);
 
         return this;
     }
 
     @Override
-    public ByteVerifier falsy() {
+    public ByteVerifier falsy() throws VerifierException {
         final Byte value = verification().getValue();
         final boolean result = value == null || value == 0;
 
-        verification().report(result, BaseTruthVerifier.MessageKeys.FALSY);
+        verification().check(result, FALSY_MESSAGE);
 
         return this;
     }
 
     @Override
-    public ByteVerifier negative() {
+    public ByteVerifier negative() throws VerifierException {
         final Byte value = verification().getValue();
         final boolean result = value != null && value < 0;
 
-        verification().report(result, BaseNumberVerifier.MessageKeys.NEGATIVE);
+        verification().check(result, NEGATIVE_MESSAGE);
 
         return this;
     }
 
     @Override
-    public ByteVerifier odd() {
+    public ByteVerifier odd() throws VerifierException {
         final Byte value = verification().getValue();
         final boolean result = value != null && value % 2 != 0;
 
-        verification().report(result, BaseNumberVerifier.MessageKeys.ODD);
+        verification().check(result, ODD_MESSAGE);
 
         return this;
     }
 
     @Override
-    public ByteVerifier one() {
+    public ByteVerifier one() throws VerifierException {
         final Byte value = verification().getValue();
         final boolean result = value != null && value == 1;
 
-        verification().report(result, BaseNumberVerifier.MessageKeys.ONE);
+        verification().check(result, ONE_MESSAGE);
 
         return this;
     }
 
     @Override
-    public ByteVerifier positive() {
+    public ByteVerifier positive() throws VerifierException {
         final Byte value = verification().getValue();
         final boolean result = value != null && value >= 0;
 
-        verification().report(result, BaseNumberVerifier.MessageKeys.POSITIVE);
+        verification().check(result, POSITIVE_MESSAGE);
 
         return this;
     }
 
     @Override
-    public ByteVerifier truthy() {
+    public ByteVerifier truthy() throws VerifierException {
         final Byte value = verification().getValue();
         final boolean result = value != null && value == 1;
 
-        verification().report(result, BaseTruthVerifier.MessageKeys.TRUTHY);
+        verification().check(result, TRUTHY_MESSAGE);
 
         return this;
     }
 
     @Override
-    public ByteVerifier zero() {
+    public ByteVerifier zero() throws VerifierException {
         final Byte value = verification().getValue();
         final boolean result = value != null && value == 0;
 
-        verification().report(result, BaseNumberVerifier.MessageKeys.ZERO);
+        verification().check(result, ZERO_MESSAGE);
 
         return this;
     }

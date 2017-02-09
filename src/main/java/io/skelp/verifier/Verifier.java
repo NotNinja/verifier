@@ -29,7 +29,10 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
-import io.skelp.verifier.service.Services;
+import io.skelp.verifier.factory.DefaultVerifierFactoryProvider;
+import io.skelp.verifier.factory.VerifierFactoryException;
+import io.skelp.verifier.factory.VerifierFactoryProvider;
+import io.skelp.verifier.message.MessageFormatter;
 import io.skelp.verifier.type.ArrayVerifier;
 import io.skelp.verifier.type.BigDecimalVerifier;
 import io.skelp.verifier.type.BigIntegerVerifier;
@@ -52,7 +55,6 @@ import io.skelp.verifier.type.ShortVerifier;
 import io.skelp.verifier.type.StringVerifier;
 import io.skelp.verifier.type.ThrowableVerifier;
 import io.skelp.verifier.verification.Verification;
-import io.skelp.verifier.verification.VerificationProvider;
 
 /**
  * <p>
@@ -60,38 +62,20 @@ import io.skelp.verifier.verification.VerificationProvider;
  * address).
  * </p>
  * <p>
+ * {@code Verifier} can be configured by passing a custom {@link VerifierFactoryProvider} to {@link
+ * #setFactoryProvider(VerifierFactoryProvider)}.
+ * </p>
+ * <p>
  * Custom implementations of {@link CustomVerifier} can be passed to {@link #verify(Object, Object, Class)} for
  * extending what's included in {@code Verifier} by default, but this class can also be extended for large applications
  * to add more {@code verify} methods for an arguably even cleaner API.
  * </p>
- * <p>
- * {@code Verifier} uses the Java SPI (Service Provider Interfaces) framework to allow for advanced configuration while
- * maintaining a clean and simple API.
  *
  * @author Alasdair Mercer
  */
 public class Verifier {
 
-    /**
-     * <p>
-     * Calls the {@link VerificationProvider VerificationProviders} in order of importance with the specified
-     * {@code value} and {@code name} and returns the first non-null {@link Verification} result.
-     * </p>
-     *
-     * @param value
-     *         the value being verified
-     * @param name
-     *         the optional name for the value being verified
-     * @param <T>
-     *         the type of the value being verified
-     * @return The {@link Verification} instance using {@code value} and {@code name}.
-     * @throws VerifierException
-     *         If any of the {@link VerificationProvider VerificationProviders} called experience a problem occurs while
-     *         providing the {@link Verification} instance.
-     */
-    protected static <T> Verification<T> getVerification(final T value, final Object name) {
-        return Services.findFirstNonNullForWeightedService(VerificationProvider.class, provider -> provider.getVerification(value, name));
-    }
+    private static VerifierFactoryProvider factoryProvider = new DefaultVerifierFactoryProvider();
 
     /**
      * <p>
@@ -107,12 +91,13 @@ public class Verifier {
      * @param <E>
      *         the type of the elements contained within {@code value}
      * @return An {@link ArrayVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link ArrayVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Object[], Object)
      * @see ArrayVerifier
      */
-    public static <E> ArrayVerifier<E> verify(final E[] value) {
+    public static final <E> ArrayVerifier<E> verify(final E[] value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -134,13 +119,14 @@ public class Verifier {
      * @param <E>
      *         the type of the elements contained within {@code value}
      * @return An {@link ArrayVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link ArrayVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Object[])
      * @see ArrayVerifier
      */
-    public static <E> ArrayVerifier<E> verify(final E[] value, final Object name) {
-        return new ArrayVerifier<>(getVerification(value, name));
+    public static final <E> ArrayVerifier<E> verify(final E[] value, final Object name) throws VerifierFactoryException {
+        return new ArrayVerifier<>(createVerification(value, name));
     }
 
     /**
@@ -155,12 +141,13 @@ public class Verifier {
      * @param value
      *         the {@code BigDecimal} to be verified (may be {@literal null})
      * @return A {@link BigDecimalVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link BigDecimalVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(BigDecimal, Object)
      * @see BigDecimalVerifier
      */
-    public static BigDecimalVerifier verify(final BigDecimal value) {
+    public static final BigDecimalVerifier verify(final BigDecimal value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -180,13 +167,14 @@ public class Verifier {
      * @param name
      *         the optional name used to represent {@code value} (may be {@literal null})
      * @return A {@link BigDecimalVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link BigDecimalVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(BigDecimal)
      * @see BigDecimalVerifier
      */
-    public static BigDecimalVerifier verify(final BigDecimal value, final Object name) {
-        return new BigDecimalVerifier(getVerification(value, name));
+    public static final BigDecimalVerifier verify(final BigDecimal value, final Object name) throws VerifierFactoryException {
+        return new BigDecimalVerifier(createVerification(value, name));
     }
 
     /**
@@ -201,12 +189,13 @@ public class Verifier {
      * @param value
      *         the {@code BigInteger} to be verified (may be {@literal null})
      * @return A {@link BigIntegerVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link BigIntegerVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(BigInteger, Object)
      * @see BigIntegerVerifier
      */
-    public static BigIntegerVerifier verify(final BigInteger value) {
+    public static final BigIntegerVerifier verify(final BigInteger value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -226,13 +215,14 @@ public class Verifier {
      * @param name
      *         the optional name used to represent {@code value} (may be {@literal null})
      * @return A {@link BigIntegerVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link BigIntegerVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(BigInteger)
      * @see BigIntegerVerifier
      */
-    public static BigIntegerVerifier verify(final BigInteger value, final Object name) {
-        return new BigIntegerVerifier(getVerification(value, name));
+    public static final BigIntegerVerifier verify(final BigInteger value, final Object name) throws VerifierFactoryException {
+        return new BigIntegerVerifier(createVerification(value, name));
     }
 
     /**
@@ -247,12 +237,13 @@ public class Verifier {
      * @param value
      *         the {@code Boolean} to be verified (may be {@literal null})
      * @return A {@link BooleanVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link BooleanVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Boolean, Object)
      * @see BooleanVerifier
      */
-    public static BooleanVerifier verify(final Boolean value) {
+    public static final BooleanVerifier verify(final Boolean value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -272,13 +263,14 @@ public class Verifier {
      * @param name
      *         the optional name used to represent {@code value} (may be {@literal null})
      * @return A {@link BooleanVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link BooleanVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Boolean)
      * @see BooleanVerifier
      */
-    public static BooleanVerifier verify(final Boolean value, final Object name) {
-        return new BooleanVerifier(getVerification(value, name));
+    public static final BooleanVerifier verify(final Boolean value, final Object name) throws VerifierFactoryException {
+        return new BooleanVerifier(createVerification(value, name));
     }
 
     /**
@@ -293,12 +285,13 @@ public class Verifier {
      * @param value
      *         the {@code Byte} to be verified (may be {@literal null})
      * @return A {@link ByteVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link ByteVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Byte, Object)
      * @see ByteVerifier
      */
-    public static ByteVerifier verify(final Byte value) {
+    public static final ByteVerifier verify(final Byte value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -318,13 +311,14 @@ public class Verifier {
      * @param name
      *         the optional name used to represent {@code value} (may be {@literal null})
      * @return A {@link ByteVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link ByteVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Byte)
      * @see ByteVerifier
      */
-    public static ByteVerifier verify(final Byte value, final Object name) {
-        return new ByteVerifier(getVerification(value, name));
+    public static final ByteVerifier verify(final Byte value, final Object name) throws VerifierFactoryException {
+        return new ByteVerifier(createVerification(value, name));
     }
 
     /**
@@ -339,12 +333,13 @@ public class Verifier {
      * @param value
      *         the {@code Calendar} to be verified (may be {@literal null})
      * @return A {@link CalendarVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link CalendarVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Calendar, Object)
      * @see CalendarVerifier
      */
-    public static CalendarVerifier verify(final Calendar value) {
+    public static final CalendarVerifier verify(final Calendar value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -364,13 +359,14 @@ public class Verifier {
      * @param name
      *         the optional name used to represent {@code value} (may be {@literal null})
      * @return A {@link CalendarVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link CalendarVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Calendar)
      * @see CalendarVerifier
      */
-    public static CalendarVerifier verify(final Calendar value, final Object name) {
-        return new CalendarVerifier(getVerification(value, name));
+    public static final CalendarVerifier verify(final Calendar value, final Object name) throws VerifierFactoryException {
+        return new CalendarVerifier(createVerification(value, name));
     }
 
     /**
@@ -385,12 +381,13 @@ public class Verifier {
      * @param value
      *         the {@code Character} to be verified (may be {@literal null})
      * @return A {@link CharacterVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link CharacterVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Character, Object)
      * @see CharacterVerifier
      */
-    public static CharacterVerifier verify(final Character value) {
+    public static final CharacterVerifier verify(final Character value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -410,13 +407,14 @@ public class Verifier {
      * @param name
      *         the optional name used to represent {@code value} (may be {@literal null})
      * @return A {@link CharacterVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link CharacterVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Character)
      * @see CharacterVerifier
      */
-    public static CharacterVerifier verify(final Character value, final Object name) {
-        return new CharacterVerifier(getVerification(value, name));
+    public static final CharacterVerifier verify(final Character value, final Object name) throws VerifierFactoryException {
+        return new CharacterVerifier(createVerification(value, name));
     }
 
     /**
@@ -431,12 +429,13 @@ public class Verifier {
      * @param value
      *         the {@code Class} to be verified (may be {@literal null})
      * @return A {@link ClassVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link ClassVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Class, Object)
      * @see ClassVerifier
      */
-    public static ClassVerifier verify(final Class value) {
+    public static final ClassVerifier verify(final Class value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -456,13 +455,14 @@ public class Verifier {
      * @param name
      *         the optional name used to represent {@code value} (may be {@literal null})
      * @return A {@link ClassVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link ClassVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Class)
      * @see ClassVerifier
      */
-    public static ClassVerifier verify(final Class value, final Object name) {
-        return new ClassVerifier(getVerification(value, name));
+    public static final ClassVerifier verify(final Class value, final Object name) throws VerifierFactoryException {
+        return new ClassVerifier(createVerification(value, name));
     }
 
     /**
@@ -479,12 +479,13 @@ public class Verifier {
      * @param <E>
      *         the type of the elements contained within {@code value}
      * @return A {@link CollectionVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link CollectionVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Collection, Object)
      * @see CollectionVerifier
      */
-    public static <E> CollectionVerifier<E> verify(final Collection<E> value) {
+    public static final <E> CollectionVerifier<E> verify(final Collection<E> value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -506,13 +507,14 @@ public class Verifier {
      * @param <E>
      *         the type of the elements contained within {@code value}
      * @return A {@link CollectionVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link CollectionVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Collection)
      * @see CollectionVerifier
      */
-    public static <E> CollectionVerifier<E> verify(final Collection<E> value, final Object name) {
-        return new CollectionVerifier<>(getVerification(value, name));
+    public static final <E> CollectionVerifier<E> verify(final Collection<E> value, final Object name) throws VerifierFactoryException {
+        return new CollectionVerifier<>(createVerification(value, name));
     }
 
     /**
@@ -527,12 +529,13 @@ public class Verifier {
      * @param value
      *         the {@code Date} to be verified (may be {@literal null})
      * @return A {@link DateVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link DateVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Date, Object)
      * @see DateVerifier
      */
-    public static DateVerifier verify(final Date value) {
+    public static final DateVerifier verify(final Date value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -552,13 +555,14 @@ public class Verifier {
      * @param name
      *         the optional name used to represent {@code value} (may be {@literal null})
      * @return A {@link DateVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link DateVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Date)
      * @see DateVerifier
      */
-    public static DateVerifier verify(final Date value, final Object name) {
-        return new DateVerifier(getVerification(value, name));
+    public static final DateVerifier verify(final Date value, final Object name) throws VerifierFactoryException {
+        return new DateVerifier(createVerification(value, name));
     }
 
     /**
@@ -573,12 +577,13 @@ public class Verifier {
      * @param value
      *         the {@code Double} to be verified (may be {@literal null})
      * @return A {@link DoubleVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link DoubleVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Double, Object)
      * @see DoubleVerifier
      */
-    public static DoubleVerifier verify(final Double value) {
+    public static final DoubleVerifier verify(final Double value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -598,13 +603,14 @@ public class Verifier {
      * @param name
      *         the optional name used to represent {@code value} (may be {@literal null})
      * @return A {@link DoubleVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link DoubleVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Double)
      * @see DoubleVerifier
      */
-    public static DoubleVerifier verify(final Double value, final Object name) {
-        return new DoubleVerifier(getVerification(value, name));
+    public static final DoubleVerifier verify(final Double value, final Object name) throws VerifierFactoryException {
+        return new DoubleVerifier(createVerification(value, name));
     }
 
     /**
@@ -619,12 +625,13 @@ public class Verifier {
      * @param value
      *         the {@code Float} to be verified (may be {@literal null})
      * @return A {@link FloatVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link FloatVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Float, Object)
      * @see FloatVerifier
      */
-    public static FloatVerifier verify(final Float value) {
+    public static final FloatVerifier verify(final Float value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -644,13 +651,14 @@ public class Verifier {
      * @param name
      *         the optional name used to represent {@code value} (may be {@literal null})
      * @return A {@link FloatVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link FloatVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Float)
      * @see FloatVerifier
      */
-    public static FloatVerifier verify(final Float value, final Object name) {
-        return new FloatVerifier(getVerification(value, name));
+    public static final FloatVerifier verify(final Float value, final Object name) throws VerifierFactoryException {
+        return new FloatVerifier(createVerification(value, name));
     }
 
     /**
@@ -665,12 +673,13 @@ public class Verifier {
      * @param value
      *         the {@code Integer} to be verified (may be {@literal null})
      * @return An {@link IntegerVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link IntegerVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Integer, Object)
      * @see IntegerVerifier
      */
-    public static IntegerVerifier verify(final Integer value) {
+    public static final IntegerVerifier verify(final Integer value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -690,13 +699,14 @@ public class Verifier {
      * @param name
      *         the optional name used to represent {@code value} (may be {@literal null})
      * @return An {@link IntegerVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link IntegerVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Integer)
      * @see IntegerVerifier
      */
-    public static IntegerVerifier verify(final Integer value, final Object name) {
-        return new IntegerVerifier(getVerification(value, name));
+    public static final IntegerVerifier verify(final Integer value, final Object name) throws VerifierFactoryException {
+        return new IntegerVerifier(createVerification(value, name));
     }
 
     /**
@@ -711,12 +721,13 @@ public class Verifier {
      * @param value
      *         the {@code Locale} to be verified (may be {@literal null})
      * @return A {@link LocaleVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link LocaleVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Locale, Object)
      * @see LocaleVerifier
      */
-    public static LocaleVerifier verify(final Locale value) {
+    public static final LocaleVerifier verify(final Locale value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -736,13 +747,14 @@ public class Verifier {
      * @param name
      *         the optional name used to represent {@code value} (may be {@literal null})
      * @return A {@link LocaleVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link LocaleVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Locale)
      * @see LocaleVerifier
      */
-    public static LocaleVerifier verify(final Locale value, final Object name) {
-        return new LocaleVerifier(getVerification(value, name));
+    public static final LocaleVerifier verify(final Locale value, final Object name) throws VerifierFactoryException {
+        return new LocaleVerifier(createVerification(value, name));
     }
 
     /**
@@ -757,12 +769,13 @@ public class Verifier {
      * @param value
      *         the {@code Long} to be verified (may be {@literal null})
      * @return A {@link LongVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link LongVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Long, Object)
      * @see LongVerifier
      */
-    public static LongVerifier verify(final Long value) {
+    public static final LongVerifier verify(final Long value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -782,13 +795,14 @@ public class Verifier {
      * @param name
      *         the optional name used to represent {@code value} (may be {@literal null})
      * @return A {@link LongVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link LongVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Long)
      * @see LongVerifier
      */
-    public static LongVerifier verify(final Long value, final Object name) {
-        return new LongVerifier(getVerification(value, name));
+    public static final LongVerifier verify(final Long value, final Object name) throws VerifierFactoryException {
+        return new LongVerifier(createVerification(value, name));
     }
 
     /**
@@ -807,12 +821,13 @@ public class Verifier {
      * @param <V>
      *         the type of the values contained within {@code value}
      * @return A {@link MapVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link MapVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Map, Object)
      * @see MapVerifier
      */
-    public static <K, V> MapVerifier<K, V> verify(final Map<K, V> value) {
+    public static final <K, V> MapVerifier<K, V> verify(final Map<K, V> value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -836,13 +851,14 @@ public class Verifier {
      * @param <V>
      *         the type of the values contained within {@code value}
      * @return A {@link MapVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link MapVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Map)
      * @see MapVerifier
      */
-    public static <K, V> MapVerifier<K, V> verify(final Map<K, V> value, final Object name) {
-        return new MapVerifier<>(getVerification(value, name));
+    public static final <K, V> MapVerifier<K, V> verify(final Map<K, V> value, final Object name) throws VerifierFactoryException {
+        return new MapVerifier<>(createVerification(value, name));
     }
 
     /**
@@ -862,12 +878,13 @@ public class Verifier {
      * @param value
      *         the {@code Object} to be verified (may be {@literal null})
      * @return An {@link ObjectVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link ObjectVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Object, Object)
      * @see ObjectVerifier
      */
-    public static ObjectVerifier verify(final Object value) {
+    public static final ObjectVerifier verify(final Object value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -892,13 +909,14 @@ public class Verifier {
      * @param name
      *         the optional name used to represent {@code value} (may be {@literal null})
      * @return A {@link ObjectVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link ObjectVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Object)
      * @see ObjectVerifier
      */
-    public static ObjectVerifier verify(final Object value, final Object name) {
-        return new ObjectVerifier(getVerification(value, name));
+    public static final ObjectVerifier verify(final Object value, final Object name) throws VerifierFactoryException {
+        return new ObjectVerifier(createVerification(value, name));
     }
 
     /**
@@ -913,12 +931,13 @@ public class Verifier {
      * @param value
      *         the {@code Short} to be verified (may be {@literal null})
      * @return A {@link ShortVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link ShortVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Short, Object)
      * @see ShortVerifier
      */
-    public static ShortVerifier verify(final Short value) {
+    public static final ShortVerifier verify(final Short value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -938,13 +957,14 @@ public class Verifier {
      * @param name
      *         the optional name used to represent {@code value} (may be {@literal null})
      * @return A {@link ShortVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link ShortVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Short)
      * @see ShortVerifier
      */
-    public static ShortVerifier verify(final Short value, final Object name) {
-        return new ShortVerifier(getVerification(value, name));
+    public static final ShortVerifier verify(final Short value, final Object name) throws VerifierFactoryException {
+        return new ShortVerifier(createVerification(value, name));
     }
 
     /**
@@ -959,12 +979,13 @@ public class Verifier {
      * @param value
      *         the {@code String} to be verified (may be {@literal null})
      * @return A {@link StringVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link StringVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(String, Object)
      * @see StringVerifier
      */
-    public static StringVerifier verify(final String value) {
+    public static final StringVerifier verify(final String value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -984,13 +1005,14 @@ public class Verifier {
      * @param name
      *         the optional name used to represent {@code value} (may be {@literal null})
      * @return A {@link StringVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link StringVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(String)
      * @see StringVerifier
      */
-    public static StringVerifier verify(final String value, final Object name) {
-        return new StringVerifier(getVerification(value, name));
+    public static final StringVerifier verify(final String value, final Object name) throws VerifierFactoryException {
+        return new StringVerifier(createVerification(value, name));
     }
 
     /**
@@ -1005,12 +1027,13 @@ public class Verifier {
      * @param value
      *         the {@code Throwable} to be verified (may be {@literal null})
      * @return A {@link ThrowableVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link ThrowableVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Throwable, Object)
      * @see ThrowableVerifier
      */
-    public static ThrowableVerifier verify(final Throwable value) {
+    public static final ThrowableVerifier verify(final Throwable value) throws VerifierFactoryException {
         return verify(value, null);
     }
 
@@ -1030,13 +1053,14 @@ public class Verifier {
      * @param name
      *         the optional name used to represent {@code value} (may be {@literal null})
      * @return A {@link ThrowableVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link ThrowableVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verify(Throwable)
      * @see ThrowableVerifier
      */
-    public static ThrowableVerifier verify(final Throwable value, final Object name) {
-        return new ThrowableVerifier(getVerification(value, name));
+    public static final ThrowableVerifier verify(final Throwable value, final Object name) throws VerifierFactoryException {
+        return new ThrowableVerifier(createVerification(value, name));
     }
 
     /**
@@ -1061,12 +1085,12 @@ public class Verifier {
      * @param <V>
      *         the type of {@code cls} for chaining purposes
      * @return An instance of {@code cls} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link CustomVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value}, an instance of
+     *         {@code cls}, or a {@link MessageFormatter}.
      */
-    public static <T, V extends CustomVerifier<T, V>> V verify(final T value, final Object name, final Class<V> cls) {
-        final Verification<T> verification = getVerification(value, name);
-        return Services.findFirstNonNullForWeightedService(CustomVerifierProvider.class, provider -> provider.getCustomVerifier(cls, verification));
+    public static final <T, V extends CustomVerifier<T, V>> V verify(final T value, final Object name, final Class<V> cls) throws VerifierFactoryException {
+        return getFactoryProvider().getCustomVerifierFactory().create(cls, createVerification(value, name));
     }
 
     /**
@@ -1089,12 +1113,13 @@ public class Verifier {
      * @param <T>
      *         the {@code Comparable} type of {@code value}
      * @return A {@link ComparableVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link ComparableVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verifyComparable(Comparable, Object)
      * @see ComparableVerifier
      */
-    public static <T extends Comparable<? super T>> ComparableVerifier<T> verifyComparable(final T value) {
+    public static final <T extends Comparable<? super T>> ComparableVerifier<T> verifyComparable(final T value) throws VerifierFactoryException {
         return verifyComparable(value, null);
     }
 
@@ -1121,13 +1146,53 @@ public class Verifier {
      * @param <T>
      *         the {@code Comparable} type of {@code value}
      * @return A {@link ComparableVerifier} to be used to verify {@code value}.
-     * @throws VerifierException
-     *         If a problem occurs while setting up the {@link ComparableVerifier}.
+     * @throws VerifierFactoryException
+     *         If a problem occurs while trying to create the {@link Verification} for {@code value} or a
+     *         {@link MessageFormatter}.
      * @see #verifyComparable(Comparable)
      * @see ComparableVerifier
      */
-    public static <T extends Comparable<? super T>> ComparableVerifier<T> verifyComparable(final T value, final Object name) {
-        return new ComparableVerifier<>(getVerification(value, name));
+    public static final <T extends Comparable<? super T>> ComparableVerifier<T> verifyComparable(final T value, final Object name) throws VerifierFactoryException {
+        return new ComparableVerifier<>(createVerification(value, name));
+    }
+
+    /**
+     * <p>
+     * Returns the factory provider used by {@link Verifier}.
+     * </p>
+     * <p>
+     * The factory provider is used to create instances of all {@link CustomVerifier} classes passed to {@link
+     * #verify(Object, Object, Class)} as well as {@link MessageFormatter MessageFormatters} used to format verification
+     * error messages and {@link Verification} context holders.
+     * </p>
+     *
+     * @return The {@link VerifierFactoryProvider} which will be an instance of {@link DefaultVerifierFactoryProvider}
+     * if none has been explicitly set.
+     */
+    public static final VerifierFactoryProvider getFactoryProvider() {
+        return factoryProvider;
+    }
+
+    /**
+     * <p>
+     * Sets the factory provider used by {@link Verifier} to {@code factoryProvider}.
+     * </p>
+     * <p>
+     * {@code factoryProvider} will be used to create instances of all {@link CustomVerifier} classes passed to {@link
+     * #verify(Object, Object, Class)} as well as {@link MessageFormatter MessageFormatters} used to format verification
+     * error messages and {@link Verification} context holders.
+     * </p>
+     *
+     * @param factoryProvider
+     *         the {@link VerifierFactoryProvider} to be used (may be {@literal null} to use an instance of
+     *         {@link DefaultVerifierFactoryProvider})
+     */
+    public static final void setFactoryProvider(final VerifierFactoryProvider factoryProvider) {
+        Verifier.factoryProvider = factoryProvider != null ? factoryProvider : new DefaultVerifierFactoryProvider();
+    }
+
+    private static <T> Verification<T> createVerification(final T value, final Object name) throws VerifierFactoryException {
+        return getFactoryProvider().getVerificationFactory().create(getFactoryProvider().getMessageFormatterFactory(), value, name);
     }
 
     /**

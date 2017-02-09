@@ -21,6 +21,7 @@
  */
 package io.skelp.verifier.type;
 
+import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseNumberVerifier;
 import io.skelp.verifier.type.base.BaseTruthVerifier;
@@ -54,81 +55,81 @@ public final class ShortVerifier extends BaseComparableVerifier<Short, ShortVeri
     }
 
     @Override
-    public ShortVerifier even() {
+    public ShortVerifier even() throws VerifierException {
         final Short value = verification().getValue();
         final boolean result = value != null && value % 2 == 0;
 
-        verification().report(result, BaseNumberVerifier.MessageKeys.EVEN);
+        verification().check(result, EVEN_MESSAGE);
 
         return this;
     }
 
     @Override
-    public ShortVerifier falsy() {
+    public ShortVerifier falsy() throws VerifierException {
         final Short value = verification().getValue();
         final boolean result = value == null || value == 0;
 
-        verification().report(result, BaseTruthVerifier.MessageKeys.FALSY);
+        verification().check(result, FALSY_MESSAGE);
 
         return this;
     }
 
     @Override
-    public ShortVerifier negative() {
+    public ShortVerifier negative() throws VerifierException {
         final Short value = verification().getValue();
         final boolean result = value != null && value < 0;
 
-        verification().report(result, BaseNumberVerifier.MessageKeys.NEGATIVE);
+        verification().check(result, NEGATIVE_MESSAGE);
 
         return this;
     }
 
     @Override
-    public ShortVerifier odd() {
+    public ShortVerifier odd() throws VerifierException {
         final Short value = verification().getValue();
         final boolean result = value != null && value % 2 != 0;
 
-        verification().report(result, BaseNumberVerifier.MessageKeys.ODD);
+        verification().check(result, ODD_MESSAGE);
 
         return this;
     }
 
     @Override
-    public ShortVerifier one() {
+    public ShortVerifier one() throws VerifierException {
         final Short value = verification().getValue();
         final boolean result = value != null && value == 1;
 
-        verification().report(result, BaseNumberVerifier.MessageKeys.ONE);
+        verification().check(result, ONE_MESSAGE);
 
         return this;
     }
 
     @Override
-    public ShortVerifier positive() {
+    public ShortVerifier positive() throws VerifierException {
         final Short value = verification().getValue();
         final boolean result = value != null && value >= 0;
 
-        verification().report(result, BaseNumberVerifier.MessageKeys.POSITIVE);
+        verification().check(result, POSITIVE_MESSAGE);
 
         return this;
     }
 
     @Override
-    public ShortVerifier truthy() {
+    public ShortVerifier truthy() throws VerifierException {
         final Short value = verification().getValue();
         final boolean result = value != null && value == 1;
 
-        verification().report(result, BaseTruthVerifier.MessageKeys.TRUTHY);
+        verification().check(result, TRUTHY_MESSAGE);
 
         return this;
     }
 
     @Override
-    public ShortVerifier zero() {
+    public ShortVerifier zero() throws VerifierException {
         final Short value = verification().getValue();
         final boolean result = value != null && value == 0;
 
-        verification().report(result, BaseNumberVerifier.MessageKeys.ZERO);
+        verification().check(result, ZERO_MESSAGE);
 
         return this;
     }

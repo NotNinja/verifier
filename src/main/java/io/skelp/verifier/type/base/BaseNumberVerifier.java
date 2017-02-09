@@ -22,7 +22,6 @@
 package io.skelp.verifier.type.base;
 
 import io.skelp.verifier.VerifierException;
-import io.skelp.verifier.message.MessageKey;
 
 /**
  * <p>
@@ -45,6 +44,66 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
 
     /**
      * <p>
+     * The message used to enhance that of the {@link VerifierException} thrown by {@link #even()} when the verification
+     * fails.
+     * </p>
+     *
+     * @see #even()
+     */
+    String EVEN_MESSAGE = "be even";
+
+    /**
+     * <p>
+     * The message used to enhance that of the {@link VerifierException} thrown by {@link #negative()} when the
+     * verification fails.
+     * </p>
+     *
+     * @see #negative()
+     */
+    String NEGATIVE_MESSAGE = "be negative";
+
+    /**
+     * <p>
+     * The message used to enhance that of the {@link VerifierException} thrown by {@link #odd()} when the verification
+     * fails.
+     * </p>
+     *
+     * @see #odd()
+     */
+    String ODD_MESSAGE = "be odd";
+
+    /**
+     * <p>
+     * The message used to enhance that of the {@link VerifierException} thrown by {@link #one()} when the verification
+     * fails.
+     * </p>
+     *
+     * @see #one()
+     */
+    String ONE_MESSAGE = "be one";
+
+    /**
+     * <p>
+     * The message used to enhance that of the {@link VerifierException} thrown by {@link #positive()} when the
+     * verification fails.
+     * </p>
+     *
+     * @see #positive()
+     */
+    String POSITIVE_MESSAGE = "be positive";
+
+    /**
+     * <p>
+     * The message used to enhance that of the {@link VerifierException} thrown by {@link #zero()} when the verification
+     * fails.
+     * </p>
+     *
+     * @see #zero()
+     */
+    String ZERO_MESSAGE = "be zero";
+
+    /**
+     * <p>
      * Verifies that the value is even (i.e. divisible by two without a remainder).
      * </p>
      * <pre>
@@ -60,7 +119,7 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      *         If the verification fails while not negated or passes while negated.
      * @see #odd()
      */
-    V even();
+    V even() throws VerifierException;
 
     /**
      * <p>
@@ -78,7 +137,7 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      *         If the verification fails while not negated or passes while negated.
      * @see #positive()
      */
-    V negative();
+    V negative() throws VerifierException;
 
     /**
      * <p>
@@ -97,7 +156,7 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      *         If the verification fails while not negated or passes while negated.
      * @see #even()
      */
-    V odd();
+    V odd() throws VerifierException;
 
     /**
      * <p>
@@ -116,7 +175,7 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      *         If the verification fails while not negated or passes while negated.
      * @see #zero()
      */
-    V one();
+    V one() throws VerifierException;
 
     /**
      * <p>
@@ -134,7 +193,7 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      *         If the verification fails while not negated or passes while negated.
      * @see #negative()
      */
-    V positive();
+    V positive() throws VerifierException;
 
     /**
      * <p>
@@ -152,33 +211,5 @@ public interface BaseNumberVerifier<T extends Number, V extends BaseNumberVerifi
      *         If the verification fails while not negated or passes while negated.
      * @see #one()
      */
-    V zero();
-
-    /**
-     * <p>
-     * The {@link MessageKey MessageKeys} that are used by {@link BaseNumberVerifier}.
-     * </p>
-     *
-     * @since 0.2.0
-     */
-    enum MessageKeys implements MessageKey {
-
-        EVEN("io.skelp.verifier.type.base.BaseNumberVerifier.even"),
-        NEGATIVE("io.skelp.verifier.type.base.BaseNumberVerifier.negative"),
-        ODD("io.skelp.verifier.type.base.BaseNumberVerifier.odd"),
-        ONE("io.skelp.verifier.type.base.BaseNumberVerifier.one"),
-        POSITIVE("io.skelp.verifier.type.base.BaseNumberVerifier.positive"),
-        ZERO("io.skelp.verifier.type.base.BaseNumberVerifier.zero");
-
-        private final String code;
-
-        MessageKeys(final String code) {
-            this.code = code;
-        }
-
-        @Override
-        public String code() {
-            return code;
-        }
-    }
+    V zero() throws VerifierException;
 }

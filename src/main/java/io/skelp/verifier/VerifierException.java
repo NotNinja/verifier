@@ -23,8 +23,8 @@ package io.skelp.verifier;
 
 /**
  * <p>
- * A runtime exception which is used throughout Verifier to avoid consumers having to worry about lots of different
- * types of exceptions.
+ * A runtime exception which is throughout Verifier to avoid consumers having to worry about lots of different types of
+ * exceptions.
  * </p>
  *
  * @author Alasdair Mercer
