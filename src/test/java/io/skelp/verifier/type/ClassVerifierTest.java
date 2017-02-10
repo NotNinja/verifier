@@ -379,7 +379,7 @@ public class ClassVerifierTest {
 
         @Test
         public void testAssignableFromAllWhenTypeIsNull() {
-            testAssignableFromAllHelper(Collection.class, createArray((Class<?>) null), false);
+            testAssignableFromAllHelper(Collection.class, createArray((Class) null), false);
         }
 
         @Test
@@ -422,7 +422,7 @@ public class ClassVerifierTest {
 
         @Test
         public void testAssignableFromAnyWhenTypeIsNull() {
-            testAssignableFromAnyHelper(Collection.class, createArray((Class<?>) null), false);
+            testAssignableFromAnyHelper(Collection.class, createArray((Class) null), false);
         }
 
         @Test
