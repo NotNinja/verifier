@@ -1,0 +1,3 @@
+files:
+  - source: /src/main/resources/Verifier.properties
+    translation: /src/main/resources/Verifier_%locale_with_underscore%.properties
