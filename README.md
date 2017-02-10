@@ -140,5 +140,5 @@ A list of Verifier contributors can be found in [AUTHORS.md](https://github.com/
 
 See [LICENSE.md](https://github.com/Skelp/verifier/raw/master/LICENSE.md) for more information on our MIT license.
 
-© 2016 [Skelp](https://skelp.io)
+© 2017 [Skelp](https://skelp.io)
 <img align="right" width="16" height="16" src="https://cdn.rawgit.com/Skelp/skelp-branding/master/assets/logo/base/skelp-logo-16x16.png">
