@@ -837,6 +837,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      * @see #matchAll(Pattern...)
+     * @since 0.2.0
      */
     public StringVerifier matchAll(final CharSequence... regexes) {
         final String value = verification().getValue();
@@ -870,6 +871,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      * @see #matchAll(CharSequence...)
+     * @since 0.2.0
      */
     public StringVerifier matchAll(final Pattern... patterns) {
         final String value = verification().getValue();
@@ -902,6 +904,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      * @see #matchAny(Pattern...)
+     * @since 0.2.0
      */
     public StringVerifier matchAny(final CharSequence... regexes) {
         final String value = verification().getValue();
@@ -934,6 +937,7 @@ public final class StringVerifier extends BaseComparableVerifier<String, StringV
      * @throws VerifierException
      *         If the verification fails while not negated or passes while negated.
      * @see #matchAny(CharSequence...)
+     * @since 0.2.0
      */
     public StringVerifier matchAny(final Pattern... patterns) {
         final String value = verification().getValue();

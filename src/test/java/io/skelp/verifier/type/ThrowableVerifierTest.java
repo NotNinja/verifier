@@ -76,35 +76,35 @@ public class ThrowableVerifierTest {
 
         @Test
         public void testCausedByWithClassWhenValueHasCircularCause() {
-            testCausedByHelper(new CheckedException(null, new CircularException()), CircularException.class, true);
+            testCausedByWithClassHelper(new CheckedException(null, new CircularException()), CircularException.class, true);
         }
 
         @Test
         public void testCausedByWithClassWhenValueHasCausesWithDifferentType() {
-            testCausedByHelper(new CheckedException(null, new NullPointerException()), UncheckedException.class, false);
+            testCausedByWithClassHelper(new CheckedException(null, new NullPointerException()), UncheckedException.class, false);
         }
 
         @Test
         public void testCausedByWithClassWhenValueHasCausesWithSameType() {
-            testCausedByHelper(new CheckedException(null, new UncheckedException(null, null)), UncheckedException.class, true);
+            testCausedByWithClassHelper(new CheckedException(null, new UncheckedException(null, null)), UncheckedException.class, true);
         }
 
         @Test
         public void testCausedByWithClassWhenValueHasDifferentTypeAndNoCause() {
-            testCausedByHelper(new CheckedException(null, null), UncheckedException.class, false);
+            testCausedByWithClassHelper(new CheckedException(null, null), UncheckedException.class, false);
         }
 
         @Test
         public void testCausedByWithClassWhenValueHasSameTypeAndNoCause() {
-            testCausedByHelper(new CheckedException(null, null), CheckedException.class, true);
+            testCausedByWithClassHelper(new CheckedException(null, null), CheckedException.class, true);
         }
 
         @Test
         public void testCausedByWithClassWhenValueIsNull() {
-            testCausedByHelper(null, Exception.class, false);
+            testCausedByWithClassHelper(null, Exception.class, false);
         }
 
-        private void testCausedByHelper(Throwable value, Class<?> type, boolean expected) {
+        private void testCausedByWithClassHelper(Throwable value, Class<?> type, boolean expected) {
             setValue(value);
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().causedBy(type));
@@ -118,39 +118,39 @@ public class ThrowableVerifierTest {
         public void testCausedByWithThrowableWhenValueHasCircularCause() {
             Throwable cause = new CircularException();
 
-            testCausedByHelper(new CheckedException(null, cause), cause, true);
+            testCausedByWithThrowableHelper(new CheckedException(null, cause), cause, true);
         }
 
         @Test
         public void testCausedByWithThrowableWhenValueHasDifferentCauses() {
-            testCausedByHelper(new CheckedException(null, new NullPointerException()), new UncheckedException(null, null), false);
+            testCausedByWithThrowableHelper(new CheckedException(null, new NullPointerException()), new UncheckedException(null, null), false);
         }
 
         @Test
         public void testCausedByWithThrowableWhenValueHasSameCause() {
             Throwable cause = new UncheckedException(null, null);
 
-            testCausedByHelper(new CheckedException(null, cause), cause, true);
+            testCausedByWithThrowableHelper(new CheckedException(null, cause), cause, true);
         }
 
         @Test
         public void testCausedByWithThrowableWhenValueIsDifferentAndHasNoCause() {
-            testCausedByHelper(new CheckedException(null, null), new UncheckedException(null, null), false);
+            testCausedByWithThrowableHelper(new CheckedException(null, null), new UncheckedException(null, null), false);
         }
 
         @Test
         public void testCausedByWithThrowableWhenValueIsSameAndHasNoCause() {
             Throwable cause = new CheckedException(null, null);
 
-            testCausedByHelper(cause, cause, true);
+            testCausedByWithThrowableHelper(cause, cause, true);
         }
 
         @Test
         public void testCausedByWithThrowableWhenValueIsNull() {
-            testCausedByHelper(null, new Exception(), false);
+            testCausedByWithThrowableHelper(null, new Exception(), false);
         }
 
-        private void testCausedByHelper(Throwable value, Throwable cause, boolean expected) {
+        private void testCausedByWithThrowableHelper(Throwable value, Throwable cause, boolean expected) {
             setValue(value);
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().causedBy(cause));
@@ -164,39 +164,39 @@ public class ThrowableVerifierTest {
         public void testCausedByWithThrowableAndNameWhenValueHasCircularCause() {
             Throwable cause = new CircularException();
 
-            testCausedByHelper(new CheckedException(null, cause), cause, "cause", true);
+            testCausedByWithThrowableAndNameHelper(new CheckedException(null, cause), cause, "cause", true);
         }
 
         @Test
         public void testCausedByWithThrowableAndNameWhenValueHasDifferentCauses() {
-            testCausedByHelper(new CheckedException(null, new NullPointerException()), new UncheckedException(null, null), "cause", false);
+            testCausedByWithThrowableAndNameHelper(new CheckedException(null, new NullPointerException()), new UncheckedException(null, null), "cause", false);
         }
 
         @Test
         public void testCausedByWithThrowableAndNameWhenValueHasSameCause() {
             Throwable cause = new UncheckedException(null, null);
 
-            testCausedByHelper(new CheckedException(null, cause), cause, "cause", true);
+            testCausedByWithThrowableAndNameHelper(new CheckedException(null, cause), cause, "cause", true);
         }
 
         @Test
         public void testCausedByWithThrowableAndNameWhenValueIsDifferentAndHasNoCause() {
-            testCausedByHelper(new CheckedException(null, null), new UncheckedException(null, null), "cause", false);
+            testCausedByWithThrowableAndNameHelper(new CheckedException(null, null), new UncheckedException(null, null), "cause", false);
         }
 
         @Test
         public void testCausedByWithThrowableAndNameWhenValueIsSameAndHasNoCause() {
             Throwable cause = new CheckedException(null, null);
 
-            testCausedByHelper(cause, cause, "cause", true);
+            testCausedByWithThrowableAndNameHelper(cause, cause, "cause", true);
         }
 
         @Test
         public void testCausedByWithThrowableAndNameWhenValueIsNull() {
-            testCausedByHelper(null, new Exception(), "cause", false);
+            testCausedByWithThrowableAndNameHelper(null, new Exception(), "cause", false);
         }
 
-        private void testCausedByHelper(Throwable value, Throwable cause, Object name, boolean expected) {
+        private void testCausedByWithThrowableAndNameHelper(Throwable value, Throwable cause, Object name, boolean expected) {
             setValue(value);
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().causedBy(cause, name));
@@ -204,6 +204,140 @@ public class ThrowableVerifierTest {
             verify(getMockVerification()).report(eq(expected), eq(ThrowableVerifier.MessageKeys.CAUSED_BY), getArgsCaptor().capture());
 
             assertSame("Passes name for message formatting", name, getArgsCaptor().getValue());
+        }
+
+        @Test
+        public void testCausedByAllWhenNoTypes() {
+            testCausedByAllHelper(new CheckedException(null, null), createEmptyArray(Class.class), true);
+        }
+
+        @Test
+        public void testCausedByAllWhenTypeIsNull() {
+            testCausedByAllHelper(new CheckedException(null, null), createArray((Class) null), false);
+        }
+
+        @Test
+        public void testCausedByAllWhenTypesIsNull() {
+            testCausedByAllHelper(new CheckedException(null, null), null, true);
+        }
+
+        @Test
+        public void testCausedByAllWhenValueCausedByAllTypes() {
+            testCausedByAllHelper(new CheckedException(null, new UncheckedException(null, null)), createArray(CheckedException.class, UncheckedException.class, Throwable.class), true);
+        }
+
+        @Test
+        public void testCausedByAllWhenValueCausedBySomeTypes() {
+            testCausedByAllHelper(new CheckedException(null, new UncheckedException(null, null)), createArray(IllegalArgumentException.class, IllegalStateException.class, UncheckedException.class), false);
+        }
+
+        @Test
+        public void testCausedByAllWhenValueNotCausedByAnyType() {
+            testCausedByAllHelper(new CheckedException(null, new UncheckedException(null, null)), createArray(IllegalArgumentException.class, IllegalStateException.class, NullPointerException.class), false);
+        }
+
+        @Test
+        public void testCausedByAllWhenValueIsNull() {
+            testCausedByAllHelper(null, createArray(Throwable.class), false);
+        }
+
+        private void testCausedByAllHelper(Throwable value, Class<?>[] types, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().causedByAll(types));
+
+            verify(getMockVerification()).report(expected, ThrowableVerifier.MessageKeys.CAUSED_BY_ALL, (Object) types);
+        }
+
+        @Test
+        public void testCausedByAnyWithClassesWhenNoTypes() {
+            testCausedByAnyWithClassesHelper(new CheckedException(null, null), createEmptyArray(Class.class), false);
+        }
+
+        @Test
+        public void testCausedByAnyWithClassesWhenTypeIsNull() {
+            testCausedByAnyWithClassesHelper(new CheckedException(null, null), createArray((Class) null), false);
+        }
+
+        @Test
+        public void testCausedByAnyWithClassesWhenTypesIsNull() {
+            testCausedByAnyWithClassesHelper(new CheckedException(null, null), null, false);
+        }
+
+        @Test
+        public void testCausedByAnyWithClassesWhenValueCausedByAllTypes() {
+            testCausedByAnyWithClassesHelper(new CheckedException(null, new UncheckedException(null, null)), createArray(CheckedException.class, UncheckedException.class, Throwable.class), true);
+        }
+
+        @Test
+        public void testCausedByAnyWithClassesWhenValueCausedBySomeTypes() {
+            testCausedByAnyWithClassesHelper(new CheckedException(null, new UncheckedException(null, null)), createArray(IllegalArgumentException.class, IllegalStateException.class, UncheckedException.class), true);
+        }
+
+        @Test
+        public void testCausedByAnyWithClassesWhenValueNotCausedByAnyType() {
+            testCausedByAnyWithClassesHelper(new CheckedException(null, new UncheckedException(null, null)), createArray(IllegalArgumentException.class, IllegalStateException.class, NullPointerException.class), false);
+        }
+
+        @Test
+        public void testCausedByAnyWithClassesWhenValueIsNull() {
+            testCausedByAnyWithClassesHelper(null, createArray(Throwable.class), false);
+        }
+
+        private void testCausedByAnyWithClassesHelper(Throwable value, Class<?>[] types, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().causedByAny(types));
+
+            verify(getMockVerification()).report(expected, ThrowableVerifier.MessageKeys.CAUSED_BY_ANY, (Object) types);
+        }
+
+        @Test
+        public void testCausedByAnyWithThrowablesWhenNoCauses() {
+            testCausedByAnyWithThrowablesHelper(new CheckedException(null, null), createEmptyArray(Throwable.class), false);
+        }
+
+        @Test
+        public void testCausedByAnyWithThrowablesWhenCauseIsNull() {
+            testCausedByAnyWithThrowablesHelper(new CheckedException(null, null), createArray((Throwable) null), false);
+        }
+
+        @Test
+        public void testCausedByAnyWithThrowablesWhenCausesIsNull() {
+            testCausedByAnyWithThrowablesHelper(new CheckedException(null, null), null, false);
+        }
+
+        @Test
+        public void testCausedByAnyWithThrowablesWhenValueCausedByAllCauses() {
+            Throwable cause = new UncheckedException(null, null);
+            Throwable value = new CheckedException(null, cause);
+
+            testCausedByAnyWithThrowablesHelper(value, createArray(value, cause), true);
+        }
+
+        @Test
+        public void testCausedByAnyWithThrowablesWhenValueCausedBySomeCauses() {
+            Throwable cause = new UncheckedException(null, null);
+
+            testCausedByAnyWithThrowablesHelper(new CheckedException(null, cause), createArray(new IllegalArgumentException(), cause), true);
+        }
+
+        @Test
+        public void testCausedByAnyWithThrowablesWhenValueNotCausedByAnyCause() {
+            testCausedByAnyWithThrowablesHelper(new CheckedException(null, new UncheckedException(null, null)), createArray(new IllegalArgumentException(), new NullPointerException()), false);
+        }
+
+        @Test
+        public void testCausedByAnyWithThrowablesWhenValueIsNull() {
+            testCausedByAnyWithThrowablesHelper(null, createArray(new Throwable()), false);
+        }
+
+        private void testCausedByAnyWithThrowablesHelper(Throwable value, Throwable[] causes, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().causedByAny(causes));
+
+            verify(getMockVerification()).report(expected, ThrowableVerifier.MessageKeys.CAUSED_BY_ANY, (Object) causes);
         }
 
         @Test
@@ -304,6 +438,8 @@ public class ThrowableVerifierTest {
         protected Map<String, String> getMessageKeys() {
             Map<String, String> messageKeys = new HashMap<>();
             messageKeys.put("CAUSED_BY", "io.skelp.verifier.type.ThrowableVerifier.causedBy");
+            messageKeys.put("CAUSED_BY_ALL", "io.skelp.verifier.type.ThrowableVerifier.causedByAll");
+            messageKeys.put("CAUSED_BY_ANY", "io.skelp.verifier.type.ThrowableVerifier.causedByAny");
             messageKeys.put("CHECKED", "io.skelp.verifier.type.ThrowableVerifier.checked");
             messageKeys.put("MESSAGE", "io.skelp.verifier.type.ThrowableVerifier.message");
             messageKeys.put("UNCHECKED", "io.skelp.verifier.type.ThrowableVerifier.unchecked");
