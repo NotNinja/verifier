@@ -32,7 +32,6 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import io.skelp.verifier.message.locale.LocaleContext;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -41,8 +40,8 @@ import io.skelp.verifier.verification.Verification;
  * configurable {@code ResourceBundles} with support for multiple base names.
  * </p>
  * <p>
- * All created {@code MessageFormats} are cached based on the message and {@code Locale} (as specified in the current
- * {@link LocaleContext}) and all loaded {@code ResourceBundles} are cached based on the base name and {@code Locale},
+ * All created {@code MessageFormats} are cached based on the message and {@code Locale} (provided by the current
+ * {@link Verification}) and all loaded {@code ResourceBundles} are cached based on the base name and {@code Locale},
  * which this class allows, as well as anything else cached by child implementations, to be cleared easily using
  * {@link #clearCache()}.
  * </p>
@@ -102,7 +101,7 @@ public class ResourceBundleMessageSource extends AbstractMessageSource {
         final MessageKey key = verification.isNegated() ? MessageKeys.MESSAGE_NEGATED : MessageKeys.MESSAGE;
         final String finalMessage = getMessageInternal(key, new Object[]{name, message, value}, verification);
         if (finalMessage == null) {
-            throw new NoSuchMessageException(key, verification.getLocaleContext());
+            throw new NoSuchMessageException(key, verification.getLocale());
         }
 
         return finalMessage;
@@ -125,7 +124,7 @@ public class ResourceBundleMessageSource extends AbstractMessageSource {
         final MessageKey key = verification.isNegated() ? MessageKeys.DEFAULT_MESSAGE_NEGATED : MessageKeys.DEFAULT_MESSAGE;
         final String defaultMessage = getMessageInternal(key, null, verification);
         if (defaultMessage == null) {
-            throw new NoSuchMessageException(key, verification.getLocaleContext());
+            throw new NoSuchMessageException(key, verification.getLocale());
         }
 
         return defaultMessage;
@@ -136,7 +135,7 @@ public class ResourceBundleMessageSource extends AbstractMessageSource {
         final MessageKey key = MessageKeys.DEFAULT_NAME;
         final String defaultName = getMessageInternal(key, null, verification);
         if (defaultName == null) {
-            throw new NoSuchMessageException(key, verification.getLocaleContext());
+            throw new NoSuchMessageException(key, verification.getLocale());
         }
 
         return defaultName;
@@ -149,7 +148,7 @@ public class ResourceBundleMessageSource extends AbstractMessageSource {
      * </p>
      * <p>
      * All {@code MessageFormats} that are created by this method are cached based on {@code key} and the {@code Locale}
-     * contained within the current {@link LocaleContext} to optimize subsequent calls to this method for the same key.
+     * contained within {@code verification} to optimize subsequent calls to this method for the same key.
      * </p>
      * <p>
      * This method will return {@literal null} if no message could be found for {@code key} in the resource
@@ -169,7 +168,7 @@ public class ResourceBundleMessageSource extends AbstractMessageSource {
      *         are invalid for their placeholders.
      */
     protected MessageFormat getMessageFormat(final ResourceBundle bundle, final MessageKey key, final Verification<?> verification) {
-        final Locale locale = verification.getLocaleContext().getLocale();
+        final Locale locale = verification.getLocale();
         MessageFormat messageFormat = null;
 
         synchronized (messageFormatsPerResourceBundle) {
@@ -212,8 +211,8 @@ public class ResourceBundleMessageSource extends AbstractMessageSource {
      * </p>
      * <p>
      * All {@code ResourceBundles} that are loaded by this method are cached based on {@code base} and the
-     * {@code Locale} contained within the current {@link LocaleContext} to optimize subsequent calls to this method for
-     * the same base name.
+     * {@code Locale} contained within {@code verification} to optimize subsequent calls to this method for the same
+     * base name.
      * </p>
      * <p>
      * This method will return {@literal null} if no resource bundle could be found for {@code baseName} for the current
@@ -228,7 +227,7 @@ public class ResourceBundleMessageSource extends AbstractMessageSource {
      * could be found.
      */
     protected ResourceBundle getResourceBundle(final String baseName, final Verification<?> verification) {
-        final Locale locale = verification.getLocaleContext().getLocale();
+        final Locale locale = verification.getLocale();
         ResourceBundle bundle;
 
         synchronized (resourceBundlesPerBaseName) {

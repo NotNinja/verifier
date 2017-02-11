@@ -21,13 +21,12 @@
  */
 package io.skelp.verifier.verification.report;
 
-import io.skelp.verifier.message.MessageSource;
 import io.skelp.verifier.verification.Verification;
 
 /**
  * <p>
  * An immutable implementation of {@link MessageHolder} that contains an unlocalized string message and format arguments
- * which are later passed to {@link MessageSource#getMessage(Verification, String, Object[])}.
+ * which are later passed to {@link Verification#getMessage(String, Object[])}.
  * </p>
  *
  * @author Alasdair Mercer
@@ -56,6 +55,6 @@ public final class StringMessageHolder implements MessageHolder {
 
     @Override
     public String getMessage(final Verification<?> verification) {
-        return verification.getMessageSource().getMessage(verification, message, args);
+        return verification.getMessage(message, args);
     }
 }

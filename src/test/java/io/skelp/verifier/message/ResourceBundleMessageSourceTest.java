@@ -44,7 +44,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import io.skelp.verifier.message.locale.LocaleContext;
 import io.skelp.verifier.util.TestUtils;
 import io.skelp.verifier.verification.Verification;
 
@@ -360,8 +359,6 @@ public class ResourceBundleMessageSourceTest {
     public static class ResourceBundleMessageSourceMiscTest {
 
         @Mock
-        private LocaleContext mockLocaleContext;
-        @Mock
         private Verification<?> mockVerification;
 
         private ResourceBundleMessageSource messageSource;
@@ -370,10 +367,7 @@ public class ResourceBundleMessageSourceTest {
         public void setUp() {
             messageSource = new ResourceBundleMessageSource(TEST_BASE_NAMES);
 
-            when(mockLocaleContext.getLocale()).thenReturn(TEST_LOCALE);
-
-            when(mockVerification.getLocaleContext()).thenReturn(mockLocaleContext);
-            when(mockVerification.getMessageSource()).thenReturn(messageSource);
+            when(mockVerification.getLocale()).thenReturn(TEST_LOCALE);
         }
 
         @Test
@@ -522,8 +516,8 @@ public class ResourceBundleMessageSourceTest {
         }
 
         private void testGetMessageFormatHelper(String baseName, Locale locale, MessageKey key, boolean cached, String expected) throws Exception {
-            reset(mockLocaleContext);
-            when(mockLocaleContext.getLocale()).thenReturn(locale);
+            reset(mockVerification);
+            when(mockVerification.getLocale()).thenReturn(locale);
 
             ResourceBundle bundle = messageSource.getResourceBundle(baseName, mockVerification);
             MessageFormat messageFormat = messageSource.getMessageFormat(bundle, key, mockVerification);
@@ -590,8 +584,8 @@ public class ResourceBundleMessageSourceTest {
         }
 
         private void testGetResourceBundleHelper(String baseName, Locale locale, Locale expectedLocale) throws Exception {
-            reset(mockLocaleContext);
-            when(mockLocaleContext.getLocale()).thenReturn(locale);
+            reset(mockVerification);
+            when(mockVerification.getLocale()).thenReturn(locale);
 
             ResourceBundle bundle = messageSource.getResourceBundle(baseName, mockVerification);
 

@@ -28,8 +28,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import io.skelp.verifier.message.formatter.Formatter;
-import io.skelp.verifier.message.locale.LocaleContext;
-import io.skelp.verifier.service.Services;
 import io.skelp.verifier.util.ArrayUtils;
 import io.skelp.verifier.verification.Verification;
 
@@ -49,8 +47,8 @@ import io.skelp.verifier.verification.Verification;
  * preferred, then the {@code alwaysUseMessageFormat} flag should be enabled.
  * </p>
  * <p>
- * All created {@code MessageFormats} are cached based on the message and {@code Locale} (as specified in the current
- * {@link LocaleContext}) and this class allows these, and anything else cached by child implementations, to be cleared
+ * All created {@code MessageFormats} are cached based on the message and {@code Locale} (provided by the current
+ * {@link Verification}) and this class allows these, and anything else cached by child implementations, to be cleared
  * easily using {@link #clearCache()}.
  * </p>
  *
@@ -126,7 +124,7 @@ public abstract class AbstractMessageSource implements MessageSource {
      *         If {@code message} is an invalid format pattern.
      */
     protected MessageFormat createMessageFormat(final String message, final Verification<?> verification) {
-        return new MessageFormat(message != null ? message : "", verification.getLocaleContext().getLocale());
+        return new MessageFormat(message != null ? message : "", verification.getLocale());
     }
 
     /**
@@ -135,8 +133,8 @@ public abstract class AbstractMessageSource implements MessageSource {
      * </p>
      * <p>
      * All {@code MessageFormats} that are created by this method are cached based on {@code message} and the
-     * {@code Locale} contained within the current {@link LocaleContext} to optimize subsequent calls to this method for
-     * the same message.
+     * {@code Locale} contained within {@code verification} to optimize subsequent calls to this method for the same
+     * message.
      * </p>
      * <p>
      * This method will return {@literal null} if {@code message} is {@literal null} and will call
@@ -163,7 +161,7 @@ public abstract class AbstractMessageSource implements MessageSource {
             return formatMessageWithoutArguments(message, verification);
         }
 
-        final Locale locale = verification.getLocaleContext().getLocale();
+        final Locale locale = verification.getLocale();
         MessageFormat messageFormat = null;
 
         synchronized (messageFormatsPerMessage) {
@@ -277,19 +275,6 @@ public abstract class AbstractMessageSource implements MessageSource {
     protected abstract Object getDefaultName(Verification<?> verification);
 
     @Override
-    public Formatter getFormatter(final Object obj) {
-        if (obj == null) {
-            return null;
-        }
-
-        final Class<?> cls = obj.getClass();
-        return Services.getServices(Formatter.class).stream()
-            .filter(formatter -> formatter.supports(cls))
-            .findFirst()
-            .orElse(null);
-    }
-
-    @Override
     public String getMessage(final Verification<?> verification, final MessageKey key, final Object[] args) {
         final String formattedMessage = getMessageInternal(key, args, verification);
         if (formattedMessage != null) {
@@ -301,7 +286,7 @@ public abstract class AbstractMessageSource implements MessageSource {
             return buildMessage(defaultMessage, verification);
         }
 
-        throw new NoSuchMessageException(key, verification.getLocaleContext());
+        throw new NoSuchMessageException(key, verification.getLocale());
     }
 
     @Override
@@ -533,10 +518,10 @@ public abstract class AbstractMessageSource implements MessageSource {
      * @param verification
      *         the current {@link Verification}
      * @return The potentially formatted {@code obj} or {@literal null} if {@code obj} is {@literal null}.
-     * @see #getFormatter(Object)
+     * @see Verification#getFormatter(Object)
      */
     protected Object tryFormat(final Object obj, final Verification<?> verification) {
-        final Formatter formatter = getFormatter(obj);
+        final Formatter formatter = verification.getFormatter(obj);
         return formatter != null ? formatter.format(verification, obj) : obj;
     }
 

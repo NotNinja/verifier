@@ -54,7 +54,7 @@ import io.skelp.verifier.service.Weighted.WeightedComparator;
  * This file should contain an entry for each custom implementation, consisting of the class reference:
  * </p>
  * <pre>
- * com.example.verifier.message.locale.ExampleLocaleContextProvider
+ * com.example.verifier.MyCustomLocaleContextProvider
  * </pre>
  *
  * @author Alasdair Mercer

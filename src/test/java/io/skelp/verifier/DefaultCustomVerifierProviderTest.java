@@ -33,6 +33,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import io.skelp.verifier.message.ResourceBundleMessageSource;
+import io.skelp.verifier.message.formatter.DefaultFormatterProvider;
 import io.skelp.verifier.message.locale.SimpleLocaleContext;
 import io.skelp.verifier.service.Weighted;
 import io.skelp.verifier.verification.SimpleVerification;
@@ -60,7 +61,7 @@ public class DefaultCustomVerifierProviderTest {
 
     @Before
     public void setUp() {
-        when(mockVerificationProvider.getVerification(any(), any())).thenAnswer(invocation -> new SimpleVerification<>(new SimpleLocaleContext(Locale.ENGLISH), new ResourceBundleMessageSource(), new DefaultReportExecutorProvider().getReportExecutor(), invocation.getArguments()[0], invocation.getArguments()[1]));
+        when(mockVerificationProvider.getVerification(any(), any())).thenAnswer(invocation -> new SimpleVerification<>(new SimpleLocaleContext(Locale.ENGLISH), new ResourceBundleMessageSource(), new DefaultFormatterProvider(), new DefaultReportExecutorProvider().getReportExecutor(), invocation.getArguments()[0], invocation.getArguments()[1]));
 
         TestVerificationProvider.setDelegate(mockVerificationProvider);
 

@@ -19,40 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier.verification.report;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+package io.skelp.verifier.message.formatter;
 
 import io.skelp.verifier.verification.Verification;
 
 /**
  * <p>
- * Tests for the {@link StringMessageHolder} class.
+ * An implementation of {@link Formatter} which provides the most specific yet human-readable string representation of a
+ * {@code Class} object.
  * </p>
  *
  * @author Alasdair Mercer
+ * @since 0.2.0
  */
-@RunWith(MockitoJUnitRunner.class)
-public class StringMessageHolderTest {
+public final class ClassFormatter implements Formatter {
 
-    @Mock
-    private Verification<?> mockVerification;
+    @Override
+    public String format(final Verification<?> verification, final Object obj) {
+        return ((Class) obj).getTypeName();
+    }
 
-    @Test
-    public void testGetMessage() {
-        String expected = "i am expected";
-        String message = "test";
-        Object[] args = new Object[]{"foo", "bar"};
-
-        when(mockVerification.getMessage(message, args)).thenReturn(expected);
-
-        StringMessageHolder holder = new StringMessageHolder(message, args);
-        assertEquals("Uses message source to return message", expected, holder.getMessage(mockVerification));
+    @Override
+    public boolean supports(final Class<?> cls) {
+        return cls.equals(Class.class);
     }
 }

@@ -21,11 +21,17 @@
  */
 package io.skelp.verifier.verification;
 
+import java.util.Locale;
+
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.message.MessageKey;
 import io.skelp.verifier.message.MessageSource;
+import io.skelp.verifier.message.NoSuchMessageException;
+import io.skelp.verifier.message.formatter.Formatter;
+import io.skelp.verifier.message.formatter.FormatterProvider;
 import io.skelp.verifier.message.locale.LocaleContext;
 import io.skelp.verifier.verification.report.AssertionReporter;
+import io.skelp.verifier.verification.report.MessageHolder;
 import io.skelp.verifier.verification.report.ReportExecutor;
 import io.skelp.verifier.verification.report.Reporter;
 
@@ -47,6 +53,86 @@ public interface Verification<T> {
 
     /**
      * <p>
+     * Returns a formatter that can be used to format the specified object so that it is more human-friendly.
+     * </p>
+     * <p>
+     * This method will return the first {@link Formatter} that supports {@code obj} and will return {@literal null} if
+     * none support {@code obj} or if {@code obj} is {@literal null}.
+     * </p>
+     * <p>
+     * Generally, this method simply acts as a convenient proxy for {@link FormatterProvider#getFormatter(Object)}.
+     * </p>
+     *
+     * @param obj
+     *         the object for which a supporting {@link Formatter} is to be returned (may be {@literal null})
+     * @return A {@link Formatter} that supports {@code obj} or {@literal null} if none was found or {@code obj} is
+     * {@literal null}.
+     * @since 0.2.0
+     */
+    Formatter getFormatter(Object obj);
+
+    /**
+     * <p>
+     * Returns the message for this {@link Verification}, optionally using the {@code key} and format {@code args}
+     * provided.
+     * </p>
+     * <p>
+     * Where {@code key} is provided, it is used to lookup a localized message which may also be formatted using the
+     * arguments provided. Using {@link MessageKey} is the ideal approach as it can help to localize messages which aids
+     * consumers and their users.
+     * </p>
+     * <p>
+     * Generally, this method simply acts as a convenient proxy for
+     * {@link MessageSource#getMessage(Verification, MessageKey, Object[])}.
+     * </p>
+     *
+     * @param key
+     *         the optional {@link MessageKey} which provides a more detailed localized explanation of what was verified
+     * @param args
+     *         the optional format arguments which are used to format localized message
+     * @return The localized message.
+     * @throws IllegalArgumentException
+     *         If the localized message is formatted but is an invalid format pattern or any of the format {@code args}
+     *         are invalid for their placeholders.
+     * @throws NoSuchMessageException
+     *         If no message could be found for {@code key} or any other that is required to build the full message.
+     * @see #getMessage(String, Object...)
+     * @since 0.2.0
+     */
+    String getMessage(MessageKey key, Object... args);
+
+    /**
+     * <p>
+     * Returns the message for this {@link Verification}, optionally using the {@code message} and format {@code args}
+     * provided.
+     * </p>
+     * <p>
+     * While the context of the message should still be localized by the implementation, this method is intended for
+     * cases where {@code message} is not pre-defined and is most likely provided by consumers. Ideally, all messages
+     * should be localized and can be referenced via a {@link MessageKey}.
+     * </p>
+     * <p>
+     * Generally, this method simply acts as a convenient proxy for
+     * {@link MessageSource#getMessage(Verification, String, Object[])}.
+     * </p>
+     *
+     * @param message
+     *         the optional message which provides a more detailed explanation of what was verified
+     * @param args
+     *         the optional format arguments which are used to format {@code message}
+     * @return The potentially formatted message.
+     * @throws IllegalArgumentException
+     *         If {@code message} is formatted but is an invalid format pattern or any of the format {@code args} are
+     *         invalid for their placeholders.
+     * @throws NoSuchMessageException
+     *         If no message could be found for any keys that are required to build the full message.
+     * @see #getMessage(MessageKey, Object...)
+     * @since 0.2.0
+     */
+    String getMessage(String message, Object... args);
+
+    /**
+     * <p>
      * Reports the specified {@code result}, which may determine whether it passes verification.
      * </p>
      * <p>
@@ -57,7 +143,9 @@ public interface Verification<T> {
      * enhanced by providing an optional {@code key} and format {@code args}.
      * </p>
      * <p>
-     * This {@link Verification} will no longer be negated as a result of calling this method, regardless of whether
+     * Generally, this method simply acts as a convenient proxy for
+     * {@link ReportExecutor#execute(Verification, boolean, MessageHolder)}, while also ensuring that this
+     * {@link Verification} will no longer be negated as a result of calling this method, regardless of whether
      * {@code result} passes verification.
      * </p>
      *
@@ -88,7 +176,9 @@ public interface Verification<T> {
      * enhanced by providing an optional (unlocalized) {@code message} and format {@code args}.
      * </p>
      * <p>
-     * This {@link Verification} will no longer be negated as a result of calling this method, regardless of whether
+     * Generally, this method simply acts as a convenient proxy for
+     * {@link ReportExecutor#execute(Verification, boolean, MessageHolder)}, while also ensuring that this
+     * {@link Verification} will no longer be negated as a result of calling this method, regardless of whether
      * {@code result} passes verification.
      * </p>
      *
@@ -108,25 +198,17 @@ public interface Verification<T> {
 
     /**
      * <p>
-     * Returns the {@link LocaleContext} that is being used by this {@link Verification} to lookup and format messages
-     * for any {@link VerifierException VerifierExceptions} that are thrown by a {@link Reporter}.
+     * Returns the current locale that is being used by this {@link Verification} to lookup and format messages for any
+     * {@link VerifierException VerifierExceptions} that are thrown by a {@link Reporter}.
      * </p>
-     *
-     * @return The {@link LocaleContext}.
-     * @since 0.2.0
-     */
-    LocaleContext getLocaleContext();
-
-    /**
      * <p>
-     * Returns the message source that is being used by this {@link Verification} to lookup and/or format the messages
-     * for any {@link VerifierException VerifierExceptions} that are thrown by a {@link Reporter}.
+     * Generally, this method simply acts as a convenient proxy for {@link LocaleContext#getLocale()}.
      * </p>
      *
-     * @return The {@link MessageSource}.
+     * @return The current {@code Locale}.
      * @since 0.2.0
      */
-    MessageSource getMessageSource();
+    Locale getLocale();
 
     /**
      * <p>
@@ -156,17 +238,6 @@ public interface Verification<T> {
      *         {@literal true} to negate the next result; otherwise {@literal false}
      */
     void setNegated(boolean negated);
-
-    /**
-     * <p>
-     * Returns the report executor that is being used by this {@link Verification} to execute {@link Reporter Reporters}
-     * for a verification result.
-     * </p>
-     *
-     * @return The {@link ReportExecutor}.
-     * @since 0.2.0
-     */
-    ReportExecutor getReportExecutor();
 
     /**
      * <p>

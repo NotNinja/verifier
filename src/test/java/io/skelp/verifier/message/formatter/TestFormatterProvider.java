@@ -19,49 +19,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier.message;
-
-import java.util.Locale;
-
-import io.skelp.verifier.VerifierException;
+package io.skelp.verifier.message.formatter;
 
 /**
  * <p>
- * A runtime exception which is thrown by {@link MessageSource MessageSources} when a {@link MessageKey} cannot be
- * found.
+ * An implementation of {@link FormatterProvider} that is intended to be used for test purposes only by allowing tests
+ * to register a delegate (normally a mock).
+ * </p>
+ * <p>
+ * Individual tests are also responsible for ensuring that the delegate is cleared in their tear down to avoid
+ * potentially affecting other unit tests.
  * </p>
  *
  * @author Alasdair Mercer
- * @since 0.2.0
  */
-public class NoSuchMessageException extends VerifierException {
+public final class TestFormatterProvider implements FormatterProvider {
+
+    private static FormatterProvider delegate;
 
     /**
      * <p>
-     * Creates a new instance of {@link NoSuchMessageException} for the {@code key} and {@code locale} provided.
+     * Returns the delegate for this {@link TestFormatterProvider}.
      * </p>
      *
-     * @param key
-     *         the {@link MessageKey} that could not be found (may be {@literal null})
-     * @param locale
-     *         the current {@code Locale}
+     * @return The delegate {@link FormatterProvider} or {@literal null} if none has been specified.
      */
-    public NoSuchMessageException(final MessageKey key, final Locale locale) {
-        this(key != null ? key.code() : null, locale);
+    public static FormatterProvider getDelegate() {
+        return delegate;
     }
 
     /**
      * <p>
-     * Creates a new instance of {@link NoSuchMessageException} for the {@link MessageKey} {@code code} and
-     * {@code locale} provided.
+     * Sets the delegate for this {@link TestFormatterProvider} to {@code delegate}.
      * </p>
      *
-     * @param code
-     *         the code of the {@link MessageKey} that could not be found (may be {@literal null})
-     * @param locale
-     *         the current {@code Locale}
+     * @param delegate
+     *         the delegate {@link FormatterProvider} to be set (may be {@literal null})
      */
-    public NoSuchMessageException(final String code, final Locale locale) {
-        super("No message found under key '" + code + "' for locale '" + locale + "'");
+    public static void setDelegate(FormatterProvider delegate) {
+        TestFormatterProvider.delegate = delegate;
+    }
+
+    @Override
+    public Formatter getFormatter(Object obj) {
+        return delegate != null ? delegate.getFormatter(obj) : null;
+    }
+
+    @Override
+    public int getWeight() {
+        return 0;
     }
 }

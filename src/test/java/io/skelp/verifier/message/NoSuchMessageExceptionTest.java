@@ -26,8 +26,6 @@ import static org.junit.Assert.*;
 import java.util.Locale;
 import org.junit.Test;
 
-import io.skelp.verifier.message.locale.SimpleLocaleContext;
-
 /**
  * <p>
  * Tests for the {@link NoSuchMessageException} class.
@@ -37,36 +35,38 @@ import io.skelp.verifier.message.locale.SimpleLocaleContext;
  */
 public class NoSuchMessageExceptionTest {
 
+    private static final Locale TEST_LOCALE = Locale.FRENCH;
+
     @Test
     public void testConstructorWithCode() {
-        NoSuchMessageException exception = new NoSuchMessageException("foo", new SimpleLocaleContext(Locale.FRENCH));
+        NoSuchMessageException exception = new NoSuchMessageException("foo", TEST_LOCALE);
 
         assertEquals("Has correct detail message", "No message found under key 'foo' for locale 'fr'", exception.getMessage());
     }
 
     @Test
     public void testConstructorWithCodeWhenNull() {
-        NoSuchMessageException exception = new NoSuchMessageException((String) null, new SimpleLocaleContext(Locale.FRENCH));
+        NoSuchMessageException exception = new NoSuchMessageException((String) null, TEST_LOCALE);
 
         assertEquals("Has correct detail message", "No message found under key 'null' for locale 'fr'", exception.getMessage());
     }
 
     @Test
     public void testConstructorWithMessageKey() {
-        NoSuchMessageException exception = new NoSuchMessageException(() -> "foo", new SimpleLocaleContext(Locale.FRENCH));
+        NoSuchMessageException exception = new NoSuchMessageException(() -> "foo", TEST_LOCALE);
 
         assertEquals("Has correct detail message", "No message found under key 'foo' for locale 'fr'", exception.getMessage());
     }
 
     @Test
     public void testConstructorWithMessageKeyWhenNull() {
-        NoSuchMessageException exception = new NoSuchMessageException((MessageKey) null, new SimpleLocaleContext(Locale.FRENCH));
+        NoSuchMessageException exception = new NoSuchMessageException((MessageKey) null, TEST_LOCALE);
 
         assertEquals("Has correct detail message", "No message found under key 'null' for locale 'fr'", exception.getMessage());
     }
 
     @Test(expected = NoSuchMessageException.class)
     public void testThrowable() {
-        throw new NoSuchMessageException("foo", new SimpleLocaleContext(Locale.FRENCH));
+        throw new NoSuchMessageException("foo", TEST_LOCALE);
     }
 }

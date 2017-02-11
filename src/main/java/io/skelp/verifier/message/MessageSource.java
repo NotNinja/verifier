@@ -21,7 +21,6 @@
  */
 package io.skelp.verifier.message;
 
-import io.skelp.verifier.message.formatter.Formatter;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -37,22 +36,6 @@ public interface MessageSource {
 
     /**
      * <p>
-     * Returns a formatter that can be used to format the specified object so that it is more human-friendly.
-     * </p>
-     * <p>
-     * This method will return the first {@link Formatter} that supports {@code obj} and will return {@literal null} if
-     * none was found that supports {@code obj} or if {@code obj} is {@literal null}.
-     * </p>
-     *
-     * @param obj
-     *         the object for which a supporting {@link Formatter} is to be returned
-     * @return A {@link Formatter} that supports {@code obj} or {@literal null} if none was found or {@code obj} is
-     * {@literal null}.
-     */
-    Formatter getFormatter(Object obj);
-
-    /**
-     * <p>
      * Returns the message for the specified {@code verification}, optionally using the {@code key} and format
      * {@code args} provided.
      * </p>
@@ -65,8 +48,7 @@ public interface MessageSource {
      * @param verification
      *         the current {@link Verification}
      * @param key
-     *         the optional {@link MessageKey} which provides a more detailed localized explanation of what was
-     *         verified
+     *         the optional {@link MessageKey} which provides a more detailed localized explanation of what was verified
      * @param args
      *         the optional format arguments which are used to format localized message
      * @return The localized message based on {@code verification}.
