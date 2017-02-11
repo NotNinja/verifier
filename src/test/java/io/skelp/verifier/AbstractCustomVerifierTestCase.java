@@ -24,13 +24,44 @@ package io.skelp.verifier;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.net.URI;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import io.skelp.verifier.message.MessageKey;
+import io.skelp.verifier.type.ArrayVerifier;
+import io.skelp.verifier.type.BigDecimalVerifier;
+import io.skelp.verifier.type.BigIntegerVerifier;
+import io.skelp.verifier.type.BooleanVerifier;
+import io.skelp.verifier.type.ByteVerifier;
+import io.skelp.verifier.type.CalendarVerifier;
+import io.skelp.verifier.type.CharacterVerifier;
+import io.skelp.verifier.type.ClassVerifier;
+import io.skelp.verifier.type.CollectionVerifier;
+import io.skelp.verifier.type.ComparableVerifier;
+import io.skelp.verifier.type.DateVerifier;
+import io.skelp.verifier.type.DoubleVerifier;
+import io.skelp.verifier.type.FloatVerifier;
+import io.skelp.verifier.type.IntegerVerifier;
+import io.skelp.verifier.type.LocaleVerifier;
+import io.skelp.verifier.type.LongVerifier;
+import io.skelp.verifier.type.MapVerifier;
+import io.skelp.verifier.type.ObjectVerifier;
+import io.skelp.verifier.type.ShortVerifier;
+import io.skelp.verifier.type.StringVerifier;
+import io.skelp.verifier.type.ThrowableVerifier;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * <p>
@@ -48,6 +79,360 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
     @Mock
     private VerifierAssertion<T> mockAssertion;
+
+    @Test
+    public void testAndWithArray() {
+        Integer[] value = new Integer[]{123, 456, 789};
+        ArrayVerifier<Integer> result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithArrayAndName() {
+        Integer[] value = new Integer[]{123, 456, 789};
+        ArrayVerifier<Integer> result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithBigDecimal() {
+        BigDecimal value = BigDecimal.ONE;
+        BigDecimalVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithBigDecimalAndName() {
+        BigDecimal value = BigDecimal.ONE;
+        BigDecimalVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithBigInteger() {
+        BigInteger value = BigInteger.ONE;
+        BigIntegerVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithBigIntegerAndName() {
+        BigInteger value = BigInteger.ONE;
+        BigIntegerVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithBoolean() {
+        BooleanVerifier result = getCustomVerifier().and(true);
+
+        testAndHelper(result, true, null);
+    }
+
+    @Test
+    public void testAndWithBooleanAndName() {
+        BooleanVerifier result = getCustomVerifier().and(true, "foo");
+
+        testAndHelper(result, true, "foo");
+    }
+
+    @Test
+    public void testAndWithByte() {
+        byte value = 123;
+        ByteVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithByteAndName() {
+        byte value = 123;
+        ByteVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithCalendar() {
+        Calendar value = Calendar.getInstance();
+        CalendarVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithCalendarAndName() {
+        Calendar value = Calendar.getInstance();
+        CalendarVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithCharacter() {
+        char value = 'a';
+        CharacterVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithCharacterAndName() {
+        char value = 'a';
+        CharacterVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithClass() {
+        ClassVerifier result = getCustomVerifier().and(VerifierTest.class);
+
+        testAndHelper(result, VerifierTest.class, null);
+    }
+
+    @Test
+    public void testAndWithClassAndName() {
+        ClassVerifier result = getCustomVerifier().and(VerifierTest.class, "foo");
+
+        testAndHelper(result, VerifierTest.class, "foo");
+    }
+
+    @Test
+    public void testAndWithCollection() {
+        Collection<Integer> value = Arrays.asList(123, 456, 789);
+        CollectionVerifier<Integer> result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithCollectionAndName() {
+        Collection<Integer> value = Arrays.asList(123, 456, 789);
+        CollectionVerifier<Integer> result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithDate() {
+        Date value = new Date();
+        DateVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithDateAndName() {
+        Date value = new Date();
+        DateVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithDouble() {
+        double value = 123D;
+        DoubleVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithDoubleAndName() {
+        double value = 123D;
+        DoubleVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithFloat() {
+        float value = 123F;
+        FloatVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithFloatAndName() {
+        float value = 123F;
+        FloatVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithInteger() {
+        int value = 123;
+        IntegerVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithIntegerAndName() {
+        int value = 123;
+        IntegerVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithLocale() {
+        Locale value = Locale.US;
+        LocaleVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithLocaleAndName() {
+        Locale value = Locale.US;
+        LocaleVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithLong() {
+        long value = 123L;
+        LongVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithLongAndName() {
+        long value = 123L;
+        LongVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithMap() {
+        Map<String, Integer> value = new HashMap<>();
+        value.put("abc", 123);
+        MapVerifier<String, Integer> result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithMapAndName() {
+        Map<String, Integer> value = new HashMap<>();
+        value.put("abc", 123);
+        MapVerifier<String, Integer> result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithObject() {
+        Object value = new Verifier();
+        ObjectVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithObjectAndName() {
+        Object value = new Verifier();
+        ObjectVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithShort() {
+        short value = 123;
+        ShortVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithShortAndName() {
+        short value = 123;
+        ShortVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithString() {
+        StringVerifier result = getCustomVerifier().and("foo");
+
+        testAndHelper(result, "foo", null);
+    }
+
+    @Test
+    public void testAndWithStringAndName() {
+        StringVerifier result = getCustomVerifier().and("foo", "bar");
+
+        testAndHelper(result, "foo", "bar");
+    }
+
+    @Test
+    public void testAndWithThrowable() {
+        Throwable value = new Throwable();
+        ThrowableVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithThrowableAndName() {
+        Throwable value = new Throwable();
+        ThrowableVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithCustomVerifierClass() {
+        @SuppressWarnings("unchecked")
+        Verification<String> mockVerification = (Verification<String>) mock(Verification.class);
+        StringVerifier expected = new StringVerifier(mockVerification);
+
+        when(getMockVerification().copy("foo", "bar")).thenReturn(mockVerification);
+
+        when(getMockCustomVerifierProvider().getCustomVerifier(StringVerifier.class, mockVerification)).thenReturn(expected);
+
+        StringVerifier actual = getCustomVerifier().and("foo", "bar", StringVerifier.class);
+
+        assertSame("Uses CustomVerifier created by factory", expected, actual);
+        testAndHelper(actual, "foo", "bar");
+    }
+
+    private <U, C extends CustomVerifier<U, C>> void testAndHelper(CustomVerifier<U, C> verifier, U value, Object name) {
+        assertNotNull("Never returns null", verifier);
+
+        verify(getMockVerification()).copy(value, name);
+    }
+
+    @Test
+    public void testAndComparable() {
+        URI value = URI.create("foo");
+        ComparableVerifier<URI> result = getCustomVerifier().andComparable(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndComparableWithName() {
+        URI value = URI.create("foo");
+        ComparableVerifier<URI> result = getCustomVerifier().andComparable(value, "bar");
+
+        testAndHelper(result, value, "bar");
+    }
 
     @Test
     public void testEqualToWithDifferentInstance() {

@@ -21,11 +21,39 @@
  */
 package io.skelp.verifier;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 import java.util.function.Function;
 
 import io.skelp.verifier.message.MessageKey;
+import io.skelp.verifier.service.Services;
+import io.skelp.verifier.type.ArrayVerifier;
+import io.skelp.verifier.type.BigDecimalVerifier;
+import io.skelp.verifier.type.BigIntegerVerifier;
+import io.skelp.verifier.type.BooleanVerifier;
+import io.skelp.verifier.type.ByteVerifier;
+import io.skelp.verifier.type.CalendarVerifier;
+import io.skelp.verifier.type.CharacterVerifier;
+import io.skelp.verifier.type.ClassVerifier;
+import io.skelp.verifier.type.CollectionVerifier;
+import io.skelp.verifier.type.ComparableVerifier;
+import io.skelp.verifier.type.DateVerifier;
+import io.skelp.verifier.type.DoubleVerifier;
+import io.skelp.verifier.type.FloatVerifier;
+import io.skelp.verifier.type.IntegerVerifier;
+import io.skelp.verifier.type.LocaleVerifier;
+import io.skelp.verifier.type.LongVerifier;
+import io.skelp.verifier.type.MapVerifier;
+import io.skelp.verifier.type.ObjectVerifier;
+import io.skelp.verifier.type.ShortVerifier;
+import io.skelp.verifier.type.StringVerifier;
+import io.skelp.verifier.type.ThrowableVerifier;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -166,6 +194,222 @@ public abstract class AbstractCustomVerifier<T, V extends AbstractCustomVerifier
      */
     public AbstractCustomVerifier(final Verification<T> verification) {
         this.verification = verification;
+    }
+
+    @Override
+    public <E> ArrayVerifier<E> and(final E[] value) {
+        return and(value, null);
+    }
+
+    @Override
+    public <E> ArrayVerifier<E> and(final E[] value, final Object name) {
+        return new ArrayVerifier<>(verification.copy(value, name));
+    }
+
+    @Override
+    public BigDecimalVerifier and(final BigDecimal value) {
+        return and(value, null);
+    }
+
+    @Override
+    public BigDecimalVerifier and(final BigDecimal value, final Object name) {
+        return new BigDecimalVerifier(verification.copy(value, name));
+    }
+
+    @Override
+    public BigIntegerVerifier and(final BigInteger value) {
+        return and(value, null);
+    }
+
+    @Override
+    public BigIntegerVerifier and(final BigInteger value, final Object name) {
+        return new BigIntegerVerifier(verification.copy(value, name));
+    }
+
+    @Override
+    public BooleanVerifier and(final Boolean value) {
+        return and(value, null);
+    }
+
+    @Override
+    public BooleanVerifier and(final Boolean value, final Object name) {
+        return new BooleanVerifier(verification.copy(value, name));
+    }
+
+    @Override
+    public ByteVerifier and(final Byte value) {
+        return and(value, null);
+    }
+
+    @Override
+    public ByteVerifier and(final Byte value, final Object name) {
+        return new ByteVerifier(verification.copy(value, name));
+    }
+
+    @Override
+    public CalendarVerifier and(final Calendar value) {
+        return and(value, null);
+    }
+
+    @Override
+    public CalendarVerifier and(final Calendar value, final Object name) {
+        return new CalendarVerifier(verification.copy(value, name));
+    }
+
+    @Override
+    public CharacterVerifier and(final Character value) {
+        return and(value, null);
+    }
+
+    @Override
+    public CharacterVerifier and(final Character value, final Object name) {
+        return new CharacterVerifier(verification.copy(value, name));
+    }
+
+    @Override
+    public ClassVerifier and(final Class value) {
+        return and(value, null);
+    }
+
+    @Override
+    public ClassVerifier and(final Class value, final Object name) {
+        return new ClassVerifier(verification.copy(value, name));
+    }
+
+    @Override
+    public <E> CollectionVerifier<E> and(final Collection<E> value) {
+        return and(value, null);
+    }
+
+    @Override
+    public <E> CollectionVerifier<E> and(final Collection<E> value, final Object name) {
+        return new CollectionVerifier<>(verification.copy(value, name));
+    }
+
+    @Override
+    public DateVerifier and(final Date value) {
+        return and(value, null);
+    }
+
+    @Override
+    public DateVerifier and(final Date value, final Object name) {
+        return new DateVerifier(verification.copy(value, name));
+    }
+
+    @Override
+    public DoubleVerifier and(final Double value) {
+        return and(value, null);
+    }
+
+    @Override
+    public DoubleVerifier and(final Double value, final Object name) {
+        return new DoubleVerifier(verification.copy(value, name));
+    }
+
+    @Override
+    public FloatVerifier and(final Float value) {
+        return and(value, null);
+    }
+
+    @Override
+    public FloatVerifier and(final Float value, final Object name) {
+        return new FloatVerifier(verification.copy(value, name));
+    }
+
+    @Override
+    public IntegerVerifier and(final Integer value) {
+        return and(value, null);
+    }
+
+    @Override
+    public IntegerVerifier and(final Integer value, final Object name) {
+        return new IntegerVerifier(verification.copy(value, name));
+    }
+
+    @Override
+    public LocaleVerifier and(final Locale value) {
+        return and(value, null);
+    }
+
+    @Override
+    public LocaleVerifier and(final Locale value, final Object name) {
+        return new LocaleVerifier(verification.copy(value, name));
+    }
+
+    @Override
+    public LongVerifier and(final Long value) {
+        return and(value, null);
+    }
+
+    @Override
+    public LongVerifier and(final Long value, final Object name) {
+        return new LongVerifier(verification.copy(value, name));
+    }
+
+    @Override
+    public <K, U> MapVerifier<K, U> and(final Map<K, U> value) {
+        return and(value, null);
+    }
+
+    @Override
+    public <K, U> MapVerifier<K, U> and(final Map<K, U> value, final Object name) {
+        return new MapVerifier<>(verification.copy(value, name));
+    }
+
+    @Override
+    public ObjectVerifier and(final Object value) {
+        return and(value, null);
+    }
+
+    @Override
+    public ObjectVerifier and(final Object value, final Object name) {
+        return new ObjectVerifier(verification.copy(value, name));
+    }
+
+    @Override
+    public ShortVerifier and(final Short value) {
+        return and(value, null);
+    }
+
+    @Override
+    public ShortVerifier and(final Short value, final Object name) {
+        return new ShortVerifier(verification.copy(value, name));
+    }
+
+    @Override
+    public StringVerifier and(final String value) {
+        return and(value, null);
+    }
+
+    @Override
+    public StringVerifier and(final String value, final Object name) {
+        return new StringVerifier(verification.copy(value, name));
+    }
+
+    @Override
+    public ThrowableVerifier and(final Throwable value) {
+        return and(value, null);
+    }
+
+    @Override
+    public ThrowableVerifier and(final Throwable value, final Object name) {
+        return new ThrowableVerifier(verification.copy(value, name));
+    }
+
+    @Override
+    public <U, C extends CustomVerifier<U, C>> C and(final U value, final Object name, final Class<C> cls) {
+        final Verification<U> copy = verification.copy(value, name);
+        return Services.findFirstNonNullForWeightedService(CustomVerifierProvider.class, provider -> provider.getCustomVerifier(cls, copy));
+    }
+
+    @Override
+    public <C extends Comparable<? super C>> ComparableVerifier<C> andComparable(final C value) {
+        return andComparable(value, null);
+    }
+
+    @Override
+    public <C extends Comparable<? super C>> ComparableVerifier<C> andComparable(final C value, final Object name) {
+        return new ComparableVerifier<>(verification.copy(value, name));
     }
 
     /**
