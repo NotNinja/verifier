@@ -1,1 +1,3 @@
-io.skelp.verifier.message.formatter.ArrayFormatter
+io.skelp.verifier.message.formatter.ClassFormatter
+io.skelp.verifier.message.formatter.CollectionFormatter
+io.skelp.verifier.message.formatter.MapFormatter

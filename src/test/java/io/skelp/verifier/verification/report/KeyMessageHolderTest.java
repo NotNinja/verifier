@@ -24,14 +24,12 @@ package io.skelp.verifier.verification.report;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import io.skelp.verifier.message.MessageKey;
-import io.skelp.verifier.message.MessageSource;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -45,14 +43,7 @@ import io.skelp.verifier.verification.Verification;
 public class KeyMessageHolderTest {
 
     @Mock
-    private MessageSource mockMessageSource;
-    @Mock
     private Verification<?> mockVerification;
-
-    @Before
-    public void setUp() {
-        when(mockVerification.getMessageSource()).thenReturn(mockMessageSource);
-    }
 
     @Test
     public void testGetMessage() {
@@ -60,7 +51,7 @@ public class KeyMessageHolderTest {
         MessageKey key = () -> "test";
         Object[] args = new Object[]{"foo", "bar"};
 
-        when(mockMessageSource.getMessage(mockVerification, key, args)).thenReturn(expected);
+        when(mockVerification.getMessage(key, args)).thenReturn(expected);
 
         KeyMessageHolder holder = new KeyMessageHolder(key, args);
         assertEquals("Uses message source to return message", expected, holder.getMessage(mockVerification));
