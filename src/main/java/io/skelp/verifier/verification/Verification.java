@@ -53,6 +53,25 @@ public interface Verification<T> {
 
     /**
      * <p>
+     * Creates a copy of this {@link Verification} but using the {@code value} and optional {@code name} provided.
+     * </p>
+     * <p>
+     * The current negated state of this {@link Verification} is <b>not</b> copied.
+     * </p>
+     *
+     * @param value
+     *         the new value being verified
+     * @param name
+     *         the new optional name used to represent {@code value}
+     * @param <V>
+     *         the type of the new {@code value} being verified
+     * @return A copy for {@code value} and {@code name}.
+     * @since 0.2.0
+     */
+    <V> Verification<V> copy(V value, Object name);
+
+    /**
+     * <p>
      * Returns a formatter that can be used to format the specified object so that it is more human-friendly.
      * </p>
      * <p>

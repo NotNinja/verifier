@@ -122,6 +122,8 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     @Captor
     private ArgumentCaptor<Object> argsCaptor;
     @Mock
+    private CustomVerifierProvider mockCustomVerifierProvider;
+    @Mock
     private Verification<T> mockVerification;
     @Mock
     private VerificationProvider mockVerificationProvider;
@@ -134,6 +136,7 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     public void setUp() throws Exception {
         when(mockVerificationProvider.getVerification(any(), any())).thenAnswer(invocation -> new SimpleVerification<>(new SimpleLocaleContext(), new ResourceBundleMessageSource(), new DefaultFormatterProvider(), new DefaultReportExecutorProvider().getReportExecutor(), invocation.getArguments()[0], invocation.getArguments()[1]));
 
+        TestCustomVerifierProvider.setDelegate(mockCustomVerifierProvider);
         TestVerificationProvider.setDelegate(mockVerificationProvider);
 
         when(mockVerification.getValue()).thenAnswer(invocation -> value);
@@ -145,6 +148,7 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
 
     @After
     public void tearDown() throws Exception {
+        TestCustomVerifierProvider.setDelegate(null);
         TestVerificationProvider.setDelegate(null);
     }
 
@@ -177,6 +181,17 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
      */
     protected V getCustomVerifier() {
         return customVerifier;
+    }
+
+    /**
+     * <p>
+     * Returns the mock custom verifier provider being used to test the subject.
+     * </p>
+     *
+     * @return The mock {@link CustomVerifierProvider}.
+     */
+    protected CustomVerifierProvider getMockCustomVerifierProvider() {
+        return mockCustomVerifierProvider;
     }
 
     /**

@@ -52,11 +52,11 @@ public class LoginForm implements Form {
     public void handle(Map<String, String> data) {
         Verifier.verify(data)
             .containAllKeys("username", "password");
-        Verifier.verify(data.get("username"), "username")
-            .not().blank();
-        Verifier.verify(data.get("password"), "password")
-            .not().empty()
-            .alphanumeric();
+            .and(data.get("username"), "username")
+                .not().blank();
+            .and(data.get("password"), "password")
+                .not().empty()
+                .alphanumeric();
 
         userService.login(data);
     }
@@ -81,12 +81,12 @@ public class RegistrationForm implements Form {
     public void handle(Map<String, String> data) {
         Verifier.verify(data)
             .containAllKeys("username", "password");
-        Verifier.verify(data.get("username"), "username")
-            .not().blank()
-            .that((value) -> userService.isAvailable(value));
-        Verifier.verify(data.get("password"), "password", PasswordVerifier.class)
-            .not().nulled()
-            .strong();
+            .and(data.get("username"), "username")
+                .not().blank()
+                .that((value) -> userService.isAvailable(value));
+            .and(data.get("password"), "password", PasswordVerifier.class)
+                .not().nulled()
+                .strong();
 
         userService.register(data);
     }

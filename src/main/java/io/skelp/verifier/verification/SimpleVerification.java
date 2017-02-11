@@ -84,6 +84,11 @@ public final class SimpleVerification<T> implements Verification<T> {
     }
 
     @Override
+    public <V> Verification<V> copy(final V value, final Object name) {
+        return new SimpleVerification<>(localeContext, messageSource, formatterProvider, reportExecutor, value, name);
+    }
+
+    @Override
     public Formatter getFormatter(final Object obj) {
         return formatterProvider.getFormatter(obj);
     }
