@@ -6,6 +6,7 @@ application code.
 
 [![Chat](https://img.shields.io/gitter/room/skelpuk/verifier.svg)](https://gitter.im/skelpuk/verifier)
 [![Build](https://img.shields.io/travis/Skelp/verifier/develop.svg)](https://travis-ci.org/Skelp/verifier)
+[![Coverage](https://img.shields.io/codecov/c/github/Skelp/verifier/develop.svg)](https://codecov.io/gh/Skelp/verifier)
 [![Translations](https://d322cqt584bo4o.cloudfront.net/verifier/localized.svg)](https://crowdin.com/project/verifier)
 [![JavaDoc](https://www.javadoc.io/badge/io.skelp/verifier.svg)](https://www.javadoc.io/doc/io.skelp/verifier)
 [![License](https://img.shields.io/github/license/Skelp/verifier.svg)](https://github.com/Skelp/verifier/blob/master/LICENSE.md)
