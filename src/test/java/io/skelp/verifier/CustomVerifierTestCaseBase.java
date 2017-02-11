@@ -36,16 +36,14 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import io.skelp.verifier.message.MessageSource;
 import io.skelp.verifier.message.ResourceBundleMessageSource;
-import io.skelp.verifier.message.locale.LocaleContext;
+import io.skelp.verifier.message.formatter.DefaultFormatterProvider;
 import io.skelp.verifier.message.locale.SimpleLocaleContext;
 import io.skelp.verifier.verification.SimpleVerification;
 import io.skelp.verifier.verification.TestVerificationProvider;
 import io.skelp.verifier.verification.Verification;
 import io.skelp.verifier.verification.VerificationProvider;
 import io.skelp.verifier.verification.report.DefaultReportExecutorProvider;
-import io.skelp.verifier.verification.report.ReportExecutor;
 
 /**
  * <p>
@@ -124,12 +122,6 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     @Captor
     private ArgumentCaptor<Object> argsCaptor;
     @Mock
-    private LocaleContext mockLocaleContext;
-    @Mock
-    private MessageSource mockMessageSource;
-    @Mock
-    private ReportExecutor mockReportExecutor;
-    @Mock
     private Verification<T> mockVerification;
     @Mock
     private VerificationProvider mockVerificationProvider;
@@ -140,13 +132,10 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
 
     @Before
     public void setUp() throws Exception {
-        when(mockVerificationProvider.getVerification(any(), any())).thenAnswer(invocation -> new SimpleVerification<>(new SimpleLocaleContext(), new ResourceBundleMessageSource(), new DefaultReportExecutorProvider().getReportExecutor(), invocation.getArguments()[0], invocation.getArguments()[1]));
+        when(mockVerificationProvider.getVerification(any(), any())).thenAnswer(invocation -> new SimpleVerification<>(new SimpleLocaleContext(), new ResourceBundleMessageSource(), new DefaultFormatterProvider(), new DefaultReportExecutorProvider().getReportExecutor(), invocation.getArguments()[0], invocation.getArguments()[1]));
 
         TestVerificationProvider.setDelegate(mockVerificationProvider);
 
-        when(mockVerification.getLocaleContext()).thenReturn(mockLocaleContext);
-        when(mockVerification.getMessageSource()).thenReturn(mockMessageSource);
-        when(mockVerification.getReportExecutor()).thenReturn(mockReportExecutor);
         when(mockVerification.getValue()).thenAnswer(invocation -> value);
 
         value = null;
@@ -188,39 +177,6 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
      */
     protected V getCustomVerifier() {
         return customVerifier;
-    }
-
-    /**
-     * <p>
-     * Returns the mock locale context being used to test the subject.
-     * </p>
-     *
-     * @return The mock {@link LocaleContext}.
-     */
-    protected LocaleContext getMockLocaleContext() {
-        return mockLocaleContext;
-    }
-
-    /**
-     * <p>
-     * Returns the mock message source being used to test the subject.
-     * </p>
-     *
-     * @return The mock {@link MessageSource}.
-     */
-    protected MessageSource getMockMessageSource() {
-        return mockMessageSource;
-    }
-
-    /**
-     * <p>
-     * Returns the mock report executor being used to test the subject.
-     * </p>
-     *
-     * @return The mock {@link ReportExecutor}.
-     */
-    protected ReportExecutor getMockReportExecutor() {
-        return mockReportExecutor;
     }
 
     /**

@@ -25,6 +25,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
@@ -35,9 +36,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import io.skelp.verifier.message.formatter.ArrayFormatter;
-import io.skelp.verifier.message.formatter.Formatter;
-import io.skelp.verifier.message.locale.LocaleContext;
+import io.skelp.verifier.message.formatter.ClassFormatter;
+import io.skelp.verifier.message.formatter.CollectionFormatter;
+import io.skelp.verifier.message.formatter.MapFormatter;
 import io.skelp.verifier.util.TestUtils;
 import io.skelp.verifier.verification.Verification;
 
@@ -54,8 +55,6 @@ import io.skelp.verifier.verification.Verification;
 public abstract class AbstractMessageSourceTestCase<T extends AbstractMessageSource> {
 
     @Mock
-    private LocaleContext mockLocaleContext;
-    @Mock
     private Verification<?> mockVerification;
 
     private T messageSource;
@@ -64,10 +63,11 @@ public abstract class AbstractMessageSourceTestCase<T extends AbstractMessageSou
     public void setUp() {
         messageSource = createMessageSource();
 
-        when(mockLocaleContext.getLocale()).thenReturn(getLocale());
-
-        when(mockVerification.getLocaleContext()).thenReturn(mockLocaleContext);
-        when(mockVerification.getMessageSource()).thenReturn(messageSource);
+        when(mockVerification.getFormatter(isA(Class.class))).thenReturn(new ClassFormatter());
+        when(mockVerification.getFormatter(isA(Collection.class))).thenReturn(new CollectionFormatter());
+        when(mockVerification.getFormatter(isA(Object[].class))).thenReturn(new CollectionFormatter());
+        when(mockVerification.getFormatter(isA(Map.class))).thenReturn(new MapFormatter());
+        when(mockVerification.getLocale()).thenReturn(getLocale());
     }
 
     @After
@@ -330,24 +330,6 @@ public abstract class AbstractMessageSourceTestCase<T extends AbstractMessageSou
     @Test
     public void testGetDefaultName() {
         assertEquals("Returns expected default name", getDefaultName(), messageSource.getDefaultName(mockVerification));
-    }
-
-    @Test
-    public void testGetFormatter() {
-        Formatter formatter = messageSource.getFormatter(new Object[]{123, 456, 789});
-
-        assertNotNull("Returns formatter for array", formatter);
-        assertTrue("Formatter is instance of ArrayFormatter", formatter instanceof ArrayFormatter);
-    }
-
-    @Test
-    public void testGetFormatterWhenNoFormatterFound() {
-        assertNull("Returns null for unsupported object", messageSource.getFormatter(123));
-    }
-
-    @Test
-    public void testGetFormatterWhenObjectIsNull() {
-        assertNull("Returns null for null object", messageSource.getFormatter(null));
     }
 
     @Test

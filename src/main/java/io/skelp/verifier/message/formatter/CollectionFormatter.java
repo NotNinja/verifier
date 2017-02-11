@@ -19,40 +19,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier.verification.report;
+package io.skelp.verifier.message.formatter;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import java.util.Arrays;
+import java.util.Collection;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import io.skelp.verifier.verification.Verification;
+import io.skelp.verifier.util.ArrayUtils;
 
 /**
  * <p>
- * Tests for the {@link StringMessageHolder} class.
+ * An implementation of {@link Formatter} which transforms the elements within a {@code Collection} or an array into a
+ * string. The collection of elements is formatted recursively while preventing infinite loops by highlighting circular
+ * references.
  * </p>
  *
  * @author Alasdair Mercer
+ * @since 0.2.0
  */
-@RunWith(MockitoJUnitRunner.class)
-public class StringMessageHolderTest {
+public final class CollectionFormatter extends HierarchicalFormatter {
 
-    @Mock
-    private Verification<?> mockVerification;
+    @Override
+    protected Collection<Object> getChildren(final Object parent) {
+        return ArrayUtils.isArray(parent) ? Arrays.asList((Object[]) parent) : (Collection) parent;
+    }
 
-    @Test
-    public void testGetMessage() {
-        String expected = "i am expected";
-        String message = "test";
-        Object[] args = new Object[]{"foo", "bar"};
+    @Override
+    public boolean supports(final Class<?> cls) {
+        return Collection.class.isAssignableFrom(cls) || cls.isArray();
+    }
 
-        when(mockVerification.getMessage(message, args)).thenReturn(expected);
+    @Override
+    protected String getEndTag() {
+        return "]";
+    }
 
-        StringMessageHolder holder = new StringMessageHolder(message, args);
-        assertEquals("Uses message source to return message", expected, holder.getMessage(mockVerification));
+    @Override
+    protected String getStartTag() {
+        return "[";
     }
 }

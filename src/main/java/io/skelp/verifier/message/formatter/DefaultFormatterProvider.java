@@ -19,40 +19,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier.verification.report;
+package io.skelp.verifier.message.formatter;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import io.skelp.verifier.verification.Verification;
+import io.skelp.verifier.service.Services;
 
 /**
  * <p>
- * Tests for the {@link StringMessageHolder} class.
+ * The default implementation of {@link FormatterProvider} which looks up {@link Formatter Formatters} using Java's SPI
+ * and returns the first one to support a given object.
  * </p>
  *
  * @author Alasdair Mercer
+ * @since 0.2.0
  */
-@RunWith(MockitoJUnitRunner.class)
-public class StringMessageHolderTest {
+public final class DefaultFormatterProvider implements FormatterProvider {
 
-    @Mock
-    private Verification<?> mockVerification;
+    @Override
+    public Formatter getFormatter(final Object obj) {
+        if (obj == null) {
+            return null;
+        }
 
-    @Test
-    public void testGetMessage() {
-        String expected = "i am expected";
-        String message = "test";
-        Object[] args = new Object[]{"foo", "bar"};
+        final Class<?> cls = obj.getClass();
+        return Services.getServices(Formatter.class).stream()
+            .filter(formatter -> formatter.supports(cls))
+            .findFirst()
+            .orElse(null);
+    }
 
-        when(mockVerification.getMessage(message, args)).thenReturn(expected);
-
-        StringMessageHolder holder = new StringMessageHolder(message, args);
-        assertEquals("Uses message source to return message", expected, holder.getMessage(mockVerification));
+    @Override
+    public int getWeight() {
+        return DEFAULT_IMPLEMENTATION_WEIGHT;
     }
 }

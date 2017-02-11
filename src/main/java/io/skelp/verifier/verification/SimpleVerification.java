@@ -21,9 +21,13 @@
  */
 package io.skelp.verifier.verification;
 
+import java.util.Locale;
+
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.message.MessageKey;
 import io.skelp.verifier.message.MessageSource;
+import io.skelp.verifier.message.formatter.Formatter;
+import io.skelp.verifier.message.formatter.FormatterProvider;
 import io.skelp.verifier.message.locale.LocaleContext;
 import io.skelp.verifier.verification.report.KeyMessageHolder;
 import io.skelp.verifier.verification.report.MessageHolder;
@@ -42,6 +46,7 @@ import io.skelp.verifier.verification.report.StringMessageHolder;
  */
 public final class SimpleVerification<T> implements Verification<T> {
 
+    private final FormatterProvider formatterProvider;
     private final LocaleContext localeContext;
     private final MessageSource messageSource;
     private final Object name;
@@ -59,6 +64,9 @@ public final class SimpleVerification<T> implements Verification<T> {
      * @param messageSource
      *         the {@link MessageSource} to be used to lookup and/or format the messages for any {@link
      *         VerifierException VerifierExceptions}
+     * @param formatterProvider
+     *         the {@link FormatterProvider} to be used to lookup {@link Formatter Formatters} to be used to format
+     *         objects
      * @param reportExecutor
      *         the {@link ReportExecutor} to be used to report verification results
      * @param value
@@ -66,12 +74,28 @@ public final class SimpleVerification<T> implements Verification<T> {
      * @param name
      *         the optional name used to represent {@code value}
      */
-    public SimpleVerification(final LocaleContext localeContext, final MessageSource messageSource, final ReportExecutor reportExecutor, final T value, final Object name) {
+    public SimpleVerification(final LocaleContext localeContext, final MessageSource messageSource, final FormatterProvider formatterProvider, final ReportExecutor reportExecutor, final T value, final Object name) {
         this.localeContext = localeContext;
         this.messageSource = messageSource;
+        this.formatterProvider = formatterProvider;
         this.reportExecutor = reportExecutor;
         this.value = value;
         this.name = name;
+    }
+
+    @Override
+    public Formatter getFormatter(final Object obj) {
+        return formatterProvider.getFormatter(obj);
+    }
+
+    @Override
+    public String getMessage(final MessageKey key, final Object... args) {
+        return messageSource.getMessage(this, key, args);
+    }
+
+    @Override
+    public String getMessage(final String message, final Object... args) {
+        return messageSource.getMessage(this, message, args);
     }
 
     @Override
@@ -95,13 +119,8 @@ public final class SimpleVerification<T> implements Verification<T> {
     }
 
     @Override
-    public LocaleContext getLocaleContext() {
-        return localeContext;
-    }
-
-    @Override
-    public MessageSource getMessageSource() {
-        return messageSource;
+    public Locale getLocale() {
+        return localeContext.getLocale();
     }
 
     @Override
@@ -117,11 +136,6 @@ public final class SimpleVerification<T> implements Verification<T> {
     @Override
     public void setNegated(final boolean negated) {
         this.negated = negated;
-    }
-
-    @Override
-    public ReportExecutor getReportExecutor() {
-        return reportExecutor;
     }
 
     @Override

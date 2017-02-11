@@ -26,6 +26,7 @@ import static org.mockito.AdditionalMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.eq;
 
+import java.util.Locale;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +38,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.message.MessageKey;
 import io.skelp.verifier.message.MessageSource;
+import io.skelp.verifier.message.formatter.Formatter;
+import io.skelp.verifier.message.formatter.FormatterProvider;
 import io.skelp.verifier.message.locale.LocaleContext;
 import io.skelp.verifier.verification.report.MessageHolder;
 import io.skelp.verifier.verification.report.ReportExecutor;
@@ -57,6 +60,10 @@ public class SimpleVerificationTest {
     @Captor
     private ArgumentCaptor<MessageHolder> messageHolderCaptor;
     @Mock
+    private Formatter mockFormatter;
+    @Mock
+    private FormatterProvider mockFormatterProvider;
+    @Mock
     private LocaleContext mockLocaleContext;
     @Mock
     private MessageSource mockMessageSource;
@@ -67,7 +74,38 @@ public class SimpleVerificationTest {
 
     @Before
     public void setUp() {
-        verification = new SimpleVerification<>(mockLocaleContext, mockMessageSource, mockReportExecutor, TEST_VALUE, TEST_NAME);
+        verification = new SimpleVerification<>(mockLocaleContext, mockMessageSource, mockFormatterProvider, mockReportExecutor, TEST_VALUE, TEST_NAME);
+    }
+
+    @Test
+    public void testGetFormatter() {
+        Object obj = 123;
+
+        when(mockFormatterProvider.getFormatter(obj)).thenReturn(mockFormatter);
+
+        assertEquals("Delegates to FormatterProvider", mockFormatter, verification.getFormatter(obj));
+    }
+
+    @Test
+    public void testGetMessageWithMessage() {
+        String expected = "i am expected";
+        String message = "test";
+        Object[] args = new Object[]{"foo", "bar"};
+
+        when(mockMessageSource.getMessage(verification, message, args)).thenReturn(expected);
+
+        assertEquals("Delegates to MessageSource", expected, verification.getMessage(message, args));
+    }
+
+    @Test
+    public void testGetMessageWithMessageKey() {
+        String expected = "i am expected";
+        MessageKey key = () -> "test";
+        Object[] args = new Object[]{"foo", "bar"};
+
+        when(mockMessageSource.getMessage(verification, key, args)).thenReturn(expected);
+
+        assertEquals("Delegates to MessageSource", expected, verification.getMessage(key, args));
     }
 
     @Test
@@ -137,18 +175,12 @@ public class SimpleVerificationTest {
     }
 
     @Test
-    public void testLocaleContext() {
-        assertEquals("LocaleContext property is readable", mockLocaleContext, verification.getLocaleContext());
-    }
+    public void testGetLocale() {
+        Locale locale = Locale.FRENCH;
 
-    @Test
-    public void testMessageSource() {
-        assertEquals("MessageSource property is readable", mockMessageSource, verification.getMessageSource());
-    }
+        when(mockLocaleContext.getLocale()).thenReturn(locale);
 
-    @Test
-    public void testReportExecutor() {
-        assertEquals("ReportExecutor property is readable", mockReportExecutor, verification.getReportExecutor());
+        assertEquals("Delegates to LocaleContext", locale, verification.getLocale());
     }
 
     @Test

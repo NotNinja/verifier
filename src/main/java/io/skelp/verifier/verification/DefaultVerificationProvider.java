@@ -23,6 +23,7 @@ package io.skelp.verifier.verification;
 
 import io.skelp.verifier.message.MessageSource;
 import io.skelp.verifier.message.MessageSourceProvider;
+import io.skelp.verifier.message.formatter.FormatterProvider;
 import io.skelp.verifier.message.locale.LocaleContext;
 import io.skelp.verifier.message.locale.LocaleContextProvider;
 import io.skelp.verifier.service.Services;
@@ -42,11 +43,12 @@ public final class DefaultVerificationProvider implements VerificationProvider {
 
     @Override
     public <T> Verification<T> getVerification(final T value, final Object name) {
+        final FormatterProvider formatterProvider = Services.getWeightedService(FormatterProvider.class);
         final LocaleContext localeContext = Services.findFirstNonNullForWeightedService(LocaleContextProvider.class, LocaleContextProvider::getLocaleContext);
         final MessageSource messageSource = Services.findFirstNonNullForWeightedService(MessageSourceProvider.class, MessageSourceProvider::getMessageSource);
         final ReportExecutor reportExecutor = Services.findFirstNonNullForWeightedService(ReportExecutorProvider.class, ReportExecutorProvider::getReportExecutor);
 
-        return new SimpleVerification<>(localeContext, messageSource, reportExecutor, value, name);
+        return new SimpleVerification<>(localeContext, messageSource, formatterProvider, reportExecutor, value, name);
     }
 
     @Override

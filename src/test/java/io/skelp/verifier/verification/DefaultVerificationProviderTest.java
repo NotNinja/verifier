@@ -34,10 +34,12 @@ import org.mockito.runners.MockitoJUnitRunner;
 import io.skelp.verifier.message.MessageSource;
 import io.skelp.verifier.message.MessageSourceProvider;
 import io.skelp.verifier.message.TestMessageSourceProvider;
+import io.skelp.verifier.message.formatter.TestFormatterProvider;
 import io.skelp.verifier.message.locale.LocaleContext;
 import io.skelp.verifier.message.locale.LocaleContextProvider;
 import io.skelp.verifier.message.locale.TestLocaleContextProvider;
 import io.skelp.verifier.service.Weighted;
+import io.skelp.verifier.util.TestUtils;
 import io.skelp.verifier.verification.report.ReportExecutor;
 import io.skelp.verifier.verification.report.ReportExecutorProvider;
 import io.skelp.verifier.verification.report.TestReportExecutorProvider;
@@ -88,14 +90,15 @@ public class DefaultVerificationProviderTest {
     }
 
     @Test
-    public void testGetVerification() {
+    public void testGetVerification() throws Exception {
         Verification<Integer> verification = provider.getVerification(123, "foo");
 
         assertNotNull("Never returns null", verification);
         assertTrue("Returns instance of SimpleVerification", verification instanceof SimpleVerification);
-        assertSame("Passed LocaleContext from provider", mockLocaleContext, verification.getLocaleContext());
-        assertSame("Passed MessageSource from provider", mockMessageSource, verification.getMessageSource());
-        assertSame("Passed ReportExecutor from provider", mockReportExecutor, verification.getReportExecutor());
+        assertTrue("Passed FormatterProvider", TestUtils.getInstanceField(verification, "formatterProvider", true) instanceof TestFormatterProvider);
+        assertSame("Passed LocaleContext from provider", mockLocaleContext, TestUtils.getInstanceField(verification, "localeContext", true));
+        assertSame("Passed MessageSource from provider", mockMessageSource, TestUtils.getInstanceField(verification, "messageSource", true));
+        assertSame("Passed ReportExecutor from provider", mockReportExecutor, TestUtils.getInstanceField(verification, "reportExecutor", true));
         assertEquals("Passed name", "foo", verification.getName());
         assertEquals("Passed value", Integer.valueOf(123), verification.getValue());
     }

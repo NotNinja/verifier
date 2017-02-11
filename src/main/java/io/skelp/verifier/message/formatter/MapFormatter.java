@@ -19,40 +19,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.skelp.verifier.verification.report;
+package io.skelp.verifier.message.formatter;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import io.skelp.verifier.verification.Verification;
 
 /**
  * <p>
- * Tests for the {@link StringMessageHolder} class.
+ * An implementation of {@link Formatter} which transforms the key/value pairs within a {@code Map} into a string. The
+ * entries are formatted recursively while preventing infinite loops by highlighting circular references.
  * </p>
  *
  * @author Alasdair Mercer
+ * @since 0.2.0
  */
-@RunWith(MockitoJUnitRunner.class)
-public class StringMessageHolderTest {
+public final class MapFormatter extends HierarchicalFormatter {
 
-    @Mock
-    private Verification<?> mockVerification;
+    @Override
+    protected void appendChild(final Verification<?> verification, final Object child, final List<Object> hierarchy, final StringBuilder buffer) {
+        final Map.Entry entry = (Map.Entry) child;
 
-    @Test
-    public void testGetMessage() {
-        String expected = "i am expected";
-        String message = "test";
-        Object[] args = new Object[]{"foo", "bar"};
+        super.appendChild(verification, entry.getKey(), hierarchy, buffer);
 
-        when(mockVerification.getMessage(message, args)).thenReturn(expected);
+        buffer.append("=");
 
-        StringMessageHolder holder = new StringMessageHolder(message, args);
-        assertEquals("Uses message source to return message", expected, holder.getMessage(mockVerification));
+        super.appendChild(verification, entry.getValue(), hierarchy, buffer);
+    }
+
+    @Override
+    protected Collection<Object> getChildren(final Object parent) {
+        return ((Map) parent).entrySet();
+    }
+
+    @Override
+    public boolean supports(final Class<?> cls) {
+        return Map.class.isAssignableFrom(cls);
     }
 }
