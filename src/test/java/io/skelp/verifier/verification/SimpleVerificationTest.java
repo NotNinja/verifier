@@ -41,6 +41,7 @@ import io.skelp.verifier.message.MessageSource;
 import io.skelp.verifier.message.formatter.Formatter;
 import io.skelp.verifier.message.formatter.FormatterProvider;
 import io.skelp.verifier.message.locale.LocaleContext;
+import io.skelp.verifier.util.TestUtils;
 import io.skelp.verifier.verification.report.MessageHolder;
 import io.skelp.verifier.verification.report.ReportExecutor;
 
@@ -54,8 +55,10 @@ import io.skelp.verifier.verification.report.ReportExecutor;
 @RunWith(MockitoJUnitRunner.class)
 public class SimpleVerificationTest {
 
-    private static final Object TEST_NAME = "foo";
-    private static final Object TEST_VALUE = 123;
+    private static final Object TEST_NAME_1 = "foo";
+    private static final Object TEST_NAME_2 = "fu";
+    private static final Object TEST_VALUE_1 = 123;
+    private static final Object TEST_VALUE_2 = 456;
 
     @Captor
     private ArgumentCaptor<MessageHolder> messageHolderCaptor;
@@ -74,7 +77,24 @@ public class SimpleVerificationTest {
 
     @Before
     public void setUp() {
-        verification = new SimpleVerification<>(mockLocaleContext, mockMessageSource, mockFormatterProvider, mockReportExecutor, TEST_VALUE, TEST_NAME);
+        verification = new SimpleVerification<>(mockLocaleContext, mockMessageSource, mockFormatterProvider, mockReportExecutor, TEST_VALUE_1, TEST_NAME_1);
+    }
+
+    @Test
+    public void testCopy() throws Exception {
+        verification.setNegated(true);
+
+        Verification<?> copy = verification.copy(TEST_VALUE_2, TEST_NAME_2);
+
+        assertNotNull("Never returns null", copy);
+        assertTrue("Returns instance of SimpleVerification", copy instanceof SimpleVerification);
+        assertFalse("Copy is not negated", copy.isNegated());
+        assertSame("Reuses FormatterProvider", TestUtils.getInstanceField(verification, "formatterProvider", true), TestUtils.getInstanceField(copy, "formatterProvider", true));
+        assertSame("Reuses LocaleContext", TestUtils.getInstanceField(verification, "localeContext", true), TestUtils.getInstanceField(copy, "localeContext", true));
+        assertSame("Reuses MessageSource", TestUtils.getInstanceField(verification, "messageSource", true), TestUtils.getInstanceField(copy, "messageSource", true));
+        assertSame("Reuses ReportExecutor", TestUtils.getInstanceField(verification, "reportExecutor", true), TestUtils.getInstanceField(copy, "reportExecutor", true));
+        assertEquals("Passed name", TEST_NAME_2, copy.getName());
+        assertEquals("Passed value", TEST_VALUE_2, copy.getValue());
     }
 
     @Test
@@ -185,7 +205,7 @@ public class SimpleVerificationTest {
 
     @Test
     public void testName() {
-        assertEquals("Name property is readable", TEST_NAME, verification.getName());
+        assertEquals("Name property is readable", TEST_NAME_1, verification.getName());
     }
 
     @Test
@@ -199,6 +219,6 @@ public class SimpleVerificationTest {
 
     @Test
     public void testValue() {
-        assertEquals("Value property is readable", TEST_VALUE, verification.getValue());
+        assertEquals("Value property is readable", TEST_VALUE_1, verification.getValue());
     }
 }
