@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, Skelp
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ import java.util.Iterator;
 
 import io.skelp.verifier.Verifier;
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.message.MessageKey;
 import io.skelp.verifier.verification.Verification;
 
 /**
@@ -82,7 +83,7 @@ public abstract class BaseSortableCollectionVerifier<E, T, V extends BaseSortabl
      *         negated.
      * @see #sortedBy(Comparator, Object)
      */
-    public V sortedBy(final Comparator<E> comparator) throws VerifierException {
+    public V sortedBy(final Comparator<E> comparator) {
         return sortedBy(comparator, comparator);
     }
 
@@ -119,7 +120,7 @@ public abstract class BaseSortableCollectionVerifier<E, T, V extends BaseSortabl
      *         negated.
      * @see #sortedBy(Comparator)
      */
-    public V sortedBy(final Comparator<E> comparator, final Object name) throws VerifierException {
+    public V sortedBy(final Comparator<E> comparator, final Object name) {
         Verifier.verify(comparator, "comparator")
             .not().nulled();
 
@@ -143,8 +144,31 @@ public abstract class BaseSortableCollectionVerifier<E, T, V extends BaseSortabl
             }
         }
 
-        verification().check(result, "be sorted by '%s'", name);
+        verification().report(result, MessageKeys.SORTED_BY, name);
 
         return chain();
+    }
+
+    /**
+     * <p>
+     * The {@link MessageKey MessageKeys} that are used by {@link BaseSortableCollectionVerifier}.
+     * </p>
+     *
+     * @since 0.2.0
+     */
+    enum MessageKeys implements MessageKey {
+
+        SORTED_BY("io.skelp.verifier.type.base.BaseSortableCollectionVerifier.sortedBy");
+
+        private final String code;
+
+        MessageKeys(final String code) {
+            this.code = code;
+        }
+
+        @Override
+        public String code() {
+            return code;
+        }
     }
 }

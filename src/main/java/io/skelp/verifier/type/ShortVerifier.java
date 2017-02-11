@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, Skelp
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@
  */
 package io.skelp.verifier.type;
 
-import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseNumberVerifier;
 import io.skelp.verifier.type.base.BaseTruthVerifier;
@@ -55,81 +54,81 @@ public final class ShortVerifier extends BaseComparableVerifier<Short, ShortVeri
     }
 
     @Override
-    public ShortVerifier even() throws VerifierException {
+    public ShortVerifier even() {
         final Short value = verification().getValue();
         final boolean result = value != null && value % 2 == 0;
 
-        verification().check(result, EVEN_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.EVEN);
 
         return this;
     }
 
     @Override
-    public ShortVerifier falsy() throws VerifierException {
+    public ShortVerifier falsy() {
         final Short value = verification().getValue();
         final boolean result = value == null || value == 0;
 
-        verification().check(result, FALSY_MESSAGE);
+        verification().report(result, BaseTruthVerifier.MessageKeys.FALSY);
 
         return this;
     }
 
     @Override
-    public ShortVerifier negative() throws VerifierException {
+    public ShortVerifier negative() {
         final Short value = verification().getValue();
         final boolean result = value != null && value < 0;
 
-        verification().check(result, NEGATIVE_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.NEGATIVE);
 
         return this;
     }
 
     @Override
-    public ShortVerifier odd() throws VerifierException {
+    public ShortVerifier odd() {
         final Short value = verification().getValue();
         final boolean result = value != null && value % 2 != 0;
 
-        verification().check(result, ODD_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.ODD);
 
         return this;
     }
 
     @Override
-    public ShortVerifier one() throws VerifierException {
+    public ShortVerifier one() {
         final Short value = verification().getValue();
         final boolean result = value != null && value == 1;
 
-        verification().check(result, ONE_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.ONE);
 
         return this;
     }
 
     @Override
-    public ShortVerifier positive() throws VerifierException {
+    public ShortVerifier positive() {
         final Short value = verification().getValue();
         final boolean result = value != null && value >= 0;
 
-        verification().check(result, POSITIVE_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.POSITIVE);
 
         return this;
     }
 
     @Override
-    public ShortVerifier truthy() throws VerifierException {
+    public ShortVerifier truthy() {
         final Short value = verification().getValue();
         final boolean result = value != null && value == 1;
 
-        verification().check(result, TRUTHY_MESSAGE);
+        verification().report(result, BaseTruthVerifier.MessageKeys.TRUTHY);
 
         return this;
     }
 
     @Override
-    public ShortVerifier zero() throws VerifierException {
+    public ShortVerifier zero() {
         final Short value = verification().getValue();
         final boolean result = value != null && value == 0;
 
-        verification().check(result, ZERO_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.ZERO);
 
         return this;
     }

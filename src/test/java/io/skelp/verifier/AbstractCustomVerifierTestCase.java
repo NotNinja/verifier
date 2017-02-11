@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, Skelp
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +22,46 @@
 package io.skelp.verifier;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.*;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.net.URI;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import io.skelp.verifier.message.MessageKey;
+import io.skelp.verifier.type.ArrayVerifier;
+import io.skelp.verifier.type.BigDecimalVerifier;
+import io.skelp.verifier.type.BigIntegerVerifier;
+import io.skelp.verifier.type.BooleanVerifier;
+import io.skelp.verifier.type.ByteVerifier;
+import io.skelp.verifier.type.CalendarVerifier;
+import io.skelp.verifier.type.CharacterVerifier;
+import io.skelp.verifier.type.ClassVerifier;
+import io.skelp.verifier.type.CollectionVerifier;
+import io.skelp.verifier.type.ComparableVerifier;
+import io.skelp.verifier.type.DateVerifier;
+import io.skelp.verifier.type.DoubleVerifier;
+import io.skelp.verifier.type.FloatVerifier;
+import io.skelp.verifier.type.IntegerVerifier;
+import io.skelp.verifier.type.LocaleVerifier;
+import io.skelp.verifier.type.LongVerifier;
+import io.skelp.verifier.type.MapVerifier;
+import io.skelp.verifier.type.ObjectVerifier;
+import io.skelp.verifier.type.ShortVerifier;
+import io.skelp.verifier.type.StringVerifier;
+import io.skelp.verifier.type.ThrowableVerifier;
+import io.skelp.verifier.verification.Verification;
 
 /**
  * <p>
@@ -48,6 +79,360 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
     @Mock
     private VerifierAssertion<T> mockAssertion;
+
+    @Test
+    public void testAndWithArray() {
+        Integer[] value = new Integer[]{123, 456, 789};
+        ArrayVerifier<Integer> result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithArrayAndName() {
+        Integer[] value = new Integer[]{123, 456, 789};
+        ArrayVerifier<Integer> result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithBigDecimal() {
+        BigDecimal value = BigDecimal.ONE;
+        BigDecimalVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithBigDecimalAndName() {
+        BigDecimal value = BigDecimal.ONE;
+        BigDecimalVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithBigInteger() {
+        BigInteger value = BigInteger.ONE;
+        BigIntegerVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithBigIntegerAndName() {
+        BigInteger value = BigInteger.ONE;
+        BigIntegerVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithBoolean() {
+        BooleanVerifier result = getCustomVerifier().and(true);
+
+        testAndHelper(result, true, null);
+    }
+
+    @Test
+    public void testAndWithBooleanAndName() {
+        BooleanVerifier result = getCustomVerifier().and(true, "foo");
+
+        testAndHelper(result, true, "foo");
+    }
+
+    @Test
+    public void testAndWithByte() {
+        byte value = 123;
+        ByteVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithByteAndName() {
+        byte value = 123;
+        ByteVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithCalendar() {
+        Calendar value = Calendar.getInstance();
+        CalendarVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithCalendarAndName() {
+        Calendar value = Calendar.getInstance();
+        CalendarVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithCharacter() {
+        char value = 'a';
+        CharacterVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithCharacterAndName() {
+        char value = 'a';
+        CharacterVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithClass() {
+        ClassVerifier result = getCustomVerifier().and(VerifierTest.class);
+
+        testAndHelper(result, VerifierTest.class, null);
+    }
+
+    @Test
+    public void testAndWithClassAndName() {
+        ClassVerifier result = getCustomVerifier().and(VerifierTest.class, "foo");
+
+        testAndHelper(result, VerifierTest.class, "foo");
+    }
+
+    @Test
+    public void testAndWithCollection() {
+        Collection<Integer> value = Arrays.asList(123, 456, 789);
+        CollectionVerifier<Integer> result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithCollectionAndName() {
+        Collection<Integer> value = Arrays.asList(123, 456, 789);
+        CollectionVerifier<Integer> result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithDate() {
+        Date value = new Date();
+        DateVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithDateAndName() {
+        Date value = new Date();
+        DateVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithDouble() {
+        double value = 123D;
+        DoubleVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithDoubleAndName() {
+        double value = 123D;
+        DoubleVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithFloat() {
+        float value = 123F;
+        FloatVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithFloatAndName() {
+        float value = 123F;
+        FloatVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithInteger() {
+        int value = 123;
+        IntegerVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithIntegerAndName() {
+        int value = 123;
+        IntegerVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithLocale() {
+        Locale value = Locale.US;
+        LocaleVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithLocaleAndName() {
+        Locale value = Locale.US;
+        LocaleVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithLong() {
+        long value = 123L;
+        LongVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithLongAndName() {
+        long value = 123L;
+        LongVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithMap() {
+        Map<String, Integer> value = new HashMap<>();
+        value.put("abc", 123);
+        MapVerifier<String, Integer> result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithMapAndName() {
+        Map<String, Integer> value = new HashMap<>();
+        value.put("abc", 123);
+        MapVerifier<String, Integer> result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithObject() {
+        Object value = new Verifier();
+        ObjectVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithObjectAndName() {
+        Object value = new Verifier();
+        ObjectVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithShort() {
+        short value = 123;
+        ShortVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithShortAndName() {
+        short value = 123;
+        ShortVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithString() {
+        StringVerifier result = getCustomVerifier().and("foo");
+
+        testAndHelper(result, "foo", null);
+    }
+
+    @Test
+    public void testAndWithStringAndName() {
+        StringVerifier result = getCustomVerifier().and("foo", "bar");
+
+        testAndHelper(result, "foo", "bar");
+    }
+
+    @Test
+    public void testAndWithThrowable() {
+        Throwable value = new Throwable();
+        ThrowableVerifier result = getCustomVerifier().and(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndWithThrowableAndName() {
+        Throwable value = new Throwable();
+        ThrowableVerifier result = getCustomVerifier().and(value, "foo");
+
+        testAndHelper(result, value, "foo");
+    }
+
+    @Test
+    public void testAndWithCustomVerifierClass() {
+        @SuppressWarnings("unchecked")
+        Verification<String> mockVerification = (Verification<String>) mock(Verification.class);
+        StringVerifier expected = new StringVerifier(mockVerification);
+
+        when(getMockVerification().copy("foo", "bar")).thenReturn(mockVerification);
+
+        when(getMockCustomVerifierProvider().getCustomVerifier(StringVerifier.class, mockVerification)).thenReturn(expected);
+
+        StringVerifier actual = getCustomVerifier().and("foo", "bar", StringVerifier.class);
+
+        assertSame("Uses CustomVerifier created by factory", expected, actual);
+        testAndHelper(actual, "foo", "bar");
+    }
+
+    private <U, C extends CustomVerifier<U, C>> void testAndHelper(CustomVerifier<U, C> verifier, U value, Object name) {
+        assertNotNull("Never returns null", verifier);
+
+        verify(getMockVerification()).copy(value, name);
+    }
+
+    @Test
+    public void testAndComparable() {
+        URI value = URI.create("foo");
+        ComparableVerifier<URI> result = getCustomVerifier().andComparable(value);
+
+        testAndHelper(result, value, null);
+    }
+
+    @Test
+    public void testAndComparableWithName() {
+        URI value = URI.create("foo");
+        ComparableVerifier<URI> result = getCustomVerifier().andComparable(value, "bar");
+
+        testAndHelper(result, value, "bar");
+    }
 
     @Test
     public void testEqualToWithDifferentInstance() {
@@ -86,7 +471,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().equalTo(other));
 
-        verify(getMockVerification()).check(eq(expected), eq("be equal to '%s'"), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(AbstractCustomVerifier.MessageKeys.EQUAL_TO), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }
@@ -128,7 +513,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().equalTo(other, name));
 
-        verify(getMockVerification()).check(eq(expected), eq("be equal to '%s'"), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(AbstractCustomVerifier.MessageKeys.EQUAL_TO), getArgsCaptor().capture());
 
         assertSame("Passes name for message formatting", name, getArgsCaptor().getValue());
     }
@@ -185,9 +570,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().equalToAny(others));
 
-        verify(getMockVerification()).check(eq(expected), eq("be equal to any %s"), getArgsCaptor().capture());
-
-        assertArrayFormatter(getArgsCaptor().getValue(), others);
+        verify(getMockVerification()).report(expected, AbstractCustomVerifier.MessageKeys.EQUAL_TO_ANY, (Object) others);
     }
 
     @Test
@@ -214,7 +597,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().hashedAs(hashCode));
 
-        verify(getMockVerification()).check(eq(expected), eq("have hash code '%d'"), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(AbstractCustomVerifier.MessageKeys.HASHED_AS), getArgsCaptor().capture());
 
         assertEquals("Passes hash code for message formatting", hashCode, getArgsCaptor().getValue());
     }
@@ -254,7 +637,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().instanceOf(cls));
 
-        verify(getMockVerification()).check(eq(expected), eq("be an instance of '%s'"), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(AbstractCustomVerifier.MessageKeys.INSTANCE_OF), getArgsCaptor().capture());
 
         assertEquals("Passes class for message formatting", cls, getArgsCaptor().getValue());
     }
@@ -309,9 +692,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().instanceOfAll(classes));
 
-        verify(getMockVerification()).check(eq(expected), eq("be an instance of all %s"), getArgsCaptor().capture());
-
-        assertArrayFormatter(getArgsCaptor().getValue(), classes);
+        verify(getMockVerification()).report(expected, AbstractCustomVerifier.MessageKeys.INSTANCE_OF_ALL, (Object) classes);
     }
 
     @Test
@@ -364,9 +745,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().instanceOfAny(classes));
 
-        verify(getMockVerification()).check(eq(expected), eq("be an instance of any %s"), getArgsCaptor().capture());
-
-        assertArrayFormatter(getArgsCaptor().getValue(), classes);
+        verify(getMockVerification()).report(expected, AbstractCustomVerifier.MessageKeys.INSTANCE_OF_ANY, (Object) classes);
     }
 
     @Test
@@ -400,7 +779,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().nulled());
 
-        verify(getMockVerification()).check(expected, "be null");
+        verify(getMockVerification()).report(expected, AbstractCustomVerifier.MessageKeys.NULLED);
     }
 
     @Test
@@ -440,7 +819,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameAs(other));
 
-        verify(getMockVerification()).check(eq(expected), eq("be same as '%s'"), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(AbstractCustomVerifier.MessageKeys.SAME_AS), getArgsCaptor().capture());
 
         assertSame("Passes other for message formatting", other, getArgsCaptor().getValue());
     }
@@ -482,7 +861,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameAs(other, name));
 
-        verify(getMockVerification()).check(eq(expected), eq("be same as '%s'"), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(AbstractCustomVerifier.MessageKeys.SAME_AS), getArgsCaptor().capture());
 
         assertSame("Passes name for message formatting", name, getArgsCaptor().getValue());
     }
@@ -539,9 +918,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
 
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().sameAsAny(others));
 
-        verify(getMockVerification()).check(eq(expected), eq("be same as any %s"), getArgsCaptor().capture());
-
-        assertArrayFormatter(getArgsCaptor().getValue(), others);
+        verify(getMockVerification()).report(expected, AbstractCustomVerifier.MessageKeys.SAME_AS_ANY, (Object) others);
     }
 
     @Test
@@ -571,17 +948,17 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().that(mockAssertion));
 
         verify(mockAssertion).verify(value);
-        verify(getMockVerification()).check(eq(expected), isNull(String.class));
+        verify(getMockVerification()).report(eq(expected), isNull(String.class));
     }
 
     @Test
     public void testThatWithMessageWhenFalse() {
-        testThatHelper(false, "foo %s", new Object[]{"bar"});
+        testThatHelper(false, "foo {0}", new Object[]{"bar"});
     }
 
     @Test
     public void testThatWithMessageWhenTrue() {
-        testThatHelper(true, "foo %s", new Object[]{"bar"});
+        testThatHelper(true, "foo {0}", new Object[]{"bar"});
     }
 
     @Test
@@ -589,7 +966,7 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
         thrown.expect(VerifierException.class);
         thrown.expectMessage("assertion must not be null: null");
 
-        getCustomVerifier().that(null, "foo %s", "bar");
+        getCustomVerifier().that(null, "foo {0}", "bar");
     }
 
     private void testThatHelper(boolean expected, String message, Object[] args) {
@@ -601,7 +978,39 @@ public abstract class AbstractCustomVerifierTestCase<T, V extends AbstractCustom
         assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().that(mockAssertion, message, args));
 
         verify(mockAssertion).verify(value);
-        verify(getMockVerification()).check(eq(expected), eq(message), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(message), getArgsCaptor().capture());
+
+        assertEquals("Passes args for message formatting", Arrays.asList(args), getArgsCaptor().getAllValues());
+    }
+
+    @Test
+    public void testThatWithMessageKeyWhenFalse() {
+        testThatHelper(false, () -> "foo", new Object[]{"bar"});
+    }
+
+    @Test
+    public void testThatWithMessageKeyWhenTrue() {
+        testThatHelper(true, () -> "foo", new Object[]{"bar"});
+    }
+
+    @Test
+    public void testThatWithMessageKeyThrowsIfAssertionIsNull() {
+        thrown.expect(VerifierException.class);
+        thrown.expectMessage("assertion must not be null: null");
+
+        getCustomVerifier().that(null, () -> "foo", "bar");
+    }
+
+    private void testThatHelper(boolean expected, MessageKey key, Object[] args) {
+        T value = createValueOne();
+        setValue(value);
+
+        when(mockAssertion.verify(value)).thenReturn(expected);
+
+        assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().that(mockAssertion, key, args));
+
+        verify(mockAssertion).verify(value);
+        verify(getMockVerification()).report(eq(expected), eq(key), getArgsCaptor().capture());
 
         assertEquals("Passes args for message formatting", Arrays.asList(args), getArgsCaptor().getAllValues());
     }

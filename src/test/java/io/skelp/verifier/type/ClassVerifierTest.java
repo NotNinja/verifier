@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, Skelp
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@
 package io.skelp.verifier.type;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 import java.lang.annotation.Annotation;
@@ -30,15 +29,21 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
 import io.skelp.verifier.AbstractCustomVerifierTestCase;
 import io.skelp.verifier.CustomVerifierTestCaseBase;
+import io.skelp.verifier.message.MessageKeyEnumTestCase;
 
 /**
  * <p>
@@ -113,7 +118,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotated());
 
-            verify(getMockVerification()).check(expected, "be annotated");
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ANNOTATED);
         }
 
         @Test
@@ -151,7 +156,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotatedWith(type));
 
-            verify(getMockVerification()).check(eq(expected), eq("be annotated with '%s'"), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(ClassVerifier.MessageKeys.ANNOTATED_WITH), getArgsCaptor().capture());
 
             assertSame("Passes type for message formatting", type, getArgsCaptor().getValue());
         }
@@ -206,9 +211,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotatedWithAll(types));
 
-            verify(getMockVerification()).check(eq(expected), eq("be annotated with all %s"), getArgsCaptor().capture());
-
-            assertArrayFormatter(getArgsCaptor().getValue(), types);
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ANNOTATED_WITH_ALL, (Object) types);
         }
 
         @Test
@@ -261,9 +264,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotatedWithAny(types));
 
-            verify(getMockVerification()).check(eq(expected), eq("be annotated with any %s"), getArgsCaptor().capture());
-
-            assertArrayFormatter(getArgsCaptor().getValue(), types);
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ANNOTATED_WITH_ANY, (Object) types);
         }
 
         @Test
@@ -286,7 +287,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().annotation());
 
-            verify(getMockVerification()).check(expected, "be an annotation");
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ANNOTATION);
         }
 
         @Test
@@ -310,7 +311,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().anonymous());
 
-            verify(getMockVerification()).check(expected, "be anonymous");
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ANONYMOUS);
         }
 
         @Test
@@ -333,7 +334,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().array());
 
-            verify(getMockVerification()).check(expected, "be an array");
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ARRAY);
         }
 
         @Test
@@ -366,9 +367,95 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().assignableFrom(type));
 
-            verify(getMockVerification()).check(eq(expected), eq("be assignable from '%s'"), getArgsCaptor().capture());
+            verify(getMockVerification()).report(eq(expected), eq(ClassVerifier.MessageKeys.ASSIGNABLE_FROM), getArgsCaptor().capture());
 
             assertSame("Passes type for message formatting", type, getArgsCaptor().getValue());
+        }
+
+        @Test
+        public void testAssignableFromAllWhenNoTypes() {
+            testAssignableFromAllHelper(Collection.class, createEmptyArray(Class.class), true);
+        }
+
+        @Test
+        public void testAssignableFromAllWhenTypeIsNull() {
+            testAssignableFromAllHelper(Collection.class, createArray((Class) null), false);
+        }
+
+        @Test
+        public void testAssignableFromAllWhenTypesIsNull() {
+            testAssignableFromAllHelper(Collection.class, null, true);
+        }
+
+        @Test
+        public void testAssignableFromAllWhenValueIsAssignableFromAllTypes() {
+            testAssignableFromAllHelper(Collection.class, createArray(List.class, Set.class, ArrayList.class), true);
+        }
+
+        @Test
+        public void testAssignableFromAllWhenValueIsAssignableFromSomeTypes() {
+            testAssignableFromAllHelper(Collection.class, createArray(List.class, Map.class, ArrayList.class), false);
+        }
+
+        @Test
+        public void testAssignableFromAllWhenValueIsNotAssignableFromAnyType() {
+            testAssignableFromAllHelper(Collection.class, createArray(Boolean.class, Map.class, URI.class), false);
+        }
+
+        @Test
+        public void testAssignableFromAllWhenValueIsNull() {
+            testAssignableFromAllHelper(null, createArray(Object.class), false);
+        }
+
+        private void testAssignableFromAllHelper(Class<?> value, Class<?>[] types, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().assignableFromAll(types));
+
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ASSIGNABLE_FROM_ALL, (Object) types);
+        }
+
+        @Test
+        public void testAssignableFromAnyWhenNoTypes() {
+            testAssignableFromAnyHelper(Collection.class, createEmptyArray(Class.class), false);
+        }
+
+        @Test
+        public void testAssignableFromAnyWhenTypeIsNull() {
+            testAssignableFromAnyHelper(Collection.class, createArray((Class) null), false);
+        }
+
+        @Test
+        public void testAssignableFromAnyWhenTypesIsNull() {
+            testAssignableFromAnyHelper(Collection.class, null, false);
+        }
+
+        @Test
+        public void testAssignableFromAnyWhenValueIsAssignableFromAllTypes() {
+            testAssignableFromAnyHelper(Collection.class, createArray(List.class, Set.class, ArrayList.class), true);
+        }
+
+        @Test
+        public void testAssignableFromAnyWhenValueIsAssignableFromSomeTypes() {
+            testAssignableFromAnyHelper(Collection.class, createArray(List.class, Map.class, ArrayList.class), true);
+        }
+
+        @Test
+        public void testAssignableFromAnyWhenValueIsNotAssignableFromAnyType() {
+            testAssignableFromAnyHelper(Collection.class, createArray(Boolean.class, Map.class, URI.class), false);
+        }
+
+        @Test
+        public void testAssignableFromAnyWhenValueIsNull() {
+            testAssignableFromAnyHelper(null, createArray(Object.class), false);
+        }
+
+        private void testAssignableFromAnyHelper(Class<?> value, Class<?>[] types, boolean expected) {
+            setValue(value);
+
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().assignableFromAny(types));
+
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ASSIGNABLE_FROM_ANY, (Object) types);
         }
 
         @Test
@@ -391,30 +478,30 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().enumeration());
 
-            verify(getMockVerification()).check(expected, "be an enum");
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.ENUMERATION);
         }
 
         @Test
-        public void testInterfacingWhenValueIsInterface() {
-            testInterfacingHelper(AnInterface.class, true);
+        public void testInterfacedWhenValueIsInterface() {
+            testInterfacedHelper(AnInterface.class, true);
         }
 
         @Test
-        public void testInterfacingWhenValueIsNotInterface() {
-            testInterfacingHelper(ClassVerifierTest.class, false);
+        public void testInterfacedWhenValueIsNotInterface() {
+            testInterfacedHelper(ClassVerifierTest.class, false);
         }
 
         @Test
-        public void testInterfacingWhenValueIsNull() {
-            testInterfacingHelper(null, false);
+        public void testInterfacedWhenValueIsNull() {
+            testInterfacedHelper(null, false);
         }
 
-        private void testInterfacingHelper(Class<?> value, boolean expected) {
+        private void testInterfacedHelper(Class<?> value, boolean expected) {
             setValue(value);
 
-            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().interfacing());
+            assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().interfaced());
 
-            verify(getMockVerification()).check(expected, "be an interface");
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.INTERFACED);
         }
 
         @Test
@@ -437,7 +524,7 @@ public class ClassVerifierTest {
 
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().nested());
 
-            verify(getMockVerification()).check(expected, "be nested");
+            verify(getMockVerification()).report(expected, ClassVerifier.MessageKeys.NESTED);
         }
 
         @Test
@@ -470,7 +557,7 @@ public class ClassVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().primitive());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be a primitive");
+            verify(getMockVerification(), times(values.length)).report(expected, ClassVerifier.MessageKeys.PRIMITIVE);
         }
 
         @Test
@@ -500,7 +587,7 @@ public class ClassVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().primitiveOrWrapper());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be a primitive or primitive wrapper");
+            verify(getMockVerification(), times(values.length)).report(expected, ClassVerifier.MessageKeys.PRIMITIVE_OR_WRAPPER);
         }
 
         @Test
@@ -533,7 +620,38 @@ public class ClassVerifierTest {
                 assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().primitiveWrapper());
             }
 
-            verify(getMockVerification(), times(values.length)).check(expected, "be a primitive wrapper");
+            verify(getMockVerification(), times(values.length)).report(expected, ClassVerifier.MessageKeys.PRIMITIVE_WRAPPER);
+        }
+    }
+
+    public static class ClassVerifierMessageKeysTest extends MessageKeyEnumTestCase<ClassVerifier.MessageKeys> {
+
+        @Override
+        protected Class<? extends Enum> getEnumClass() {
+            return ClassVerifier.MessageKeys.class;
+        }
+
+        @Override
+        protected Map<String, String> getMessageKeys() {
+            Map<String, String> messageKeys = new HashMap<>();
+            messageKeys.put("ANNOTATED", "io.skelp.verifier.type.ClassVerifier.annotated");
+            messageKeys.put("ANNOTATED_WITH", "io.skelp.verifier.type.ClassVerifier.annotatedWith");
+            messageKeys.put("ANNOTATED_WITH_ALL", "io.skelp.verifier.type.ClassVerifier.annotatedWithAll");
+            messageKeys.put("ANNOTATED_WITH_ANY", "io.skelp.verifier.type.ClassVerifier.annotatedWithAny");
+            messageKeys.put("ANNOTATION", "io.skelp.verifier.type.ClassVerifier.annotation");
+            messageKeys.put("ANONYMOUS", "io.skelp.verifier.type.ClassVerifier.anonymous");
+            messageKeys.put("ARRAY", "io.skelp.verifier.type.ClassVerifier.array");
+            messageKeys.put("ASSIGNABLE_FROM", "io.skelp.verifier.type.ClassVerifier.assignableFrom");
+            messageKeys.put("ASSIGNABLE_FROM_ALL", "io.skelp.verifier.type.ClassVerifier.assignableFromAll");
+            messageKeys.put("ASSIGNABLE_FROM_ANY", "io.skelp.verifier.type.ClassVerifier.assignableFromAny");
+            messageKeys.put("ENUMERATION", "io.skelp.verifier.type.ClassVerifier.enumeration");
+            messageKeys.put("INTERFACED", "io.skelp.verifier.type.ClassVerifier.interfaced");
+            messageKeys.put("NESTED", "io.skelp.verifier.type.ClassVerifier.nested");
+            messageKeys.put("PRIMITIVE", "io.skelp.verifier.type.ClassVerifier.primitive");
+            messageKeys.put("PRIMITIVE_OR_WRAPPER", "io.skelp.verifier.type.ClassVerifier.primitiveOrWrapper");
+            messageKeys.put("PRIMITIVE_WRAPPER", "io.skelp.verifier.type.ClassVerifier.primitiveWrapper");
+
+            return messageKeys;
         }
     }
 

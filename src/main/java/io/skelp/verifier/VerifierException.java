@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, Skelp
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,8 @@ package io.skelp.verifier;
 
 /**
  * <p>
- * A runtime exception which is throughout Verifier to avoid consumers having to worry about lots of different types of
- * exceptions.
+ * A runtime exception which is used throughout Verifier to avoid consumers having to worry about lots of different
+ * types of exceptions.
  * </p>
  *
  * @author Alasdair Mercer

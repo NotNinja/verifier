@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, Skelp
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@ package io.skelp.verifier.type.base;
 
 import io.skelp.verifier.CustomVerifier;
 import io.skelp.verifier.VerifierException;
+import io.skelp.verifier.message.MessageKey;
 
 /**
  * <p>
@@ -46,26 +47,6 @@ public interface BaseTruthVerifier<T, V extends BaseTruthVerifier<T, V>> extends
 
     /**
      * <p>
-     * The message used to enhance that of the {@link VerifierException} thrown by {@link #falsy()} when the
-     * verification fails.
-     * </p>
-     *
-     * @see #falsy()
-     */
-    String FALSY_MESSAGE = "be falsy";
-
-    /**
-     * <p>
-     * The message used to enhance that of the {@link VerifierException} thrown by {@link #truthy()} when the
-     * verification fails.
-     * </p>
-     *
-     * @see #truthy()
-     */
-    String TRUTHY_MESSAGE = "be truthy";
-
-    /**
-     * <p>
      * Verifies that the value is falsy.
      * </p>
      * <p>
@@ -84,7 +65,7 @@ public interface BaseTruthVerifier<T, V extends BaseTruthVerifier<T, V>> extends
      *         If the verification fails while not negated or passes while negated.
      * @see #truthy()
      */
-    V falsy() throws VerifierException;
+    V falsy();
 
     /**
      * <p>
@@ -106,5 +87,29 @@ public interface BaseTruthVerifier<T, V extends BaseTruthVerifier<T, V>> extends
      *         If the verification fails while not negated or passes while negated.
      * @see #falsy()
      */
-    V truthy() throws VerifierException;
+    V truthy();
+
+    /**
+     * <p>
+     * The {@link MessageKey MessageKeys} that are used by {@link BaseTruthVerifier}.
+     * </p>
+     *
+     * @since 0.2.0
+     */
+    enum MessageKeys implements MessageKey {
+
+        FALSY("io.skelp.verifier.type.base.BaseTruthVerifier.falsy"),
+        TRUTHY("io.skelp.verifier.type.base.BaseTruthVerifier.truthy");
+
+        private final String code;
+
+        MessageKeys(final String code) {
+            this.code = code;
+        }
+
+        @Override
+        public String code() {
+            return code;
+        }
+    }
 }

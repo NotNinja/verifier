@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, Skelp
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,6 @@ package io.skelp.verifier.type;
 
 import java.math.BigDecimal;
 
-import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseNumberVerifier;
 import io.skelp.verifier.type.base.BaseTruthVerifier;
@@ -57,81 +56,81 @@ public final class BigDecimalVerifier extends BaseComparableVerifier<BigDecimal,
     }
 
     @Override
-    public BigDecimalVerifier even() throws VerifierException {
+    public BigDecimalVerifier even() {
         final BigDecimal value = verification().getValue();
         final boolean result = value != null && !value.stripTrailingZeros().unscaledValue().testBit(0);
 
-        verification().check(result, EVEN_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.EVEN);
 
         return this;
     }
 
     @Override
-    public BigDecimalVerifier falsy() throws VerifierException {
+    public BigDecimalVerifier falsy() {
         final BigDecimal value = verification().getValue();
         final boolean result = value == null || value.compareTo(BigDecimal.ZERO) == 0;
 
-        verification().check(result, FALSY_MESSAGE);
+        verification().report(result, BaseTruthVerifier.MessageKeys.FALSY);
 
         return this;
     }
 
     @Override
-    public BigDecimalVerifier negative() throws VerifierException {
+    public BigDecimalVerifier negative() {
         final BigDecimal value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigDecimal.ZERO) < 0;
 
-        verification().check(result, NEGATIVE_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.NEGATIVE);
 
         return this;
     }
 
     @Override
-    public BigDecimalVerifier odd() throws VerifierException {
+    public BigDecimalVerifier odd() {
         final BigDecimal value = verification().getValue();
         final boolean result = value != null && value.stripTrailingZeros().unscaledValue().testBit(0);
 
-        verification().check(result, ODD_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.ODD);
 
         return this;
     }
 
     @Override
-    public BigDecimalVerifier one() throws VerifierException {
+    public BigDecimalVerifier one() {
         final BigDecimal value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigDecimal.ONE) == 0;
 
-        verification().check(result, ONE_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.ONE);
 
         return this;
     }
 
     @Override
-    public BigDecimalVerifier positive() throws VerifierException {
+    public BigDecimalVerifier positive() {
         final BigDecimal value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigDecimal.ZERO) >= 0;
 
-        verification().check(result, POSITIVE_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.POSITIVE);
 
         return this;
     }
 
     @Override
-    public BigDecimalVerifier truthy() throws VerifierException {
+    public BigDecimalVerifier truthy() {
         final BigDecimal value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigDecimal.ONE) == 0;
 
-        verification().check(result, TRUTHY_MESSAGE);
+        verification().report(result, BaseTruthVerifier.MessageKeys.TRUTHY);
 
         return this;
     }
 
     @Override
-    public BigDecimalVerifier zero() throws VerifierException {
+    public BigDecimalVerifier zero() {
         final BigDecimal value = verification().getValue();
         final boolean result = value != null && value.compareTo(BigDecimal.ZERO) == 0;
 
-        verification().check(result, ZERO_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.ZERO);
 
         return this;
     }

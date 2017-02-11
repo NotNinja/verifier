@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, Skelp
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@
  */
 package io.skelp.verifier.type;
 
-import io.skelp.verifier.VerifierException;
 import io.skelp.verifier.type.base.BaseComparableVerifier;
 import io.skelp.verifier.type.base.BaseNumberVerifier;
 import io.skelp.verifier.type.base.BaseTruthVerifier;
@@ -55,81 +54,81 @@ public final class IntegerVerifier extends BaseComparableVerifier<Integer, Integ
     }
 
     @Override
-    public IntegerVerifier even() throws VerifierException {
+    public IntegerVerifier even() {
         final Integer value = verification().getValue();
         final boolean result = value != null && value % 2 == 0;
 
-        verification().check(result, EVEN_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.EVEN);
 
         return this;
     }
 
     @Override
-    public IntegerVerifier falsy() throws VerifierException {
+    public IntegerVerifier falsy() {
         final Integer value = verification().getValue();
         final boolean result = value == null || value == 0;
 
-        verification().check(result, FALSY_MESSAGE);
+        verification().report(result, BaseTruthVerifier.MessageKeys.FALSY);
 
         return this;
     }
 
     @Override
-    public IntegerVerifier negative() throws VerifierException {
+    public IntegerVerifier negative() {
         final Integer value = verification().getValue();
         final boolean result = value != null && value < 0;
 
-        verification().check(result, NEGATIVE_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.NEGATIVE);
 
         return this;
     }
 
     @Override
-    public IntegerVerifier odd() throws VerifierException {
+    public IntegerVerifier odd() {
         final Integer value = verification().getValue();
         final boolean result = value != null && value % 2 != 0;
 
-        verification().check(result, ODD_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.ODD);
 
         return this;
     }
 
     @Override
-    public IntegerVerifier one() throws VerifierException {
+    public IntegerVerifier one() {
         final Integer value = verification().getValue();
         final boolean result = value != null && value == 1;
 
-        verification().check(result, ONE_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.ONE);
 
         return this;
     }
 
     @Override
-    public IntegerVerifier positive() throws VerifierException {
+    public IntegerVerifier positive() {
         final Integer value = verification().getValue();
         final boolean result = value != null && value >= 0;
 
-        verification().check(result, POSITIVE_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.POSITIVE);
 
         return this;
     }
 
     @Override
-    public IntegerVerifier truthy() throws VerifierException {
+    public IntegerVerifier truthy() {
         final Integer value = verification().getValue();
         final boolean result = value != null && value == 1;
 
-        verification().check(result, TRUTHY_MESSAGE);
+        verification().report(result, BaseTruthVerifier.MessageKeys.TRUTHY);
 
         return this;
     }
 
     @Override
-    public IntegerVerifier zero() throws VerifierException {
+    public IntegerVerifier zero() {
         final Integer value = verification().getValue();
         final boolean result = value != null && value == 0;
 
-        verification().check(result, ZERO_MESSAGE);
+        verification().report(result, BaseNumberVerifier.MessageKeys.ZERO);
 
         return this;
     }

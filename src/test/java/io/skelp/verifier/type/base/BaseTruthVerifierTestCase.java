@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, Skelp
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -63,7 +63,7 @@ public abstract class BaseTruthVerifierTestCase<T, V extends BaseTruthVerifier<T
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().falsy());
         }
 
-        verify(getMockVerification(), times(values.length)).check(expected, BaseTruthVerifier.FALSY_MESSAGE);
+        verify(getMockVerification(), times(values.length)).report(expected, BaseTruthVerifier.MessageKeys.FALSY);
     }
 
     @Test
@@ -88,7 +88,7 @@ public abstract class BaseTruthVerifierTestCase<T, V extends BaseTruthVerifier<T
             assertSame("Chains reference", getCustomVerifier(), getCustomVerifier().truthy());
         }
 
-        verify(getMockVerification(), times(values.length)).check(expected, BaseTruthVerifier.TRUTHY_MESSAGE);
+        verify(getMockVerification(), times(values.length)).report(expected, BaseTruthVerifier.MessageKeys.TRUTHY);
     }
 
     /**

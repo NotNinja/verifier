@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, Skelp
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,6 @@
 package io.skelp.verifier.type.base;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 import java.util.Comparator;
@@ -48,27 +46,27 @@ public abstract class BaseSortableCollectionVerifierTestCase<E extends Comparabl
 
     @Test
     public void testSortedByWithEmptyValue() {
-        testSortedByHelper(createEmptyValue(), new NaturalComparator<E>(), false, true);
+        testSortedByHelper(createEmptyValue(), new NaturalComparator<>(), false, true);
     }
 
     @Test
     public void testSortedByWithNullValue() {
-        testSortedByHelper(null, new NaturalComparator<E>(), false, false);
+        testSortedByHelper(null, new NaturalComparator<>(), false, false);
     }
 
     @Test
     public void testSortedByWithSingleElementValue() {
-        testSortedByHelper(createSingleValue(), new NaturalComparator<E>(), false, true);
+        testSortedByHelper(createSingleValue(), new NaturalComparator<>(), false, true);
     }
 
     @Test
     public void testSortedByWithSortedValue() {
-        testSortedByHelper(createSortedValue(), new NaturalComparator<E>(), true, true);
+        testSortedByHelper(createSortedValue(), new NaturalComparator<>(), true, true);
     }
 
     @Test
     public void testSortedByWithUnsortedValue() {
-        testSortedByHelper(createUnsortedValue(), new NaturalComparator<E>(), true, false);
+        testSortedByHelper(createUnsortedValue(), new NaturalComparator<>(), true, false);
     }
 
     @Test
@@ -88,34 +86,34 @@ public abstract class BaseSortableCollectionVerifierTestCase<E extends Comparabl
 
         verify(comparator, comparatorUseExpected ? atLeastOnce() : never()).compare(any(getElementClass()), any(getElementClass()));
 
-        verify(getMockVerification()).check(eq(expected), eq("be sorted by '%s'"), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseSortableCollectionVerifier.MessageKeys.SORTED_BY), getArgsCaptor().capture());
 
         assertSame("Passes comparator for message formatting", comparator, getArgsCaptor().getValue());
     }
 
     @Test
     public void testSortedByWithNameAndEmptyValue() {
-        testSortedByHelper(createEmptyValue(), new NaturalComparator<E>(), "comparator", false, true);
+        testSortedByHelper(createEmptyValue(), new NaturalComparator<>(), "comparator", false, true);
     }
 
     @Test
     public void testSortedByWithNameAndNullValue() {
-        testSortedByHelper(null, new NaturalComparator<E>(), "comparator", false, false);
+        testSortedByHelper(null, new NaturalComparator<>(), "comparator", false, false);
     }
 
     @Test
     public void testSortedByWithNameAndSingleElementValue() {
-        testSortedByHelper(createSingleValue(), new NaturalComparator<E>(), "comparator", false, true);
+        testSortedByHelper(createSingleValue(), new NaturalComparator<>(), "comparator", false, true);
     }
 
     @Test
     public void testSortedByWithNameAndSortedValue() {
-        testSortedByHelper(createSortedValue(), new NaturalComparator<E>(), "comparator", true, true);
+        testSortedByHelper(createSortedValue(), new NaturalComparator<>(), "comparator", true, true);
     }
 
     @Test
     public void testSortedByWithNameAndUnsortedValue() {
-        testSortedByHelper(createUnsortedValue(), new NaturalComparator<E>(), "comparator", true, false);
+        testSortedByHelper(createUnsortedValue(), new NaturalComparator<>(), "comparator", true, false);
     }
 
     @Test
@@ -135,7 +133,7 @@ public abstract class BaseSortableCollectionVerifierTestCase<E extends Comparabl
 
         verify(comparator, comparatorUseExpected ? atLeastOnce() : never()).compare(any(getElementClass()), any(getElementClass()));
 
-        verify(getMockVerification()).check(eq(expected), eq("be sorted by '%s'"), getArgsCaptor().capture());
+        verify(getMockVerification()).report(eq(expected), eq(BaseSortableCollectionVerifier.MessageKeys.SORTED_BY), getArgsCaptor().capture());
 
         assertSame("Passes name for message formatting", name, getArgsCaptor().getValue());
     }

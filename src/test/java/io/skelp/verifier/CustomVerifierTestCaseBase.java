@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, Skelp
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,12 @@
  */
 package io.skelp.verifier;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.lang.reflect.Array;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
@@ -34,13 +34,16 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
-import io.skelp.verifier.message.ArrayFormatter;
-import io.skelp.verifier.message.MessageFormatter;
+import io.skelp.verifier.message.ResourceBundleMessageSource;
+import io.skelp.verifier.message.formatter.DefaultFormatterProvider;
+import io.skelp.verifier.message.locale.SimpleLocaleContext;
+import io.skelp.verifier.verification.SimpleVerification;
+import io.skelp.verifier.verification.TestVerificationProvider;
 import io.skelp.verifier.verification.Verification;
+import io.skelp.verifier.verification.VerificationProvider;
+import io.skelp.verifier.verification.report.DefaultReportExecutorProvider;
 
 /**
  * <p>
@@ -119,52 +122,34 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
     @Captor
     private ArgumentCaptor<Object> argsCaptor;
     @Mock
-    private ArrayFormatter<?> mockArrayFormatter;
-    @Mock
-    private MessageFormatter mockMessageFormatter;
+    private CustomVerifierProvider mockCustomVerifierProvider;
     @Mock
     private Verification<T> mockVerification;
+    @Mock
+    private VerificationProvider mockVerificationProvider;
 
     private T value;
 
     private V customVerifier;
 
     @Before
-    public void setUp() {
-        when(mockMessageFormatter.formatArray(any(Object[].class))).thenAnswer(new Answer<ArrayFormatter<?>>() {
-            @Override
-            public ArrayFormatter<?> answer(InvocationOnMock invocation) throws Throwable {
-                return mockArrayFormatter;
-            }
-        });
-        when(mockVerification.getMessageFormatter()).thenReturn(mockMessageFormatter);
-        when(mockVerification.getValue()).thenAnswer(new Answer<T>() {
-            @Override
-            public T answer(InvocationOnMock invocation) throws Throwable {
-                return value;
-            }
-        });
+    public void setUp() throws Exception {
+        when(mockVerificationProvider.getVerification(any(), any())).thenAnswer(invocation -> new SimpleVerification<>(new SimpleLocaleContext(), new ResourceBundleMessageSource(), new DefaultFormatterProvider(), new DefaultReportExecutorProvider().getReportExecutor(), invocation.getArguments()[0], invocation.getArguments()[1]));
+
+        TestCustomVerifierProvider.setDelegate(mockCustomVerifierProvider);
+        TestVerificationProvider.setDelegate(mockVerificationProvider);
+
+        when(mockVerification.getValue()).thenAnswer(invocation -> value);
 
         value = null;
 
         customVerifier = createCustomVerifier();
     }
 
-    /**
-     * <p>
-     * Asserts that the an {@link ArrayFormatter} was passed as the specified {@code arg} for the {@code array}
-     * provided.
-     * </p>
-     *
-     * @param arg
-     *         the captured argument to be checked
-     * @param array
-     *         the expected array to be formatted
-     */
-    protected void assertArrayFormatter(Object arg, Object[] array) {
-        assertSame("Passes array formatter for message formatting", getMockArrayFormatter(), arg);
-
-        verify(getMockMessageFormatter()).formatArray(array);
+    @After
+    public void tearDown() throws Exception {
+        TestCustomVerifierProvider.setDelegate(null);
+        TestVerificationProvider.setDelegate(null);
     }
 
     /**
@@ -178,8 +163,7 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
 
     /**
      * <p>
-     * Returns an argument captor to be be used to capture any varargs that are passed to {@link
-     * Verification#check(boolean, String, Object...)}.
+     * Returns an argument captor to be be used to capture any varargs that are passed to {@link Verification#report}.
      * </p>
      *
      * @return An {@code ArgumentCaptor} to be used to capture optional format arguments.
@@ -201,24 +185,13 @@ public abstract class CustomVerifierTestCaseBase<T, V extends CustomVerifier<T, 
 
     /**
      * <p>
-     * Returns the mock array formatter being used to test the subject.
+     * Returns the mock custom verifier provider being used to test the subject.
      * </p>
      *
-     * @return The mock {@link ArrayFormatter}.
+     * @return The mock {@link CustomVerifierProvider}.
      */
-    protected ArrayFormatter<?> getMockArrayFormatter() {
-        return mockArrayFormatter;
-    }
-
-    /**
-     * <p>
-     * Returns the mock message formatter being used to test the subject.
-     * </p>
-     *
-     * @return The mock {@link MessageFormatter}.
-     */
-    protected MessageFormatter getMockMessageFormatter() {
-        return mockMessageFormatter;
+    protected CustomVerifierProvider getMockCustomVerifierProvider() {
+        return mockCustomVerifierProvider;
     }
 
     /**
