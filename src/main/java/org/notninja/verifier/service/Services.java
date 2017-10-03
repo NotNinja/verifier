@@ -21,10 +21,7 @@
  */
 package org.notninja.verifier.service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ServiceLoader;
+import java.util.*;
 import java.util.function.Function;
 
 import org.notninja.verifier.message.locale.LocaleContextProvider;
@@ -64,6 +61,8 @@ public final class Services {
 
     private static final WeightedComparator WEIGHTED_COMPARATOR = new WeightedComparator();
 
+    private static final Map<Class, ServiceLoader> cache = new HashMap<>();
+
     /**
      * <p>
      * Calls the specified {@code mapper} function for each registered implementation of the specified {@code service}
@@ -93,7 +92,7 @@ public final class Services {
      * @see #findFirstNonNullForWeightedService(Class, Function)
      */
     public static <T, R> R findFirstNonNullForService(final Class<T> service, final Function<T, R> mapper) {
-        for (final T instance : ServiceLoader.load(service)) {
+        for (final T instance : getServiceLoader(service)) {
             final R result = mapper.apply(instance);
             if (result != null) {
                 return result;
@@ -158,7 +157,7 @@ public final class Services {
      * @see #getWeightedService(Class)
      */
     public static <T> T getService(final Class<T> service) {
-        final Iterator<T> iterator = ServiceLoader.load(service).iterator();
+        final Iterator<T> iterator = getServiceLoader(service).iterator();
         if (iterator.hasNext()) {
             return iterator.next();
         }
@@ -183,7 +182,7 @@ public final class Services {
      */
     public static <T> List<T> getServices(final Class<T> service) {
         final List<T> instances = new ArrayList<>();
-        for (final T instance : ServiceLoader.load(service)) {
+        for (final T instance : getServiceLoader(service)) {
             instances.add(instance);
         }
 
@@ -237,6 +236,11 @@ public final class Services {
         instances.sort(WEIGHTED_COMPARATOR);
 
         return instances;
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <T> ServiceLoader<T> getServiceLoader(final Class<T> service) {
+        return (ServiceLoader<T>) cache.computeIfAbsent(service, k -> ServiceLoader.load(service));
     }
 
     /**
