@@ -33,9 +33,9 @@ import org.notninja.verifier.verification.Verification;
  * </p>
  * <p>
  * {@code Formatters} are registered via Java's SPI, so in order to register a custom {@code Formatter} projects should
- * contain should create a {@code org.notninja.verifier.message.formatter.Formatter} file within {@code META-INF/services}
- * listing the class reference for each custom {@code Formatter} (e.g. {@code com.example.verifier.MyCustomFormatter})
- * on separate lines.
+ * contain should create a {@code org.notninja.verifier.message.formatter.Formatter} file within
+ * {@code META-INF/services} listing the class reference for each custom {@code Formatter} (e.g.
+ * {@code com.example.verifier.MyCustomFormatter}) on separate lines.
  * </p>
  *
  * @author Alasdair Mercer

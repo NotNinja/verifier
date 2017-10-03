@@ -31,8 +31,8 @@ import org.notninja.verifier.service.Weighted;
  * <p>
  * {@code MessageSourceProviders} are registered via Java's SPI, so in order to register a custom
  * {@code MessageSourceProvider} projects should contain should create a
- * {@code org.notninja.verifier.verification.message.MessageSourceProvider} file within {@code META-INF/services} listing
- * the class reference for each custom {@code MessageSourceProvider} (e.g.
+ * {@code org.notninja.verifier.verification.message.MessageSourceProvider} file within {@code META-INF/services}
+ * listing the class reference for each custom {@code MessageSourceProvider} (e.g.
  * {@code com.example.verifier.MyCustomMessageSourceProvider}) on separate lines. {@code MessageSourceProviders} are
  * also {@link Weighted}, which means that they are loaded in priority order (the lower the weight, the higher the
  * priority). Verifier has a built-in default {@code MessageSourceProvider} which is given a low priority (i.e.

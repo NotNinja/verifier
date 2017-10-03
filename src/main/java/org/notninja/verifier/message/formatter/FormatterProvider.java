@@ -29,8 +29,9 @@ import org.notninja.verifier.service.Weighted;
  * </p>
  * <p>
  * {@code FormatterProviders} are registered via Java's SPI, so in order to register a custom {@code FormatterProvider}
- * projects should contain should create a {@code org.notninja.verifier.verification.message.formatter.FormatterProvider}
- * file within {@code META-INF/services} listing the class reference for each custom {@code FormatterProvider} (e.g.
+ * projects should contain should create a
+ * {@code org.notninja.verifier.verification.message.formatter.FormatterProvider} file within {@code META-INF/services}
+ * listing the class reference for each custom {@code FormatterProvider} (e.g.
  * {@code com.example.verifier.MyCustomFormatterProvider}) on separate lines. {@code FormatterProviders} are also
  * {@link Weighted}, which means that they are loaded in priority order (the lower the weight, the higher the priority).
  * Verifier has a built-in default {@code FormatterProvider} which is given a low priority (i.e.

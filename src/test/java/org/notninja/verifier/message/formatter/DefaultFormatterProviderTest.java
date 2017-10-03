@@ -24,7 +24,6 @@ package org.notninja.verifier.message.formatter;
 import static org.junit.Assert.*;
 
 import java.util.Collections;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

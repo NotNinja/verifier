@@ -24,7 +24,6 @@ package org.notninja.verifier.verification.report;
 import static org.junit.Assert.*;
 
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

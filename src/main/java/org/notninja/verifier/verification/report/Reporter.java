@@ -41,12 +41,12 @@ import org.notninja.verifier.verification.Verification;
  * </p>
  * <p>
  * {@code Reporters} are registered via Java's SPI, so in order to register a custom {@code Reporter} projects should
- * contain should create a {@code org.notninja.verifier.verification.report.Reporter} file within {@code META-INF/services}
- * listing the class reference for each custom {@code Reporter} (e.g. {@code com.example.verifier.MyCustomReporter}) on
- * separate lines. {@code Reporters} are also {@link Weighted}, which means that they are loaded in priority order (the
- * lower the weight, the higher the priority). Verifier has a built-in default {@code Reporter} which is given a low
- * priority (i.e. {@value #DEFAULT_IMPLEMENTATION_WEIGHT}) to allow custom implementations to be easily ordered around
- * it.
+ * contain should create a {@code org.notninja.verifier.verification.report.Reporter} file within
+ * {@code META-INF/services} listing the class reference for each custom {@code Reporter} (e.g.
+ * {@code com.example.verifier.MyCustomReporter}) on separate lines. {@code Reporters} are also {@link Weighted}, which
+ * means that they are loaded in priority order (the lower the weight, the higher the priority). Verifier has a built-in
+ * default {@code Reporter} which is given a low priority (i.e. {@value #DEFAULT_IMPLEMENTATION_WEIGHT}) to allow custom
+ * implementations to be easily ordered around it.
  * </p>
  *
  * @author Alasdair Mercer

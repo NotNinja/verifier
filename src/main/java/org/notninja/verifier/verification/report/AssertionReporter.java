@@ -22,8 +22,8 @@
 package org.notninja.verifier.verification.report;
 
 import org.notninja.verifier.VerifierException;
-import org.notninja.verifier.verification.Verification;
 import org.notninja.verifier.service.Weighted;
+import org.notninja.verifier.verification.Verification;
 
 /**
  * <p>
