@@ -26,13 +26,13 @@ To install Verifier, simply add it as a dependency to your project:
 <dependency>
     <groupId>org.notninja</groupId>
     <artifactId>verifier</artifactId>
-    <version>0.3.0</version>
+    <version>0.4.0-SNAPSHOT</version>
 </dependency>
 ```
 
 **Gradle:**
 ``` groovy
-compile 'org.notninja:verifier:0.3.0'
+compile 'org.notninja:verifier:0.4.0-SNAPSHOT'
 ```
 
 That's it! You'll need to have Java 8 or above though.
