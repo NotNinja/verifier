@@ -1,0 +1,2 @@
+org.notninja.verifier.message.DefaultMessageSourceProvider
+org.notninja.verifier.message.TestMessageSourceProvider

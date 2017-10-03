@@ -1,0 +1,2 @@
+org.notninja.verifier.verification.DefaultVerificationProvider
+org.notninja.verifier.verification.TestVerificationProvider

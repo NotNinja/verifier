@@ -1,0 +1,2 @@
+org.notninja.verifier.message.locale.DefaultLocaleContextProvider
+org.notninja.verifier.message.locale.TestLocaleContextProvider

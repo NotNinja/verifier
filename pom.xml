@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (C) 2017 Alasdair Mercer, Skelp
+  Copyright (C) 2017 Alasdair Mercer, !ninja
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -27,33 +27,33 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.skelp</groupId>
+    <groupId>org.notninja</groupId>
     <artifactId>verifier</artifactId>
     <version>0.3.0-SNAPSHOT</version>
     <name>Verifier</name>
     <description>
         Verifier is a Java library for validation.
     </description>
-    <url>https://github.com/Skelp/verifier</url>
+    <url>https://github.com/NotNinja/verifier</url>
     <inceptionYear>2016</inceptionYear>
 
     <licenses>
         <license>
             <name>MIT License</name>
-            <url>https://github.com/Skelp/verifier/blob/master/LICENSE.md</url>
+            <url>https://github.com/NotNinja/verifier/blob/master/LICENSE.md</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
 
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/Skelp/verifier/issues</url>
+        <url>https://github.com/NotNinja/verifier/issues</url>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/Skelp/verifier</url>
-        <connection>scm:git:git://github.com/Skelp/verifier.git</connection>
-        <developerConnection>scm:git:git@github.com:Skelp/verifier.git</developerConnection>
+        <url>https://github.com/NotNinja/verifier</url>
+        <connection>scm:git:git://github.com/NotNinja/verifier.git</connection>
+        <developerConnection>scm:git:git@github.com:NotNinja/verifier.git</developerConnection>
     </scm>
 
     <distributionManagement>
@@ -71,10 +71,8 @@
         <developer>
             <id>neocotic</id>
             <name>Alasdair Mercer</name>
-            <email>alasdair@skelp.io</email>
+            <email>mercer.alasdair@gmail.com</email>
             <url>https://github.com/neocotic</url>
-            <organization>Skelp</organization>
-            <organizationUrl>https://skelp.io</organizationUrl>
             <timezone>Europe/London</timezone>
         </developer>
     </developers>

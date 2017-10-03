@@ -8,10 +8,3 @@ addons:
       - oracle-java8-installer
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-notifications:
-  webhooks:
-    urls:
-      - https://webhooks.gitter.im/e/a4d2c0b15b94444b173e
-    on_success: always
-    on_failure: always
-    on_start: never

@@ -1,0 +1,2 @@
+org.notninja.verifier.verification.report.DefaultReportExecutorProvider
+org.notninja.verifier.verification.report.TestReportExecutorProvider
