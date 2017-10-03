@@ -29,7 +29,7 @@
 
     <groupId>org.notninja</groupId>
     <artifactId>verifier</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
+    <version>0.3.0</version>
     <name>Verifier</name>
     <description>
         Verifier is a Java library for validation.

@@ -1,3 +1,8 @@
+## Version 0.3.0, 2017.10.03
+
+* ServiceLoaders being loaded multiple times so providers are not being cached [#23](https://github.com/NotNinja/verifier/issues/23)
+* Move from `io.skelp:verifier` to `org.notninja:verifier` (**breaking change**)
+
 ## Version 0.2.0, 2017.02.11
 
 * Drop support for Java 7 [#9](https://github.com/NotNinja/verifier/issues/9) (**breaking change**)
