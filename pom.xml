@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (C) 2017 Alasdair Mercer, Skelp
+  Copyright (C) 2017 Alasdair Mercer, !ninja
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -27,33 +27,33 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.skelp</groupId>
+    <groupId>org.notninja</groupId>
     <artifactId>verifier</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
     <name>Verifier</name>
     <description>
         Verifier is a Java library for validation.
     </description>
-    <url>https://github.com/Skelp/verifier</url>
+    <url>https://github.com/NotNinja/verifier</url>
     <inceptionYear>2016</inceptionYear>
 
     <licenses>
         <license>
             <name>MIT License</name>
-            <url>https://github.com/Skelp/verifier/blob/master/LICENSE.md</url>
+            <url>https://github.com/NotNinja/verifier/blob/master/LICENSE.md</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
 
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/Skelp/verifier/issues</url>
+        <url>https://github.com/NotNinja/verifier/issues</url>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/Skelp/verifier</url>
-        <connection>scm:git:git://github.com/Skelp/verifier.git</connection>
-        <developerConnection>scm:git:git@github.com:Skelp/verifier.git</developerConnection>
+        <url>https://github.com/NotNinja/verifier</url>
+        <connection>scm:git:git://github.com/NotNinja/verifier.git</connection>
+        <developerConnection>scm:git:git@github.com:NotNinja/verifier.git</developerConnection>
     </scm>
 
     <distributionManagement>
@@ -71,10 +71,8 @@
         <developer>
             <id>neocotic</id>
             <name>Alasdair Mercer</name>
-            <email>alasdair@skelp.io</email>
+            <email>mercer.alasdair@gmail.com</email>
             <url>https://github.com/neocotic</url>
-            <organization>Skelp</organization>
-            <organizationUrl>https://skelp.io</organizationUrl>
             <timezone>Europe/London</timezone>
         </developer>
     </developers>
@@ -118,12 +116,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
+                <version>2.20.1</version>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.7.201606060606</version>
+                <version>0.7.9</version>
                 <executions>
                     <execution>
                         <id>jacoco-initialize</id>
@@ -133,7 +131,7 @@
                     </execution>
                     <execution>
                         <id>jacoco-site</id>
-                        <phase>package</phase>
+                        <phase>test</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
@@ -246,7 +244,7 @@
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.7</version>
+                        <version>1.6.8</version>
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>ossrh</serverId>

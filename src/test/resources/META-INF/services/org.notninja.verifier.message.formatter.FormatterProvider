@@ -1,0 +1,2 @@
+org.notninja.verifier.message.formatter.DefaultFormatterProvider
+org.notninja.verifier.message.formatter.TestFormatterProvider
